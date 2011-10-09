@@ -84,7 +84,7 @@ namespace SpaceHaste.Graphics
         private void UpdateWorldMatricies(GameTime gameTime)
         {
             for (int i = 0; i < GraphicsGameObjects.Count; i++)
-                GraphicsGameObjects[i].World = Matrix.CreateTranslation(GraphicsGameObjects[i].Position);
+                GraphicsGameObjects[i].World = Matrix.CreateScale(GraphicsGameObjects[i].Scale) * Matrix.CreateTranslation(GraphicsGameObjects[i].Position) ;
         }
 
 

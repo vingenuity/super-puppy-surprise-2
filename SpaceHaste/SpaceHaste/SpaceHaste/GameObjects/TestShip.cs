@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using SpaceHaste.Graphics;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceHaste.Maps;
 
 namespace SpaceHaste.GameObjects
 {
@@ -14,8 +15,7 @@ namespace SpaceHaste.GameObjects
         {
             Model = GraphicsManager.Content.Load<Model>("Ship");
             GraphicsManager.GraphicsGameObjects.Add(this);
-            World = Matrix.Identity;
-            Scale = .01f;
+            Scale = .5f;
         }
     }
 }

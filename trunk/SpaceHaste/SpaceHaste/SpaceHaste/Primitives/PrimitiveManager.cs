@@ -98,13 +98,18 @@ namespace SpaceHaste.Grids
             basicEffect = new BasicEffect(graphics.GraphicsDevice);
             basicEffect.VertexColorEnabled = true;
 
-            worldMatrix = Matrix.CreateTranslation(graphics.GraphicsDevice.Viewport.Width / 2f - 150,
-                graphics.GraphicsDevice.Viewport.Height / 2f - 50, 0);
-            basicEffect.World = worldMatrix;
+            //worldMatrix = Matrix.CreateTranslation(graphics.GraphicsDevice.Viewport.Width / 2f - 150,
+             //   graphics.GraphicsDevice.Viewport.Height / 2f - 50, 0);
+           // basicEffect.World = worldMatrix;
+           // basicEffect.View = CameraManager.View;
+           // basicEffect.Projection = CameraManager.Projection;
+        }
+        public void Update(GameTime gameTime)
+        {
+            basicEffect.World = Matrix.Identity;
             basicEffect.View = CameraManager.View;
             basicEffect.Projection = CameraManager.Projection;
         }
-
         /// <summary>
         /// Initializes the point list.
         /// </summary>
@@ -154,18 +159,7 @@ namespace SpaceHaste.Grids
         }
 
        
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        public override void Update(GameTime gameTime)
-        {
-            // Allows the game to exit
-
-
-            base.Update(gameTime);
-        }
+       
 
       
 
@@ -189,7 +183,7 @@ namespace SpaceHaste.Grids
                 pass.Apply();
 
 
-                  //DrawLineList();
+                  DrawLineList();
 
 
                // DrawLineStrip();

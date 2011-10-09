@@ -33,9 +33,10 @@ namespace SpaceHaste.Maps
         public List<GameObject> GetGameObjectsInRange(int range)
         {
             List<GameObject> list = new List<GameObject>();
-            
+           
             return new List<GameObject>();
         }
+       
         public List<GridSquare> GetGridSquaresInRange(int range)
         {
             return new List<GridSquare>();
@@ -53,6 +54,12 @@ namespace SpaceHaste.Maps
             }
                 
 
+        }
+        public void DrawLineTest()
+        {
+            float y = Size / 2 * GridSquare.GRIDSQUARELENGTH;
+            LineManager.AddLine(new Line(new Vector3(10, 10, 10),
+                                new Vector3(0, 0, 0)));
         }
         public void AddGameObjectToGridSquare(GameObject gameObject, int x, int y, int z)
         {

@@ -13,6 +13,7 @@ namespace SpaceHaste.GameObjects
        // public Vector3 Velocity;
         public Vector3 Direction;
         public float Speed;
+        public float Scale;
         public double Health;
         //Radius is used for physics only Graphics uses Size
         public float Radius;

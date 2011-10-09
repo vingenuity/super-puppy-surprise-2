@@ -9,7 +9,7 @@ namespace SpaceHaste.Maps
     public class GridSquare
     {
         public int X, Y, Z;
-        public static float GRIDSQUARELENGTH = 50;
+        public static float GRIDSQUARELENGTH = 500;
         public Vector3 Center;
         public GridSquare(int X, int Y, int Z)
         {

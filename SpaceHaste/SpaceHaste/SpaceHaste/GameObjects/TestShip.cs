@@ -15,6 +15,7 @@ namespace SpaceHaste.GameObjects
             Model = GraphicsManager.Content.Load<Model>("Ship");
             GraphicsManager.GraphicsGameObjects.Add(this);
             World = Matrix.Identity;
+            Scale = .01f;
         }
     }
 }

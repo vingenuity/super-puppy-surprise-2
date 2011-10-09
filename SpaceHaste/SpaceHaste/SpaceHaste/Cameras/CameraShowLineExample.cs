@@ -19,27 +19,24 @@ namespace SpaceHaste.Cameras
              float time = 0;
 
              CameraManager.View = Matrix.CreateLookAt(
-                new Vector3(0.0f, 0.0f, 1000.0f),
+                new Vector3(0.0f, 0f, 10000f),
                 new Vector3(0.0f, 0.0f, 0.0f),
                 Vector3.Up
                 );
 
-             CameraManager.Projection = Matrix.CreateOrthographicOffCenter(
-                             0,
-                             (float)device.Viewport.Width,
-                             (float)device.Viewport.Height,
-                             0,
-                             1.0f, 100000.0f);
+             CameraManager.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
+                                                                   device.Viewport.AspectRatio,
+                                                                   10, 10000);
 
             
         }
         float offsetx, offsety, offsetz = 0;
         public override void UpdateView(GameTime gameTime)
         {
-            offsety = -30;
+            offsety = 0;
             CameraManager.View = Matrix.CreateLookAt(
-                new Vector3(offsetx, offsety, 1000.0f+offsetz),
-                new Vector3(offsetx, offsety, 0),
+                new Vector3(0, 0, 10000),
+                new Vector3(0, 0, 0),
                 Vector3.Up
                 );
           //  offsetz--;

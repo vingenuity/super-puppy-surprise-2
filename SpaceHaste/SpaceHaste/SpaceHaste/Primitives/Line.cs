@@ -36,5 +36,6 @@ namespace SpaceHaste.Primitives
                 1   // number of primitives to draw
             );
         }
+
     }
 }

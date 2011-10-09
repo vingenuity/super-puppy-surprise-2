@@ -3,13 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceHaste.GameObjects
 {
     public class GameObject
     {
-        Vector3 Position;
-        Vector3 Direction;
+        public Vector3 Position;
+       // public Vector3 Velocity;
+        public Vector3 Direction;
+        public float Speed;
+        public double Health;
+        //Radius is used for physics only Graphics uses Size
+        public float Radius;
+        public Vector2 Size;
+        int Side;
+        public Model Model;
+        public Matrix World;
         public GameObject()
         {
         }

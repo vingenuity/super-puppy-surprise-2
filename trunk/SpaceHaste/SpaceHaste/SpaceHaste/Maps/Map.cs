@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SpaceHaste.GameObjects;
+using SpaceHaste.Primitives;
+using Microsoft.Xna.Framework;
 
 namespace SpaceHaste.Maps
 {
@@ -15,7 +17,7 @@ namespace SpaceHaste.Maps
         {
             this.Size = Size;
             InitMapGridSquares();
-           
+            InitMapGameObjects();
         }
         void InitMapGridSquares()
         {
@@ -38,5 +40,24 @@ namespace SpaceHaste.Maps
         {
             return new List<GridSquare>();
         }
+        public void AddGridXY0()
+        {
+            for (int i = 0; i <= Size; i++)
+            {
+               float x = ((Size / 2) - i) * GridSquare.GRIDSQUARELENGTH;
+                float y = Size / 2 * GridSquare.GRIDSQUARELENGTH;
+                LineManager.AddLine(new Line(new Vector3(x, y , 0),
+                                    new Vector3(x,-y,0)));
+                LineManager.AddLine(new Line(new Vector3(y, x, 0),
+                                   new Vector3(-y, x, 0)));
+            }
+                
+
+        }
+        public void AddGameObjectToGridSquare(GameObject gameObject, int x, int y, int z)
+        {
+            MapGameObjects[x, y, z] = gameObject;
+        }
     }
 }
+

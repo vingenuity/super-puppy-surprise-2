@@ -114,10 +114,12 @@
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\TestShip.cs" />
     <Compile Include="Graphics\GraphicsManager.cs" />
+    <Compile Include="Graphics\GraphicsShaders.cs" />
     <Compile Include="Graphics\NonPhotoRealisticSettings.cs" />
     <Compile Include="Maps\GridSquare.cs" />
     <Compile Include="Maps\Map.cs" />
     <Compile Include="Maps\Map1.cs" />
+    <Compile Include="Maps\MapManager.cs" />
     <Compile Include="Primitives\Line.cs" />
     <Compile Include="Primitives\LineManager.cs" />
     <Compile Include="Primitives\PrimitiveManager.cs" />

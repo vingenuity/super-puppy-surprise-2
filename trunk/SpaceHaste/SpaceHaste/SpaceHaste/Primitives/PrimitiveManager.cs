@@ -17,7 +17,7 @@ namespace SpaceHaste.Grids
 
         BasicEffect basicEffect;
         VertexDeclaration vertexDeclaration;
-        VertexPositionColor[] pointList;
+        VertexPositionColor[] pointList ;
         VertexBuffer vertexBuffer;
 
         
@@ -189,7 +189,7 @@ namespace SpaceHaste.Grids
                 pass.Apply();
 
 
-                  DrawLineList();
+                  //DrawLineList();
 
 
                // DrawLineStrip();
@@ -202,7 +202,7 @@ namespace SpaceHaste.Grids
 
         void DrawAllLines()
         {
-            for (int i = 0; i < LineManager.Points.Count; i++)
+            for (int i = 0; i < LineManager.Lines.Count; i++)
             {
                 graphics.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionColor>(
                     PrimitiveType.LineList, pointList, 0, 2, lineListIndices, 0, 2);

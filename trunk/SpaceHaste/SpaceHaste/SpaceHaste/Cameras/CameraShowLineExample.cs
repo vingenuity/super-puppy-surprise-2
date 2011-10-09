@@ -19,8 +19,8 @@ namespace SpaceHaste.Cameras
              float time = 0;
 
              CameraManager.View = Matrix.CreateLookAt(
-                new Vector3(0.0f, 0.0f, 1.0f),
-                Vector3.Zero,
+                new Vector3(0.0f, 0.0f, 1000.0f),
+                new Vector3(0.0f, 0.0f, 0.0f),
                 Vector3.Up
                 );
 
@@ -29,14 +29,22 @@ namespace SpaceHaste.Cameras
                              (float)device.Viewport.Width,
                              (float)device.Viewport.Height,
                              0,
-                             1.0f, 1000.0f);
+                             1.0f, 100000.0f);
 
             
         }
-        public void UpdateView(GameTime gameTime)
+        float offsetx, offsety, offsetz = 0;
+        public override void UpdateView(GameTime gameTime)
         {
+            offsety = -30;
+            CameraManager.View = Matrix.CreateLookAt(
+                new Vector3(offsetx, offsety, 1000.0f+offsetz),
+                new Vector3(offsetx, offsety, 0),
+                Vector3.Up
+                );
+          //  offsetz--;
         }
-        public void UpdateProjection(GameTime gameTime)
+        public override void UpdateProjection(GameTime gameTime)
         {
 
         }

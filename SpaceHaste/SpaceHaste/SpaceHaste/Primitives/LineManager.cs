@@ -3,24 +3,32 @@ using System.Collections.Generic;
 
 namespace SpaceHaste.Primitives
 {
-    public class LineManager
+    public class LineManager : DrawableGameComponent
     {
-        public static List<Point> Points;
-        public LineManager()
+        public static List<Line> Lines;
+        GraphicsDeviceManager graphics;
+        public LineManager(Game game, GraphicsDeviceManager graphics) : base(game)
         {
-            Points = new List<Point>();
+            Lines = new List<Line>();
+            this.graphics = graphics;
         }
-        public static void AddLine(Point point)
+        public override void Draw(GameTime gameTime)
         {
-            Points.Add(point);
+            for (int i = 0; i < Lines.Count; i++)
+                Lines[i].DrawLine(graphics);
+            base.Draw(gameTime);
+        }
+        public static void AddLine(Line line)
+        {
+            Lines.Add(line);
         }
         public static void Clear()
         {
-            Points = new List<Point>();
+            Lines = new List<Line>();
         }
-        public static void RemoveLine(Point point)
+        public static void RemoveLine(Line line)
         {
-            Points.Remove(point);
+            Lines.Remove(line);
         }
     }
 }

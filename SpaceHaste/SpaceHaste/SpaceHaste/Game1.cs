@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Media;
 using SpaceHaste.Graphics;
 using SpaceHaste.Cameras;
 using SpaceHaste.Grids;
+using SpaceHaste.Primitives;
+using SpaceHaste.Maps;
 
 namespace SpaceHaste
 {
@@ -45,6 +47,13 @@ namespace SpaceHaste
 
             PrimitiveManager PrimitiveManager = new PrimitiveManager(this, graphics);
             Components.Add(PrimitiveManager);
+
+            LineManager LineManager = new LineManager(this, graphics);
+            Components.Add(LineManager);
+
+
+            MapManager MapManager = new MapManager(this);
+            Components.Add(MapManager);
 
             base.Initialize();
         }

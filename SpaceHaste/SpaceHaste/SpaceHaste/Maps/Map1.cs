@@ -16,7 +16,9 @@ namespace SpaceHaste.Maps
         protected override void InitMapGameObjects()
         {
             MapGameObjects = new GameObject[Size, Size, Size];
-
+            AddGameObjectToGridSquare(new TestShip(),0, 0, 0);
+            AddGameObjectToGridSquare(new TestShip(), 0, 0, 0);
+            AddGridXY0();
             base.InitMapGameObjects();
         }
     }

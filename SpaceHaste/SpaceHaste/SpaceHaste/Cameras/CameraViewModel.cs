@@ -19,7 +19,7 @@ namespace SpaceHaste.Cameras
 
              Matrix rotation = Matrix.CreateRotationY(time * 0.5f);
 
-             Matrix view = Matrix.CreateLookAt(new Vector3(3000, 1500, 0),
+             Matrix view = Matrix.CreateLookAt(new Vector3(1500, 3000, 0),
                                               Vector3.Zero,
                                               Vector3.Up);
              Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
@@ -29,10 +29,10 @@ namespace SpaceHaste.Cameras
              CameraManager.View = view;
             
         }
-        public void UpdateView(GameTime gameTime)
+        public override void UpdateView(GameTime gameTime)
         {
         }
-        public void UpdateProjection(GameTime gameTime)
+        public override void UpdateProjection(GameTime gameTime)
         {
             Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
                                                                    device.Viewport.AspectRatio,

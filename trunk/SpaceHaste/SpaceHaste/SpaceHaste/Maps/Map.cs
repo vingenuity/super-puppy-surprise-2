@@ -21,11 +21,18 @@ namespace SpaceHaste.Maps
         }
         void InitMapGridSquares()
         {
+            float bounds = -GridSquare.GRIDSQUARELENGTH * Size / 2 + GridSquare.GRIDSQUARELENGTH/2;
+
             MapGridSquares = new GridSquare[Size, Size, Size];
             for (int i = 0; i < Size; i++)
                 for (int j = 0; j < Size; j++)
                     for (int k = 0; k < Size; k++)
+                    {
                         MapGridSquares[i, j, k] = new GridSquare(i, j, k);
+                        MapGridSquares[i, j, k].Center = new Vector3(bounds + GridSquare.GRIDSQUARELENGTH * i, 
+                            bounds + GridSquare.GRIDSQUARELENGTH * j,
+                            bounds + GridSquare.GRIDSQUARELENGTH * k);
+                    }
         }
         protected virtual void InitMapGameObjects()
         {
@@ -64,6 +71,7 @@ namespace SpaceHaste.Maps
         public void AddGameObjectToGridSquare(GameObject gameObject, int x, int y, int z)
         {
             MapGameObjects[x, y, z] = gameObject;
+            gameObject.Position = MapGridSquares[x, y, z].Center;
         }
     }
 }

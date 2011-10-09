@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceHaste.Maps;
 
 namespace SpaceHaste.GameObjects
 {
@@ -21,6 +22,7 @@ namespace SpaceHaste.GameObjects
         int Side;
         public Model Model;
         public Matrix World;
+        GridSquare gridSquare;
         public GameObject()
         {
         }

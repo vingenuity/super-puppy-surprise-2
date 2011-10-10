@@ -10,16 +10,16 @@ namespace SpaceHaste.Maps
 {
     public class Map
     {
-        protected GameObject[, ,] MapGameObjects;
-        protected GridSquare[, ,] MapGridSquares;
+        protected GridSquare[,,] MapGridSquares;
         protected int Size;
         public Map(int Size)
         {
             this.Size = Size;
             InitMapGridSquares();
-            InitMapGameObjects();
         }
+
         public int getGridSize() { return Size; }
+
         void InitMapGridSquares()
         {
             float bounds = -GridSquare.GRIDSQUARELENGTH * Size / 2 + GridSquare.GRIDSQUARELENGTH/2;
@@ -36,34 +36,49 @@ namespace SpaceHaste.Maps
                     }
             ConnectGridSquares();
         }
-        protected virtual void InitMapGameObjects()
-        {
-        }
-        //implement here through
+
         public List<GameObject> GetGameObjectsInRange(int range) 
         {
             List<GameObject> list = new List<GameObject>();
            
             return new List<GameObject>();
         }
+
+        /// <summary>
+        /// Finds the number of grid squares in range of a particular grid square.
+        /// This will presumably be used to find valid moves for each ship.
+        /// </summary>
+        /// <param name="gs">Grid square to start the search.</param>
+        /// <param name="range">Distance of squares away to search.</param>
+        /// <returns>List of valid grid squares in range.</returns>
+        public List<GridSquare> GetGridSquaresInRange(GridSquare gs, int range)
+        {
+            List<GridSquare> inRange = new List<GridSquare>();
+            if (range == 0) return inRange;
+            foreach (GridSquare neighbor in gs.ConnectedGridSquares)
+            {
+                inRange.AddRange(GetGridSquaresInRange(neighbor, range - 1));
+            }
+            inRange = inRange.Distinct().ToList();
+            return inRange;
+        }
        
+        /// <summary>
+        /// Finds the number of grid squares in range of a grid square x, y, z.
+        /// This extends the functinoality of the above function for more general use.
+        /// </summary>
+        /// <param name="x"> X coordinate to start the search.</param>
+        /// <param name="y"> Y coordinate to start the search.</param>
+        /// <param name="z"> Z coordinate to start the search.</param>
+        /// <param name="range"> number of neighboring squares to search.</param>
+        /// <returns>List of valid grid squares in range.</returns>
         public List<GridSquare> GetGridSquaresInRange(int x, int y, int z, int range)
         {
             return GetGridSquaresInRange(MapGridSquares[x,y,z], range);
         }
-        public List<GridSquare> GetGridSquaresInRange(GridSquare gs, int range)
-        {
-            List<GridSquare> inRange = new List<GridSquare>();
-            if(range == 0) return inRange;
-            foreach (GridSquare neighbor in gs.ConnectedGridSquares)
-            {
-                inRange.AddRange(GetGridSquaresInRange(neighbor, range-1));
-            }
-             inRange = inRange.Distinct().ToList();
-            return inRange;
-        }
+
         /// <summary>
-        /// Fills for each gridsquare the gridsquares that it connects to
+        /// Fills each grid square with a list of neighboring grid squares.
         /// </summary>
         public void ConnectGridSquares()
         {

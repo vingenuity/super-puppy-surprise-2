@@ -3,29 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using SpaceHaste.GameObjects;
 using SpaceHaste.Maps;
 
 namespace SpaceHaste.Maps
 {
     public class GridSquare
     {
-        public int X, Y, Z;
         public static float GRIDSQUARELENGTH = 500;
+        public int X, Y, Z;
         public Vector3 Center;
+        private List<GameObject> ContainedObjects;
         public List<GridSquare> ConnectedGridSquares;
+        enum Terrain { none = 0, asteroid, nebula, wreck }
+
         public GridSquare(int X, int Y, int Z)
         {
             this.X = X;
             this.Y = Y;
             this.Z = Z;
             Center = new Vector3(X + GRIDSQUARELENGTH / 2, Y + GRIDSQUARELENGTH / 2, + Z + GRIDSQUARELENGTH / 2);
+            ContainedObjects = new List<GameObject>();
             ConnectedGridSquares = new List<GridSquare>();
         }
-        //public void ConnectGridSquares()
-        //{
-        //    if (X + 1 < Map.getGridSize()) 
-        //    { 
-        //    }
-        //}
+
+        public void AddObject(GameObject obj)
+        {
+            ContainedObjects.Add(obj);
+        }
+
+        public bool HasObject()
+        {
+            if(ContainedObjects.Count() == 0)
+                return false;
+            return true;
+        }
+
+        public void RemoveObject(GameObject obj)
+        {
+            ContainedObjects.Remove(obj);
+        }
     }
 }

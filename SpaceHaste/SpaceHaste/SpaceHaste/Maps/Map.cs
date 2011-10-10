@@ -37,7 +37,8 @@ namespace SpaceHaste.Maps
         protected virtual void InitMapGameObjects()
         {
         }
-        public List<GameObject> GetGameObjectsInRange(int range)
+        //implement here through
+        public List<GameObject> GetGameObjectsInRange(int range) 
         {
             List<GameObject> list = new List<GameObject>();
            
@@ -48,9 +49,13 @@ namespace SpaceHaste.Maps
         {
             return new List<GridSquare>();
         }
+        /// <summary>
+        /// Fills for each gridsquare the gridquares that it connects to
+        /// </summary>
         public void ConnectGridSquares()
         {
         }
+        //here!
         public void AddGridXY0()
         {
             for (int i = 0; i <= Size; i++)
@@ -63,6 +68,24 @@ namespace SpaceHaste.Maps
                                    new Vector3(-y, x, 0)));
             }
                 
+
+        }
+        public void AddGridXYZ()
+        {
+            for (int j = 0; j <= Size; j++)
+            {
+                float z = ((Size / 2) - j) * GridSquare.GRIDSQUARELENGTH;
+                for (int i = 0; i <= Size; i++)
+                {
+                    float x = ((Size / 2) - i) * GridSquare.GRIDSQUARELENGTH;
+                    float y = Size / 2 * GridSquare.GRIDSQUARELENGTH;
+                    LineManager.AddLine(new Line(new Vector3(x, y, z),
+                                        new Vector3(x, -y, z)));
+                    LineManager.AddLine(new Line(new Vector3(y, x, z),
+                                       new Vector3(-y, x, z)));
+                }
+
+            }
 
         }
         public void DrawLineTest()

@@ -19,7 +19,7 @@ namespace SpaceHaste.Maps
             AddGameObjectToGridSquare(new TestShip(), 4, 4, 4); 
             AddGameObjectToGridSquare(new TestShip(), 2, 2, 3);
             AddGameObjectToGridSquare(new TestShip(), 0, 0, 0);
-            AddGridXY0();
+            AddGridXYZ();
             base.InitMapGameObjects();
         }
     }

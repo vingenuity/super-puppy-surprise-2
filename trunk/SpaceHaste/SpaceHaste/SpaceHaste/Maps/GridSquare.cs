@@ -15,7 +15,8 @@ namespace SpaceHaste.Maps
         public Vector3 Center;
         private List<GameObject> ContainedObjects;
         public List<GridSquare> ConnectedGridSquares;
-        enum Terrain { none = 0, asteroid, nebula, wreck }
+        public enum TerrainType { none = 0, asteroid, nebula, wreck }
+        private TerrainType Terrain;
 
         public GridSquare(int X, int Y, int Z)
         {
@@ -25,6 +26,7 @@ namespace SpaceHaste.Maps
             Center = new Vector3(X + GRIDSQUARELENGTH / 2, Y + GRIDSQUARELENGTH / 2, + Z + GRIDSQUARELENGTH / 2);
             ContainedObjects = new List<GameObject>();
             ConnectedGridSquares = new List<GridSquare>();
+            Terrain = TerrainType.none;
         }
 
         public void AddObject(GameObject obj)
@@ -43,5 +45,8 @@ namespace SpaceHaste.Maps
         {
             ContainedObjects.Remove(obj);
         }
+
+        public TerrainType getTerrain() { return Terrain; }
+        public void setTerrain(TerrainType t) { Terrain = t; }
     }
 }

@@ -43,7 +43,7 @@ namespace SpaceHaste.Maps
            
             return new List<GameObject>();
         }
-
+        
         /// <summary>
         /// Finds the number of grid squares in range of a particular grid square.
         /// This will presumably be used to find valid moves for each ship.
@@ -57,7 +57,15 @@ namespace SpaceHaste.Maps
             if (range == 0) return inRange;
             foreach (GridSquare neighbor in gs.ConnectedGridSquares)
             {
-                inRange.AddRange(GetGridSquaresInRange(neighbor, range - 1));
+                //Can't cross through asteroid
+                if(neighbor.getTerrain() == GridSquare.TerrainType.asteroid)
+                    continue;
+                //Movement penalty for nebulae
+                if(neighbor.getTerrain() == GridSquare.TerrainType.nebula)
+                    inRange.AddRange(GetGridSquaresInRange(neighbor, range - 2));
+                //Otherwise, take normal movement
+                else
+                    inRange.AddRange(GetGridSquaresInRange(neighbor, range - 1));
             }
             inRange = inRange.Distinct().ToList();
             return inRange;

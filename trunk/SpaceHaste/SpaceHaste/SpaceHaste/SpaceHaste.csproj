@@ -112,6 +112,8 @@
     <Compile Include="Cameras\CameraManager.cs" />
     <Compile Include="Cameras\CameraShowLineExample.cs" />
     <Compile Include="Cameras\CameraViewModel.cs" />
+    <Compile Include="GameObjects\Shields.cs" />
+    <Compile Include="GameObjects\Ship.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\TestShip.cs" />
     <Compile Include="Graphics\GraphicsManager.cs" />

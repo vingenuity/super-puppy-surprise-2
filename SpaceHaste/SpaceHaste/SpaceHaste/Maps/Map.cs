@@ -48,6 +48,9 @@ namespace SpaceHaste.Maps
         {
             return new List<GridSquare>();
         }
+        public void ConnectGridSquares()
+        {
+        }
         public void AddGridXY0()
         {
             for (int i = 0; i <= Size; i++)

@@ -122,6 +122,7 @@
     <Compile Include="Graphics\GraphicsManager.cs" />
     <Compile Include="Graphics\GraphicsShaders.cs" />
     <Compile Include="Graphics\NonPhotoRealisticSettings.cs" />
+    <Compile Include="Maps\Asteroid.cs" />
     <Compile Include="Maps\GridSquare.cs" />
     <Compile Include="Maps\Map.cs" />
     <Compile Include="Maps\Map1.cs" />

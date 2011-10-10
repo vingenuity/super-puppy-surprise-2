@@ -19,6 +19,7 @@ namespace SpaceHaste.Maps
             InitMapGridSquares();
             InitMapGameObjects();
         }
+        public int getGridSize() { return Size; }
         void InitMapGridSquares()
         {
             float bounds = -GridSquare.GRIDSQUARELENGTH * Size / 2 + GridSquare.GRIDSQUARELENGTH/2;
@@ -54,6 +55,17 @@ namespace SpaceHaste.Maps
         /// </summary>
         public void ConnectGridSquares()
         {
+            for (int i = 0; i < MapGridSquares.Length; i++) 
+            {
+                for (int j = 0; j < MapGridSquares.Length; j++) 
+                {
+                    for (int k = 0; k < MapGridSquares.Length; k++) 
+                    {
+                        if (MapGridSquares[i, j, k].X + 1 < Size)
+                            MapGridSquares[i, j, k].ConnectedGridSquares.Add(InitMapGridSquares[i + 1, j, k]);
+                    }
+                }
+            }
         }
         //here!
         public void AddGridXY0()

@@ -41,9 +41,9 @@ namespace SpaceHaste
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
-            if (!graphics.IsFullScreen)
-                graphics.ToggleFullScreen();
-            graphics.ApplyChanges();
+            //if (!graphics.IsFullScreen)
+             //   graphics.ToggleFullScreen();
+            //graphics.ApplyChanges();
 
             // TODO: Add your initialization logic here
             GraphicsManager GraphicsManager = new GraphicsManager(this, graphics);

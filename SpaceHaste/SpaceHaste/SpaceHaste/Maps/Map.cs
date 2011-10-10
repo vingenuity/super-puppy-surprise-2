@@ -147,7 +147,7 @@ namespace SpaceHaste.Maps
         }
         public void AddGameObjectToGridSquare(GameObject gameObject, int x, int y, int z)
         {
-            MapGameObjects[x, y, z] = gameObject;
+            //MapGameObjects[x, y, z] = gameObject;
             gameObject.Position = MapGridSquares[x, y, z].Center;
         }
     }

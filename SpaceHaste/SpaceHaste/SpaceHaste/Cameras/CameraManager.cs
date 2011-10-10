@@ -34,13 +34,13 @@ namespace SpaceHaste.Cameras
         }
         void ChangeCamera()
         {
-            if(CameraNum == 0)
-                Camera = new CameraTopView(graphics);
-            if (CameraNum == 1)
-                Camera = new CameraSideView(graphics);
-            if (CameraNum == 2)
-                Camera = new CameraBackView(graphics);
-            if (CameraNum == 3)
+           // if(CameraNum == 0)
+           //     Camera = new CameraTopView(graphics);
+           // if (CameraNum == 1)
+            //    Camera = new CameraSideView(graphics);
+            //if (CameraNum == 2)
+              //  Camera = new CameraBackView(graphics);
+            if (CameraNum == 0)
                 Camera = new CameraViewModel(graphics);
         }
         KeyboardState currentKeyboardState;
@@ -58,7 +58,7 @@ namespace SpaceHaste.Cameras
             if (currentKeyboardState.IsKeyDown(Keys.B) &&
                  lastKeyboardState.IsKeyUp(Keys.B))
             {
-                CameraNum = (CameraNum + 1) % 4;
+                CameraNum = (CameraNum + 1) % 1;
                 ChangeCamera();
             }
         }

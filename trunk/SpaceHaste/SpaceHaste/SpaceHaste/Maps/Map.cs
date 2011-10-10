@@ -55,16 +55,20 @@ namespace SpaceHaste.Maps
         /// </summary>
         public void ConnectGridSquares()
         {
-            for (int i = 0; i < MapGridSquares.Length; i++) 
+            foreach (GridSquare gs in MapGridSquares)
             {
-                for (int j = 0; j < MapGridSquares.Length; j++) 
-                {
-                    for (int k = 0; k < MapGridSquares.Length; k++) 
-                    {
-                        if (MapGridSquares[i, j, k].X + 1 < Size)
-                            MapGridSquares[i, j, k].ConnectedGridSquares.Add(InitMapGridSquares[i + 1, j, k]);
-                    }
-                }
+                if (gs.X > 0)
+                    gs.ConnectedGridSquares.Add(MapGridSquares[gs.X - 1, gs.Y, gs.Z]);
+                if (gs.X < Size - 1)
+                    gs.ConnectedGridSquares.Add(MapGridSquares[gs.X + 1, gs.Y, gs.Z]);
+                if (gs.Y > 0)
+                    gs.ConnectedGridSquares.Add(MapGridSquares[gs.X, gs.Y - 1, gs.Z]);
+                if (gs.Y < Size - 1)
+                    gs.ConnectedGridSquares.Add(MapGridSquares[gs.X, gs.Y + 1, gs.Z]);
+                if (gs.Z > 0)
+                    gs.ConnectedGridSquares.Add(MapGridSquares[gs.X, gs.Y, gs.Z - 1]);
+                if (gs.Z < Size - 1)
+                    gs.ConnectedGridSquares.Add(MapGridSquares[gs.X, gs.Y, gs.Z + 1]);
             }
         }
         //here!

@@ -13,14 +13,15 @@ namespace SpaceHaste.Maps
         {
 
         }
-        protected override void InitMapGameObjects()
+        protected void InitMapGameObjects()
         {
+            /*
             MapGameObjects = new GameObject[Size, Size, Size];
             AddGameObjectToGridSquare(new TestShip(), 4, 4, 4); 
             AddGameObjectToGridSquare(new TestShip(), 2, 2, 3);
             AddGameObjectToGridSquare(new TestShip(), 0, 0, 0);
             AddGridXYZ();
-            base.InitMapGameObjects();
+            base.InitMapGameObjects();*/
         }
     }
 }

@@ -35,7 +35,7 @@ namespace SpaceHaste.Cameras
         void ChangeCamera()
         {
             if(CameraNum == 0)
-                Camera = new CameraShowLineExample(graphics);
+                Camera = new CameraAngled(graphics);
             if (CameraNum == 1)
                 Camera = new CameraViewModel(graphics);
         }

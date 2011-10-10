@@ -38,6 +38,13 @@ namespace SpaceHaste
         /// </summary>
         protected override void Initialize()
         {
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+
+            if (!graphics.IsFullScreen)
+                graphics.ToggleFullScreen();
+            graphics.ApplyChanges();
+
             // TODO: Add your initialization logic here
             GraphicsManager GraphicsManager = new GraphicsManager(this, graphics);
             Components.Add(GraphicsManager);
@@ -66,7 +73,7 @@ namespace SpaceHaste
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            
             // TODO: use this.Content to load your game content here
         }
 

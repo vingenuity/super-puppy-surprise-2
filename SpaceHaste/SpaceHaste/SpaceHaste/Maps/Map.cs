@@ -34,6 +34,7 @@ namespace SpaceHaste.Maps
                             bounds + GridSquare.GRIDSQUARELENGTH * j,
                             bounds + GridSquare.GRIDSQUARELENGTH * k);
                     }
+            ConnectGridSquares();
         }
         protected virtual void InitMapGameObjects()
         {
@@ -46,12 +47,23 @@ namespace SpaceHaste.Maps
             return new List<GameObject>();
         }
        
-        public List<GridSquare> GetGridSquaresInRange(int range)
+        public List<GridSquare> GetGridSquaresInRange(int x, int y, int z, int range)
         {
-            return new List<GridSquare>();
+            return GetGridSquaresInRange(MapGridSquares[x,y,z], range);
+        }
+        public List<GridSquare> GetGridSquaresInRange(GridSquare gs, int range)
+        {
+            List<GridSquare> inRange = new List<GridSquare>();
+            if(range == 0) return inRange;
+            foreach (GridSquare neighbor in gs.ConnectedGridSquares)
+            {
+                inRange.AddRange(GetGridSquaresInRange(neighbor, range-1));
+            }
+             inRange = inRange.Distinct().ToList();
+            return inRange;
         }
         /// <summary>
-        /// Fills for each gridsquare the gridquares that it connects to
+        /// Fills for each gridsquare the gridsquares that it connects to
         /// </summary>
         public void ConnectGridSquares()
         {

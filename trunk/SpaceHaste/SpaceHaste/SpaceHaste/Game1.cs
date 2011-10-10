@@ -98,6 +98,7 @@ namespace SpaceHaste
                 this.Exit();
 
             // TODO: Add your update logic here
+            MapManager.Map.GetGridSquaresInRange(1,1,1,1);
 
             base.Update(gameTime);
         }

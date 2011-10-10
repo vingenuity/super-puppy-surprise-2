@@ -15,7 +15,7 @@ namespace SpaceHaste.GameObjects
         double eRegen;                          //Amount energy regens per tern                       
         //shield shield;        **Need shield type
 
-        public Ship(double maxHull,double maxEnergy, int numMissiles, double lsrDmg, double missDmg, double[3] eff,double regen) {
+        public Ship(double maxHull,double maxEnergy, int numMissiles, double lsrDmg, double missDmg, double[] eff,double regen) {
             //Hull and energy only initialize max set health and energy to max
             hull[0] = hull[1] = maxHull;
             energy[0] = energy[1] = maxEnergy;

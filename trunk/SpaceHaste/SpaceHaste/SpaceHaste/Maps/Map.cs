@@ -11,11 +11,20 @@ namespace SpaceHaste.Maps
     public class Map
     {
         protected GridSquare[,,] MapGridSquares;
+        protected List<GameObject> MapObjects;
         protected int Size;
         public Map(int Size)
         {
             this.Size = Size;
             InitMapGridSquares();
+            MapObjects = new List<GameObject>();
+        }
+
+        public void addGameObject(GameObject go, Vector3 position) {
+            MapGridSquares[(int)position.X, (int)position.Y, (int)position.Z].AddObject(go);
+            go.GridPosition = position;
+            go.DrawPosition = MapGridSquares[(int)position.X, (int)position.Y, (int)position.Z].Center;
+            MapObjects.Add(go);
         }
 
         public int getGridSize() { return Size; }
@@ -37,10 +46,28 @@ namespace SpaceHaste.Maps
             ConnectGridSquares();
         }
 
-        public List<GameObject> GetGameObjectsInRange(int range) 
+        /// <summary>
+        /// This is primarily for the lasers
+        /// axis-bound distance check eliminates game objects out of range
+        /// a ray test checks if objects are out of range
+        /// </summary>
+        /// <param name="gs"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        public List<GameObject> GetGameObjectsInRange(GridSquare gs, int range) 
         {
             List<GameObject> list = new List<GameObject>();
-           
+            for (int i = 0; i < MapObjects.Count; i++) {
+                int d = (int)Math.Abs(MapObjects[i].Position.X - gs.Position.X) +
+                        (int)Math.Abs(MapObjects[i].Position.Y - gs.Position.Y) +
+                        (int)Math.Abs(MapObjects[i].Position.Z - gs.Position.Z);
+                if (d > range)
+                    continue;
+                Vector3 ray = MapObjects[i].Position - gs.Position;
+                for (int j = 0; j < MapObjects.Count; j++) {
+
+                }
+            }
             return new List<GameObject>();
         }
         
@@ -153,3 +180,25 @@ namespace SpaceHaste.Maps
     }
 }
 
+
+           //for (int i = 0; i < MapGridSquares.Length; i++)
+           // {
+           //     for (int j = 0; j < MapGridSquares.Length; j++)
+           //     {
+           //         for (int k = 0; k < MapGridSquares.Length; k++)
+           //         {
+           //             if (MapGridSquares[i, j, k].X + 1 < Size)
+           //                 MapGridSquares[i, j, k].ConnectedGridSquares.Add(MapGridSquares[i + 1, j, k]);
+           //             if (MapGridSquares[i, j, k].X - 1 >= 0)
+           //                 MapGridSquares[i, j, k].ConnectedGridSquares.Add(MapGridSquares[i - 1, j, k]);
+           //             if (MapGridSquares[i, j, k].Y + 1 < Size)
+           //                 MapGridSquares[i, j, k].ConnectedGridSquares.Add(MapGridSquares[i, j + 1, k]);
+           //             if (MapGridSquares[i, j, k].Y - 1 >= 0)
+           //                 MapGridSquares[i, j, k].ConnectedGridSquares.Add(MapGridSquares[i, j - 1, k]);
+           //             if (MapGridSquares[i, j, k].Z + 1 < Size)
+           //                 MapGridSquares[i, j, k].ConnectedGridSquares.Add(MapGridSquares[i, j, k + 1]);
+           //             if (MapGridSquares[i, j, k].Z - 1 >= 0)
+           //                 MapGridSquares[i, j, k].ConnectedGridSquares.Add(MapGridSquares[i, j, k - 1]);
+           //         }
+           //     }
+           // }

@@ -12,6 +12,7 @@ namespace SpaceHaste.Maps
     {
         public static float GRIDSQUARELENGTH = 500;
         public int X, Y, Z;
+        public Vector3 Position;
         public Vector3 Center;
         private List<GameObject> ContainedObjects;
         public List<GridSquare> ConnectedGridSquares;
@@ -23,6 +24,7 @@ namespace SpaceHaste.Maps
             this.X = X;
             this.Y = Y;
             this.Z = Z;
+            Position = new Vector3(X, Y, Z);
             Center = new Vector3(X + GRIDSQUARELENGTH / 2, Y + GRIDSQUARELENGTH / 2, + Z + GRIDSQUARELENGTH / 2);
             ContainedObjects = new List<GameObject>();
             ConnectedGridSquares = new List<GridSquare>();

@@ -28,7 +28,7 @@ namespace SpaceHaste.Cameras
              CameraManager.Projection = projection;
              CameraManager.View = view;
             
-        }
+        }      
         public override void UpdateView(GameTime gameTime)
         {
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SpaceHaste.GameObjects;
+using Microsoft.Xna.Framework;
 
 namespace SpaceHaste.Maps
 {
@@ -13,15 +14,12 @@ namespace SpaceHaste.Maps
         {
 
         }
-        protected void InitMapGameObjects()
+        protected override void InitMapGameObjects()
         {
-            /*
-            MapGameObjects = new GameObject[Size, Size, Size];
-            AddGameObjectToGridSquare(new TestShip(), 4, 4, 4); 
-            AddGameObjectToGridSquare(new TestShip(), 2, 2, 3);
-            AddGameObjectToGridSquare(new TestShip(), 0, 0, 0);
+            this.addGameObject(new TestShip(), new Vector3(4, 4, 4));
+            this.addGameObject(new TestShip(), new Vector3(2, 2, 4));
+            this.addGameObject(new TestShip(), new Vector3(3, 3, 3));
             AddGridXYZ();
-            base.InitMapGameObjects();*/
         }
     }
 }

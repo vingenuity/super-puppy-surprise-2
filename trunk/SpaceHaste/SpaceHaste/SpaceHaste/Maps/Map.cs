@@ -16,8 +16,11 @@ namespace SpaceHaste.Maps
         public Map(int Size)
         {
             this.Size = Size;
-            InitMapGridSquares();
             MapObjects = new List<GameObject>();
+
+            InitMapGridSquares();
+            InitMapGameObjects();
+   
         }
 
         public void addGameObject(GameObject go, Vector3 position) {
@@ -28,6 +31,10 @@ namespace SpaceHaste.Maps
         }
 
         public int getGridSize() { return Size; }
+
+        protected virtual void InitMapGameObjects()
+        {
+        }
 
         void InitMapGridSquares()
         {

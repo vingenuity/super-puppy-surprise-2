@@ -58,7 +58,7 @@ namespace SpaceHaste.Cameras
             if (currentKeyboardState.IsKeyDown(Keys.B) &&
                  lastKeyboardState.IsKeyUp(Keys.B))
             {
-                CameraNum = (CameraNum + 1) % 1;
+                CameraNum = (CameraNum + 1) % 4;
                 ChangeCamera();
             }
         }

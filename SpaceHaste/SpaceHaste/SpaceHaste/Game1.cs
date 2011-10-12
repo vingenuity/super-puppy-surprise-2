@@ -24,10 +24,21 @@ namespace SpaceHaste
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static Camera Camera;
+        double seconds = 1000;
+        public double Hours
+        {
+            get { return seconds / 3600; }
+            set { seconds = value * 3600; }
+        }
+
+
+        public double Hours2;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
         }
 
         /// <summary>
@@ -57,7 +68,6 @@ namespace SpaceHaste
 
             LineManager LineManager = new LineManager(this, graphics);
             Components.Add(LineManager);
-
 
             MapManager MapManager = new MapManager(this);
             Components.Add(MapManager);

@@ -34,13 +34,13 @@ namespace SpaceHaste.Cameras
         }
         void ChangeCamera()
         {
-           // if(CameraNum == 0)
-           //     Camera = new CameraTopView(graphics);
-           // if (CameraNum == 1)
-            //    Camera = new CameraSideView(graphics);
-            //if (CameraNum == 2)
-              //  Camera = new CameraBackView(graphics);
-            if (CameraNum == 0)
+            if(CameraNum == 0)
+                Camera = new CameraTopView(graphics);
+            if (CameraNum == 1)
+                Camera = new CameraSideView(graphics);
+            if (CameraNum == 2)
+                Camera = new CameraBackView(graphics);
+            if (CameraNum == 3)
                 Camera = new CameraViewModel(graphics);
         }
         KeyboardState currentKeyboardState;

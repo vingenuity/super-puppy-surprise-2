@@ -49,7 +49,7 @@ namespace SpaceHaste.Maps
         /// <summary>
         /// This is primarily for the lasers
         /// axis-bound distance check eliminates game objects out of range
-        /// a ray test checks if objects are out of range
+        /// a ray test checks if objects are blocked
         /// </summary>
         /// <param name="gs"></param>
         /// <param name="range"></param>
@@ -58,12 +58,12 @@ namespace SpaceHaste.Maps
         {
             List<GameObject> list = new List<GameObject>();
             for (int i = 0; i < MapObjects.Count; i++) {
-                int d = (int)Math.Abs(MapObjects[i].Position.X - gs.Position.X) +
-                        (int)Math.Abs(MapObjects[i].Position.Y - gs.Position.Y) +
-                        (int)Math.Abs(MapObjects[i].Position.Z - gs.Position.Z);
+                int d = (int)Math.Abs(MapObjects[i].GridPosition.X - gs.Position.X) +
+                        (int)Math.Abs(MapObjects[i].GridPosition.Y - gs.Position.Y) +
+                        (int)Math.Abs(MapObjects[i].GridPosition.Z - gs.Position.Z);
                 if (d > range)
                     continue;
-                Vector3 ray = MapObjects[i].Position - gs.Position;
+                Vector3 ray = MapObjects[i].GridPosition - gs.Position;
                 for (int j = 0; j < MapObjects.Count; j++) {
 
                 }
@@ -175,7 +175,7 @@ namespace SpaceHaste.Maps
         public void AddGameObjectToGridSquare(GameObject gameObject, int x, int y, int z)
         {
             //MapGameObjects[x, y, z] = gameObject;
-            gameObject.Position = MapGridSquares[x, y, z].Center;
+            gameObject.GridPosition = MapGridSquares[x, y, z].Center;
         }
     }
 }

@@ -196,25 +196,3 @@ namespace SpaceHaste.Maps
     }
 }
 
-
-           //for (int i = 0; i < MapGridSquares.Length; i++)
-           // {
-           //     for (int j = 0; j < MapGridSquares.Length; j++)
-           //     {
-           //         for (int k = 0; k < MapGridSquares.Length; k++)
-           //         {
-           //             if (MapGridSquares[i, j, k].X + 1 < Size)
-           //                 MapGridSquares[i, j, k].ConnectedGridSquares.Add(MapGridSquares[i + 1, j, k]);
-           //             if (MapGridSquares[i, j, k].X - 1 >= 0)
-           //                 MapGridSquares[i, j, k].ConnectedGridSquares.Add(MapGridSquares[i - 1, j, k]);
-           //             if (MapGridSquares[i, j, k].Y + 1 < Size)
-           //                 MapGridSquares[i, j, k].ConnectedGridSquares.Add(MapGridSquares[i, j + 1, k]);
-           //             if (MapGridSquares[i, j, k].Y - 1 >= 0)
-           //                 MapGridSquares[i, j, k].ConnectedGridSquares.Add(MapGridSquares[i, j - 1, k]);
-           //             if (MapGridSquares[i, j, k].Z + 1 < Size)
-           //                 MapGridSquares[i, j, k].ConnectedGridSquares.Add(MapGridSquares[i, j, k + 1]);
-           //             if (MapGridSquares[i, j, k].Z - 1 >= 0)
-           //                 MapGridSquares[i, j, k].ConnectedGridSquares.Add(MapGridSquares[i, j, k - 1]);
-           //         }
-           //     }
-           // }

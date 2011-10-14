@@ -118,7 +118,6 @@
     <Compile Include="GameObjects\Shields.cs" />
     <Compile Include="GameObjects\Ship.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
-    <Compile Include="GameObjects\TestShip.cs" />
     <Compile Include="Graphics\GraphicsManager.cs" />
     <Compile Include="Graphics\GraphicsShaders.cs" />
     <Compile Include="Graphics\NonPhotoRealisticSettings.cs" />

@@ -8,18 +8,18 @@ using SpaceHaste.Maps;
 
 namespace SpaceHaste.Maps
 {
-    public class GridSquare
+    public class GridCube
     {
         public static float GRIDSQUARELENGTH = 500;
         public int X, Y, Z;
         public Vector3 Position;
         public Vector3 Center;
         private List<GameObject> ContainedObjects;
-        public List<GridSquare> ConnectedGridSquares;
+        public List<GridCube> ConnectedGridSquares;
         public enum TerrainType { none = 0, asteroid, nebula, wreck }
         private TerrainType Terrain;
 
-        public GridSquare(int X, int Y, int Z)
+        public GridCube(int X, int Y, int Z)
         {
             this.X = X;
             this.Y = Y;
@@ -27,7 +27,7 @@ namespace SpaceHaste.Maps
             Position = new Vector3(X, Y, Z);
             Center = new Vector3(X + GRIDSQUARELENGTH / 2, Y + GRIDSQUARELENGTH / 2, + Z + GRIDSQUARELENGTH / 2);
             ContainedObjects = new List<GameObject>();
-            ConnectedGridSquares = new List<GridSquare>();
+            ConnectedGridSquares = new List<GridCube>();
             Terrain = TerrainType.none;
         }
 

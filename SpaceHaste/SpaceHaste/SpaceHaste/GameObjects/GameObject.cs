@@ -25,7 +25,7 @@ namespace SpaceHaste.GameObjects
         public float Scale;
         public Model Model;             //Holds model info and effect information
         public Matrix World;            //Render position of model
-        GridSquare gridSquare;          //One square in our game grid
+        GridCube gridSquare;          //One square in our game grid
 
         //Constructor
         public GameObject()

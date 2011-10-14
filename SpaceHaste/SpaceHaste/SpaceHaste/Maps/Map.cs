@@ -10,7 +10,7 @@ namespace SpaceHaste.Maps
 {
     public class Map
     {
-        protected GridSquare[,,] MapGridSquares;
+        protected GridCube[,,] MapGridSquares;
         protected List<GameObject> MapObjects;
         protected int Size;
         public Map(int Size)
@@ -38,17 +38,17 @@ namespace SpaceHaste.Maps
 
         void InitMapGridSquares()
         {
-            float bounds = -GridSquare.GRIDSQUARELENGTH * Size / 2 + GridSquare.GRIDSQUARELENGTH/2;
+            float bounds = -GridCube.GRIDSQUARELENGTH * Size / 2 + GridCube.GRIDSQUARELENGTH/2;
 
-            MapGridSquares = new GridSquare[Size, Size, Size];
+            MapGridSquares = new GridCube[Size, Size, Size];
             for (int i = 0; i < Size; i++)
                 for (int j = 0; j < Size; j++)
                     for (int k = 0; k < Size; k++)
                     {
-                        MapGridSquares[i, j, k] = new GridSquare(i, j, k);
-                        MapGridSquares[i, j, k].Center = new Vector3(bounds + GridSquare.GRIDSQUARELENGTH * i, 
-                            bounds + GridSquare.GRIDSQUARELENGTH * j,
-                            bounds + GridSquare.GRIDSQUARELENGTH * k);
+                        MapGridSquares[i, j, k] = new GridCube(i, j, k);
+                        MapGridSquares[i, j, k].Center = new Vector3(bounds + GridCube.GRIDSQUARELENGTH * i, 
+                            bounds + GridCube.GRIDSQUARELENGTH * j,
+                            bounds + GridCube.GRIDSQUARELENGTH * k);
                     }
             ConnectGridSquares();
         }
@@ -61,7 +61,7 @@ namespace SpaceHaste.Maps
         /// <param name="gs"></param>
         /// <param name="range"></param>
         /// <returns></returns>
-        public List<GameObject> GetGameObjectsInRange(GridSquare gs, int range) 
+        public List<GameObject> GetGameObjectsInRange(GridCube gs, int range) 
         {
             List<GameObject> list = new List<GameObject>();
             for (int i = 0; i < MapObjects.Count; i++) {
@@ -94,17 +94,17 @@ namespace SpaceHaste.Maps
         /// <param name="gs">Grid square to start the search.</param>
         /// <param name="range">Distance of squares away to search.</param>
         /// <returns>List of valid grid squares in range.</returns>
-        public List<GridSquare> GetGridSquaresInRange(GridSquare gs, int range)
+        public List<GridCube> GetGridSquaresInRange(GridCube gs, int range)
         {
-            List<GridSquare> inRange = new List<GridSquare>();
+            List<GridCube> inRange = new List<GridCube>();
             if (range == 0) return inRange;
-            foreach (GridSquare neighbor in gs.ConnectedGridSquares)
+            foreach (GridCube neighbor in gs.ConnectedGridSquares)
             {
                 //Can't cross through asteroid
-                if(neighbor.getTerrain() == GridSquare.TerrainType.asteroid)
+                if(neighbor.getTerrain() == GridCube.TerrainType.asteroid)
                     continue;
                 //Movement penalty for nebulae
-                if(neighbor.getTerrain() == GridSquare.TerrainType.nebula)
+                if(neighbor.getTerrain() == GridCube.TerrainType.nebula)
                     inRange.AddRange(GetGridSquaresInRange(neighbor, range - 2));
                 //Otherwise, take normal movement
                 else
@@ -123,7 +123,7 @@ namespace SpaceHaste.Maps
         /// <param name="z"> Z coordinate to start the search.</param>
         /// <param name="range"> number of neighboring squares to search.</param>
         /// <returns>List of valid grid squares in range.</returns>
-        public List<GridSquare> GetGridSquaresInRange(int x, int y, int z, int range)
+        public List<GridCube> GetGridSquaresInRange(int x, int y, int z, int range)
         {
             return GetGridSquaresInRange(MapGridSquares[x,y,z], range);
         }
@@ -133,7 +133,7 @@ namespace SpaceHaste.Maps
         /// </summary>
         public void ConnectGridSquares()
         {
-            foreach (GridSquare gs in MapGridSquares)
+            foreach (GridCube gs in MapGridSquares)
             {
                 if (gs.X > 0)
                     gs.ConnectedGridSquares.Add(MapGridSquares[gs.X - 1, gs.Y, gs.Z]);
@@ -154,8 +154,8 @@ namespace SpaceHaste.Maps
         {
             for (int i = 0; i <= Size; i++)
             {
-               float x = ((Size / 2) - i) * GridSquare.GRIDSQUARELENGTH;
-                float y = Size / 2 * GridSquare.GRIDSQUARELENGTH;
+               float x = ((Size / 2) - i) * GridCube.GRIDSQUARELENGTH;
+                float y = Size / 2 * GridCube.GRIDSQUARELENGTH;
                 LineManager.AddLine(new Line(new Vector3(x, y , 0),
                                     new Vector3(x,-y,0)));
                 LineManager.AddLine(new Line(new Vector3(y, x, 0),
@@ -168,11 +168,11 @@ namespace SpaceHaste.Maps
         {
             for (int j = 0; j <= Size; j++)
             {
-                float z = ((Size / 2) - j) * GridSquare.GRIDSQUARELENGTH;
+                float z = ((Size / 2) - j) * GridCube.GRIDSQUARELENGTH;
                 for (int i = 0; i <= Size; i++)
                 {
-                    float x = ((Size / 2) - i) * GridSquare.GRIDSQUARELENGTH;
-                    float y = Size / 2 * GridSquare.GRIDSQUARELENGTH;
+                    float x = ((Size / 2) - i) * GridCube.GRIDSQUARELENGTH;
+                    float y = Size / 2 * GridCube.GRIDSQUARELENGTH;
                     LineManager.AddLine(new Line(new Vector3(x, y, z),
                                         new Vector3(x, -y, z)));
                     LineManager.AddLine(new Line(new Vector3(y, x, z),
@@ -184,7 +184,7 @@ namespace SpaceHaste.Maps
         }
         public void DrawLineTest()
         {
-            float y = Size / 2 * GridSquare.GRIDSQUARELENGTH;
+            float y = Size / 2 * GridCube.GRIDSQUARELENGTH;
             LineManager.AddLine(new Line(new Vector3(10, 10, 10),
                                 new Vector3(0, 0, 0)));
         }

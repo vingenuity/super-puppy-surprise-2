@@ -18,6 +18,8 @@ namespace SpaceHaste.GameObjects
         public Vector3 DrawPosition;
         public Vector3 Velocity;        //Might be abstracted into ship, Speed of ship movement to new square
         public Vector3 Direction;       //Unit Vector of the direction the ship is facing
+        public BoundingSphere boundingSphere;
+        public Boolean Passable;
         
         //Model/Render Info
         public float Scale;

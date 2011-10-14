@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SpaceHaste.Graphics;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceHaste.GameObjects
 {
@@ -15,16 +17,23 @@ namespace SpaceHaste.GameObjects
         double eRegen;                          //Amount energy regens per tern                       
         //shield shield;        **Need shield type
 
+        public Ship()
+            : this(100, 100, 1, 20, 10, new double[] {.5, .5, .5}, 50){ }
+
         public Ship(double maxHull,double maxEnergy, int numMissiles, double lsrDmg, double missDmg, double[] eff,double regen) {
             //Hull and energy only initialize max set health and energy to max
             hull[0] = hull[1] = maxHull;
+
             energy[0] = energy[1] = maxEnergy;
 
             numMiss = numMissiles;
 
             dmg[0] = lsrDmg;
             dmg[1] = missDmg;
-        
+
+            Model = GraphicsManager.Content.Load<Model>("Ship");
+            GraphicsManager.GraphicsGameObjects.Add(this);
+            Scale = .5f;
         }
 
         public void Laser() { 

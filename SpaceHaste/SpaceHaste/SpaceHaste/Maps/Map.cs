@@ -70,10 +70,19 @@ namespace SpaceHaste.Maps
                         (int)Math.Abs(MapObjects[i].GridPosition.Z - gs.Position.Z);
                 if (d > range)
                     continue;
-                Vector3 ray = MapObjects[i].GridPosition - gs.Position;
+                Vector3 rayDirection = MapObjects[i].GridPosition - gs.Position;
+           
+                Ray ray = new Ray(gs.Position, rayDirection);
+                float? distance = ray.Intersects(MapObjects[i].boundingSphere);
+                float? r = 0;
                 for (int j = 0; j < MapObjects.Count; j++) {
-
+                    if (MapObjects[j].Passable) continue; //ignore nebulae
+                    r = ray.Intersects(MapObjects[j].boundingSphere);
+                    if (r == null || r < 1 || r > distance) continue;
+                    else break; // 1 < r < d
                 }
+                if (!(r > 1 && r < distance) || r == null)
+                    list.Add(MapObjects[i]);
             }
             return new List<GameObject>();
         }

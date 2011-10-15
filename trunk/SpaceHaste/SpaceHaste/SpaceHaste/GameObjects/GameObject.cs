@@ -14,7 +14,7 @@ namespace SpaceHaste.GameObjects
     public class GameObject
     {
         //Our info for engine
-        public Vector3 GridPosition;        //Our notion of position within game grid
+        public Vector3 GridPosition;    //Our notion of position within game grid
         public Vector3 DrawPosition;
         public Vector3 Velocity;        //Might be abstracted into ship, Speed of ship movement to new square
         public Vector3 Direction;       //Unit Vector of the direction the ship is facing
@@ -25,7 +25,7 @@ namespace SpaceHaste.GameObjects
         public float Scale;
         public Model Model;             //Holds model info and effect information
         public Matrix World;            //Render position of model
-        GridCube gridSquare;          //One square in our game grid
+        GridCube gridSquare;            //One square in our game grid
 
         //Constructor
         public GameObject()

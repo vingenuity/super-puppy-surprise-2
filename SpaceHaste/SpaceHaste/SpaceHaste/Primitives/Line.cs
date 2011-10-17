@@ -23,6 +23,16 @@ namespace SpaceHaste.Primitives
             pointList[1] = new VertexPositionColor(
                         new Vector3(B.X, B.Y, B.Z), Color.DarkMagenta);
         }
+        public Line(Vector3 A, Vector3 B, Color C)
+        {
+            this.A = A;
+            this.B = B;
+            pointList = new VertexPositionColor[2];
+            pointList[0] = new VertexPositionColor(
+                        new Vector3(A.X, A.Y, A.Z), C);
+            pointList[1] = new VertexPositionColor(
+                        new Vector3(B.X, B.Y, B.Z), C);
+        }
         public void DrawLine(GraphicsDeviceManager graphics)
         {
 

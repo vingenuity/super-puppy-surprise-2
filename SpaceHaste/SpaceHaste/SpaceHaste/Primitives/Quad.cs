@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceHaste.Cameras;
+using SpaceHaste.Graphics;
 
 namespace SpaceHaste.Primitives
 {
-    public struct Quad
+    public class Quad
     {
         public Vector3 Origin;
         public Vector3 UpperLeft;
@@ -42,23 +44,22 @@ namespace SpaceHaste.Primitives
 
             FillVertices();
         }
-        protected override void LoadGraphicsContent( bool loadAllContent )
+        public void LoadContent( )
         {
-            if (loadAllContent)
-            {
+
                 // TODO: Load any ResourceManagementMode.Automatic content
-                texture = content.Load<Texture2D>( "Glass" );
-                quadEffect = new BasicEffect( graphics.GraphicsDevice, null );
+                texture = GraphicsManager.Content.Load<Texture2D>( "Glass" );
+                quadEffect = new BasicEffect(GraphicsManager.graphics.GraphicsDevice);
                 quadEffect.EnableDefaultLighting();
 
                 quadEffect.World = Matrix.Identity;
-                quadEffect.View = View;
-                quadEffect.Projection = Projection;
+                quadEffect.View = CameraManager.View;
+                quadEffect.Projection = CameraManager.Projection;
                 quadEffect.TextureEnabled = true;
                 quadEffect.Texture = texture;
-            } // TODO: Load any ResourceManagementMode.Manual content
-            quadVertexDecl = new VertexDeclaration(graphics.GraphicsDevice,
-                VertexPositionNormalTexture.VertexElements);
+             // TODO: Load any ResourceManagementMode.Manual content
+            //quadVertexDecl = new VertexDeclaration(graphics.GraphicsDevice,
+           //     VertexPositionNormalTexture.VertexElements);
         }
 
         private void FillVertices()
@@ -96,10 +97,11 @@ namespace SpaceHaste.Primitives
             Indices[4] = 1;
             Indices[5] = 3;
         }
-        protected override void Draw( GameTime gameTime ) 
+        public void Draw( GameTime gameTime ) 
         {
-            graphics.GraphicsDevice.Clear( Color.CornflowerBlue );
-            graphics.GraphicsDevice.VertexDeclaration = quadVertexDecl;
+            /*
+            GraphicsManager.graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsManager.graphics.GraphicsDevice.VertexDeclaration = quadVertexDecl;
             quadEffect.Begin();
             foreach (EffectPass pass in quadEffect.CurrentTechnique.Passes)
             {
@@ -110,7 +112,7 @@ namespace SpaceHaste.Primitives
 
                 pass.End();
             }
-            quadEffect.End();
+            quadEffect.End();*/
        }
     }
 }

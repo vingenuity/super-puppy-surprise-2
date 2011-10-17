@@ -20,8 +20,8 @@ namespace SpaceHaste.Primitives
 
         public override void Draw(GameTime gameTime)
         {
-            for (int i = 0; i < Quads.Count; i++)
-                Quads[i].DrawLine(graphics);
+            //for (int i = 0; i < Quads.Count; i++)
+                //Quads[i].DrawLine(graphics);
             base.Draw(gameTime);
         }
         public static void AddLine(Quad quad)

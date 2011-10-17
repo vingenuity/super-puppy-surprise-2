@@ -10,7 +10,13 @@ namespace SpaceHaste.Maps
 {
     public class Map
     {
-        protected GridCube[,,] MapGridSquares;
+        protected GridCube[, ,] MapGridSquares;
+        protected GridCube[, ,] BottomMap;
+        protected Color[] DepthRainbow = { new Color(0, 0, .11f), new Color(0, 0, .22f), 
+                                           new Color(0, 0, .33f), new Color(0, 0, .44f), 
+                                           new Color(0, 0, .55f), new Color(0, 0, .66f), 
+                                           new Color(0, 0, .77f), new Color(0, 0, .88f),
+                                           new Color(0, 0, .99f)};
         public List<GameObject> MapObjects;
         protected int Size;
         public Map(int Size)
@@ -46,10 +52,21 @@ namespace SpaceHaste.Maps
                     for (int k = 0; k < Size; k++)
                     {
                         MapGridSquares[i, j, k] = new GridCube(i, j, k);
-                        MapGridSquares[i, j, k].Center = new Vector3(bounds + GridCube.GRIDSQUARELENGTH * i, 
+                        MapGridSquares[i, j, k].Center = new Vector3(bounds + GridCube.GRIDSQUARELENGTH * i,
                             bounds + GridCube.GRIDSQUARELENGTH * j,
                             bounds + GridCube.GRIDSQUARELENGTH * k);
                     }
+
+            BottomMap = new GridCube[Size, 1, Size];
+            for (int i = 0; i < Size; i++)
+                for (int k = 0; k < Size; k++)
+                {
+                    int j = 0;
+                    BottomMap[i, j, k] = new GridCube(i, j, k);
+                    BottomMap[i, j, k].Center = new Vector3(bounds + GridCube.GRIDSQUARELENGTH * i,
+                        bounds + GridCube.GRIDSQUARELENGTH * j,
+                        bounds + GridCube.GRIDSQUARELENGTH * k);
+                }
             ConnectGridSquares();
         }
 
@@ -154,15 +171,44 @@ namespace SpaceHaste.Maps
         {
             for (int i = 0; i <= Size; i++)
             {
-               float x = ((Size / 2) - i) * GridCube.GRIDSQUARELENGTH;
+                float x = ((Size / 2) - i) * GridCube.GRIDSQUARELENGTH;
                 float y = Size / 2 * GridCube.GRIDSQUARELENGTH;
-                LineManager.AddLine(new Line(new Vector3(x, y , 0),
-                                    new Vector3(x,-y,0)));
-                LineManager.AddLine(new Line(new Vector3(y, x, 0),
-                                   new Vector3(-y, x, 0)));
+                float z = -1 * Size / 2 * GridCube.GRIDSQUARELENGTH;
+                LineManager.AddLine(new Line(new Vector3(x, y , z), new Vector3(x, -y, z), 
+                                    new Color((float) (Size - i) * .1f, 0, 0)));
+                LineManager.AddLine(new Line(new Vector3(y, x, z), new Vector3(-y, x, z),
+                                    new Color((float) (Size - i) * .1f, 0, 0)));
             }
                 
 
+        }
+        public void AddGrid0YZ()
+        {
+            for (int i = 0; i <= Size; i++)
+            {
+                float x = -1 * Size / 2 * GridCube.GRIDSQUARELENGTH;
+                float y = Size / 2 * GridCube.GRIDSQUARELENGTH;
+                float z = ((Size / 2) - i) * GridCube.GRIDSQUARELENGTH;
+                LineManager.AddLine(new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
+                                    new Color(0, (float)(Size - i) * .1f, 0)));
+                LineManager.AddLine(new Line(new Vector3(x, z, y), new Vector3(x, z, -y),
+                                    new Color(0, (float)(Size - i) * .1f, 0)));
+            }
+
+
+        }
+        public void AddGridX0Z() 
+        {
+            for (int i = 0; i <= Size; i++) 
+            {
+                float x = ((Size / 2) - i) * GridCube.GRIDSQUARELENGTH;
+                float z = Size / 2 * GridCube.GRIDSQUARELENGTH;
+                float y = -1 * (Size / 2) * GridCube.GRIDSQUARELENGTH;
+                LineManager.AddLine(new Line(new Vector3(x, y, z), new Vector3(x, y, -z), 
+                                    new Color(0, 0, (float) (Size - i) * .1f )));
+                LineManager.AddLine(new Line(new Vector3(z, y, x), new Vector3(-z, y, x),
+                                    new Color(0, 0, (float) (Size - i) * .1f)));
+            }
         }
         public void AddGridXYZ()
         {

@@ -19,7 +19,10 @@ namespace SpaceHaste.Maps
             this.addGameObject(new Ship(), new Vector3(4, 4, 4));
             this.addGameObject(new Ship(), new Vector3(2, 2, 4));
             this.addGameObject(new Ship(), new Vector3(3, 3, 3));
-            AddGridXYZ();
+            //AddGridXYZ();
+            AddGridXY0();
+            AddGrid0YZ();
+            AddGridX0Z();
         }
     }
 }

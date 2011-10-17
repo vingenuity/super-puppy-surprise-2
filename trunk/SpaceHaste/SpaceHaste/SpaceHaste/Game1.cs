@@ -13,6 +13,8 @@ using SpaceHaste.Cameras;
 using SpaceHaste.Grids;
 using SpaceHaste.Primitives;
 using SpaceHaste.Maps;
+using SpaceHaste.Huds;
+using SpaceHaste.GameMech;
 
 namespace SpaceHaste
 {
@@ -60,6 +62,12 @@ namespace SpaceHaste
             GraphicsManager GraphicsManager = new GraphicsManager(this, graphics);
             Components.Add(GraphicsManager);
 
+            GameMechanicsManager GameMechanicsManager = new GameMechanicsManager(this);
+            Components.Add(GameMechanicsManager);
+
+            Hud HudManager = new Hud(this, graphics);
+            Components.Add(HudManager);
+
             CameraManager CameraManager = new CameraManager(this, graphics);
             Components.Add(CameraManager);
 
@@ -71,6 +79,8 @@ namespace SpaceHaste
 
             MapManager MapManager = new MapManager(this);
             Components.Add(MapManager);
+
+           
 
             base.Initialize();
         }

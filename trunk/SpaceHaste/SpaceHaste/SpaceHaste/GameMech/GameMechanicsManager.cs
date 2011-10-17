@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SpaceHaste.GameObjects;
+using Microsoft.Xna.Framework;
 
 namespace SpaceHaste.GameMech
 {
-    public class GameMechanicsManager
+    public class GameMechanicsManager : GameComponent
     {
-        public List<GameObject> MoveableSceneGameObjectList;
-        public GameMechanicsManager()
+        public static List<GameObject> MoveableSceneGameObjectList;
+        public GameMechanicsManager(Game g): base(g)
         {
             MoveableSceneGameObjectList = new List<GameObject>();
         }

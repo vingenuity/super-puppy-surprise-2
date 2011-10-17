@@ -11,10 +11,13 @@ namespace SpaceHaste.Graphics
     {
         List<Vector3> StarPoints;       //Holds star positions  StarPoints = new List<Vector
 
+        //Constructor
         public starz() {
             StarPoints = new List<Vector3>();
 
         }
+
+        //Where the literal star positions from maya will be input
         public void AddStars()
         {
             //StarPoints.Add(new Vector3(4,4,4));

@@ -24,17 +24,18 @@ namespace SpaceHaste.GameObjects
         public Boolean Passable;
         public int Team;
         public double NeededEnergy;
+        public GridCube location;
 
         //Model/Render Info
         public float Scale;
         public Model Model;             //Holds model info and effect information
         public Matrix World;            //Render position of model
-        GridCube gridSquare;            //One square in our game grid
 
         //Constructor
-        public GameObject()
+        public GameObject(Vector3 location)
         {
             Load();
+            GridPosition = location;
         }
         public virtual void Load()
         {

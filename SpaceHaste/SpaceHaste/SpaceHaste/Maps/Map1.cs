@@ -16,9 +16,9 @@ namespace SpaceHaste.Maps
         }
         protected override void InitMapGameObjects()
         {
-            this.addGameObject(new Ship(), new Vector3(4, 4, 4));
-            this.addGameObject(new Ship(), new Vector3(2, 2, 4));
-            this.addGameObject(new Ship(), new Vector3(3, 3, 3));
+            this.addGameObject(new Ship(new Vector3(4, 4, 4)), new Vector3(4, 4, 4));
+            this.addGameObject(new Ship(new Vector3(2, 2, 4)), new Vector3(2, 2, 4));
+            this.addGameObject(new Ship(new Vector3(3, 3, 3)), new Vector3(3, 3, 3));
             //AddGridXYZ();
             AddGridXY0();
             AddGrid0YZ();

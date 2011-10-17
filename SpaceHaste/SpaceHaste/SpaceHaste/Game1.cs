@@ -119,6 +119,7 @@ namespace SpaceHaste
 
             // TODO: Add your update logic here
             MapManager.Map.GetGridSquaresInRange(1,1,1,1);
+            MapManager.Map.UpdateMap(gameTime);
 
             base.Update(gameTime);
         }

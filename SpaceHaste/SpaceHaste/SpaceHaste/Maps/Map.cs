@@ -11,7 +11,7 @@ namespace SpaceHaste.Maps
     public class Map
     {
         protected GridCube[,,] MapGridSquares;
-        protected List<GameObject> MapObjects;
+        public List<GameObject> MapObjects;
         protected int Size;
         public Map(int Size)
         {

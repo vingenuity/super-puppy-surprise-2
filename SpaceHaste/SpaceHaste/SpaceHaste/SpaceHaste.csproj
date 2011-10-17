@@ -116,6 +116,7 @@
     <Compile Include="Cameras\CameraSideView.cs" />
     <Compile Include="Cameras\CameraTopView.cs" />
     <Compile Include="Cameras\CameraViewModel.cs" />
+    <Compile Include="GameMech\GameMechanicsManager.cs" />
     <Compile Include="GameObjects\Shields.cs" />
     <Compile Include="GameObjects\Ship.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
@@ -170,7 +171,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Manager\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

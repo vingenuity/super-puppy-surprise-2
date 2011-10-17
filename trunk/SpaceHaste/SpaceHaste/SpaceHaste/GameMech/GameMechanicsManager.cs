@@ -14,7 +14,7 @@ namespace SpaceHaste.GameMech
             MoveableSceneGameObjectList = new List<GameObject>();
         }
 
-        public GameObject NextShipToMove()
+        GameObject NextShipToMove()
         {
             GameObject go = null;
             if (MoveableSceneGameObjectList.Count > 0)
@@ -27,8 +27,24 @@ namespace SpaceHaste.GameMech
             return go;
         }
 
-        public void asdf()
+        void RecoverEnergyToNextShip()
         {
+            GameObject nextShipToMove = NextShipToMove();
+            double energyToRecover = nextShipToMove.NeededEnergy;
+            for (int i = 0; i < MoveableSceneGameObjectList.Count; i++)
+            {
+                MoveableSceneGameObjectList[i].NeededEnergy -= energyToRecover;           
+            }
+            if (nextShipToMove.Team == 0)
+                PlayerControlShip();
+            else
+                ComputerControlShip();
+        }
+        void PlayerControlShip()
+        {
+        }
+        void ComputerControlShip()
+        { 
         }
     }
 }

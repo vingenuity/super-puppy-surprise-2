@@ -20,7 +20,7 @@ namespace SpaceHaste.GameObjects
         public Vector3 Direction;       //Unit Vector of the direction the ship is facing
         public BoundingSphere boundingSphere;
         public Boolean Passable;
-
+        public int Team;
         public double NeededEnergy;
 
         //Model/Render Info

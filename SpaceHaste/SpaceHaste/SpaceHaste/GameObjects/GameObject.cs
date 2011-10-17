@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceHaste.Maps;
+using SpaceHaste.GameMech;
+using SpaceHaste.Graphics;
 //------------------------------------------------------
 //Game object holds the model information for all assets in game ie: Ships, Environmental Obstacles, Visual Assets
 //Most game objects take up space in the grid with the exception of Visual assets ie: The Sun, extra stuff
@@ -31,6 +33,15 @@ namespace SpaceHaste.GameObjects
 
         //Constructor
         public GameObject()
+        {
+            Load();
+        }
+        public virtual void Load()
+        {
+            GraphicsManager.GraphicsGameObjects.Add(this);
+            GameMechanicsManager.MoveableSceneGameObjectList.Add(this);
+        }
+        public virtual void Unload()
         {
         }
     }

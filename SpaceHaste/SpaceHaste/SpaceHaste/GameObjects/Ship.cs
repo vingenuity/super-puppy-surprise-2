@@ -40,12 +40,17 @@ namespace SpaceHaste.GameObjects
             dmg[0] = lsrDmg;
             dmg[1] = missDmg;
 
-            //Set up our rendering options.
-            Model = GraphicsManager.Content.Load<Model>("Ship");
-            GraphicsManager.GraphicsGameObjects.Add(this);
-            Scale = .25f;
+            
         }
 
+        public override void Load()
+        {
+            //Set up our rendering options.
+            Model = GraphicsManager.Content.Load<Model>("Ship");
+            
+            Scale = .25f;
+            base.Load();
+        }
         public void fireLaser(Ship ship)
         {
             ship.isHit(dmg[0]);

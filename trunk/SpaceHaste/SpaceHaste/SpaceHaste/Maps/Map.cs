@@ -12,11 +12,6 @@ namespace SpaceHaste.Maps
     {
         protected GridCube[, ,] MapGridSquares;
         protected GridCube[, ,] BottomMap;
-        protected Color[] DepthRainbow = { new Color(0, 0, .11f), new Color(0, 0, .22f), 
-                                           new Color(0, 0, .33f), new Color(0, 0, .44f), 
-                                           new Color(0, 0, .55f), new Color(0, 0, .66f), 
-                                           new Color(0, 0, .77f), new Color(0, 0, .88f),
-                                           new Color(0, 0, .99f)};
         public List<GameObject> MapObjects;
         protected int Size;
         public Map(int Size)
@@ -34,6 +29,13 @@ namespace SpaceHaste.Maps
             go.GridPosition = position;
             go.DrawPosition = MapGridSquares[(int)position.X, (int)position.Y, (int)position.Z].Center;
             MapObjects.Add(go);
+        }
+
+        public void colorGrids() 
+        {
+            foreach (GameObject go in MapObjects)
+            {
+            }
         }
 
         public int getGridSize() { return Size; }

@@ -5,15 +5,17 @@ using System.Text;
 using SpaceHaste.GameObjects;
 using SpaceHaste.Primitives;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace SpaceHaste.Maps
 {
     public class Map
     {
-        protected GridCube[, ,] MapGridSquares;
+        protected static GridCube[, ,] MapGridSquares;
         protected GridCube[, ,] BottomMap;
         public List<GameObject> MapObjects;
         protected int Size;
+        private KeyboardState kState;
         public Map(int Size)
         {
             this.Size = Size;
@@ -70,6 +72,11 @@ namespace SpaceHaste.Maps
                         bounds + GridCube.GRIDSQUARELENGTH * k);
                 }
             ConnectGridSquares();
+        }
+
+        public List<GameObject> GetGameObjectsInRange(int x, int y, int z, int range)
+        {
+            return GetGameObjectsInRange(MapGridSquares[x, y, z], range);
         }
 
         /// <summary>
@@ -168,7 +175,7 @@ namespace SpaceHaste.Maps
                     gs.ConnectedGridSquares.Add(MapGridSquares[gs.X, gs.Y, gs.Z + 1]);
             }
         }
-        //here!
+
         public void AddGridXY0()
         {
             for (int i = 0; i <= Size; i++)
@@ -230,6 +237,9 @@ namespace SpaceHaste.Maps
             }
 
         }
+
+        public GridCube GetCubeAt(Vector3 loc) { return MapGridSquares[(int)loc.X, (int)loc.Y, (int)loc.Z]; }
+
         public void DrawLineTest()
         {
             float y = Size / 2 * GridCube.GRIDSQUARELENGTH;
@@ -238,8 +248,28 @@ namespace SpaceHaste.Maps
         }
         public void AddGameObjectToGridSquare(GameObject gameObject, int x, int y, int z)
         {
-            //MapGameObjects[x, y, z] = gameObject;
+            gameObject.location = MapGridSquares[x, y, z];
             gameObject.GridPosition = MapGridSquares[x, y, z].Center;
+        }
+        public static void MoveObject(GameObject obj, int x, int y, int z)
+        {
+            obj.location.RemoveObject(obj);
+            obj.location = MapGridSquares[x, y, z];
+            obj.location.AddObject(obj);
+        }
+        public void UpdateMap(GameTime gametime)
+        {
+            List<GameObject> objs = this.GetGameObjectsInRange(0, 0, 0, 16);
+            if (kState.IsKeyDown(Keys.M))
+            {
+                for (int i = 0; i < objs.Count(); i++)
+                {
+                    if (objs[i] is Ship)
+                    {
+                        Ship s = (Ship)objs[i];
+                    }
+                }
+            }
         }
     }
 }

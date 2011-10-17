@@ -3,29 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SpaceHaste.Graphics;
+using SpaceHaste.Maps;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceHaste.GameObjects
 {
     public class Ship : GameObject
     {
+
         //Health
         int[] hull = new int[2];          //health  -- 0 = current, 1 = max
         int[] shield = new int[2];        //shields -- 0 = current, 1 = max
 
         //Energy
         int[] energy = new int[2];        //energy  -- 0 = current, 1 = max
-        int enRegen = 20;                    //Amount energy regenerates per turn 
         double[] efficiency = new double[3];    //contains [moveEff,laserEff,shieldsEff] efficiencies track energy usage for specified action                        
 
         //Weapons
         int[] dmg = new int[2];           //Damage done by weapons 0 = Laser, 1 = Missile
         int numMiss;                            //Number of missiles ship has left              
 
-        public Ship()
-            : this(100, 100, 100, 1, 20, 10, new double[] {.5, .5, .5}){ }
+        public Ship(Vector3 location)
+            : this(location, 100, 100, 100, 1, 20, 10, new double[] {.5, .5, .5})
+        {
+        }
 
-        public Ship(int maxHull, int maxShield, int maxEnergy, int numMissiles, int lsrDmg, int missDmg, double[] eff) 
+        public Ship(Vector3 location, int maxHull, int maxShield, int maxEnergy, int numMissiles, int lsrDmg, int missDmg, double[] eff) 
+            : base(location)
         {
             //Fill hull and shields to max.
             hull[0] = hull[1] = maxHull;
@@ -53,6 +58,7 @@ namespace SpaceHaste.GameObjects
         }
         public void fireLaser(Ship ship)
         {
+            ship.energy[0] -= 40;
             ship.isHit(dmg[0]);
         }
 
@@ -86,6 +92,8 @@ namespace SpaceHaste.GameObjects
             else
                 Unload();
         }
+
+        public void Generate(int amount_energy) { energy[0] += amount_energy; }
 
         public void Unload()
         {

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SpaceHaste.GameObjects;
+using SpaceHaste.Maps;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace SpaceHaste.GameMech
 {
     public class GameMechanicsManager : GameComponent
     {
+        private KeyboardState kState;
         public static List<GameObject> MoveableSceneGameObjectList;
         public GameMechanicsManager(Game g): base(g)
         {
@@ -20,7 +23,7 @@ namespace SpaceHaste.GameMech
             GameObject go = null;
             if (MoveableSceneGameObjectList.Count > 0)
                 go = MoveableSceneGameObjectList[0];
-            for (int i = 0; i < MoveableSceneGameObjectList.Count; i++ )
+            for (int i = 0; i < MoveableSceneGameObjectList.Count; i++)
             {
                 if (go.NeededEnergy > MoveableSceneGameObjectList[i].NeededEnergy)
                     go = MoveableSceneGameObjectList[i];
@@ -37,14 +40,17 @@ namespace SpaceHaste.GameMech
                 MoveableSceneGameObjectList[i].NeededEnergy -= energyToRecover;           
             }
             if (nextShipToMove.Team == 0)
-                PlayerControlShip();
+                PlayerTurn();
             else
-                ComputerControlShip();
+                ComputerTurn();
         }
-        void PlayerControlShip()
+        void PlayerTurn()
         {
+            if (kState.IsKeyDown(Keys.M))
+            {
+            }
         }
-        void ComputerControlShip()
+        void ComputerTurn()
         { 
         }
     }

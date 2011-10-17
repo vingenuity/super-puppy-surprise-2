@@ -11,11 +11,14 @@ namespace SpaceHaste.Maps
 {
     public class Map
     {
-        protected static GridCube[, ,] MapGridSquares;
+        protected GridCube[, ,] MapGridSquares;
         protected GridCube[, ,] BottomMap;
         public List<GameObject> MapObjects;
         protected int Size;
         private KeyboardState kState;
+
+        public static Map map;
+
         public Map(int Size)
         {
             this.Size = Size;
@@ -23,7 +26,7 @@ namespace SpaceHaste.Maps
 
             InitMapGridSquares();
             InitMapGameObjects();
-   
+            map = this;
         }
 
         public void addGameObject(GameObject go, Vector3 position) {
@@ -251,12 +254,14 @@ namespace SpaceHaste.Maps
             gameObject.location = MapGridSquares[x, y, z];
             gameObject.GridPosition = MapGridSquares[x, y, z].Center;
         }
-        public static void MoveObject(GameObject obj, int x, int y, int z)
+
+        public void MoveObject(GameObject obj, int x, int y, int z)
         {
             obj.location.RemoveObject(obj);
             obj.location = MapGridSquares[x, y, z];
             obj.location.AddObject(obj);
         }
+
         public void UpdateMap(GameTime gametime)
         {
             List<GameObject> objs = this.GetGameObjectsInRange(0, 0, 0, 16);

@@ -27,6 +27,7 @@ namespace SpaceHaste.GameObjects
         public Ship(Vector3 location)
             : this(location, 100, 100, 100, 1, 20, 10, new double[] {.5, .5, .5})
         {
+    
         }
 
         public Ship(Vector3 location, int maxHull, int maxShield, int maxEnergy, int numMissiles, int lsrDmg, int missDmg, double[] eff) 

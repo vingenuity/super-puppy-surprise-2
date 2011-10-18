@@ -127,7 +127,6 @@ namespace SpaceHaste.GameMech
                 if (r <= CurrentGameObjectSelected.MovementRange)
                 {
                     Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
-
                 }
             }
             lastKState = kState;

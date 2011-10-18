@@ -33,17 +33,16 @@ namespace SpaceHaste.Maps
             MapGridSquares[(int)position.X, (int)position.Y, (int)position.Z].AddObject(go);
             go.GridPosition = position;
             go.DrawPosition = MapGridSquares[(int)position.X, (int)position.Y, (int)position.Z].Center;
+            go.location = MapGridSquares[(int)position.X, (int)position.Y, (int)position.Z];
             MapObjects.Add(go);
         }
 
-        public void colorGrids() 
+        public void colorGrids()
         {
             foreach (GameObject go in MapObjects)
             {
             }
         }
-
-        public int getGridSize() { return Size; }
 
         protected virtual void InitMapGameObjects()
         {
@@ -260,6 +259,7 @@ namespace SpaceHaste.Maps
             obj.location.RemoveObject(obj);
             obj.location = MapGridSquares[x, y, z];
             obj.location.AddObject(obj);
+            addGameObject(obj, new Vector3(x, y, z));
         }
 
         public void UpdateMap(GameTime gametime)

@@ -26,6 +26,8 @@ namespace SpaceHaste.GameObjects
         public double NeededEnergy;
         public GridCube location;
 
+        public float MovementRange;
+
         //Model/Render Info
         public float Scale;
         public Model Model;             //Holds model info and effect information
@@ -34,8 +36,10 @@ namespace SpaceHaste.GameObjects
         //Constructor
         public GameObject(Vector3 location)
         {
+            NeededEnergy = 4;
             Load();
             GridPosition = location;
+            MovementRange = 4;
         }
         public virtual void Load()
         {

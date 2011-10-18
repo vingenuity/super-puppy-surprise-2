@@ -14,7 +14,7 @@ namespace SpaceHaste.Maps
         protected GridCube[, ,] MapGridSquares;
         protected GridCube[, ,] BottomMap;
         public List<GameObject> MapObjects;
-        protected int Size;
+        public int Size;
         private KeyboardState kState;
 
         public static Map map;

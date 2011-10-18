@@ -6,6 +6,7 @@ using SpaceHaste.GameObjects;
 using SpaceHaste.Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using SpaceHaste.Primitives;
 
 namespace SpaceHaste.GameMech
 {
@@ -71,6 +72,28 @@ namespace SpaceHaste.GameMech
         void PlayerTurn(GameTime gameTime)
         {
             kState = Keyboard.GetState();
+            UpdateGridSquareSelection();
+            MoveToSelectedGridSquare();
+            lastKState = kState;
+        }
+        Line YShipLine;
+        Line YSelectedSquareLine;
+        private void MoveToSelectedGridSquare()
+        {
+            if (kState.IsKeyDown(Keys.Enter) && lastKState.IsKeyUp(Keys.Enter))
+            {
+                Vector3 pos = (CurrentGridCubeSelected - CurrentGameObjectSelected.GridPosition);
+                float r = pos.X + pos.Y + pos.Z;
+                if (r <= CurrentGameObjectSelected.MovementRange)
+                {
+                    Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
+                }
+            }
+        }
+
+        private void UpdateGridSquareSelection()
+        {
+            
             if (kState.IsKeyDown(Keys.I) && lastKState.IsKeyUp(Keys.I))
             {
                 CurrentGridCubeSelected.X++;
@@ -119,17 +142,17 @@ namespace SpaceHaste.GameMech
                     CurrentGridCubeSelected.Y = 0;
                 }
             }
-
-            if (kState.IsKeyDown(Keys.Enter) && lastKState.IsKeyUp(Keys.Enter))
+            if(YSelectedSquareLine != null)
             {
-                Vector3 pos = (CurrentGridCubeSelected - CurrentGameObjectSelected.GridPosition);
-                float r = pos.X + pos.Y + pos.Z;
-                if (r <= CurrentGameObjectSelected.MovementRange)
-                {
-                    Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
-                }
+                LineManager.RemoveLine(YSelectedSquareLine);
             }
-            lastKState = kState;
+            Vector3 botCube = CurrentGridCubeSelected;
+            botCube.Y = 0;
+            botCube = Map.map.GetCubeAt(botCube).Center;
+            botCube.Y -= +400;
+            YSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
+            LineManager.AddLine(YSelectedSquareLine);
+               
         }
         void ComputerTurn()
         { 

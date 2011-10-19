@@ -118,12 +118,12 @@ namespace SpaceHaste.Primitives
             foreach (EffectPass pass in quadEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                /*
-                GraphicsDevice.DrawUserIndexedPrimitives
+                
+                GraphicsManager.graphics.GraphicsDevice.DrawUserIndexedPrimitives
                     <VertexPositionNormalTexture>(
                     PrimitiveType.TriangleList,
                     Vertices, 0, 4,
-                    Indexes, 0, 2);*/
+                    Indexes, 0, 2);
             }
         }
     }

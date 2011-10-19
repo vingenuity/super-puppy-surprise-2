@@ -26,7 +26,7 @@ namespace SpaceHaste.GameObjects
         public double NeededEnergy;
         public GridCube location;
 
-        public float MovementRange;
+        public int MovementRange;
 
         //Model/Render Info
         public float Scale;

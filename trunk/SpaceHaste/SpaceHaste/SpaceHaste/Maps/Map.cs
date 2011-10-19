@@ -76,9 +76,9 @@ namespace SpaceHaste.Maps
             ConnectGridSquares();
         }
 
-        public List<GameObject> GetGameObjectsInRange(int x, int y, int z, int range)
+        public List<GameObject> GetGameObjectsInRange(Vector3 loc, int range)
         {
-            return GetGameObjectsInRange(MapGridSquares[x, y, z], range);
+            return GetGameObjectsInRange(MapGridSquares[(int)loc.X, (int)loc.Y, (int)loc.Z], range);
         }
 
         /// <summary>
@@ -125,18 +125,23 @@ namespace SpaceHaste.Maps
         public List<GridCube> GetGridSquaresInRange(GridCube gs, int range)
         {
             List<GridCube> inRange = new List<GridCube>();
-            if (range == 0) return inRange;
+            if (range <= 0) return inRange;
             foreach (GridCube neighbor in gs.ConnectedGridSquares)
             {
+                //Can't be in same square as another ship
+                if (neighbor.HasObject())
+                    continue;
                 //Can't cross through asteroid
                 if(neighbor.getTerrain() == GridCube.TerrainType.asteroid)
                     continue;
                 //Movement penalty for nebulae
                 if(neighbor.getTerrain() == GridCube.TerrainType.nebula)
-                    inRange.AddRange(GetGridSquaresInRange(neighbor, range - 2));
+                    range -= 2;
                 //Otherwise, take normal movement
                 else
-                    inRange.AddRange(GetGridSquaresInRange(neighbor, range - 1));
+                    range -= 1;
+                inRange.Add(neighbor);
+                inRange.AddRange(GetGridSquaresInRange(neighbor, range));
             }
             inRange = inRange.Distinct().ToList();
             return inRange;
@@ -146,14 +151,12 @@ namespace SpaceHaste.Maps
         /// Finds the number of grid squares in range of a grid square x, y, z.
         /// This extends the functinoality of the above function for more general use.
         /// </summary>
-        /// <param name="x"> X coordinate to start the search.</param>
-        /// <param name="y"> Y coordinate to start the search.</param>
-        /// <param name="z"> Z coordinate to start the search.</param>
+        /// <param name="loc"> location to start the search.</param>
         /// <param name="range"> number of neighboring squares to search.</param>
         /// <returns>List of valid grid squares in range.</returns>
-        public List<GridCube> GetGridSquaresInRange(int x, int y, int z, int range)
+        public List<GridCube> GetGridSquaresInRange(Vector3 loc, int range)
         {
-            return GetGridSquaresInRange(MapGridSquares[x,y,z], range);
+            return GetGridSquaresInRange(MapGridSquares[(int)loc.X, (int)loc.Y, (int)loc.Z], range);
         }
 
         /// <summary>
@@ -260,21 +263,6 @@ namespace SpaceHaste.Maps
             obj.location = MapGridSquares[x, y, z];
             obj.location.AddObject(obj);
             addGameObject(obj, new Vector3(x, y, z));
-        }
-
-        public void UpdateMap(GameTime gametime)
-        {
-            List<GameObject> objs = this.GetGameObjectsInRange(0, 0, 0, 16);
-            if (kState.IsKeyDown(Keys.M))
-            {
-                for (int i = 0; i < objs.Count(); i++)
-                {
-                    if (objs[i] is Ship)
-                    {
-                        Ship s = (Ship)objs[i];
-                    }
-                }
-            }
         }
     }
 }

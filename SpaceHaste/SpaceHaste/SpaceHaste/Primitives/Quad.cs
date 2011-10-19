@@ -21,15 +21,15 @@ namespace SpaceHaste.Primitives
         public Vector3 Left;
 
         public VertexPositionNormalTexture[] Vertices;
-        public int[] Indices;
+        //        public int[] Indexes;
+        public short[] Indexes;
 
-        BasicEffect quadEffect;
-        Texture2D texture;
 
-        public Quad(Vector3 origin, Vector3 normal, Vector3 up, float width, float height)
+        public Quad(Vector3 origin, Vector3 normal, Vector3 up,
+            float width, float height)
         {
             Vertices = new VertexPositionNormalTexture[4];
-            Indices = new int[6];
+            Indexes = new short[6];
             Origin = origin;
             Normal = normal;
             Up = up;
@@ -43,23 +43,8 @@ namespace SpaceHaste.Primitives
             LowerRight = UpperRight - (Up * height);
 
             FillVertices();
-        }
-        public void LoadContent( )
-        {
 
-                // TODO: Load any ResourceManagementMode.Automatic content
-                texture = GraphicsManager.Content.Load<Texture2D>( "Glass" );
-                quadEffect = new BasicEffect(GraphicsManager.graphics.GraphicsDevice);
-                quadEffect.EnableDefaultLighting();
-
-                quadEffect.World = Matrix.Identity;
-                quadEffect.View = CameraManager.View;
-                quadEffect.Projection = CameraManager.Projection;
-                quadEffect.TextureEnabled = true;
-                quadEffect.Texture = texture;
-             // TODO: Load any ResourceManagementMode.Manual content
-            //quadVertexDecl = new VertexDeclaration(graphics.GraphicsDevice,
-           //     VertexPositionNormalTexture.VertexElements);
+            LoadContent();
         }
 
         private void FillVertices()
@@ -90,29 +75,56 @@ namespace SpaceHaste.Primitives
 
             // Set the index buffer for each vertex, using
             // clockwise winding
-            Indices[0] = 0;
-            Indices[1] = 1;
-            Indices[2] = 2;
-            Indices[3] = 2;
-            Indices[4] = 1;
-            Indices[5] = 3;
+            Indexes[0] = 0;
+            Indexes[1] = 1;
+            Indexes[2] = 2;
+            Indexes[3] = 2;
+            Indexes[4] = 1;
+            Indexes[5] = 3;
         }
-        public void Draw( GameTime gameTime ) 
+        SpriteBatch spriteBatch;
+        Texture2D texture;
+        BasicEffect quadEffect;
+        VertexDeclaration vertexDeclaration;
+        void LoadContent()
         {
-            /*
-            GraphicsManager.graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
-            GraphicsManager.graphics.GraphicsDevice.VertexDeclaration = quadVertexDecl;
-            quadEffect.Begin();
+            // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsManager.graphics.GraphicsDevice);
+            texture = GraphicsManager.Content.Load<Texture2D>("Glass");
+            quadEffect = new BasicEffect(GraphicsManager.graphics.GraphicsDevice);
+            quadEffect.EnableDefaultLighting();
+
+            quadEffect.World = Matrix.Identity;
+            quadEffect.View = CameraManager.View;
+            quadEffect.Projection = CameraManager.Projection;
+            quadEffect.TextureEnabled = true;
+            quadEffect.Texture = texture;
+
+            vertexDeclaration = new VertexDeclaration(new VertexElement[]
+                {
+                    new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
+                    new VertexElement(12, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0),
+                    new VertexElement(24, VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0)
+                }
+            );
+        }
+
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        public void Draw(GameTime gameTime)
+        {
             foreach (EffectPass pass in quadEffect.CurrentTechnique.Passes)
             {
-                pass.Begin();
-
-                graphics.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
-                PrimitiveType.TriangleList, quad.Vertices, 0, 4, quad.Indices, 0, 2 );
-
-                pass.End();
+                pass.Apply();
+                /*
+                GraphicsDevice.DrawUserIndexedPrimitives
+                    <VertexPositionNormalTexture>(
+                    PrimitiveType.TriangleList,
+                    Vertices, 0, 4,
+                    Indexes, 0, 2);*/
             }
-            quadEffect.End();*/
-       }
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace SpaceHaste.Huds
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
+            spriteFont = Hud.Content.Load<SpriteFont>("hudFont");
             DrawUnitLists.Load();
         }
         public override void Update(GameTime gameTime)
@@ -37,7 +38,7 @@ namespace SpaceHaste.Huds
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
-                DrawUnitLists.Draw(gameTime,spriteBatch);
+                DrawUnitLists.Draw(gameTime,spriteBatch, spriteFont);
             spriteBatch.End();
         }
     }

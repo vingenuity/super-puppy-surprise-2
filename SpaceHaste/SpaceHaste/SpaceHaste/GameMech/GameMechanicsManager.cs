@@ -82,9 +82,8 @@ namespace SpaceHaste.GameMech
         {
             if (kState.IsKeyDown(Keys.Enter) && lastKState.IsKeyUp(Keys.Enter))
             {
-                Vector3 pos = (CurrentGridCubeSelected - CurrentGameObjectSelected.GridPosition);
-                float r = pos.X + pos.Y + pos.Z;
-                if (r <= CurrentGameObjectSelected.MovementRange)
+                List<GridCube> InRange = Map.map.GetGridSquaresInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
+                if (InRange.Find(item => item == Map.map.GetCubeAt(CurrentGridCubeSelected)) != null)
                 {
                     Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
                 }

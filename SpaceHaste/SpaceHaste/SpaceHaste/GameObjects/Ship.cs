@@ -96,7 +96,7 @@ namespace SpaceHaste.GameObjects
 
         public void Generate(int amount_energy) { energy[0] += amount_energy; }
 
-        public void Unload()
+        public override void Unload()
         {
         }
     }

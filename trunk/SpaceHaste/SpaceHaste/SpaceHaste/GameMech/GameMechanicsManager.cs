@@ -85,10 +85,11 @@ namespace SpaceHaste.GameMech
                 List<GridCube> InRange = Map.map.GetGridSquaresInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
                 if (InRange.Find(item => item == Map.map.GetCubeAt(CurrentGridCubeSelected)) != null)
                 {
-                    Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
                     Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;
+                    Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
                     float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
                     CurrentGameObjectSelected.NeededEnergy += DistanceMoved * CurrentGameObjectSelected.MovementEnergy;
+                    RecoverEnergyToNextShip();
                 }
             }
         }

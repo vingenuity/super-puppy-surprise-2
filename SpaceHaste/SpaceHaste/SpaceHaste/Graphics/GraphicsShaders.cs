@@ -207,7 +207,7 @@ namespace SpaceHaste.Graphics
             else
                 device.SetRenderTarget(null);
 
-            device.Clear(Color.CornflowerBlue);
+            device.Clear(Color.Black);
 
             // Draw the model, using either the cartoon or lambert shading technique.
             string effectTechniqueName;

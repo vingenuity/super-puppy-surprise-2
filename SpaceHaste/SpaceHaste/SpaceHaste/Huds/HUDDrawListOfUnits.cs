@@ -21,18 +21,20 @@ namespace SpaceHaste.Huds
         {
             texture1 = Hud.Content.Load<Texture2D>("SketchTexture");
         }
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont spriteFont)
         {
             for (int i = 0; i < GameMechanicsManager.MoveableSceneGameObjectList.Count; i++)
-                DrawUnitInformation(GameMechanicsManager.MoveableSceneGameObjectList[i], spriteBatch, i, GraphicsManager.graphics.PreferredBackBufferWidth, GraphicsManager.graphics.PreferredBackBufferHeight);
+                DrawUnitInformation(GameMechanicsManager.MoveableSceneGameObjectList[i], spriteBatch, spriteFont, i, GraphicsManager.graphics.PreferredBackBufferWidth, GraphicsManager.graphics.PreferredBackBufferHeight);
         }
 
-        private void DrawUnitInformation(GameObject unit, SpriteBatch spriteBatch,int num, float ScreenWidth, float ScreenHeight)
+        private void DrawUnitInformation(GameObject unit, SpriteBatch spriteBatch, SpriteFont spriteFont, int num, float ScreenWidth, float ScreenHeight)
         {
-            float Width = ScreenWidth / 10;
-            float Height = ScreenHeight / 30;
+            float Width = ScreenWidth / 5;
+            float Height = ScreenHeight / 30 * 2;
             //float multiply = ScreenHeight /30/50
-            spriteBatch.Draw(texture1, new Rectangle(0, num * 50, (int)Width, (int) Height), Color.White);
+            spriteBatch.Draw(texture1, new Rectangle(20, num * 100 + 20, (int)Width, (int) Height), Color.White);
+            spriteBatch.DrawString(spriteFont, unit.Name, new Vector2(20, num * 100 + 20), Color.White);
+            spriteBatch.DrawString(spriteFont, "Energy Needed for Next Turn: " + unit.NeededEnergy + "", new Vector2(20, num * 100 + 25 + 20), Color.White);
         }
 
     }

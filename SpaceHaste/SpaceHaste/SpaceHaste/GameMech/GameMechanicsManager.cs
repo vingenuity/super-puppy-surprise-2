@@ -12,28 +12,47 @@ namespace SpaceHaste.GameMech
 {
     public class GameMechanicsManager : GameComponent
     {
-        KeyboardState kState;
+        //For controls
+        private delegate void KeyAction();
+        private static Dictionary<Microsoft.Xna.Framework.Input.Keys, KeyAction> KeyMap;
         KeyboardState lastKState;
-        public static List<GameObject> MoveableSceneGameObjectList;
+
+        //For selection and display thereof
+        Vector3 CurrentGridCubeSelected;
+        GameObject CurrentGameObjectSelected;
+        Line YShipLine;
+        Line YSelectedSquareLine;
+
+        //For other stuff
+        public static List<GameObject> GameObjectList;
         Del update;
+
         public GameMechanicsManager(Game g): base(g)
         {
-            MoveableSceneGameObjectList = new List<GameObject>();
+            GameObjectList = new List<GameObject>();
             update = EmptyMethod;
-            kState = Keyboard.GetState();
+
+            //Initialize Keys
+            KeyMap = new Dictionary<Microsoft.Xna.Framework.Input.Keys, KeyAction>();
+            KeyMap.Add(Keys.Enter, new KeyAction(Selection));
+            KeyMap.Add(Keys.I, new KeyAction(MoveSelectionUp));
+            KeyMap.Add(Keys.K, new KeyAction(MoveSelectionDown));
+            KeyMap.Add(Keys.J, new KeyAction(MoveSelectionLeft));
+            KeyMap.Add(Keys.L, new KeyAction(MoveSelectionRight));
+            KeyMap.Add(Keys.O, new KeyAction(MoveSelectionHigher));
+            KeyMap.Add(Keys.U, new KeyAction(MoveSelectionLower));
             lastKState = Keyboard.GetState();
-            
         }
 
         GameObject NextShipToMove()
         {
             GameObject go = null;
-            if (MoveableSceneGameObjectList.Count > 0)
-                go = MoveableSceneGameObjectList[0];
-            for (int i = 0; i < MoveableSceneGameObjectList.Count; i++)
+            if (GameObjectList.Count > 0)
+                go = GameObjectList[0];
+            for (int i = 0; i < GameObjectList.Count; i++)
             {
-                if (go.NeededEnergy > MoveableSceneGameObjectList[i].NeededEnergy)
-                    go = MoveableSceneGameObjectList[i];
+                if (go.NeededEnergy > GameObjectList[i].NeededEnergy)
+                    go = GameObjectList[i];
             }
             return go;
         }
@@ -44,16 +63,15 @@ namespace SpaceHaste.GameMech
         }
 
 
-
         void RecoverEnergyToNextShip()
         {
             GameObject nextShipToMove = NextShipToMove();
             if (nextShipToMove == null)
                 return;
             double energyToRecover = nextShipToMove.NeededEnergy;
-            for (int i = 0; i < MoveableSceneGameObjectList.Count; i++)
+            for (int i = 0; i < GameObjectList.Count; i++)
             {
-                MoveableSceneGameObjectList[i].NeededEnergy -= energyToRecover;           
+                GameObjectList[i].NeededEnergy -= energyToRecover;           
             }
             if (nextShipToMove.Team == 0)
             {
@@ -65,87 +83,68 @@ namespace SpaceHaste.GameMech
                 ComputerTurn();
         }
 
-
-        Vector3 CurrentGridCubeSelected;
-        GameObject CurrentGameObjectSelected;
-
         void PlayerTurn(GameTime gameTime)
         {
-            kState = Keyboard.GetState();
-            UpdateGridSquareSelection();
-            MoveToSelectedGridSquare();
-            lastKState = kState;
+            KeyboardState state = Keyboard.GetState();
+            foreach (Microsoft.Xna.Framework.Input.Keys key in KeyMap.Keys)
+                if (state.IsKeyDown(key) && lastKState.IsKeyUp(key))
+                    KeyMap[key]();
+            lastKState = state;
         }
-        Line YShipLine;
-        Line YSelectedSquareLine;
-        private void MoveToSelectedGridSquare()
+        void ComputerTurn()
         {
-            if (kState.IsKeyDown(Keys.Enter) && lastKState.IsKeyUp(Keys.Enter))
-            {
-                List<GridCube> InRange = Map.map.GetGridSquaresInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
-                if (InRange.Find(item => item == Map.map.GetCubeAt(CurrentGridCubeSelected)) != null)
-                {
-                    Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;
-                    Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
-                    float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
-                    CurrentGameObjectSelected.NeededEnergy += DistanceMoved * CurrentGameObjectSelected.MovementEnergy;
-                    RecoverEnergyToNextShip();
-                }
-            }
         }
 
-        private void UpdateGridSquareSelection()
+        /// <summary>
+        /// The following functions all return void and take no arguments.
+        /// During the instantiation of the class, these are tied to keys and used to perform actions.
+        /// </summary>
+        private void Selection()
         {
-            
-            if (kState.IsKeyDown(Keys.I) && lastKState.IsKeyUp(Keys.I))
+            List<GridCube> InRange = Map.map.GetGridSquaresInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
+            if (InRange.Find(item => item == Map.map.GetCubeAt(CurrentGridCubeSelected)) != null)
             {
-                CurrentGridCubeSelected.X++;
-                if (CurrentGridCubeSelected.X >= Map.map.Size)
-                {
-                    CurrentGridCubeSelected.X = Map.map.Size - 1;
-                }
+                Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;
+                Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
+                float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
+                CurrentGameObjectSelected.NeededEnergy += DistanceMoved * CurrentGameObjectSelected.MovementEnergy;
+                RecoverEnergyToNextShip();
             }
-            if (kState.IsKeyDown(Keys.K) && lastKState.IsKeyUp(Keys.K))
-            {
-                CurrentGridCubeSelected.X--;
-                if (CurrentGridCubeSelected.X < 0)
-                {
-                    CurrentGridCubeSelected.X = 0;
-                }
-            }
-            if (kState.IsKeyDown(Keys.J) && lastKState.IsKeyUp(Keys.J))
-            {
-                CurrentGridCubeSelected.Z++;
-                if (CurrentGridCubeSelected.Z >= Map.map.Size)
-                {
-                    CurrentGridCubeSelected.Z = Map.map.Size - 1;
-                }
-            }
-            if (kState.IsKeyDown(Keys.L) && lastKState.IsKeyUp(Keys.L))
-            {
-                CurrentGridCubeSelected.Z--;
-                if (CurrentGridCubeSelected.Z < 0)
-                {
-                    CurrentGridCubeSelected.Z = 0;
-                }
-            }
-            if (kState.IsKeyDown(Keys.U) && lastKState.IsKeyUp(Keys.U))
-            {
-                CurrentGridCubeSelected.Y++;
-                if (CurrentGridCubeSelected.Y >= Map.map.Size)
-                {
-                    CurrentGridCubeSelected.Y = Map.map.Size - 1;
-                }
-            }
-            if (kState.IsKeyDown(Keys.O) && lastKState.IsKeyUp(Keys.O))
-            {
-                CurrentGridCubeSelected.Y--;
-                if (CurrentGridCubeSelected.Y < 0)
-                {
-                    CurrentGridCubeSelected.Y = 0;
-                }
-            }
-            if(YSelectedSquareLine != null)
+        }
+        private void MoveSelectionUp()
+        {
+            if(CurrentGridCubeSelected.X < Map.map.Size - 1) CurrentGridCubeSelected.X++;
+            UpdateSelectionLine();
+        }
+        private void MoveSelectionDown()
+        {
+            if (CurrentGridCubeSelected.X > 0) CurrentGridCubeSelected.X--;
+            UpdateSelectionLine();
+        }
+        private void MoveSelectionLeft()
+        {
+            if (CurrentGridCubeSelected.Z > 0) CurrentGridCubeSelected.Z--;
+            UpdateSelectionLine();
+        }
+        private void MoveSelectionRight()
+        {
+            if (CurrentGridCubeSelected.Z < Map.map.Size - 1) CurrentGridCubeSelected.Z++;
+            UpdateSelectionLine();
+        }
+        private void MoveSelectionHigher()
+        {
+            if (CurrentGridCubeSelected.Y < Map.map.Size - 1) CurrentGridCubeSelected.Y++;
+            UpdateSelectionLine();
+        }
+        private void MoveSelectionLower()
+        {
+            if (CurrentGridCubeSelected.Y > 0) CurrentGridCubeSelected.Y--;
+            UpdateSelectionLine();
+        }
+
+        void UpdateSelectionLine()
+        {
+            if (YSelectedSquareLine != null)
             {
                 LineManager.RemoveLine(YSelectedSquareLine);
             }
@@ -155,11 +154,8 @@ namespace SpaceHaste.GameMech
             botCube.Y -= +400;
             YSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
             LineManager.AddLine(YSelectedSquareLine);
-               
         }
-        void ComputerTurn()
-        { 
-        }
+
         public override void Update(GameTime gameTime)
         {
             update(gameTime);

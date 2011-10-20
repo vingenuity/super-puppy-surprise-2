@@ -45,7 +45,7 @@ namespace SpaceHaste.GameObjects
         public virtual void Load()
         {
             GraphicsManager.GraphicsGameObjects.Add(this);
-            GameMechanicsManager.MoveableSceneGameObjectList.Add(this);
+            GameMechanicsManager.GameObjectList.Add(this);
         }
         public virtual void Unload()
         {

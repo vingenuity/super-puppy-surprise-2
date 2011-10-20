@@ -23,8 +23,8 @@ namespace SpaceHaste.Huds
         }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont spriteFont)
         {
-            for (int i = 0; i < GameMechanicsManager.MoveableSceneGameObjectList.Count; i++)
-                DrawUnitInformation(GameMechanicsManager.MoveableSceneGameObjectList[i], spriteBatch, spriteFont, i, GraphicsManager.graphics.PreferredBackBufferWidth, GraphicsManager.graphics.PreferredBackBufferHeight);
+            for (int i = 0; i < GameMechanicsManager.GameObjectList.Count; i++)
+                DrawUnitInformation(GameMechanicsManager.GameObjectList[i], spriteBatch, spriteFont, i, GraphicsManager.graphics.PreferredBackBufferWidth, GraphicsManager.graphics.PreferredBackBufferHeight);
         }
 
         private void DrawUnitInformation(GameObject unit, SpriteBatch spriteBatch, SpriteFont spriteFont, int num, float ScreenWidth, float ScreenHeight)

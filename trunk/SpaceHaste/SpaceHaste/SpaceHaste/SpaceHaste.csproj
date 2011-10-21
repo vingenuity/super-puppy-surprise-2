@@ -110,12 +110,14 @@
     <Compile Include="Cameras\Camera.cs" />
     <Compile Include="Cameras\CameraAngled.cs" />
     <Compile Include="Cameras\CameraBackView.cs" />
+    <Compile Include="Cameras\CameraControls.cs" />
     <Compile Include="Cameras\CameraManager.cs" />
     <Compile Include="Cameras\CameraRotateAroundGridSquare.cs" />
     <Compile Include="Cameras\CameraShowLineExample.cs" />
     <Compile Include="Cameras\CameraSideView.cs" />
     <Compile Include="Cameras\CameraTopView.cs" />
     <Compile Include="Cameras\CameraViewModel.cs" />
+    <Compile Include="Controls\ControlManager.cs" />
     <Compile Include="GameMech\GameMechanicsManager.cs" />
     <Compile Include="GameObjects\Shields.cs" />
     <Compile Include="GameObjects\Ship.cs" />

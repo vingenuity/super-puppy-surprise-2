@@ -18,7 +18,6 @@ namespace SpaceHaste.GameMech
         //For selection and display thereof
         Vector3 CurrentGridCubeSelected;
         GameObject CurrentGameObjectSelected;
-        Line YShipLine;
         Line YSelectedSquareLine;
 
         //For other stuff

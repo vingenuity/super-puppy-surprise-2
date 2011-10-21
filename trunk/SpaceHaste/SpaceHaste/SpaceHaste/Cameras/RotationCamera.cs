@@ -19,7 +19,7 @@ namespace SpaceHaste.Cameras
         float zoom = 10;
         float verticalAngleMin = 0;
         float verticalAngleMax = (float) Math.PI * 2;
-        float zoomMin = 10000;
+        float zoomMin = 5000;
         float zoomMax = 1000000;
         public RotationCamera(GraphicsDeviceManager graphics)
             : base()
@@ -55,6 +55,11 @@ namespace SpaceHaste.Cameras
         internal void MoveCameraRight()
         {
             horizontalAngle += .01F; 
+        }
+        internal void AnalogMove(Vector2 stick)
+        {
+            horizontalAngle += .01F * stick.X;
+            verticalAngle   += .01F * stick.Y;
         }
         internal void ZoomIn()
         {

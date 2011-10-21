@@ -36,8 +36,8 @@ namespace SpaceHaste.Huds
             float Height = ScreenHeight / 30 * 2;
             //float multiply = ScreenHeight /30/50
             spriteBatch.Draw(texture1, new Rectangle(20, num * 100 + 20, (int)Width, (int) Height), Color.Gray);
-            spriteBatch.Draw(currentEnergy, new Rectangle(23, num * 100 + 33,  (int)Width - 6, (int)Height - 60), Color.Gray);
-            spriteBatch.Draw(currentHealth, new Rectangle(23, num * 100 + 40, (int)Width - 6, (int)Height - 40), Color.Gray);
+            spriteBatch.Draw(currentEnergy, new Rectangle(23, num * 100 + 33,  (int)Width - 6, (int)Height - 60), Color.White);
+            spriteBatch.Draw(currentHealth, new Rectangle(23, num * 100 + 40, (int)Width - 6, (int)Height - 40), Color.White);
             spriteBatch.DrawString(spriteFont, unit.Name, new Vector2(20, num * 100 + 20), Color.White);
             spriteBatch.DrawString(spriteFont,"" +unit.Energy, new Vector2(60, num * 100 + 33), Color.White);
         }

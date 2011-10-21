@@ -13,9 +13,10 @@ namespace SpaceHaste.GameMech
     public class GameMechanicsManager : GameComponent
     {
         //For controls
-        private delegate void KeyAction();
-        private static Dictionary<Microsoft.Xna.Framework.Input.Keys, KeyAction> KeyMap;
+        private delegate void GameAction();
+        private static Dictionary<Keys, GameAction> KeyMap;
         KeyboardState lastKState;
+        int LastPacket;
 
         //For selection and display thereof
         Vector3 CurrentGridCubeSelected;
@@ -32,15 +33,9 @@ namespace SpaceHaste.GameMech
             GameObjectList = new List<GameObject>();
             update = EmptyMethod;
 
-            //Initialize Keys
-            KeyMap = new Dictionary<Microsoft.Xna.Framework.Input.Keys, KeyAction>();
-            KeyMap.Add(Keys.Enter, new KeyAction(Selection));
-            KeyMap.Add(Keys.I, new KeyAction(MoveSelectionUp));
-            KeyMap.Add(Keys.K, new KeyAction(MoveSelectionDown));
-            KeyMap.Add(Keys.J, new KeyAction(MoveSelectionLeft));
-            KeyMap.Add(Keys.L, new KeyAction(MoveSelectionRight));
-            KeyMap.Add(Keys.O, new KeyAction(MoveSelectionHigher));
-            KeyMap.Add(Keys.U, new KeyAction(MoveSelectionLower));
+            //Initialize Controls
+            KeyMap = new Dictionary<Keys, GameAction>();
+            MapControls();
             lastKState = Keyboard.GetState();
         }
 
@@ -85,16 +80,44 @@ namespace SpaceHaste.GameMech
 
         void PlayerTurn(GameTime gameTime)
         {
-            KeyboardState state = Keyboard.GetState();
-            foreach (Microsoft.Xna.Framework.Input.Keys key in KeyMap.Keys)
-                if (state.IsKeyDown(key) && lastKState.IsKeyUp(key))
-                    KeyMap[key]();
-            lastKState = state;
+            GamePadState Gstate = GamePad.GetState(PlayerIndex.One);
+            if (!Gstate.IsConnected)
+            {
+                KeyboardState Kstate = Keyboard.GetState();
+                foreach (Microsoft.Xna.Framework.Input.Keys key in KeyMap.Keys)
+                    if (Kstate.IsKeyDown(key) && lastKState.IsKeyUp(key))
+                        KeyMap[key]();
+                lastKState = Kstate;
+            }
+            else
+            {
+                if (Gstate.PacketNumber == LastPacket)
+                    return;
+                LastPacket = Gstate.PacketNumber;
+                if (Gstate.IsButtonDown(Buttons.A)) Selection();
+                if (Gstate.ThumbSticks.Right.X < -0.5) MoveSelectionLeft();
+                if (Gstate.ThumbSticks.Right.X > 0.5) MoveSelectionRight();
+                if (Gstate.ThumbSticks.Right.Y > 0.5) MoveSelectionUp();
+                if (Gstate.ThumbSticks.Right.Y < -0.5) MoveSelectionDown();
+                if (Gstate.IsButtonDown(Buttons.RightStick)) MoveSelectionLower();
+                if (Gstate.IsButtonDown(Buttons.RightStick) && Gstate.IsButtonDown(Buttons.LeftTrigger)) MoveSelectionHigher();
+            }
         }
         void ComputerTurn()
         {
         }
 
+        private void MapControls()
+        {
+            //Add Keyboard Keys
+            KeyMap.Add(Keys.Enter, new GameAction(Selection));
+            KeyMap.Add(Keys.I, new GameAction(MoveSelectionUp));
+            KeyMap.Add(Keys.K, new GameAction(MoveSelectionDown));
+            KeyMap.Add(Keys.J, new GameAction(MoveSelectionLeft));
+            KeyMap.Add(Keys.L, new GameAction(MoveSelectionRight));
+            KeyMap.Add(Keys.O, new GameAction(MoveSelectionHigher));
+            KeyMap.Add(Keys.U, new GameAction(MoveSelectionLower));
+        }
         /// <summary>
         /// The following functions all return void and take no arguments.
         /// During the instantiation of the class, these are tied to keys and used to perform actions.

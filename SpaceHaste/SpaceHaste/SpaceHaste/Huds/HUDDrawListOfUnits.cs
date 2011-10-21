@@ -12,7 +12,7 @@ namespace SpaceHaste.Huds
 {
     public class HUDDrawListOfUnits
     {
-        Texture2D texture1;
+        Texture2D texture1, currentHealth, currentEnergy;
 
         public HUDDrawListOfUnits()
         {
@@ -20,6 +20,9 @@ namespace SpaceHaste.Huds
         public void Load()
         {
             texture1 = Hud.Content.Load<Texture2D>("SketchTexture");
+            currentHealth = Hud.Content.Load<Texture2D>("HealthBar");
+            currentEnergy = Hud.Content.Load<Texture2D>("EnergyBar");
+
         }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont spriteFont)
         {
@@ -33,8 +36,10 @@ namespace SpaceHaste.Huds
             float Height = ScreenHeight / 30 * 2;
             //float multiply = ScreenHeight /30/50
             spriteBatch.Draw(texture1, new Rectangle(20, num * 100 + 20, (int)Width, (int) Height), Color.Gray);
+            spriteBatch.Draw(currentEnergy, new Rectangle(23, num * 100 + 33,  (int)Width - 6, (int)Height - 60), Color.Gray);
+            spriteBatch.Draw(currentHealth, new Rectangle(23, num * 100 + 40, (int)Width - 6, (int)Height - 40), Color.Gray);
             spriteBatch.DrawString(spriteFont, unit.Name, new Vector2(20, num * 100 + 20), Color.White);
-            spriteBatch.DrawString(spriteFont, "Energy Needed for Next Turn: " + unit.NeededEnergy + "", new Vector2(20, num * 100 + 25 + 20), Color.White);
+            spriteBatch.DrawString(spriteFont,"" +unit.Energy, new Vector2(60, num * 100 + 33), Color.White);
         }
 
     }

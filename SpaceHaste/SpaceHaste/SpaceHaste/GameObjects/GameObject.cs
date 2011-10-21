@@ -23,7 +23,7 @@ namespace SpaceHaste.GameObjects
         public BoundingSphere boundingSphere;
         public Boolean Passable;
         public int Team;
-        public double NeededEnergy;
+        public double Energy;
         public double MovementEnergy = 1;
         public GridCube location;
         public string Name;
@@ -37,7 +37,7 @@ namespace SpaceHaste.GameObjects
         //Constructor
         public GameObject(Vector3 location)
         {
-            NeededEnergy = 4;
+            Energy = 100;
             Load();
             GridPosition = location;
             MovementRange = 4;
@@ -47,6 +47,8 @@ namespace SpaceHaste.GameObjects
             GraphicsManager.GraphicsGameObjects.Add(this);
             GameMechanicsManager.GameObjectList.Add(this);
         }
+
+
         public virtual void Unload()
         {
         }

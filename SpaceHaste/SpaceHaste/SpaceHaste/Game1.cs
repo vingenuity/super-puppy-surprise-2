@@ -69,9 +69,6 @@ namespace SpaceHaste
             Hud HudManager = new Hud(this, graphics);
             Components.Add(HudManager);
 
-            CameraManager CameraManager = new CameraManager(this, graphics);
-            Components.Add(CameraManager);
-
             PrimitiveManager PrimitiveManager = new PrimitiveManager(this, graphics);
             Components.Add(PrimitiveManager);
 
@@ -81,7 +78,7 @@ namespace SpaceHaste
             MapManager MapManager = new MapManager(this);
             Components.Add(MapManager);
 
-            ControlManager ControlManager = new ControlManager(this);
+            ControlManager ControlManager = new ControlManager(this, graphics);
             Components.Add(ControlManager);
 
             base.Initialize();

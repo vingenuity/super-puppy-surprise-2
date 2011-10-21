@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using SpaceHaste.Cameras;
+using SpaceHaste.Controls;
 
 namespace SpaceHaste.Graphics
 {
@@ -169,7 +169,7 @@ namespace SpaceHaste.Graphics
             for(int i = 0; i< GraphicsManager.GraphicsGameObjects.Count; i++)
                 DrawModel(GraphicsManager.GraphicsGameObjects[i].Model,
                     GraphicsManager.GraphicsGameObjects[i].World, 
-                    CameraManager.View, CameraManager.Projection, effectTechniqueName);
+                    ControlManager.View, ControlManager.Projection, effectTechniqueName);
         }
 
         

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SpaceHaste.Cameras
 {
-    public class CameraManager : GameComponent, CameraControls
+    public class CameraManager : GameComponent
     {
         public static CameraManager cameraManager;
 
@@ -17,8 +17,6 @@ namespace SpaceHaste.Cameras
         bool Disabled;
         GraphicsDeviceManager graphics;
         int CameraNum = 0;
-
-        CameraControls CameraControls;
 
         public CameraManager(Game game, GraphicsDeviceManager graphics)
             : base(game)
@@ -40,18 +38,7 @@ namespace SpaceHaste.Cameras
         void ChangeCamera()
         {
             if(CameraNum == 0)
-                Camera = new CameraRotateAroundGridSquare(graphics);
-            if (CameraNum == 1)
-                Camera = new CameraSideView(graphics);
-            if (CameraNum == 2)
-                Camera = new CameraBackView(graphics);
-            if (CameraNum == 3)
-                Camera = new CameraViewModel(graphics);
-        }
-        void CameraControls.ChangeCamera()
-        {
-            CameraNum = (CameraNum + 1) % 4;
-            ChangeCamera();
+                Camera = new RotationCamera(graphics);
         }
     }
 }

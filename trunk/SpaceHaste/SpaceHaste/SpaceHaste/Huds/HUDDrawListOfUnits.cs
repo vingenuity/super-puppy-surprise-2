@@ -13,7 +13,8 @@ namespace SpaceHaste.Huds
     public class HUDDrawListOfUnits
     {
         Texture2D texture1, currentHealth, currentEnergy;
-
+        float Size;
+        float Size2;
         public HUDDrawListOfUnits()
         {
         }
@@ -32,6 +33,7 @@ namespace SpaceHaste.Huds
 
         private void DrawUnitInformation(GameObject unit, SpriteBatch spriteBatch, SpriteFont spriteFont, int num, float ScreenWidth, float ScreenHeight)
         {
+           
             float Width = ScreenWidth / 5;
             float Height = ScreenHeight / 30 * 2;
             //float multiply = ScreenHeight /30/50

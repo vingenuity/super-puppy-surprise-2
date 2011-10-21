@@ -119,6 +119,7 @@
     <Compile Include="Graphics\NonPhotoRealisticSettings.cs" />
     <Compile Include="Huds\Hud.cs" />
     <Compile Include="Huds\HUDDrawListOfUnits.cs" />
+    <Compile Include="Huds\UnitDisplayActions.cs" />
     <Compile Include="Maps\GridCube.cs" />
     <Compile Include="Maps\Map.cs" />
     <Compile Include="Maps\Map1.cs" />

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SpaceHaste.Cameras;
+using SpaceHaste.Controls;
 using SpaceHaste.Graphics;
 
 namespace SpaceHaste.Primitives
@@ -95,8 +95,8 @@ namespace SpaceHaste.Primitives
             quadEffect.EnableDefaultLighting();
 
             quadEffect.World = Matrix.Identity;
-            quadEffect.View = CameraManager.View;
-            quadEffect.Projection = CameraManager.Projection;
+            quadEffect.View = ControlManager.View;
+            quadEffect.Projection = ControlManager.Projection;
             quadEffect.TextureEnabled = true;
             quadEffect.Texture = texture;
 

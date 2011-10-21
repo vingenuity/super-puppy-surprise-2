@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using SpaceHaste.Cameras;
+using SpaceHaste.Controls;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using SpaceHaste.Primitives;
@@ -104,11 +104,12 @@ namespace SpaceHaste.Grids
            // basicEffect.View = CameraManager.View;
            // basicEffect.Projection = CameraManager.Projection;
         }
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             basicEffect.World = Matrix.Identity;
-            basicEffect.View = CameraManager.View;
-            basicEffect.Projection = CameraManager.Projection;
+            basicEffect.View = ControlManager.View;
+            basicEffect.Projection = ControlManager.Projection;
+            base.Update(gameTime);
         }
         /// <summary>
         /// Initializes the point list.
@@ -170,8 +171,8 @@ namespace SpaceHaste.Grids
         public override void Draw(GameTime gameTime)
         {
 
-            basicEffect.View = CameraManager.View;
-            basicEffect.Projection = CameraManager.Projection;
+            basicEffect.View = ControlManager.View;
+            basicEffect.Projection = ControlManager.Projection;
 
             //GraphicsDevice.Clear(Color.SteelBlue);
 

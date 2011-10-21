@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SpaceHaste.GameObjects;
-using SpaceHaste.Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using SpaceHaste.GameObjects;
+using SpaceHaste.Maps;
 using SpaceHaste.Primitives;
 
 namespace SpaceHaste.GameMech
 {
     public class GameMechanicsManager : GameComponent
     {
-        //For controls
-        private delegate void GameAction();
-        private static Dictionary<Keys, GameAction> KeyMap;
-        KeyboardState lastKState;
-        int LastPacket;
+        //For controls, we need a singleton
+        public static GameMechanicsManager MechMan;
 
         //For selection and display thereof
         Vector3 CurrentGridCubeSelected;
@@ -30,13 +27,9 @@ namespace SpaceHaste.GameMech
 
         public GameMechanicsManager(Game g): base(g)
         {
+            MechMan = this;
             GameObjectList = new List<GameObject>();
             update = EmptyMethod;
-
-            //Initialize Controls
-            KeyMap = new Dictionary<Keys, GameAction>();
-            MapControls();
-            lastKState = Keyboard.GetState();
         }
 
 
@@ -81,49 +74,16 @@ namespace SpaceHaste.GameMech
 
         void PlayerTurn(GameTime gameTime)
         {
-            GamePadState Gstate = GamePad.GetState(PlayerIndex.One);
-            if (!Gstate.IsConnected)
-            {
-                KeyboardState Kstate = Keyboard.GetState();
-                foreach (Microsoft.Xna.Framework.Input.Keys key in KeyMap.Keys)
-                    if (Kstate.IsKeyDown(key) && lastKState.IsKeyUp(key))
-                        KeyMap[key]();
-                lastKState = Kstate;
-            }
-            else
-            {
-                if (Gstate.PacketNumber == LastPacket)
-                    return;
-                LastPacket = Gstate.PacketNumber;
-                if (Gstate.IsButtonDown(Buttons.A)) Selection();
-                if (Gstate.ThumbSticks.Right.X < -0.5) MoveSelectionLeft();
-                if (Gstate.ThumbSticks.Right.X > 0.5) MoveSelectionRight();
-                if (Gstate.ThumbSticks.Right.Y > 0.5) MoveSelectionUp();
-                if (Gstate.ThumbSticks.Right.Y < -0.5) MoveSelectionDown();
-                if (Gstate.IsButtonDown(Buttons.RightStick)) MoveSelectionLower();
-                if (Gstate.IsButtonDown(Buttons.RightStick) && Gstate.IsButtonDown(Buttons.LeftTrigger)) MoveSelectionHigher();
-            }
         }
         void ComputerTurn()
         {
         }
 
-        private void MapControls()
-        {
-            //Add Keyboard Keys
-            KeyMap.Add(Keys.Enter, new GameAction(Selection));
-            KeyMap.Add(Keys.I, new GameAction(MoveSelectionUp));
-            KeyMap.Add(Keys.K, new GameAction(MoveSelectionDown));
-            KeyMap.Add(Keys.J, new GameAction(MoveSelectionLeft));
-            KeyMap.Add(Keys.L, new GameAction(MoveSelectionRight));
-            KeyMap.Add(Keys.O, new GameAction(MoveSelectionHigher));
-            KeyMap.Add(Keys.U, new GameAction(MoveSelectionLower));
-        }
         /// <summary>
         /// The following functions all return void and take no arguments.
         /// During the instantiation of the class, these are tied to keys and used to perform actions.
         /// </summary>
-        private void Selection()
+        internal void Selection()
         {
             List<GridCube> InRange = Map.map.GetGridSquaresInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
             if (InRange.Find(item => item == Map.map.GetCubeAt(CurrentGridCubeSelected)) != null)
@@ -135,32 +95,32 @@ namespace SpaceHaste.GameMech
                 RecoverEnergyToNextShip();
             }
         }
-        private void MoveSelectionUp()
+        internal void MoveSelectionUp()
         {
             if(CurrentGridCubeSelected.X < Map.map.Size - 1) CurrentGridCubeSelected.X++;
             UpdateSelectionLine();
         }
-        private void MoveSelectionDown()
+        internal void MoveSelectionDown()
         {
             if (CurrentGridCubeSelected.X > 0) CurrentGridCubeSelected.X--;
             UpdateSelectionLine();
         }
-        private void MoveSelectionLeft()
+        internal void MoveSelectionLeft()
         {
             if (CurrentGridCubeSelected.Z > 0) CurrentGridCubeSelected.Z--;
             UpdateSelectionLine();
         }
-        private void MoveSelectionRight()
+        internal void MoveSelectionRight()
         {
             if (CurrentGridCubeSelected.Z < Map.map.Size - 1) CurrentGridCubeSelected.Z++;
             UpdateSelectionLine();
         }
-        private void MoveSelectionHigher()
+        internal void MoveSelectionHigher()
         {
             if (CurrentGridCubeSelected.Y < Map.map.Size - 1) CurrentGridCubeSelected.Y++;
             UpdateSelectionLine();
         }
-        private void MoveSelectionLower()
+        internal void MoveSelectionLower()
         {
             if (CurrentGridCubeSelected.Y > 0) CurrentGridCubeSelected.Y--;
             UpdateSelectionLine();

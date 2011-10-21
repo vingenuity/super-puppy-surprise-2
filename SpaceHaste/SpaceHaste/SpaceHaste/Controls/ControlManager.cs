@@ -19,10 +19,12 @@ namespace SpaceHaste.Controls
         public static Matrix Projection;
 
         //Movement
+        bool reverse;
         private static Dictionary<Keys, GameAction> KeyMap;
+        private static Dictionary<Buttons, GameAction> PadMap;
         private delegate void GameAction(); 
         KeyboardState lastKState;
-        int LastPacket;
+        GamePadState lastGState;
 
         public ControlManager(Game game, GraphicsDeviceManager graphics) : base(game)
         {
@@ -30,11 +32,17 @@ namespace SpaceHaste.Controls
             camera = new RotationCamera(graphMan);
 
             KeyMap = new Dictionary<Keys, GameAction>();
+            PadMap = new Dictionary<Buttons, GameAction>();
             MapControls();
             lastKState = Keyboard.GetState();
-            LastPacket = 0;
+            lastGState = GamePad.GetState(PlayerIndex.One);
         }
 
+        private bool isCameraButton(Buttons b)
+        {
+            if (b == Buttons.RightStick) return true;
+            return false;
+        }
         private bool isCameraKey(Keys key)
         {
             switch (key)
@@ -67,6 +75,26 @@ namespace SpaceHaste.Controls
             KeyMap.Add(Keys.L, new GameAction(GameMechanicsManager.MechMan.MoveSelectionRight));
             KeyMap.Add(Keys.O, new GameAction(GameMechanicsManager.MechMan.MoveSelectionHigher));
             KeyMap.Add(Keys.U, new GameAction(GameMechanicsManager.MechMan.MoveSelectionLower));
+
+            //Add GamePad Buttons
+            PadMap.Add(Buttons.A, new GameAction(GameMechanicsManager.MechMan.Selection));
+            PadMap.Add(Buttons.LeftThumbstickUp, new GameAction(GameMechanicsManager.MechMan.MoveSelectionUp));
+            PadMap.Add(Buttons.LeftThumbstickDown, new GameAction(GameMechanicsManager.MechMan.MoveSelectionDown));
+            PadMap.Add(Buttons.LeftThumbstickLeft, new GameAction(GameMechanicsManager.MechMan.MoveSelectionLeft));
+            PadMap.Add(Buttons.LeftThumbstickRight, new GameAction(GameMechanicsManager.MechMan.MoveSelectionRight));
+            PadMap.Add(Buttons.LeftStick, new GameAction(VertSelection));
+            PadMap.Add(Buttons.RightStick, new GameAction(CameraZoom));
+        }
+
+        private void CameraZoom()
+        {
+            if (reverse) camera.ZoomOut();
+            else camera.ZoomIn();
+        }
+        private void VertSelection()
+        {
+            if (reverse) GameMechanicsManager.MechMan.MoveSelectionLower();
+            else GameMechanicsManager.MechMan.MoveSelectionHigher();
         }
 
         public override void Update(GameTime gameTime)
@@ -75,7 +103,7 @@ namespace SpaceHaste.Controls
             if (!Gstate.IsConnected)
             {
                 KeyboardState Kstate = Keyboard.GetState();
-                foreach (Microsoft.Xna.Framework.Input.Keys key in KeyMap.Keys)
+                foreach (Keys key in KeyMap.Keys)
                 {
                     if (Kstate.IsKeyDown(key))
                     {
@@ -89,22 +117,19 @@ namespace SpaceHaste.Controls
             }
             else
             {
-                if (Gstate.PacketNumber == LastPacket)
-                    return;
-                LastPacket = Gstate.PacketNumber;
-                if (Gstate.ThumbSticks.Right.X < -0.5) camera.MoveCameraLeft();
-                if (Gstate.ThumbSticks.Right.X > 0.5) camera.MoveCameraRight();
-                if (Gstate.ThumbSticks.Right.Y > 0.5) camera.MoveCameraUp();
-                if (Gstate.ThumbSticks.Right.Y < -0.5) camera.MoveCameraDown();
-                if (Gstate.IsButtonDown(Buttons.RightStick)) camera.ZoomIn();
-                if (Gstate.IsButtonDown(Buttons.RightStick) && Gstate.IsButtonDown(Buttons.LeftTrigger)) camera.ZoomOut();
-                if (Gstate.IsButtonDown(Buttons.A)) GameMechanicsManager.MechMan.Selection();
-                if (Gstate.ThumbSticks.Left.X < -0.5) GameMechanicsManager.MechMan.MoveSelectionLeft();
-                if (Gstate.ThumbSticks.Left.X > 0.5) GameMechanicsManager.MechMan.MoveSelectionRight();
-                if (Gstate.ThumbSticks.Left.Y > 0.5) GameMechanicsManager.MechMan.MoveSelectionUp();
-                if (Gstate.ThumbSticks.Left.Y < -0.5) GameMechanicsManager.MechMan.MoveSelectionDown();
-                if (Gstate.IsButtonDown(Buttons.RightStick)) GameMechanicsManager.MechMan.MoveSelectionLower();
-                if (Gstate.IsButtonDown(Buttons.RightStick) && Gstate.IsButtonDown(Buttons.LeftTrigger)) GameMechanicsManager.MechMan.MoveSelectionHigher();
+                reverse = (Gstate.IsButtonDown(Buttons.RightTrigger)) ? true : false;
+                camera.AnalogMove(Gstate.ThumbSticks.Right);
+                foreach (Buttons button in PadMap.Keys)
+                {
+                    if (Gstate.IsButtonDown(button))
+                    {
+                        if (lastGState.IsButtonUp(button))
+                            PadMap[button]();
+                        else if (isCameraButton(button))
+                            PadMap[button]();
+                    }
+                }
+                lastGState  = Gstate;
             }
             camera.UpdateView(gameTime);
             camera.UpdateProjection(gameTime);

@@ -7,17 +7,23 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SpaceHaste.Cameras
 {
-    public class CameraManager : GameComponent
+    public class CameraManager : GameComponent, CameraControls
     {
+        public static CameraManager cameraManager;
+
         public static Matrix View;
         public static Matrix Projection;
         public static Camera Camera;
         bool Disabled;
         GraphicsDeviceManager graphics;
         int CameraNum = 0;
+
+        CameraControls CameraControls;
+
         public CameraManager(Game game, GraphicsDeviceManager graphics)
             : base(game)
         {
+            cameraManager = this;
             //Camera = new CameraViewModel(graphics);
             //Camera = new CameraShowLineExample(graphics);
             this.graphics = graphics;
@@ -29,7 +35,6 @@ namespace SpaceHaste.Cameras
             
             Camera.UpdateView(gameTime);
             Camera.UpdateProjection(gameTime);
-            HandleInput();
             base.Update(gameTime);
         }
         void ChangeCamera()
@@ -43,24 +48,10 @@ namespace SpaceHaste.Cameras
             if (CameraNum == 3)
                 Camera = new CameraViewModel(graphics);
         }
-        KeyboardState currentKeyboardState;
-        KeyboardState lastKeyboardState;
-        void HandleInput()
+        void CameraControls.ChangeCamera()
         {
-            lastKeyboardState = currentKeyboardState;
-            
-
-            currentKeyboardState = Keyboard.GetState();
-
-
-
-            // Switch cameras
-            if (currentKeyboardState.IsKeyDown(Keys.B) &&
-                 lastKeyboardState.IsKeyUp(Keys.B))
-            {
-                CameraNum = (CameraNum + 1) % 4;
-                ChangeCamera();
-            }
+            CameraNum = (CameraNum + 1) % 4;
+            ChangeCamera();
         }
     }
 }

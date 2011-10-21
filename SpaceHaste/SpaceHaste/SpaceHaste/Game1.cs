@@ -15,6 +15,7 @@ using SpaceHaste.Primitives;
 using SpaceHaste.Maps;
 using SpaceHaste.Huds;
 using SpaceHaste.GameMech;
+using SpaceHaste.Controls;
 
 namespace SpaceHaste
 {
@@ -80,7 +81,8 @@ namespace SpaceHaste
             MapManager MapManager = new MapManager(this);
             Components.Add(MapManager);
 
-           
+            ControlManager ControlManager = new ControlManager(this);
+            Components.Add(ControlManager);
 
             base.Initialize();
         }

@@ -10,6 +10,7 @@ namespace SpaceHaste.Cameras
     public class CameraAngled : Camera
     {
         GraphicsDevice device;
+        
         public CameraAngled(GraphicsDeviceManager graphics)
             : base()
         {

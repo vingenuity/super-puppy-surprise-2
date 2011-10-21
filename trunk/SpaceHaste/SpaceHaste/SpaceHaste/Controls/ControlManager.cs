@@ -35,6 +35,22 @@ namespace SpaceHaste.Controls
             LastPacket = 0;
         }
 
+        private bool isCameraKey(Keys key)
+        {
+            switch (key)
+            {
+                case Keys.W:
+                case Keys.A:
+                case Keys.S:
+                case Keys.D:
+                case Keys.E:
+                case Keys.Q:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         private void MapControls()
         {
             //Add Keyboard Keys
@@ -60,8 +76,15 @@ namespace SpaceHaste.Controls
             {
                 KeyboardState Kstate = Keyboard.GetState();
                 foreach (Microsoft.Xna.Framework.Input.Keys key in KeyMap.Keys)
-                    if (Kstate.IsKeyDown(key) && lastKState.IsKeyUp(key))
-                        KeyMap[key]();
+                {
+                    if (Kstate.IsKeyDown(key))
+                    {
+                        if(lastKState.IsKeyUp(key))
+                            KeyMap[key]();
+                        else if (isCameraKey(key))
+                            KeyMap[key]();
+                    }
+                }
                 lastKState = Kstate;
             }
             else
@@ -76,10 +99,10 @@ namespace SpaceHaste.Controls
                 if (Gstate.IsButtonDown(Buttons.RightStick)) camera.ZoomIn();
                 if (Gstate.IsButtonDown(Buttons.RightStick) && Gstate.IsButtonDown(Buttons.LeftTrigger)) camera.ZoomOut();
                 if (Gstate.IsButtonDown(Buttons.A)) GameMechanicsManager.MechMan.Selection();
-                if (Gstate.ThumbSticks.Right.X < -0.5) GameMechanicsManager.MechMan.MoveSelectionLeft();
-                if (Gstate.ThumbSticks.Right.X > 0.5) GameMechanicsManager.MechMan.MoveSelectionRight();
-                if (Gstate.ThumbSticks.Right.Y > 0.5) GameMechanicsManager.MechMan.MoveSelectionUp();
-                if (Gstate.ThumbSticks.Right.Y < -0.5) GameMechanicsManager.MechMan.MoveSelectionDown();
+                if (Gstate.ThumbSticks.Left.X < -0.5) GameMechanicsManager.MechMan.MoveSelectionLeft();
+                if (Gstate.ThumbSticks.Left.X > 0.5) GameMechanicsManager.MechMan.MoveSelectionRight();
+                if (Gstate.ThumbSticks.Left.Y > 0.5) GameMechanicsManager.MechMan.MoveSelectionUp();
+                if (Gstate.ThumbSticks.Left.Y < -0.5) GameMechanicsManager.MechMan.MoveSelectionDown();
                 if (Gstate.IsButtonDown(Buttons.RightStick)) GameMechanicsManager.MechMan.MoveSelectionLower();
                 if (Gstate.IsButtonDown(Buttons.RightStick) && Gstate.IsButtonDown(Buttons.LeftTrigger)) GameMechanicsManager.MechMan.MoveSelectionHigher();
             }

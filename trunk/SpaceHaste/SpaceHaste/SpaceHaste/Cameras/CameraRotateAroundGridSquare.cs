@@ -16,8 +16,8 @@ namespace SpaceHaste.Cameras
         float verticalAngle = .4f;
         float horizontalAngle = 0;
         float zoom = 10;
-        float verticalAngleMin = 0;
-        float verticalAngleMax = (float) Math.PI * 2;
+        float verticalAngleMin = .01f;
+        float verticalAngleMax = (float) Math.PI - .01f;
         float zoomMin = 10000;
         float zoomMax = 1000000;
         public CameraRotateAroundGridSquare(GraphicsDeviceManager graphics)
@@ -74,16 +74,9 @@ namespace SpaceHaste.Cameras
             { 
                 //Zoom out 
                 zoom += 20F; 
-            } 
-             
-            // Keep vertical angle within tolerances 
+            }
+
             verticalAngle = MathHelper.Clamp(verticalAngle, verticalAngleMin, verticalAngleMax); 
- 
-            // Keep vertical angle within PI 
-            if (horizontalAngle > MathHelper.TwoPi) 
-                horizontalAngle -= MathHelper.TwoPi; 
-            else if (horizontalAngle < 0.0f) 
-                horizontalAngle += MathHelper.TwoPi; 
  
             // Keep zoom within range 
             zoom = MathHelper.Clamp(zoom, zoomMin, zoomMax); 

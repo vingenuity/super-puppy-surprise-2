@@ -39,6 +39,7 @@ namespace SpaceHaste.GameMech
             lastKState = Keyboard.GetState();
         }
 
+
         GameObject NextShipToMove()
         {
             GameObject go = null;
@@ -46,7 +47,7 @@ namespace SpaceHaste.GameMech
                 go = GameObjectList[0];
             for (int i = 0; i < GameObjectList.Count; i++)
             {
-                if (go.NeededEnergy > GameObjectList[i].NeededEnergy)
+                if (go.Energy < GameObjectList[i].Energy)
                     go = GameObjectList[i];
             }
             return go;
@@ -63,10 +64,10 @@ namespace SpaceHaste.GameMech
             GameObject nextShipToMove = NextShipToMove();
             if (nextShipToMove == null)
                 return;
-            double energyToRecover = nextShipToMove.NeededEnergy;
+            double energyToRecover = nextShipToMove.Energy;
             for (int i = 0; i < GameObjectList.Count; i++)
             {
-                GameObjectList[i].NeededEnergy -= energyToRecover;           
+                GameObjectList[i].Energy += energyToRecover;           
             }
             if (nextShipToMove.Team == 0)
             {
@@ -130,7 +131,7 @@ namespace SpaceHaste.GameMech
                 Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;
                 Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
                 float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
-                CurrentGameObjectSelected.NeededEnergy += DistanceMoved * CurrentGameObjectSelected.MovementEnergy;
+                CurrentGameObjectSelected.Energy += DistanceMoved * CurrentGameObjectSelected.MovementEnergy;
                 RecoverEnergyToNextShip();
             }
         }

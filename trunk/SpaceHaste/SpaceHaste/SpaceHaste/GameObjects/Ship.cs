@@ -17,20 +17,21 @@ namespace SpaceHaste.GameObjects
         int[] shield = new int[2];        //shields -- 0 = current, 1 = max
 
         //Energy
-        int[] energy = new int[2];        //energy  -- 0 = current, 1 = max
+        double[] energy = new double[2];        //energy  -- 0 = current, 1 = max
         double[] efficiency = new double[3];    //contains [moveEff,laserEff,shieldsEff] efficiencies track energy usage for specified action                        
+        double regen;                           //The amount of energy each ship regenerates in one regeneration round.  Should be somewhere around 5 - 30.
 
         //Weapons
         int[] dmg = new int[2];           //Damage done by weapons 0 = Laser, 1 = Missile
         int numMiss;                            //Number of missiles ship has left              
 
         public Ship(Vector3 location)
-            : this(location, 100, 100, 100, 1, 20, 10, new double[] {.5, .5, .5})
+            : this(location, 100, 100, 13, 1, 20, 10, new double[] {.25, .5, .5})
         {
             Name = "MovementShip";
         }
 
-        public Ship(Vector3 location, int maxHull, int maxShield, int maxEnergy, int numMissiles, int lsrDmg, int missDmg, double[] eff) 
+        public Ship(Vector3 location, int maxHull, int maxShield, double regeneration, int numMissiles, int lsrDmg, int missDmg, double[] eff) 
             : base(location)
         {
             //Fill hull and shields to max.
@@ -39,7 +40,10 @@ namespace SpaceHaste.GameObjects
 
             //Start energy at zero. We will recharge energy starting on turn 1.
             energy[0] = 0;
-            energy[1] = maxEnergy;
+            energy[1] = 100;
+
+            //Set regen
+            regen = regeneration;
 
             //Set up our weapons
             numMiss = numMissiles;
@@ -47,6 +51,10 @@ namespace SpaceHaste.GameObjects
             dmg[1] = missDmg;
 
             
+        }
+
+        public double getShipRegen() {
+            return regen;
         }
 
         public override void Load()
@@ -94,7 +102,7 @@ namespace SpaceHaste.GameObjects
                 Unload();
         }
 
-        public void Generate(int amount_energy) { energy[0] += amount_energy; }
+        public void Generate(int amount_energy) { energy[0] += regen; }
 
         public override void Unload()
         {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceHaste.GameMech;
 
 namespace SpaceHaste.Huds
 {
@@ -19,6 +20,7 @@ namespace SpaceHaste.Huds
         Vector2 MenuMoveStringPosition;
         Vector2 MenuWaitStringPosition;
         Texture2D texture1 ;
+        private bool ShowShipActions;
         public UnitDisplayActions()
         {
             MenuMoveStringPosition = new Vector2(360, 40);
@@ -33,6 +35,9 @@ namespace SpaceHaste.Huds
         }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont spriteFont)
         {
+            if (!ShowShipActions)
+                return;
+
             spriteBatch.Draw(texture1, new Rectangle(350, 20, 150, 150), Color.White);
             if(Selected == 0)
                 spriteBatch.DrawString(spriteFont, "Move", MenuMoveStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
@@ -50,6 +55,11 @@ namespace SpaceHaste.Huds
         }
         public void Update(GameTime gameTime)
         {
+            Selected = (int)GameMechanicsManager.MechMan.ShipModeSelection;
+            if (GameMechanicsManager.MechMan.gamestate == GameMechanicsManager.GameState.SelectShipAction)
+                ShowShipActions = true;
+            else
+                ShowShipActions = false;
         }
         public void Attack()
         {

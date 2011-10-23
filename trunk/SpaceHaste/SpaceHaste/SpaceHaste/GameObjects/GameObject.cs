@@ -24,7 +24,8 @@ namespace SpaceHaste.GameObjects
         public Boolean Passable;
         public int Team;
         public double Energy;
-        public double MovementEnergy = 1;
+        public double MovementEnergyCost = 10;
+        public double EnergyEfficiency = 4;
         public GridCube location;
         public string Name;
         public int MovementRange;

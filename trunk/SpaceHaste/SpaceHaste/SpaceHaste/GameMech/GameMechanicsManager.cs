@@ -7,11 +7,27 @@ using Microsoft.Xna.Framework.Input;
 using SpaceHaste.GameObjects;
 using SpaceHaste.Maps;
 using SpaceHaste.Primitives;
+using SpaceHaste.Huds;
 
 namespace SpaceHaste.GameMech
 {
     public class GameMechanicsManager : GameComponent
     {
+        public enum ShipSelectionMode
+        {
+            Movement,
+            Attack,
+            Wait,
+        };
+
+        public enum GameState
+        {
+            Other,
+            SelectShipAction,
+            EnterShipAction,
+        };
+        public GameState gamestate;
+        public ShipSelectionMode ShipModeSelection;
         //For controls, we need a singleton
         public static GameMechanicsManager MechMan;
 
@@ -44,15 +60,83 @@ namespace SpaceHaste.GameMech
             }
             return go;
         }
+
         delegate void Del(GameTime gameTime);
         void EmptyMethod(GameTime gameTime)
         {
-            RecoverEnergyToNextShip();
+            NextShipTurn();
+        }
+        //Rename to something more descriptive
+        List<GameObject> MovementOrderList = new List<GameObject>();
+
+        void CreateMovementOrderList()
+        {
+            MovementOrderList = CloneGameObjectList();
+            MovementOrderList = SortGameObjectsByEnergy(MovementOrderList);
+        }
+
+        private List<GameObject> SortGameObjectsByEnergy(List<GameObject> l)
+        {
+            List<GameObject> list = new List<GameObject>();
+            while(l.Count > 0)
+                AddFastestShipEnergyToList(l, list);
+            return list;
+        }
+
+        private void AddFastestShipEnergyToList(List<GameObject> ListFrom, List<GameObject> ListTo)
+        {
+            GameObject go = ListFrom[0];
+            for (int i = 1; i < ListFrom.Count; i++)
+            {
+                if (go.EnergyEfficiency < ListFrom[i].EnergyEfficiency)
+                    go = ListFrom[i];
+            }
+            ListFrom.Remove(go);
+            ListTo.Add(go);
+        }
+
+        private List<GameObject> CloneGameObjectList()
+        {
+            List<GameObject> list = new List<GameObject>();
+            for (int i = 0; i < GameObjectList.Count; i++)
+            {
+               list.Add(GameObjectList[i]);
+            }
+            return list;
         }
 
 
+        void NextShipTurn()
+        {
+            if (MovementOrderList.Count == 0 || MovementOrderList == null)
+                NextTurn();
+            if (MovementOrderList.Count == 0)
+                return;
+            gamestate = GameState.SelectShipAction;
+            GameObject nextShipToMove = MovementOrderList[0];
+            
+            double energy = nextShipToMove.Energy;
+ 
+            if (nextShipToMove.Team == 0)
+            {
+                PlayerTurn(nextShipToMove);
+            }
+            else
+                ComputerTurn();
+        }
+
+        private void PlayerTurn(GameObject nextShipToMove)
+        {
+
+            update = PlayerSelectShipAction;
+            CurrentGameObjectSelected = nextShipToMove;
+            CurrentGridCubeSelected = nextShipToMove.GridPosition;
+        }
+
+        /*
         void RecoverEnergyToNextShip()
         {
+           
             GameObject nextShipToMove = NextShipToMove();
             if (nextShipToMove == null)
                 return;
@@ -70,19 +154,18 @@ namespace SpaceHaste.GameMech
             else
                 ComputerTurn();
         }
-
+        */
+        void PlayerSelectShipAction(GameTime gameTime)
+        {
+            
+        }
         void PlayerTurn(GameTime gameTime)
         {
         }
         void ComputerTurn()
         {
         }
-
-        /// <summary>
-        /// The following functions all return void and take no arguments.
-        /// During the instantiation of the class, these are tied to keys and used to perform actions.
-        /// </summary>
-        internal void Selection()
+        void SelectionMovement()
         {
             List<GridCube> InRange = Map.map.GetGridSquaresInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
             if (InRange.Find(item => item == Map.map.GetCubeAt(CurrentGridCubeSelected)) != null)
@@ -90,39 +173,113 @@ namespace SpaceHaste.GameMech
                 Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;
                 Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
                 float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
-                CurrentGameObjectSelected.Energy += DistanceMoved * CurrentGameObjectSelected.MovementEnergy;
-                RecoverEnergyToNextShip();
+                CurrentGameObjectSelected.Energy -= DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost;
+                NextShipTurn();
             }
+        }
+        void SelectionWait()
+        {
+        }
+        void SelectionAttack()
+        {
+        }
+        /// <summary>
+        /// The following functions all return void and take no arguments.
+        /// During the instantiation of the class, these are tied to keys and used to perform actions.
+        /// </summary>
+        internal void Selection()
+        {
+            if (gamestate == GameState.SelectShipAction)
+            {
+                ShipModeSelection = (ShipSelectionMode)(((int)ShipModeSelection) % 3);
+                gamestate = GameState.EnterShipAction;
+                return;
+            }
+            if(gamestate == GameState.EnterShipAction)
+                switch (ShipModeSelection)
+                {
+                    case(ShipSelectionMode.Attack):
+                        SelectionAttack();
+                        return;
+                  
+                    case (ShipSelectionMode.Movement):
+                        SelectionMovement();
+                        return;
+                  
+                    case(ShipSelectionMode.Wait):
+                        SelectionWait();
+                        return;
+
+                }
+            
+        }
+
+        void NextTurn()
+        {
+            CreateMovementOrderList();
         }
         internal void MoveSelectionUp()
         {
-            if(CurrentGridCubeSelected.X < Map.map.Size - 1) CurrentGridCubeSelected.X++;
-            UpdateSelectionLine();
+            if (gamestate == GameState.EnterShipAction)
+            {
+                if (CurrentGridCubeSelected.X < Map.map.Size - 1) CurrentGridCubeSelected.X++;
+                UpdateSelectionLine();
+            }
+            if (gamestate == GameState.SelectShipAction)
+            {
+                int i = (int)ShipModeSelection - 1;
+                if (i < 0)
+                    i += 3;
+                ShipModeSelection = (ShipSelectionMode)(i % 3);
+
+            }
         }
         internal void MoveSelectionDown()
         {
-            if (CurrentGridCubeSelected.X > 0) CurrentGridCubeSelected.X--;
-            UpdateSelectionLine();
+            if (gamestate == GameState.EnterShipAction)
+            {
+                if (CurrentGridCubeSelected.X > 0) CurrentGridCubeSelected.X--;
+                UpdateSelectionLine();
+            }
+            if (gamestate == GameState.SelectShipAction)
+            {
+                ShipModeSelection++;
+                ShipModeSelection = (ShipSelectionMode)(((int)ShipModeSelection) % 3);
+            }
         }
         internal void MoveSelectionLeft()
         {
-            if (CurrentGridCubeSelected.Z > 0) CurrentGridCubeSelected.Z--;
-            UpdateSelectionLine();
+            if (gamestate == GameState.EnterShipAction)
+            {
+                if (CurrentGridCubeSelected.Z > 0) CurrentGridCubeSelected.Z--;
+                UpdateSelectionLine();
+            }
         }
         internal void MoveSelectionRight()
         {
-            if (CurrentGridCubeSelected.Z < Map.map.Size - 1) CurrentGridCubeSelected.Z++;
-            UpdateSelectionLine();
+            if (gamestate == GameState.EnterShipAction)
+            {
+                if (CurrentGridCubeSelected.Z < Map.map.Size - 1) CurrentGridCubeSelected.Z++;
+                UpdateSelectionLine();
+            }
         }
         internal void MoveSelectionHigher()
         {
-            if (CurrentGridCubeSelected.Y < Map.map.Size - 1) CurrentGridCubeSelected.Y++;
-            UpdateSelectionLine();
+            if (gamestate == GameState.EnterShipAction)
+            {
+                if (CurrentGridCubeSelected.Y < Map.map.Size - 1) CurrentGridCubeSelected.Y++;
+                UpdateSelectionLine();
+            }
+            
         }
         internal void MoveSelectionLower()
         {
-            if (CurrentGridCubeSelected.Y > 0) CurrentGridCubeSelected.Y--;
-            UpdateSelectionLine();
+            if (gamestate == GameState.EnterShipAction)
+            {
+                if (CurrentGridCubeSelected.Y > 0) CurrentGridCubeSelected.Y--;
+                UpdateSelectionLine();
+            }
+           
         }
 
         void UpdateSelectionLine()

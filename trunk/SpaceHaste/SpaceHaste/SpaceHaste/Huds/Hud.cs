@@ -35,7 +35,7 @@ namespace SpaceHaste.Huds
         }
         public override void Update(GameTime gameTime)
         {
-            //DrawUnitLists.Update(gameTime);
+            UnitActions.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)

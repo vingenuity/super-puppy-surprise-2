@@ -36,14 +36,15 @@ namespace SpaceHaste.GameMech
         GameObject CurrentGameObjectSelected;
         Line YSelectedSquareLine;
 
-        //For other stuff
         public static List<GameObject> GameObjectList;
+        public static List<GameObject> WaitingGameObjectList;
         Del update;
 
         public GameMechanicsManager(Game g): base(g)
         {
             MechMan = this;
             GameObjectList = new List<GameObject>();
+            WaitingGameObjectList = new List<GameObject>();
             update = EmptyMethod;
         }
 
@@ -64,15 +65,38 @@ namespace SpaceHaste.GameMech
         delegate void Del(GameTime gameTime);
         void EmptyMethod(GameTime gameTime)
         {
-            NextShipTurn();
+            NextShipAction();
         }
         //Rename to something more descriptive
         List<GameObject> MovementOrderList = new List<GameObject>();
 
         void CreateMovementOrderList()
-        {
+        {         
             MovementOrderList = CloneGameObjectList();
             MovementOrderList = SortGameObjectsByEnergy(MovementOrderList);
+            MovementOrderList = MoveShipsThatWaitedLastTurnToFront(MovementOrderList);
+
+        }
+
+        private List<GameObject> MoveShipsThatWaitedLastTurnToFront(List<GameObject> MovementOrderList)
+        {
+            int counter = 0;
+            while (WaitingGameObjectList.Count > 0)
+            {
+                AddShipWithMostEnergyToFrontOfList(MovementOrderList, WaitingGameObjectList, counter);
+            }
+            return MovementOrderList;
+        }
+       
+        private void AddShipWithMostEnergyToFrontOfList(List<GameObject> MovementOrderList, List<GameObject> WaitingGameObjectList, int counter)
+        {
+            GameObject go = MovementOrderList[0];
+            for (int i = 0; i < MovementOrderList.Count; i++)
+                if (go.Energy < MovementOrderList[i].Energy)
+                    go = MovementOrderList[i];
+            MovementOrderList.Remove(go);
+            MovementOrderList.Insert(counter, go);
+            counter++;
         }
 
         private List<GameObject> SortGameObjectsByEnergy(List<GameObject> l)
@@ -104,15 +128,17 @@ namespace SpaceHaste.GameMech
             }
             return list;
         }
-
-
         void NextShipTurn()
+        { 
+        }
+        void NextShipAction()
         {
             if (MovementOrderList.Count == 0 || MovementOrderList == null)
                 NextTurn();
             if (MovementOrderList.Count == 0)
                 return;
             gamestate = GameState.SelectShipAction;
+          
             GameObject nextShipToMove = MovementOrderList[0];
             
             double energy = nextShipToMove.Energy;
@@ -144,8 +170,7 @@ namespace SpaceHaste.GameMech
             for (int i = 0; i < GameObjectList.Count; i++)
             {
                 GameObjectList[i].Energy += energyToRecover;           
-            }
-            if (nextShipToMove.Team == 0)
+         * 
             {
                 update = PlayerTurn;
                 CurrentGameObjectSelected = nextShipToMove;
@@ -174,12 +199,19 @@ namespace SpaceHaste.GameMech
                 Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
                 float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
                 CurrentGameObjectSelected.Energy -= DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost;
-                NextShipTurn();
+                NextShipAction();
             }
         }
         void SelectionWait()
         {
+            WaitingGameObjectList.Add(CurrentGameObjectSelected);
+            MovementOrderList.Remove(CurrentGameObjectSelected);
+           
+            NextShipAction();
         }
+
+
+
         void SelectionAttack()
         {
             GameObject offender = CurrentGameObjectSelected;
@@ -209,6 +241,8 @@ namespace SpaceHaste.GameMech
             {
                 ShipModeSelection = (ShipSelectionMode)(((int)ShipModeSelection) % 3);
                 gamestate = GameState.EnterShipAction;
+               if(ShipModeSelection == ShipSelectionMode.Wait)
+                   SelectionWait();
                 return;
             }
             if(gamestate == GameState.EnterShipAction)
@@ -225,9 +259,7 @@ namespace SpaceHaste.GameMech
                     case(ShipSelectionMode.Wait):
                         SelectionWait();
                         return;
-
                 }
-            
         }
 
         void NextTurn()
@@ -317,5 +349,7 @@ namespace SpaceHaste.GameMech
             update(gameTime);
             base.Update(gameTime);
         }
+
+      
     }
 }

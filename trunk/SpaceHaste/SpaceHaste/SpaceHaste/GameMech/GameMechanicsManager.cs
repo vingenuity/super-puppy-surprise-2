@@ -182,6 +182,22 @@ namespace SpaceHaste.GameMech
         }
         void SelectionAttack()
         {
+            GameObject offender = CurrentGameObjectSelected;
+            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
+
+            if (tempTarget == null || !(tempTarget is Ship))
+                return;
+            Ship target = tempTarget as Ship;
+
+            if (Map.map.IsObjectInRange(offender, offender.LaserRange, target))
+            {
+                LineManager.AddLine(new Line(offender.DrawPosition, target.DrawPosition, Color.Aqua));
+                target.isHit(offender.LaserDamage);
+                offender.Energy -= 10;
+                if (offender.Energy < 0)
+                    offender.Energy = 0;
+            }
+            else return;
         }
         /// <summary>
         /// The following functions all return void and take no arguments.

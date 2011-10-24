@@ -32,6 +32,10 @@ namespace SpaceHaste.Maps
             Terrain = TerrainType.none;
         }
 
+        public GameObject GetObject(){
+            return ContainedObject;
+        }
+
         public void AddObject(GameObject obj)
         {
             ContainedObject = obj;
@@ -49,7 +53,7 @@ namespace SpaceHaste.Maps
             ContainedObject = null;
         }
 
-        public TerrainType getTerrain() { return Terrain; }
-        public void setTerrain(TerrainType t) { Terrain = t; }
+        public TerrainType GetTerrain() { return Terrain; }
+        public void SetTerrain(TerrainType t) { Terrain = t; }
     }
 }

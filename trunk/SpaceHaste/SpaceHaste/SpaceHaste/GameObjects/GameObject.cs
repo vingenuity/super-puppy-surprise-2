@@ -23,10 +23,11 @@ namespace SpaceHaste.GameObjects
         public BoundingSphere boundingSphere;
         public Boolean Passable;
         public int Team;
+        public int LaserRange;
         public double Energy;
         public double MovementEnergyCost = 10;
         public double EnergyEfficiency = 4;
-        public GridCube location;
+        public GridCube GridLocation;
         public string Name;
         public int MovementRange;
 
@@ -36,12 +37,13 @@ namespace SpaceHaste.GameObjects
         public Matrix World;            //Render position of model
 
         //Constructor
-        public GameObject(Vector3 location)
+        public GameObject(Vector3 position)
         {
             Energy = 100;
             Load();
-            GridPosition = location;
+            GridPosition = position;
             MovementRange = 4;
+            LaserRange = 6;
         }
         public virtual void Load()
         {
@@ -52,6 +54,15 @@ namespace SpaceHaste.GameObjects
 
         public virtual void Unload()
         {
+            GridLocation.RemoveObject(this);
+            Map.map.removeGameObject(this);
+            GraphicsManager.GraphicsGameObjects.Remove(this);
+            GameMechanicsManager.GameObjectList.Remove(this);
+        }
+
+        public int LaserDamage { 
+            get; 
+            set; 
         }
     }
 }

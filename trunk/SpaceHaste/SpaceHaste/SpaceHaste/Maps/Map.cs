@@ -33,8 +33,21 @@ namespace SpaceHaste.Maps
             MapGridCubes[(int)position.X, (int)position.Y, (int)position.Z].AddObject(go);
             go.GridPosition = position;
             go.DrawPosition = MapGridCubes[(int)position.X, (int)position.Y, (int)position.Z].Center;
-            go.location = MapGridCubes[(int)position.X, (int)position.Y, (int)position.Z];
+            go.GridLocation = MapGridCubes[(int)position.X, (int)position.Y, (int)position.Z];
             MapObjects.Add(go);
+        }
+
+        public void addGameObject(GameObject go)
+        {
+            MapGridCubes[(int)go.GridPosition.X, (int)go.GridPosition.Y, (int)go.GridPosition.Z].AddObject(go);
+            go.DrawPosition = MapGridCubes[(int)go.GridPosition.X, (int)go.GridPosition.Y, (int)go.GridPosition.Z].Center;
+            go.GridLocation = MapGridCubes[(int)go.GridPosition.X, (int)go.GridPosition.Y, (int)go.GridPosition.Z];
+            MapObjects.Add(go);
+        }
+
+        public void removeGameObject(GameObject go)
+        {
+            MapObjects.Remove(go);
         }
 
         public void colorGrids()
@@ -86,21 +99,20 @@ namespace SpaceHaste.Maps
         /// axis-bound distance check eliminates game objects out of range
         /// a ray test checks if objects are blocked
         /// </summary>
-        /// <param name="gs"></param>
+        /// <param name="gc"></param>
         /// <param name="range"></param>
         /// <returns></returns>
-        public List<GameObject> GetGameObjectsInRange(GridCube gs, int range) 
+        public List<GameObject> GetGameObjectsInRange(GridCube gc, int range) 
         {
             List<GameObject> list = new List<GameObject>();
             for (int i = 0; i < MapObjects.Count; i++) {
-                int d = (int)Math.Abs(MapObjects[i].GridPosition.X - gs.Position.X) +
-                        (int)Math.Abs(MapObjects[i].GridPosition.Y - gs.Position.Y) +
-                        (int)Math.Abs(MapObjects[i].GridPosition.Z - gs.Position.Z);
+                int d = (int)Math.Abs(MapObjects[i].GridPosition.X - gc.Position.X) +
+                        (int)Math.Abs(MapObjects[i].GridPosition.Y - gc.Position.Y) +
+                        (int)Math.Abs(MapObjects[i].GridPosition.Z - gc.Position.Z);
                 if (d > range)
                     continue;
-                Vector3 rayDirection = MapObjects[i].GridPosition - gs.Position;
-           
-                Ray ray = new Ray(gs.Position, rayDirection);
+                Vector3 rayDirection = MapObjects[i].GridPosition - gc.Position;
+                Ray ray = new Ray(gc.Position, rayDirection);
                 float? distance = ray.Intersects(MapObjects[i].boundingSphere);
                 float? r = 0;
                 for (int j = 0; j < MapObjects.Count; j++) {
@@ -113,6 +125,77 @@ namespace SpaceHaste.Maps
                     list.Add(MapObjects[i]);
             }
             return new List<GameObject>();
+        }
+
+        public Boolean IsObjectInRange(GameObject go, int range, GameObject target)
+        {
+            int d = (int)Math.Abs(go.GridPosition.X - target.GridPosition.X) +
+                    (int)Math.Abs(go.GridPosition.Y - target.GridPosition.Y) +
+                    (int)Math.Abs(go.GridPosition.Z - target.GridPosition.Z);
+            if (d > range)
+                return false;
+
+            Vector3 rayDirection = target.GridPosition - go.GridPosition;
+            Ray ray = new Ray(go.GridPosition, rayDirection);
+            float? distance = ray.Intersects(target.boundingSphere);
+            float? r = 0;
+            for (int i = 0; i < MapObjects.Count; i++)
+            {
+                if (MapObjects[i].Passable) continue; //ignore nebulae
+                r = ray.Intersects(MapObjects[i].boundingSphere);
+                if (r == null || r < 1 || r > distance) continue;
+                else break; // 1 < r < d
+            }
+            if (!(r > 1 && r < distance) || r == null)
+                return true;
+            else return false;
+        }
+
+        public Boolean IsObjectInRange(GridCube gc, int range, GameObject target) {
+            int d = (int)Math.Abs(gc.Position.X - target.GridPosition.X) +
+                    (int)Math.Abs(gc.Position.Y - target.GridPosition.Y) +
+                    (int)Math.Abs(gc.Position.Z - target.GridPosition.Z);
+            if (d > range)
+                return false;
+
+            Vector3 rayDirection = target.GridPosition - gc.Position;
+            Ray ray = new Ray(gc.Position, rayDirection);
+            float? distance = ray.Intersects(target.boundingSphere);
+            float? r = 0;
+            for (int i = 0; i < MapObjects.Count; i++)
+            {
+                if (MapObjects[i].Passable) continue; //ignore nebulae
+                r = ray.Intersects(MapObjects[i].boundingSphere);
+                if (r == null || r < 1 || r > distance) continue;
+                else break; // 1 < r < d
+            }
+            if (!(r > 1 && r < distance) || r == null)
+                return true;
+            else return false;
+        }
+
+        public Boolean IsObjectInRange(GridCube gc, int range, GridCube target)
+        {
+            int d = (int)Math.Abs(gc.Position.X - target.Position.X) +
+                    (int)Math.Abs(gc.Position.Y - target.Position.Y) +
+                    (int)Math.Abs(gc.Position.Z - target.Position.Z);
+            if (d > range)
+                return false;
+
+            Vector3 rayDirection = target.Position - gc.Position;
+            Ray ray = new Ray(gc.Position, rayDirection);
+            float? distance = ray.Intersects(target.GetObject().boundingSphere);
+            float? r = 0;
+            for (int i = 0; i < MapObjects.Count; i++)
+            {
+                if (MapObjects[i].Passable) continue; //ignore nebulae
+                r = ray.Intersects(MapObjects[i].boundingSphere);
+                if (r == null || r < 1 || r > distance) continue;
+                else break; // 1 < r < d
+            }
+            if (!(r > 1 && r < distance) || r == null)
+                return true;
+            else return false;
         }
         
         /// <summary>
@@ -132,10 +215,10 @@ namespace SpaceHaste.Maps
                 if (neighbor.HasObject())
                     continue;
                 //Can't cross through asteroid
-                if(neighbor.getTerrain() == GridCube.TerrainType.asteroid)
+                if(neighbor.GetTerrain() == GridCube.TerrainType.asteroid)
                     continue;
                 //Movement penalty for nebulae
-                if (neighbor.getTerrain() == GridCube.TerrainType.nebula)
+                if (neighbor.GetTerrain() == GridCube.TerrainType.nebula)
                     inRange.AddRange(GetGridSquaresInRange(neighbor, range-2));
                 //Otherwise, take normal movement
                 else
@@ -210,7 +293,7 @@ namespace SpaceHaste.Maps
 
 
         }
-        public void AddGridX0Z() 
+        public void AddGridX0Z()
         {
             for (int i = 0; i <= Size; i++) 
             {
@@ -241,6 +324,12 @@ namespace SpaceHaste.Maps
             }
 
         }
+        public void AddGridIsometric()
+        {
+            AddGrid0YZ();
+            AddGridX0Z();
+            AddGridXY0();
+        }
 
         public GridCube GetCubeAt(Vector3 loc) { return MapGridCubes[(int)loc.X, (int)loc.Y, (int)loc.Z]; }
 
@@ -250,18 +339,20 @@ namespace SpaceHaste.Maps
             LineManager.AddLine(new Line(new Vector3(10, 10, 10),
                                 new Vector3(0, 0, 0)));
         }
+
         public void AddGameObjectToGridSquare(GameObject gameObject, int x, int y, int z)
         {
-            gameObject.location = MapGridCubes[x, y, z];
+            gameObject.GridLocation = MapGridCubes[x, y, z];
             gameObject.GridPosition = MapGridCubes[x, y, z].Center;
         }
 
         public void MoveObject(GameObject obj, int x, int y, int z)
         {
-            obj.location.RemoveObject(obj);
-            obj.location = MapGridCubes[x, y, z];
-            obj.location.AddObject(obj);
+            obj.GridLocation.RemoveObject(obj);
+            obj.GridLocation = MapGridCubes[x, y, z];
+            obj.GridLocation.AddObject(obj);
             addGameObject(obj, new Vector3(x, y, z));
+            //addGameObject(obj);
         }
     }
 }

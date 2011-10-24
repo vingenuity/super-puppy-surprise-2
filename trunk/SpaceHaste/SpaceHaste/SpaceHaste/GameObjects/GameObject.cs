@@ -29,6 +29,8 @@ namespace SpaceHaste.GameObjects
         public double EnergyEfficiency = 4;
         public GridCube GridLocation;
         public string Name;
+        public double Health;
+        public double maxHealth;
         public int MovementRange;
 
         //Model/Render Info

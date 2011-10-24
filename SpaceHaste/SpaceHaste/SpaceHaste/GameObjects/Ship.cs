@@ -50,7 +50,7 @@ namespace SpaceHaste.GameObjects
             dmg[0] = lsrDmg;
             dmg[1] = missDmg;
 
-            
+            LaserDamage = 50;
         }
 
         public double getShipRegen() {
@@ -65,6 +65,7 @@ namespace SpaceHaste.GameObjects
             Scale = .25f;
             base.Load();
         }
+
         public void fireLaser(Ship ship)
         {
             ship.energy[0] -= 40;
@@ -104,8 +105,6 @@ namespace SpaceHaste.GameObjects
 
         public void Generate(int amount_energy) { energy[0] += regen; }
 
-        public override void Unload()
-        {
-        }
+        //public override void Unload() { }
     }
 }

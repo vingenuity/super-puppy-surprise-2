@@ -32,7 +32,7 @@ namespace SpaceHaste.GameObjects
         public double Health;
         public double maxHealth;
         public int MovementRange;
-
+        public double waitTime;
         //Model/Render Info
         public float Scale;
         public Model Model;             //Holds model info and effect information
@@ -67,18 +67,24 @@ namespace SpaceHaste.GameObjects
             set; 
         }
 
-        public static GameObject operator >(GameObject go1, GameObject go2)
+        public static bool operator >(GameObject go1, GameObject go2)
         {
-            if (go1.Energy > go2.Energy)
-                return go1;
-            else return go2;
+            if (go1.Energy + go1.waitTime > go2.Energy + go2.waitTime)
+                return true;
+            else return false;
         }
 
-        public static GameObject operator <(GameObject go1, GameObject go2)
+        public void AddEnergy(double energy)
         {
-            if (go1.Energy < go2.Energy)
-                return go1;
-            else return go2;
+            Energy += energy;
+            waitTime -= energy;
+        }
+
+        public static bool operator <(GameObject go1, GameObject go2)
+        {
+            if (go1.Energy + go1.waitTime < go2.Energy + go2.waitTime)
+                return true;
+            else return false;
         }
     }
 }

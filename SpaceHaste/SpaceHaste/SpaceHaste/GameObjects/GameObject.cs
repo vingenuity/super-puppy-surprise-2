@@ -25,7 +25,7 @@ namespace SpaceHaste.GameObjects
         public int Team;
         public int LaserRange;
         public double Energy;
-        public double MovementEnergyCost = 10;
+        public double MovementEnergyCost = 20;
         public double EnergyEfficiency = 4;
         public GridCube GridLocation;
         public string Name;
@@ -44,7 +44,7 @@ namespace SpaceHaste.GameObjects
             Energy = 100;
             Load();
             GridPosition = position;
-            MovementRange = 4;
+            MovementRange = (int) (Energy / MovementEnergyCost);
             LaserRange = 6;
         }
         public virtual void Load()

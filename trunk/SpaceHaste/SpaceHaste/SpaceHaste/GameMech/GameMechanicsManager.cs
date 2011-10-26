@@ -42,7 +42,6 @@ namespace SpaceHaste.GameMech
         Line YSelectedSquareLine;
 
         public static List<GameObject> GameObjectList;
-        public static List<GameObject> WaitingGameObjectList;
 
         Del update;
 
@@ -50,22 +49,7 @@ namespace SpaceHaste.GameMech
         {
             MechMan = this;
             GameObjectList = new List<GameObject>();
-            WaitingGameObjectList = new List<GameObject>();
             update = EmptyMethod;
-        }
-
-
-        GameObject NextShipToMove()
-        {
-            GameObject go = null;
-            if (GameObjectList.Count > 0)
-                go = GameObjectList[0];
-            for (int i = 0; i < GameObjectList.Count; i++)
-            {
-                if (go.Energy < GameObjectList[i].Energy)
-                    go = GameObjectList[i];
-            }
-            return go;
         }
 
         delegate void Del(GameTime gameTime);
@@ -73,86 +57,53 @@ namespace SpaceHaste.GameMech
         {
             NextShipTurn();
         }
-        //Rename to something more descriptive
-        public List<GameObject> ShipTurnOrderList = new List<GameObject>();
-
-        void CreateMovementOrderList()
-        {         
-            ShipTurnOrderList = CloneGameObjectList();
-            ShipTurnOrderList = SortGameObjectsByEnergy(ShipTurnOrderList);
-            ShipTurnOrderList = MoveShipsThatWaitedLastTurnToFront(ShipTurnOrderList);
-
-        }
-
-        private List<GameObject> MoveShipsThatWaitedLastTurnToFront(List<GameObject> MovementOrderList)
-        {
-            int counter = 0;
-            while (WaitingGameObjectList.Count > 0)
-            {
-                AddShipWithMostEnergyToFrontOfList(MovementOrderList, WaitingGameObjectList, counter);
-            }
-            return MovementOrderList;
-        }
-       
-        private void AddShipWithMostEnergyToFrontOfList(List<GameObject> MovementOrderList, List<GameObject> WaitingGameObjectList, int counter)
-        {
-            GameObject go = MovementOrderList[0];
-            for (int i = 0; i < MovementOrderList.Count; i++)
-                if (go.Energy < MovementOrderList[i].Energy)
-                    go = MovementOrderList[i];
-            MovementOrderList.Remove(go);
-            MovementOrderList.Insert(counter, go);
-            counter++;
-        }
-
-        private List<GameObject> SortGameObjectsByEnergy(List<GameObject> l)
+        void SortGameObjectList()
         {
             List<GameObject> list = new List<GameObject>();
-            while(l.Count > 0)
-                AddFastestShipEnergyToList(l, list);
-            return list;
-        }
-
-        private void AddFastestShipEnergyToList(List<GameObject> ListFrom, List<GameObject> ListTo)
-        {
-            GameObject go = ListFrom[0];
-            for (int i = 1; i < ListFrom.Count; i++)
+            while (GameObjectList.Count > 0)
             {
-                if (go.EnergyEfficiency < ListFrom[i].EnergyEfficiency)
-                    go = ListFrom[i];
-            }
-            ListFrom.Remove(go);
-            ListTo.Add(go);
-        }
+                GameObject Lowest = GameObjectList[0];
+                for (int i = 0; i < GameObjectList.Count; i++)
+                {
 
-        private List<GameObject> CloneGameObjectList()
-        {
-            List<GameObject> list = new List<GameObject>();
-            for (int i = 0; i < GameObjectList.Count; i++)
-            {
-               list.Add(GameObjectList[i]);
+                    if (GameObjectList[i] < Lowest)
+                        Lowest = GameObjectList[i];
+                }
+                list.Add(Lowest);
+                GameObjectList.Remove(Lowest);
             }
-            return list;
+            GameObjectList = list;
         }
-      
-        
         void NextShipTurn()
         {
-            if (ShipTurnOrderList.Count == 0 || ShipTurnOrderList == null)
-                NextTurn();
-            if (ShipTurnOrderList.Count == 0)
-                return;
+            SortGameObjectList();
+           // GameObjectList.Sort();
+            GameObject nextShipToMove = GameObjectList[0];
+            AddEnergyToShips(nextShipToMove);
+        
             MoveEnabled = true;
             WaitEnabled = true;
             AttackEnabled = true;
             NextShipAction();
+        }
+
+        private void AddEnergyToShips(GameObject nextShipToMove)
+        {
+            if (nextShipToMove.Energy == 0 && nextShipToMove.waitTime == 0)
+            {
+                double energyAdded = nextShipToMove.Energy + nextShipToMove.waitTime;
+                for (int i = 0; i < GameObjectList.Count; i++)
+                {
+                    GameObjectList[i].AddEnergy(energyAdded);
+                }
+            }
         }
         
         private void NextShipAction()
         {
             gamestate = GameState.SelectShipAction;
             ScrollDownInUnitListIfActionIsDisabled();
-            GameObject nextShipToMove = ShipTurnOrderList[0];
+            GameObject nextShipToMove = GameObjectList[0];
 
             double energy = nextShipToMove.Energy;
  
@@ -211,6 +162,7 @@ namespace SpaceHaste.GameMech
         void ComputerTurn()
         {
         }
+
         void SelectionMovement()
         {
             List<GridCube> InRange = Map.map.GetGridSquaresInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
@@ -222,14 +174,13 @@ namespace SpaceHaste.GameMech
                 CurrentGameObjectSelected.Energy -= DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost;
                 MoveEnabled = false;
                 NextShipAction();
-
             }
         }
+
         void SelectionWait()
         {
-            WaitingGameObjectList.Add(CurrentGameObjectSelected);
-            GameObjectList.Remove(CurrentGameObjectSelected);
-           
+            CurrentGameObjectSelected.Energy -= 5;
+            CurrentGameObjectSelected.waitTime = 40;
             NextShipAction();
         }
 
@@ -287,7 +238,7 @@ namespace SpaceHaste.GameMech
 
         void NextTurn()
         {
-            CreateMovementOrderList();
+            GameObjectList.Sort();
         }
         internal void MoveSelectionUp()
         {

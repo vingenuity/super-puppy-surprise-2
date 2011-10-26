@@ -22,7 +22,7 @@ namespace SpaceHaste.Huds
         public void Load()
         {
             texture1 = Hud.Content.Load<Texture2D>("SketchTexture");
-            maxEnergy = Hud.Content.Load<Texture2D>("EnergyBarEmpty");
+            //maxEnergy = Hud.Content.Load<Texture2D>("EnergyBarEmpty");
             currentHealth = Hud.Content.Load<Texture2D>("HealthBar");
             currentEnergy = Hud.Content.Load<Texture2D>("EnergyBar");
 

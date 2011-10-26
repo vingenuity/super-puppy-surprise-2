@@ -26,6 +26,11 @@ namespace SpaceHaste.GameMech
             SelectShipAction,
             EnterShipAction,
         };
+
+        public bool MoveEnabled;
+        public bool WaitEnabled;
+        public bool AttackEnabled;
+
         public GameState gamestate;
         public ShipSelectionMode ShipModeSelection;
         //For controls, we need a singleton
@@ -65,16 +70,16 @@ namespace SpaceHaste.GameMech
         delegate void Del(GameTime gameTime);
         void EmptyMethod(GameTime gameTime)
         {
-            NextShipAction();
+            NextShipTurn();
         }
         //Rename to something more descriptive
-        List<GameObject> MovementOrderList = new List<GameObject>();
+        List<GameObject> ShipTurnOrderList = new List<GameObject>();
 
         void CreateMovementOrderList()
         {         
-            MovementOrderList = CloneGameObjectList();
-            MovementOrderList = SortGameObjectsByEnergy(MovementOrderList);
-            MovementOrderList = MoveShipsThatWaitedLastTurnToFront(MovementOrderList);
+            ShipTurnOrderList = CloneGameObjectList();
+            ShipTurnOrderList = SortGameObjectsByEnergy(ShipTurnOrderList);
+            ShipTurnOrderList = MoveShipsThatWaitedLastTurnToFront(ShipTurnOrderList);
 
         }
 
@@ -128,19 +133,26 @@ namespace SpaceHaste.GameMech
             }
             return list;
         }
+      
+        
         void NextShipTurn()
-        { 
-        }
-        void NextShipAction()
         {
-            if (MovementOrderList.Count == 0 || MovementOrderList == null)
+            if (ShipTurnOrderList.Count == 0 || ShipTurnOrderList == null)
                 NextTurn();
-            if (MovementOrderList.Count == 0)
+            if (ShipTurnOrderList.Count == 0)
                 return;
+            MoveEnabled = true;
+            WaitEnabled = true;
+            AttackEnabled = true;
+            NextShipAction();
+        }
+        
+        private void NextShipAction()
+        {
             gamestate = GameState.SelectShipAction;
-          
-            GameObject nextShipToMove = MovementOrderList[0];
-            
+            ScrollDownInUnitListIfActionIsDisabled();
+            GameObject nextShipToMove = ShipTurnOrderList[0];
+
             double energy = nextShipToMove.Energy;
  
             if (nextShipToMove.Team == 0)
@@ -149,6 +161,14 @@ namespace SpaceHaste.GameMech
             }
             else
                 ComputerTurn();
+        }
+
+        private void ScrollDownInUnitListIfActionIsDisabled()
+        {
+            if (ShipModeSelection == ShipSelectionMode.Movement && !MoveEnabled)
+                ScrollDownInUnitActionList();
+            if (ShipModeSelection == ShipSelectionMode.Attack && !AttackEnabled)
+                ScrollDownInUnitActionList();
         }
 
         private void PlayerTurn(GameObject nextShipToMove)
@@ -199,13 +219,15 @@ namespace SpaceHaste.GameMech
                 Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
                 float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
                 CurrentGameObjectSelected.Energy -= DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost;
+                MoveEnabled = false;
                 NextShipAction();
+
             }
         }
         void SelectionWait()
         {
             WaitingGameObjectList.Add(CurrentGameObjectSelected);
-            MovementOrderList.Remove(CurrentGameObjectSelected);
+            GameObjectList.Remove(CurrentGameObjectSelected);
            
             NextShipAction();
         }
@@ -275,12 +297,22 @@ namespace SpaceHaste.GameMech
             }
             if (gamestate == GameState.SelectShipAction)
             {
-                int i = (int)ShipModeSelection - 1;
-                if (i < 0)
-                    i += 3;
-                ShipModeSelection = (ShipSelectionMode)(i % 3);
-
+                ScrollUpInUnitActionsList();
             }
+        }
+
+        private void ScrollUpInUnitActionsList()
+        {
+            int i = (int)ShipModeSelection - 1;
+            if (i < 0)
+                i += 3;
+            i = i % 3;
+            if (i == 0 && MoveEnabled == false)
+                i++;
+            if (i == 1 && AttackEnabled == false)
+                i++;
+            ShipModeSelection = (ShipSelectionMode)(i % 3);
+            
         }
         internal void MoveSelectionDown()
         {
@@ -291,9 +323,22 @@ namespace SpaceHaste.GameMech
             }
             if (gamestate == GameState.SelectShipAction)
             {
-                ShipModeSelection++;
-                ShipModeSelection = (ShipSelectionMode)(((int)ShipModeSelection) % 3);
+                ScrollDownInUnitActionList();
             }
+        }
+
+        private void ScrollDownInUnitActionList()
+        {
+            int i = (int)ShipModeSelection + 1;
+            i = i % 3;
+            if (i == 1 && AttackEnabled == false)
+                i--;
+            if (i == 0 && MoveEnabled == false)
+                i--;
+            if (i < 0)
+                i += 3;
+            i = i % 3;
+            ShipModeSelection = (ShipSelectionMode)(i);
         }
         internal void MoveSelectionLeft()
         {

@@ -124,30 +124,40 @@ namespace SpaceHaste.Maps
         /// Finds the number of grid squares in range of a particular grid square.
         /// This will presumably be used to find valid moves for each ship.
         /// </summary>
-        /// <param name="gs">Grid square to start the search.</param>
+        /// <param name="loc">Grid square to start the search.</param>
         /// <param name="range">Distance of squares away to search.</param>
         /// <returns>List of valid grid squares in range.</returns>
-        public List<GridCube> GetGridSquaresInRange(GridCube gs, int range)
+        public List<GridCube> GetGridSquaresInRange(GridCube loc, int range)
         {
+            //Create queues and initialize
+            RefreshGridSearch();
             List<GridCube> inRange = new List<GridCube>();
-            if (range <= 0) return inRange;
-            foreach (GridCube neighbor in gs.ConnectedGridSquares)
+            List<GridCube> GridQueue = new List<GridCube>();
+            int DistanceToNextCube;
+            GridQueue.Add(loc);
+            inRange.Add(loc);
+            loc.distance = 0;
+            while(GridQueue.Count != 0)
             {
-                //Can't be in same square as another ship
-                if (neighbor.HasObject())
-                    continue;
-                //Can't cross through asteroid
-                if(neighbor.GetTerrain() == GridCube.TerrainType.asteroid)
-                    continue;
-                //Movement penalty for nebulae
-                if (neighbor.GetTerrain() == GridCube.TerrainType.nebula)
-                    inRange.AddRange(GetGridSquaresInRange(neighbor, range-2));
-                //Otherwise, take normal movement
-                else
-                    inRange.AddRange(GetGridSquaresInRange(neighbor, range-1));
-                inRange.Add(neighbor);
+                GridCube gc = GridQueue[0];
+                GridQueue.RemoveAt(0);
+                if (gc.distance >= range) continue;
+                foreach (GridCube neighbor in gc.ConnectedGridSquares)
+                {
+                    if (neighbor.HasObject())
+                        continue;
+                    if(neighbor.GetTerrain() == GridCube.TerrainType.none)
+                        DistanceToNextCube = gc.distance + 1;
+                    else if(neighbor.GetTerrain() == GridCube.TerrainType.asteroid)
+                        DistanceToNextCube = gc.distance + 2;
+                    if (gc.distance + 1 < neighbor.distance)
+                    {
+                        neighbor.distance = gc.distance + 1;
+                        GridQueue.Add(neighbor);
+                        inRange.Add(neighbor);
+                    }
+                }
             }
-            inRange = inRange.Distinct().ToList();
             return inRange;
         }
        
@@ -160,7 +170,16 @@ namespace SpaceHaste.Maps
         /// <returns>List of valid grid squares in range.</returns>
         public List<GridCube> GetGridSquaresInRange(Vector3 loc, int range)
         {
+            RefreshGridSearch();
             return GetGridSquaresInRange(MapGridCubes[(int)loc.X, (int)loc.Y, (int)loc.Z], range);
+        }
+
+        public void RefreshGridSearch()
+        {
+            foreach (GridCube gs in MapGridCubes)
+            {
+                gs.distance = 1000;
+            }
         }
 
         /// <summary>

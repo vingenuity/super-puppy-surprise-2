@@ -45,7 +45,7 @@ namespace SpaceHaste.GameObjects
             Load();
             GridPosition = position;
             MovementRange = (int) (Energy / MovementEnergyCost);
-            LaserRange = 6;
+	    LaserRange = 6;
         }
         public virtual void Load()
         {

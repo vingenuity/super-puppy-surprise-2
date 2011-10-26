@@ -59,7 +59,7 @@ namespace SpaceHaste.Graphics
 
             Effect cartoonEffect = GraphicsManager.Content.Load<Effect>("CartoonEffect");
            
-           //GraphicsShaders.ChangeEffectUsedByModel(Model2, cartoonEffect);
+            //GraphicsShaders.ChangeEffectUsedByModel(Model2, cartoonEffect);
 
             // Create two custom rendertargets.
             PresentationParameters pp = GraphicsManager.graphics.GraphicsDevice.PresentationParameters;

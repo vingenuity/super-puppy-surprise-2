@@ -43,6 +43,7 @@ namespace SpaceHaste.GameMech
 
         public static List<GameObject> GameObjectList;
         public static List<GameObject> WaitingGameObjectList;
+
         Del update;
 
         public GameMechanicsManager(Game g): base(g)
@@ -73,7 +74,7 @@ namespace SpaceHaste.GameMech
             NextShipTurn();
         }
         //Rename to something more descriptive
-        List<GameObject> ShipTurnOrderList = new List<GameObject>();
+        public List<GameObject> ShipTurnOrderList = new List<GameObject>();
 
         void CreateMovementOrderList()
         {         

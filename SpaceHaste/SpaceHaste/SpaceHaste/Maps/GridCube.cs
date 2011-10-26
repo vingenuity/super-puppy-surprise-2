@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using SpaceHaste.GameObjects;
 using SpaceHaste.Maps;
 
@@ -18,7 +17,7 @@ namespace SpaceHaste.Maps
         public Vector3 Center;
         private GameObject ContainedObject;
         public List<GridCube> ConnectedGridSquares;
-        public enum TerrainType { none = 0, asteroid, nebula, wreck }
+        public enum TerrainType { none = 1, asteroid=1000, nebula=2, wreck=2000 }
         private TerrainType Terrain;
 
         public GridCube(int X, int Y, int Z)
@@ -34,27 +33,17 @@ namespace SpaceHaste.Maps
             Terrain = TerrainType.none;
         }
 
-        public GameObject GetObject(){
-            return ContainedObject;
-        }
+        //Draw Function
+        public void Draw() { }
 
-        public void AddObject(GameObject obj)
-        {
-            ContainedObject = obj;
-        }
+        //Object Functions
+        public void AddObject(GameObject obj) { ContainedObject = obj; }
+        public GameObject GetObject() { return ContainedObject; }
+        public bool HasObject() { return (ContainedObject == null) ? false : true; }
+        public void RemoveObject(GameObject obj) { ContainedObject = null; }
 
-        public bool HasObject()
-        {
-            if (ContainedObject == null)
-                return false;
-            return true;
-        }
-
-        public void RemoveObject(GameObject obj)
-        {
-            ContainedObject = null;
-        }
-
+        //Terrain Functions
+        public int GetMoveCost() { return (int)Terrain; }
         public TerrainType GetTerrain() { return Terrain; }
         public void SetTerrain(TerrainType t) { Terrain = t; }
     }

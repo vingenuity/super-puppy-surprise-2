@@ -5,7 +5,6 @@ using System.Text;
 using SpaceHaste.GameObjects;
 using SpaceHaste.Primitives;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 namespace SpaceHaste.Maps
 {
@@ -56,9 +55,7 @@ namespace SpaceHaste.Maps
             }
         }
 
-        protected virtual void InitMapGameObjects()
-        {
-        }
+        protected virtual void InitMapGameObjects() { }
 
         void InitMapGridCubes()
         {
@@ -127,33 +124,27 @@ namespace SpaceHaste.Maps
         /// <param name="loc">Grid square to start the search.</param>
         /// <param name="range">Distance of squares away to search.</param>
         /// <returns>List of valid grid squares in range.</returns>
-        public List<GridCube> GetGridSquaresInRange(GridCube loc, int range)
+        public List<GridCube> GetGridCubesInRange(GridCube loc, int range)
         {
             //Create queues and initialize
             RefreshGridSearch();
             List<GridCube> inRange = new List<GridCube>();
-            List<GridCube> GridQueue = new List<GridCube>();
-            int DistanceToNextCube;
-            GridQueue.Add(loc);
+            Queue<GridCube> GridQueue = new Queue<GridCube>();
+            GridQueue.Enqueue(loc);
             inRange.Add(loc);
             loc.distance = 0;
             while(GridQueue.Count != 0)
             {
-                GridCube gc = GridQueue[0];
-                GridQueue.RemoveAt(0);
+                GridCube gc = GridQueue.Dequeue();
                 if (gc.distance >= range) continue;
                 foreach (GridCube neighbor in gc.ConnectedGridSquares)
                 {
                     if (neighbor.HasObject())
                         continue;
-                    if(neighbor.GetTerrain() == GridCube.TerrainType.none)
-                        DistanceToNextCube = gc.distance + 1;
-                    else if(neighbor.GetTerrain() == GridCube.TerrainType.asteroid)
-                        DistanceToNextCube = gc.distance + 2;
-                    if (gc.distance + 1 < neighbor.distance)
+                    if (gc.distance + neighbor.GetMoveCost() < neighbor.distance)
                     {
-                        neighbor.distance = gc.distance + 1;
-                        GridQueue.Add(neighbor);
+                        neighbor.distance = gc.distance + neighbor.GetMoveCost();
+                        GridQueue.Enqueue(neighbor);
                         inRange.Add(neighbor);
                     }
                 }
@@ -168,12 +159,16 @@ namespace SpaceHaste.Maps
         /// <param name="loc"> location to start the search.</param>
         /// <param name="range"> number of neighboring squares to search.</param>
         /// <returns>List of valid grid squares in range.</returns>
-        public List<GridCube> GetGridSquaresInRange(Vector3 loc, int range)
+        public List<GridCube> GetGridCubesInRange(Vector3 loc, int range)
         {
             RefreshGridSearch();
-            return GetGridSquaresInRange(MapGridCubes[(int)loc.X, (int)loc.Y, (int)loc.Z], range);
+            return GetGridCubesInRange(MapGridCubes[(int)loc.X, (int)loc.Y, (int)loc.Z], range);
         }
 
+        /// <summary>
+        /// This function resets the distances in each cube of the grid to a very high number.
+        /// This is used to prepare the GetGridCubesInRange function for search.
+        /// </summary>
         public void RefreshGridSearch()
         {
             foreach (GridCube gs in MapGridCubes)

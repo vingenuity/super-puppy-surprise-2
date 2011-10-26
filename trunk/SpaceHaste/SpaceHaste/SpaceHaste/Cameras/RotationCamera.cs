@@ -98,10 +98,12 @@ namespace SpaceHaste.Cameras
            
  
             // Compute view matrix 
-            ControlManager.View = Matrix.CreateLookAt(position,
-                                                  targetPosition, 
-                                                  Vector3.Up); 
+            ControlManager.View = Matrix.CreateLookAt(position, targetPosition, Vector3.Up); 
         }
+
+        public float getVerticalAngle() { return verticalAngle; }
+        public float getHorizontalAngle() { return horizontalAngle; }
+
         public override void UpdateProjection(GameTime gameTime)
         {
 

@@ -253,7 +253,10 @@ namespace SpaceHaste.Maps
             AddGridXY0();
         }
 
-        public GridCube GetCubeAt(Vector3 loc) { return MapGridCubes[(int)loc.X, (int)loc.Y, (int)loc.Z]; }
+        public GridCube GetCubeAt(Vector3 loc)
+        {
+            return MapGridCubes[(int)loc.X, (int)loc.Y, (int)loc.Z]; 
+        }
 
         public void DrawLineTest()
         {

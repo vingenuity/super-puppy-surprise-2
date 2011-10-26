@@ -66,5 +66,19 @@ namespace SpaceHaste.GameObjects
             get; 
             set; 
         }
+
+        public static GameObject operator >(GameObject go1, GameObject go2)
+        {
+            if (go1.Energy > go2.Energy)
+                return go1;
+            else return go2;
+        }
+
+        public static GameObject operator <(GameObject go1, GameObject go2)
+        {
+            if (go1.Energy < go2.Energy)
+                return go1;
+            else return go2;
+        }
     }
 }

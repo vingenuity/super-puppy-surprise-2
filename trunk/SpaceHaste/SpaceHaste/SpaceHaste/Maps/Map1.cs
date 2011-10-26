@@ -10,7 +10,7 @@ namespace SpaceHaste.Maps
     public class Map1 : Map
     {
         public Map1()
-            : base(8)
+            : base(24)
         {
 
         }

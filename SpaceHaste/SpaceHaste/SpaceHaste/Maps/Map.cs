@@ -15,7 +15,6 @@ namespace SpaceHaste.Maps
         protected GridCube[, ,] BottomMap;
         public List<GameObject> MapObjects;
         public int Size;
-        private KeyboardState kState;
 
         public static Map map;
 
@@ -89,11 +88,6 @@ namespace SpaceHaste.Maps
             ConnectGridSquares();
         }
 
-        public List<GameObject> GetGameObjectsInRange(Vector3 loc, int range)
-        {
-            return GetGameObjectsInRange(MapGridCubes[(int)loc.X, (int)loc.Y, (int)loc.Z], range);
-        }
-
         /// <summary>
         /// This is primarily for the lasers
         /// axis-bound distance check eliminates game objects out of range
@@ -102,31 +96,6 @@ namespace SpaceHaste.Maps
         /// <param name="gc"></param>
         /// <param name="range"></param>
         /// <returns></returns>
-        public List<GameObject> GetGameObjectsInRange(GridCube gc, int range) 
-        {
-            List<GameObject> list = new List<GameObject>();
-            for (int i = 0; i < MapObjects.Count; i++) {
-                int d = (int)Math.Abs(MapObjects[i].GridPosition.X - gc.Position.X) +
-                        (int)Math.Abs(MapObjects[i].GridPosition.Y - gc.Position.Y) +
-                        (int)Math.Abs(MapObjects[i].GridPosition.Z - gc.Position.Z);
-                if (d > range)
-                    continue;
-                Vector3 rayDirection = MapObjects[i].GridPosition - gc.Position;
-                Ray ray = new Ray(gc.Position, rayDirection);
-                float? distance = ray.Intersects(MapObjects[i].boundingSphere);
-                float? r = 0;
-                for (int j = 0; j < MapObjects.Count; j++) {
-                    if (MapObjects[j].Passable) continue; //ignore nebulae
-                    r = ray.Intersects(MapObjects[j].boundingSphere);
-                    if (r == null || r < 1 || r > distance) continue;
-                    else break; // 1 < r < d
-                }
-                if (!(r > 1 && r < distance) || r == null)
-                    list.Add(MapObjects[i]);
-            }
-            return new List<GameObject>();
-        }
-
         public Boolean IsObjectInRange(GameObject go, int range, GameObject target)
         {
             int d = (int)Math.Abs(go.GridPosition.X - target.GridPosition.X) +
@@ -138,53 +107,6 @@ namespace SpaceHaste.Maps
             Vector3 rayDirection = target.GridPosition - go.GridPosition;
             Ray ray = new Ray(go.GridPosition, rayDirection);
             float? distance = ray.Intersects(target.boundingSphere);
-            float? r = 0;
-            for (int i = 0; i < MapObjects.Count; i++)
-            {
-                if (MapObjects[i].Passable) continue; //ignore nebulae
-                r = ray.Intersects(MapObjects[i].boundingSphere);
-                if (r == null || r < 1 || r > distance) continue;
-                else break; // 1 < r < d
-            }
-            if (!(r > 1 && r < distance) || r == null)
-                return true;
-            else return false;
-        }
-
-        public Boolean IsObjectInRange(GridCube gc, int range, GameObject target) {
-            int d = (int)Math.Abs(gc.Position.X - target.GridPosition.X) +
-                    (int)Math.Abs(gc.Position.Y - target.GridPosition.Y) +
-                    (int)Math.Abs(gc.Position.Z - target.GridPosition.Z);
-            if (d > range)
-                return false;
-
-            Vector3 rayDirection = target.GridPosition - gc.Position;
-            Ray ray = new Ray(gc.Position, rayDirection);
-            float? distance = ray.Intersects(target.boundingSphere);
-            float? r = 0;
-            for (int i = 0; i < MapObjects.Count; i++)
-            {
-                if (MapObjects[i].Passable) continue; //ignore nebulae
-                r = ray.Intersects(MapObjects[i].boundingSphere);
-                if (r == null || r < 1 || r > distance) continue;
-                else break; // 1 < r < d
-            }
-            if (!(r > 1 && r < distance) || r == null)
-                return true;
-            else return false;
-        }
-
-        public Boolean IsObjectInRange(GridCube gc, int range, GridCube target)
-        {
-            int d = (int)Math.Abs(gc.Position.X - target.Position.X) +
-                    (int)Math.Abs(gc.Position.Y - target.Position.Y) +
-                    (int)Math.Abs(gc.Position.Z - target.Position.Z);
-            if (d > range)
-                return false;
-
-            Vector3 rayDirection = target.Position - gc.Position;
-            Ray ray = new Ray(gc.Position, rayDirection);
-            float? distance = ray.Intersects(target.GetObject().boundingSphere);
             float? r = 0;
             for (int i = 0; i < MapObjects.Count; i++)
             {
@@ -356,4 +278,5 @@ namespace SpaceHaste.Maps
         }
     }
 }
+
 

@@ -13,7 +13,7 @@ namespace SpaceHaste.Grids
 {
     public class PrimitiveManager : DrawableGameComponent
     {
-        Matrix worldMatrix;
+        //Matrix worldMatrix;
 
         BasicEffect basicEffect;
         VertexDeclaration vertexDeclaration;
@@ -25,10 +25,10 @@ namespace SpaceHaste.Grids
         int points = 8;
         short[] lineListIndices;
         short[] lineStripIndices;
-        short[] triangleListIndices;
-        short[] triangleStripIndices;
+        //short[] triangleListIndices;
+        //short[] triangleStripIndices;
 
-        GraphicsDevice GraphicsDevice;
+        //GraphicsDevice GraphicsDevice;
 
         enum PrimType
         {
@@ -37,15 +37,15 @@ namespace SpaceHaste.Grids
             TriangleList,
             TriangleStrip
         };
-        PrimType typeToDraw = PrimType.LineList;
+        //PrimType typeToDraw = PrimType.LineList;
 
         RasterizerState rasterizerState;
 
-        GamePadState currentGamePadState;
-        GamePadState lastGamePadState;
+        //GamePadState currentGamePadState;
+        //GamePadState lastGamePadState;
 
-        KeyboardState currentKeyboardState;
-        KeyboardState lastKeyboardState;
+        //KeyboardState currentKeyboardState;
+        //KeyboardState lastKeyboardState;
 
         GraphicsDeviceManager graphics;
 

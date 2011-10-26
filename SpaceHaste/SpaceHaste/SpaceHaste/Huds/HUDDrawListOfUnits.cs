@@ -12,10 +12,10 @@ namespace SpaceHaste.Huds
 {
     public class HUDDrawListOfUnits
     {
-        Texture2D texture1, currentHealth, currentEnergy, maxEnergy;
-        float Size;
-        float Size2;
-        int here;
+        Texture2D texture1, currentHealth, currentEnergy;//, maxEnergy;
+        //float Size;
+        //float Size2;
+        //int here;
         public HUDDrawListOfUnits()
         {
         }

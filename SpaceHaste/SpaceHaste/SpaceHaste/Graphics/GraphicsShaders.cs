@@ -11,7 +11,7 @@ namespace SpaceHaste.Graphics
     public class GraphicsShaders
     {
         SpriteBatch spriteBatch;
-        SpriteFont spriteFont;
+        //SpriteFont spriteFont;
 
         Random random = new Random();
 
@@ -45,7 +45,7 @@ namespace SpaceHaste.Graphics
 
         public GraphicsShaders()
         {
-            
+            spriteBatch = null;
         }
 
 

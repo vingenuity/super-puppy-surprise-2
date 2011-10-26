@@ -11,6 +11,7 @@ namespace SpaceHaste.Maps
 {
     public class GridCube
     {
+        public int distance;
         public static float GRIDSQUARELENGTH = 500;
         public int X, Y, Z;
         public Vector3 Position;
@@ -22,6 +23,7 @@ namespace SpaceHaste.Maps
 
         public GridCube(int X, int Y, int Z)
         {
+            distance = 1000;
             this.X = X;
             this.Y = Y;
             this.Z = Z;

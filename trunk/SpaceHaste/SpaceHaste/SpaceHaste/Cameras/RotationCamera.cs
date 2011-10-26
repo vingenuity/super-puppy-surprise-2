@@ -13,7 +13,6 @@ namespace SpaceHaste.Cameras
     {
         GraphicsDevice device;
 
-        KeyboardState keyboardState;
         float verticalAngle = .4f;
         float horizontalAngle = 0;
         float zoom = 10;
@@ -27,7 +26,7 @@ namespace SpaceHaste.Cameras
             device = graphics.GraphicsDevice;
 
 
-            float time = 0;
+            //float time = 0;
 
             ControlManager.View = Matrix.CreateLookAt(
                new Vector3(1000f, 1f, 0f),

@@ -26,20 +26,20 @@ namespace SpaceHaste.Sounds
         AudioEngine engine;
         WaveBank waveBank;
         SoundBank soundBank;
-        static Cue menu, laser;
+        static Cue laser; // menu;
         Game gameref;
 
 
         
-        SoundEffect menuselect;
-        List<SoundEffect> hit;
-        List<SoundEffect> playerattack;
-        List<SoundEffect> monsterattack;
-        SoundEffect playerattacklong;
-        Random random;
+        //SoundEffect menuselect;
+        //List<SoundEffect> hit;
+        //List<SoundEffect> playerattack;
+        //List<SoundEffect> monsterattack;
+        //SoundEffect playerattacklong;
+        //Random random;
 
-        SoundEffect MenuBackground;
-        SoundEffectInstance menubackground;
+        //SoundEffect MenuBackground;
+        //SoundEffectInstance menubackground;
         public SoundManager(Game game)
         {
             try
@@ -87,7 +87,7 @@ namespace SpaceHaste.Sounds
         {
             try
             {
-                SoundEffectInstance sb;
+                //SoundEffectInstance sb;
                 switch (sound)
                 {
                     case SoundEffects.laser:
@@ -111,9 +111,9 @@ namespace SpaceHaste.Sounds
         {
             try
             {
-                switch (sound)
+                /*switch (sound)
                 {
-               /*    case ConstantSounds.MenuBackground:
+                    case ConstantSounds.MenuBackground:
                          if (!menuback.IsPlaying)
                              menuback.Play();
                          menuback.Resume();
@@ -122,8 +122,8 @@ namespace SpaceHaste.Sounds
                         if (!ambient.IsPlaying)
                             ambient.Play();
                         ambient.Resume();
-                        break;*/
-                };
+                        break;
+                };*/
             }
             catch { }
         }
@@ -131,10 +131,10 @@ namespace SpaceHaste.Sounds
         {
             try
             {
-                switch (sound)
+                /*switch (sound)
                 {
                     
-                /*case ConstantSounds.MenuBackground:
+                case ConstantSounds.MenuBackground:
                     if (menuback.IsPlaying)
                         menuback.Pause();
                     
@@ -144,9 +144,9 @@ namespace SpaceHaste.Sounds
                     case ConstantSounds.Ambient:
                         if (ambient.IsPlaying)
                             ambient.Pause();
-                        break; */
+                        break;
 
-                };
+                };*/
             }
             catch { }
         }

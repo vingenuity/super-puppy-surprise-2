@@ -64,28 +64,28 @@ namespace SpaceHaste.Controls
         private void MapControls()
         {
             //Add Keyboard Keys
-            KeyMap.Add(Keys.W, new GameAction(camera.MoveCameraUp));
-            KeyMap.Add(Keys.S, new GameAction(camera.MoveCameraDown));
-            KeyMap.Add(Keys.A, new GameAction(camera.MoveCameraLeft));
-            KeyMap.Add(Keys.D, new GameAction(camera.MoveCameraRight));
-            KeyMap.Add(Keys.E, new GameAction(camera.ZoomIn));
-            KeyMap.Add(Keys.Q, new GameAction(camera.ZoomOut));
+            KeyMap.Add(Keys.W,     new GameAction(camera.MoveCameraUp));
+            KeyMap.Add(Keys.S,     new GameAction(camera.MoveCameraDown));
+            KeyMap.Add(Keys.A,     new GameAction(camera.MoveCameraLeft));
+            KeyMap.Add(Keys.D,     new GameAction(camera.MoveCameraRight));
+            KeyMap.Add(Keys.E,     new GameAction(camera.ZoomIn));
+            KeyMap.Add(Keys.Q,     new GameAction(camera.ZoomOut));
             KeyMap.Add(Keys.Enter, new GameAction(GameMechanicsManager.MechMan.Selection));
-            KeyMap.Add(Keys.I, new GameAction(GameMechanicsManager.MechMan.MoveSelectionUp));
-            KeyMap.Add(Keys.K, new GameAction(GameMechanicsManager.MechMan.MoveSelectionDown));
-            KeyMap.Add(Keys.J, new GameAction(GameMechanicsManager.MechMan.MoveSelectionLeft));
-            KeyMap.Add(Keys.L, new GameAction(GameMechanicsManager.MechMan.MoveSelectionRight));
-            KeyMap.Add(Keys.O, new GameAction(GameMechanicsManager.MechMan.MoveSelectionHigher));
-            KeyMap.Add(Keys.U, new GameAction(GameMechanicsManager.MechMan.MoveSelectionLower));
+            KeyMap.Add(Keys.I,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionUp));
+            KeyMap.Add(Keys.K,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionDown));
+            KeyMap.Add(Keys.J,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionLeft));
+            KeyMap.Add(Keys.L,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionRight));
+            KeyMap.Add(Keys.O,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionHigher));
+            KeyMap.Add(Keys.U,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionLower));
 
             //alt keyboard
-            KeyMap.Add(Keys.Home, new GameAction(camera.ZoomIn));
-            KeyMap.Add(Keys.End, new GameAction(camera.ZoomOut));
-            KeyMap.Add(Keys.Right, new GameAction(GameMechanicsManager.MechMan.MoveSelectionUp));
-            KeyMap.Add(Keys.Left, new GameAction(GameMechanicsManager.MechMan.MoveSelectionDown));
-            KeyMap.Add(Keys.Up, new GameAction(GameMechanicsManager.MechMan.MoveSelectionLeft));
-            KeyMap.Add(Keys.Down, new GameAction(GameMechanicsManager.MechMan.MoveSelectionRight));
-            KeyMap.Add(Keys.PageUp, new GameAction(GameMechanicsManager.MechMan.MoveSelectionHigher));
+            KeyMap.Add(Keys.Home,     new GameAction(camera.ZoomIn));
+            KeyMap.Add(Keys.End,      new GameAction(camera.ZoomOut));
+            KeyMap.Add(Keys.Right,    new GameAction(GameMechanicsManager.MechMan.MoveSelectionUp));
+            KeyMap.Add(Keys.Left,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionDown));
+            KeyMap.Add(Keys.Up,       new GameAction(GameMechanicsManager.MechMan.MoveSelectionLeft));
+            KeyMap.Add(Keys.Down,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionRight));
+            KeyMap.Add(Keys.PageUp,   new GameAction(GameMechanicsManager.MechMan.MoveSelectionHigher));
             KeyMap.Add(Keys.PageDown, new GameAction(GameMechanicsManager.MechMan.MoveSelectionLower));
 
             //Add GamePad Buttons

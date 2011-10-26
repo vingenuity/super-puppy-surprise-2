@@ -43,7 +43,7 @@ namespace SpaceHaste.Huds
             /* Unit List */
             spriteBatch.Draw(texture1, new Rectangle(20, num * 100 + 20, (int)Width, (int) Height), Color.Gray);
             spriteBatch.Draw(currentEnergy, new Rectangle(23, num * 100 + 33,  (int)(Width - 6), (int)Height - 60), Color.White);
-           // spriteBatch.Draw(maxEnergy, new Rectangle((int)((unit.Energy / 100) * (Width - 6) + 26), num * 100 + 33, (int)((Width - 6) - ((unit.Energy / 100) * (Width - 6)) + 26), (int)Height - 60), Color.White);
+            spriteBatch.Draw(maxEnergy, new Rectangle((int)((unit.Energy / 100) * (Width - 6) + 26), num * 100 + 33, (int)((Width - 6) - ((unit.Energy / 100) * (Width - 6))-3), (int)Height - 60), Color.White);
             spriteBatch.Draw(currentHealth, new Rectangle(23, num * 100 + 45, (int)Width - 6, (int)Height - 50), Color.White);
             spriteBatch.DrawString(spriteFont, unit.Name, new Vector2(20, num * 100 + 10), Color.White);
             spriteBatch.DrawString(spriteFont,"" +unit.Energy, new Vector2((float)(unit.Energy/100)*(Width-6)+23, num * 100 + 33), Color.White);
@@ -51,6 +51,7 @@ namespace SpaceHaste.Huds
 
             /* Under-Bar */
             spriteBatch.Draw(texture1, new Rectangle(0, (int)(ScreenHeight-((ScreenHeight*5)/100)), (int)ScreenWidth, (int)(ScreenHeight*5)/100), Color.White);
+           // spriteBatch.Draw(texture1, 
         }
 
     }

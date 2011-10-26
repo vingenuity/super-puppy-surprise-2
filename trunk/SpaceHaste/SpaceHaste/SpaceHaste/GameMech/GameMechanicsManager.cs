@@ -165,7 +165,7 @@ namespace SpaceHaste.GameMech
 
         void SelectionMovement()
         {
-            List<GridCube> InRange = Map.map.GetGridSquaresInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
+            List<GridCube> InRange = Map.map.GetGridCubesInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
             if (InRange.Find(item => item == Map.map.GetCubeAt(CurrentGridCubeSelected)) != null)
             {
                 Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;

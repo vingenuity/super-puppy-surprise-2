@@ -6,6 +6,7 @@ using SpaceHaste.Graphics;
 using SpaceHaste.Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceHaste.Sounds;
 
 namespace SpaceHaste.GameObjects
 {
@@ -68,6 +69,7 @@ namespace SpaceHaste.GameObjects
 
         public void fireLaser(Ship ship)
         {
+            SoundManager.Sounds.PlaySound(SoundEffects.laser);
             ship.energy[0] -= 40;
             ship.isHit(dmg[0]);
         }
@@ -100,7 +102,10 @@ namespace SpaceHaste.GameObjects
             }
             //Otherwise, we're dead. Get rid of us.
             else
+            {
+                SoundManager.Sounds.PlaySound(SoundEffects.explode);
                 Unload();
+            }
         }
 
         public void Generate(int amount_energy) { energy[0] += regen; }

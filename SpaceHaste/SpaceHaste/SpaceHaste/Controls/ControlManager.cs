@@ -71,6 +71,7 @@ namespace SpaceHaste.Controls
             KeyMap.Add(Keys.E,     new GameAction(camera.ZoomIn));
             KeyMap.Add(Keys.Q,     new GameAction(camera.ZoomOut));
             KeyMap.Add(Keys.Enter, new GameAction(GameMechanicsManager.MechMan.Selection));
+            KeyMap.Add(Keys.Escape, new GameAction(GameMechanicsManager.MechMan.Back));
             KeyMap.Add(Keys.I,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionUp));
             KeyMap.Add(Keys.K,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionDown));
             KeyMap.Add(Keys.J,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionLeft));
@@ -90,6 +91,7 @@ namespace SpaceHaste.Controls
 
             //Add GamePad Buttons
             PadMap.Add(Buttons.A, new GameAction(GameMechanicsManager.MechMan.Selection));
+            PadMap.Add(Buttons.B, new GameAction(GameMechanicsManager.MechMan.Back));
             PadMap.Add(Buttons.LeftThumbstickUp, new GameAction(GameMechanicsManager.MechMan.MoveSelectionUp));
             PadMap.Add(Buttons.LeftThumbstickDown, new GameAction(GameMechanicsManager.MechMan.MoveSelectionDown));
             PadMap.Add(Buttons.LeftThumbstickLeft, new GameAction(GameMechanicsManager.MechMan.MoveSelectionLeft));

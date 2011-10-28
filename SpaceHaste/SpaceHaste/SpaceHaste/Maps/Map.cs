@@ -107,7 +107,6 @@ namespace SpaceHaste.Maps
             float? r = 0;
             for (int i = 0; i < MapObjects.Count; i++)
             {
-                if (MapObjects[i].Passable) continue; //ignore nebulae
                 r = ray.Intersects(MapObjects[i].boundingSphere);
                 if (r == null || r < 1 || r > distance) continue;
                 else break; // 1 < r < d

@@ -106,7 +106,13 @@ namespace SpaceHaste.GameMech
             GameObject nextShipToMove = GameObjectList[0];
 
             double energy = nextShipToMove.Energy;
- 
+
+            if (energy - nextShipToMove.MovementEnergyCost < 0)
+                MoveEnabled = false;
+
+            if (energy - nextShipToMove.AttackEnergyCost < 0)
+                AttackEnabled = false;
+
             if (nextShipToMove.Team == 0)
             {
                 PlayerTurn(nextShipToMove);
@@ -168,12 +174,18 @@ namespace SpaceHaste.GameMech
             List<GridCube> InRange = Map.map.GetGridCubesInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
             if (InRange.Find(item => item == Map.map.GetCubeAt(CurrentGridCubeSelected)) != null)
             {
+
                 Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;
-                Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
                 float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
-                CurrentGameObjectSelected.Energy -= DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost;
-                MoveEnabled = false;
-                NextShipAction();
+                if (CurrentGameObjectSelected.Energy - DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost> 0)
+                {
+                    Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
+
+                    CurrentGameObjectSelected.Energy -= DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost;
+                    if (CurrentGameObjectSelected.Energy - CurrentGameObjectSelected.MovementEnergyCost < 0)
+                        MoveEnabled = false;
+                    NextShipAction();
+                }
             }
         }
 
@@ -195,11 +207,17 @@ namespace SpaceHaste.GameMech
                 return;
             Ship target = tempTarget as Ship;
 
+            if (offender.Energy - offender.AttackEnergyCost < 0)
+            {
+                AttackEnabled = false;
+                NextShipAction();
+            }
+
             if (Map.map.IsObjectInRange(offender, offender.LaserRange, target))
             {
                 LineManager.AddLine(new Line(offender.DrawPosition, target.DrawPosition, Color.Aqua));
                 target.isHit(offender.LaserDamage);
-                offender.Energy -= 10;
+                offender.Energy -= offender.AttackEnergyCost;
                 if (offender.Energy < 0)
                     offender.Energy = 0;
             }

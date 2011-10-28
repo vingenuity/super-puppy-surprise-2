@@ -196,8 +196,6 @@ namespace SpaceHaste.GameMech
             NextShipAction();
         }
 
-
-
         void SelectionAttack()
         {
             GameObject offender = CurrentGameObjectSelected;
@@ -253,7 +251,11 @@ namespace SpaceHaste.GameMech
                         return;
                 }
         }
-
+        internal void Back()
+        {
+            if (gamestate == GameState.EnterShipAction)
+                gamestate = GameState.SelectShipAction;
+        }
         void NextTurn()
         {
             GameObjectList.Sort();

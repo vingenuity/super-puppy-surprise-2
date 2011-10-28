@@ -8,6 +8,7 @@ using SpaceHaste.GameObjects;
 using SpaceHaste.Maps;
 using SpaceHaste.Primitives;
 using SpaceHaste.Huds;
+using SpaceHaste.Sounds;
 
 namespace SpaceHaste.GameMech
 {
@@ -192,6 +193,7 @@ namespace SpaceHaste.GameMech
 
             if (Map.map.IsObjectInRange(offender, offender.LaserRange, target))
             {
+                SoundManager.Sounds.PlaySound(SoundEffects.laser);
                 LineManager.AddLine(new Line(offender.DrawPosition, target.DrawPosition, Color.Aqua));
                 target.isHit(offender.LaserDamage);
                 offender.Energy -= offender.AttackEnergyCost;

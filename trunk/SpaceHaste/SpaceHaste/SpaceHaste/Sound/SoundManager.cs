@@ -15,9 +15,9 @@ namespace SpaceHaste.Sounds
 
     public enum SoundEffects
     {
-        laser
+        laser, explode
     };
-    public class SoundManager
+    public class SoundManager : GameComponent
     {
         ContentManager soundContent;
         public static SoundManager Sounds;
@@ -26,7 +26,7 @@ namespace SpaceHaste.Sounds
         AudioEngine engine;
         WaveBank waveBank;
         SoundBank soundBank;
-        static Cue laser; // menu;
+        static Cue laser, explode;
         Game gameref;
 
 
@@ -40,19 +40,19 @@ namespace SpaceHaste.Sounds
 
         //SoundEffect MenuBackground;
         //SoundEffectInstance menubackground;
-        public SoundManager(Game game)
+        public SoundManager(Game game) : base(game)
         {
             try
             {
+
                 gameref = game;
                 engine = new AudioEngine("Content/Sound/Audio.xgs");
                 soundBank = new SoundBank(engine, "Content/Sound/Sounds.xsb");
                 waveBank = new WaveBank(engine, "Content/Sound/Waves.xwb");
-
-                
-                Sounds = this;
             }
-            catch { }
+            catch { }   
+                Sounds = this;
+
             Reset();
         }
         void Reset()
@@ -66,6 +66,7 @@ namespace SpaceHaste.Sounds
                 soundContent = gameref.Content;
 
                 laser = soundBank.GetCue("laser");
+                explode = soundBank.GetCue("explode");
                 
                 
             }
@@ -91,9 +92,15 @@ namespace SpaceHaste.Sounds
                 switch (sound)
                 {
                     case SoundEffects.laser:
+
                         Cue laser = soundBank.GetCue("laser");
                         laser.Play();
                         
+                        break;
+
+                    case SoundEffects.explode:
+                        Cue explode = soundBank.GetCue("explode");
+                        explode.Play();
                         break;
 
  

@@ -16,6 +16,7 @@ using SpaceHaste.Maps;
 using SpaceHaste.Huds;
 using SpaceHaste.GameMech;
 using SpaceHaste.Controls;
+using SpaceHaste.Sounds;
 
 namespace SpaceHaste
 {
@@ -62,6 +63,10 @@ namespace SpaceHaste
             // TODO: Add your initialization logic here
             GraphicsManager GraphicsManager = new GraphicsManager(this, graphics);
             Components.Add(GraphicsManager);
+
+            SoundManager SoundManager = new SoundManager(this);
+            Components.Add(SoundManager);
+            SoundManager.Load();
 
             GameMechanicsManager GameMechanicsManager = new GameMechanicsManager(this);
             Components.Add(GameMechanicsManager);

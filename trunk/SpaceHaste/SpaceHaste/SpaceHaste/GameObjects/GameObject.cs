@@ -26,6 +26,7 @@ namespace SpaceHaste.GameObjects
         public int LaserRange;
         public double Energy;
         public double MovementEnergyCost = 20;
+        public double AttackEnergyCost = 30;
         public double EnergyEfficiency = 4;
         public GridCube GridLocation;
         public string Name;

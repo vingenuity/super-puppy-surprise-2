@@ -41,16 +41,22 @@ namespace SpaceHaste.Huds
             spriteBatch.Draw(texture1, new Rectangle(350, 20, 150, 150), Color.White);
             if(Selected == 0)
                 spriteBatch.DrawString(spriteFont, "Move", MenuMoveStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
-            else
+            else if (CanMove)
                 spriteBatch.DrawString(spriteFont, "Move", MenuMoveStringPosition, Color.White);
+            else
+                spriteBatch.DrawString(spriteFont, "Move", MenuMoveStringPosition, Color.Gray);
             if (Selected == 1)
                 spriteBatch.DrawString(spriteFont, "Attack", MenuAttackStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
-            else
+            else if (CanAttack)
                 spriteBatch.DrawString(spriteFont, "Attack", MenuAttackStringPosition, Color.White);
+            else
+                spriteBatch.DrawString(spriteFont, "Attack", MenuAttackStringPosition, Color.Gray);
             if (Selected == 2)
                 spriteBatch.DrawString(spriteFont, "Wait", MenuWaitStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
-            else
+            else if (CanWait)
                 spriteBatch.DrawString(spriteFont, "Wait", MenuWaitStringPosition, Color.White);
+            else
+                spriteBatch.DrawString(spriteFont, "Wait", MenuWaitStringPosition, Color.Gray);
             
         }
         public void Update(GameTime gameTime)
@@ -60,6 +66,9 @@ namespace SpaceHaste.Huds
                 ShowShipActions = true;
             else
                 ShowShipActions = false;
+            CanMove = GameMechanicsManager.MechMan.MoveEnabled;
+            CanAttack = GameMechanicsManager.MechMan.AttackEnabled;
+            CanWait = GameMechanicsManager.MechMan.WaitEnabled;
         }
         public void Attack()
         {

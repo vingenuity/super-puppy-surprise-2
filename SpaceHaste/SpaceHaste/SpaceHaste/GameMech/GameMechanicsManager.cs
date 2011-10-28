@@ -62,15 +62,15 @@ namespace SpaceHaste.GameMech
             List<GameObject> list = new List<GameObject>();
             while (GameObjectList.Count > 0)
             {
-                GameObject Lowest = GameObjectList[0];
+                GameObject Least = GameObjectList[0];
                 for (int i = 0; i < GameObjectList.Count; i++)
                 {
 
-                    if (GameObjectList[i] < Lowest)
-                        Lowest = GameObjectList[i];
+                    if (GameObjectList[i] < Least)
+                        Least = GameObjectList[i];
                 }
-                list.Add(Lowest);
-                GameObjectList.Remove(Lowest);
+                list.Add(Least);
+                GameObjectList.Remove(Least);
             }
             GameObjectList = list;
         }
@@ -98,7 +98,6 @@ namespace SpaceHaste.GameMech
                 }
             }
         }
-        
         private void NextShipAction()
         {
             gamestate = GameState.SelectShipAction;
@@ -128,7 +127,6 @@ namespace SpaceHaste.GameMech
             if (ShipModeSelection == ShipSelectionMode.Attack && !AttackEnabled)
                 ScrollDownInUnitActionList();
         }
-
         private void PlayerTurn(GameObject nextShipToMove)
         {
 
@@ -137,27 +135,8 @@ namespace SpaceHaste.GameMech
             CurrentGridCubeSelected = nextShipToMove.GridPosition;
         }
 
-        /*
-        void RecoverEnergyToNextShip()
-        {
-           
-            GameObject nextShipToMove = NextShipToMove();
-            if (nextShipToMove == null)
-                return;
-            double energyToRecover = nextShipToMove.Energy;
-            for (int i = 0; i < GameObjectList.Count; i++)
-            {
-                GameObjectList[i].Energy += energyToRecover;           
-         * 
-            {
-                update = PlayerTurn;
-                CurrentGameObjectSelected = nextShipToMove;
-                CurrentGridCubeSelected = nextShipToMove.GridPosition;
-            }
-            else
-                ComputerTurn();
-        }
-        */
+        
+        
         void PlayerSelectShipAction(GameTime gameTime)
         {
             
@@ -193,7 +172,7 @@ namespace SpaceHaste.GameMech
         {
             CurrentGameObjectSelected.Energy -= 5;
             CurrentGameObjectSelected.waitTime = 40;
-            NextShipAction();
+            NextShipTurn();
         }
 
         void SelectionAttack()

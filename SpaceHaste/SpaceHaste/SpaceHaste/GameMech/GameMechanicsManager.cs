@@ -113,12 +113,25 @@ namespace SpaceHaste.GameMech
             if (energy - nextShipToMove.AttackEnergyCost < 0)
                 AttackEnabled = false;
 
-            if (nextShipToMove.Team == 0)
+            if (nextShipToMove.team == 0)
             {
                 PlayerTurn(nextShipToMove);
             }
             else
                 ComputerTurn();
+        }
+        private void ResetActionSelectionMenu()
+        {
+            GameObject nextShipToMove = GameObjectList[0];
+            CurrentGridCubeSelected = nextShipToMove.GridPosition;
+            double energy = nextShipToMove.Energy;
+            if (energy - nextShipToMove.MovementEnergyCost < 0)
+                MoveEnabled = false;
+
+            if (energy - nextShipToMove.AttackEnergyCost < 0)
+                AttackEnabled = false;
+            ScrollDownInUnitListIfActionIsDisabled();
+            UpdateSelectionLine();
         }
 
         private void ScrollDownInUnitListIfActionIsDisabled()
@@ -235,7 +248,10 @@ namespace SpaceHaste.GameMech
         internal void Back()
         {
             if (gamestate == GameState.EnterShipAction)
+            {
                 gamestate = GameState.SelectShipAction;
+                ResetActionSelectionMenu();
+            }
         }
         void NextTurn()
         {

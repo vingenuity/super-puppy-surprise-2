@@ -63,15 +63,15 @@ namespace SpaceHaste.GameMech
             List<GameObject> list = new List<GameObject>();
             while (GameObjectList.Count > 0)
             {
-                GameObject Least = GameObjectList[0];
+                GameObject Greatest = GameObjectList[0];
                 for (int i = 0; i < GameObjectList.Count; i++)
                 {
 
-                    if (GameObjectList[i] < Least)
-                        Least = GameObjectList[i];
+                    if (GameObjectList[i] > Greatest)
+                        Greatest = GameObjectList[i];
                 }
-                list.Add(Least);
-                GameObjectList.Remove(Least);
+                list.Add(Greatest);
+                GameObjectList.Remove(Greatest);
             }
             GameObjectList = list;
         }
@@ -85,6 +85,7 @@ namespace SpaceHaste.GameMech
             MoveEnabled = true;
             WaitEnabled = true;
             AttackEnabled = true;
+            UpdateSelectionLine();
             NextShipAction();
         }
 
@@ -119,6 +120,7 @@ namespace SpaceHaste.GameMech
             }
             else
                 ComputerTurn();
+            UpdateSelectionLine();
         }
         private void ResetActionSelectionMenu()
         {
@@ -256,6 +258,7 @@ namespace SpaceHaste.GameMech
         void NextTurn()
         {
             GameObjectList.Sort();
+            
         }
         internal void MoveSelectionUp()
         {

@@ -82,15 +82,14 @@ namespace SpaceHaste.Graphics
             new NonPhotoRealisticSettings("Colored Hatching", false,
                                           true, 0.5f, 0.333f,
                                           true, true, 0.2f, 0.5f, 0.075f),
-            /*
+            
             new NonPhotoRealisticSettings("Selected Edge Enhancement", false,
-                                          true, 1.5f, .5f,
+                                          true, 2.5f, 2.5f,
                                           false, false, 0, 0, 0),
-            */
+         
             new NonPhotoRealisticSettings("Subtle Edge Enhancement", false,
                                           true, 0.5f, 0.5f,
                                           false, false, 0, 0, 0),
-
             new NonPhotoRealisticSettings("Nothing Special", false,
                                           false, 0, 0,
                                           false, false, 0, 0, 0),

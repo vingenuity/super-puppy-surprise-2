@@ -43,9 +43,9 @@ namespace SpaceHaste.Graphics
         int settingsIndex = 5;
 
 
-        public GraphicsShaders()
+        public GraphicsShaders(GraphicsDeviceManager graphics)
         {
-            spriteBatch = null;
+            spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
         }
 
 
@@ -207,7 +207,7 @@ namespace SpaceHaste.Graphics
             else
                 device.SetRenderTarget(null);
 
-            device.Clear(Color.Black);
+            device.Clear(Color.CornflowerBlue);
 
             // Draw the model, using either the cartoon or lambert shading technique.
             string effectTechniqueName;
@@ -266,6 +266,7 @@ namespace SpaceHaste.Graphics
                 mesh.Draw();
             }
         }
+
         /*
         void DrawModel(Matrix world, Matrix view, Matrix projection,
                        string effectTechniqueName)
@@ -299,6 +300,7 @@ namespace SpaceHaste.Graphics
             }
         }
         */
+
         /// <summary>
         /// Helper applies the edge detection and pencil sketch postprocess effect.
         /// </summary>

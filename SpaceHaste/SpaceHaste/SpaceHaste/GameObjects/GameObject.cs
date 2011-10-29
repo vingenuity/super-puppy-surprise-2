@@ -84,13 +84,13 @@ namespace SpaceHaste.GameObjects
         //Operators(for sorting)
         public static bool operator >(GameObject go1, GameObject go2)
         {
-            if (go1.Energy + go1.waitTime > go2.Energy + go2.waitTime)
+            if (go1.Energy + go1.waitTime > go2.Energy - go2.waitTime)
                 return true;
             else return false;
         }
         public static bool operator <(GameObject go1, GameObject go2)
         {
-            if (go1.Energy + go1.waitTime < go2.Energy + go2.waitTime)
+            if (go1.Energy + go1.waitTime < go2.Energy - go2.waitTime)
                 return true;
             else return false;
         }

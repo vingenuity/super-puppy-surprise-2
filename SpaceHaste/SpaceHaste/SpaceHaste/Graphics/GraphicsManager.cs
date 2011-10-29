@@ -45,7 +45,7 @@ namespace SpaceHaste.Graphics
             graphics = _graphics;
             Content = new ContentManager(game.Services);
             Content.RootDirectory = "Content";
-            GraphicsShader = new GraphicsShaders();
+            GraphicsShader = new GraphicsShaders(graphics);
             GraphicsGameObjects = new List<GameObject>();
         }
 

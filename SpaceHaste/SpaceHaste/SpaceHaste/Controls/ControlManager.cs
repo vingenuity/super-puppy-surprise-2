@@ -13,7 +13,7 @@ namespace SpaceHaste.Controls
     public class ControlManager : GameComponent
     {
         //Camera
-        RotationCamera camera;
+        public static RotationCamera camera;
         GraphicsDeviceManager graphMan;
         public static Matrix View;
         public static Matrix Projection;
@@ -147,6 +147,9 @@ namespace SpaceHaste.Controls
             }
             camera.UpdateView(gameTime);
             camera.UpdateProjection(gameTime);
+
+          
+
             base.Update(gameTime);
         }
     }

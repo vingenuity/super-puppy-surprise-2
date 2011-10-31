@@ -148,9 +148,7 @@ namespace SpaceHaste.GameMech
             update = PlayerSelectShipAction;
             CurrentGameObjectSelected = nextShipToMove;
             CurrentGridCubeSelected = nextShipToMove.GridPosition;
-        }
-
-        
+        }      
         
         void PlayerSelectShipAction(GameTime gameTime)
         {
@@ -185,11 +183,10 @@ namespace SpaceHaste.GameMech
 
         void SelectionWait()
         {
-            CurrentGameObjectSelected.Energy -= 5;
+            CurrentGameObjectSelected.Energy -= 40;
             CurrentGameObjectSelected.waitTime = 40;
             NextShipTurn();
         }
-
         void SelectionAttack()
         {
             GameObject offender = CurrentGameObjectSelected;
@@ -205,7 +202,7 @@ namespace SpaceHaste.GameMech
                 NextShipAction();
             }
 
-            if (Map.map.IsObjectInRange(offender, offender.LaserRange, target))
+            if (Map.map.IsObjectInRange(offender, target))
             {
                 SoundManager.Sounds.PlaySound(SoundEffects.laser);
                 LineManager.AddLine(new Line(offender.DrawPosition, target.DrawPosition, Color.Aqua));
@@ -216,6 +213,7 @@ namespace SpaceHaste.GameMech
             }
             else return;
         }
+
         void NextTurn()
         {
             CheckVictory();

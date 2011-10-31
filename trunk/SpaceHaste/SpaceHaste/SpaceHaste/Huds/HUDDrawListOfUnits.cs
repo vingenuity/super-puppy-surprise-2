@@ -62,12 +62,12 @@ namespace SpaceHaste.Huds
             {
                 spriteBatch.Draw(enemyHud, new Rectangle(20, num * 100 + 20, (int)Width, (int)Height), Color.White);
             }
-            spriteBatch.Draw(currentEnergy, new Rectangle(23, num * 100 + 33,  (int)(Width - 6), (int)Height - 60), Color.White);
-            spriteBatch.Draw(maxEnergy, new Rectangle((int)((unit.Energy / 100) * (Width - 6) + 26), num * 100 + 33, (int)((Width - 6) - ((unit.Energy / 100) * (Width - 6))-3), (int)Height - 60), Color.White);
-            spriteBatch.Draw(currentHealth, new Rectangle(23, num * 100 + 45, (int)Width - 6, (int)Height - 50), Color.White);
+            spriteBatch.Draw(currentEnergy, new Rectangle(23, num * 100 + 47,  (int)(Width - 6), (int)Height - 50), Color.White);
+            spriteBatch.Draw(maxEnergy, new Rectangle((int)((unit.Energy / 100) * (Width - 6) + 46), num * 100 + 27, (int)((Width - 6) - ((unit.Energy / 100) * (Width - 6))-3), (int)Height - 50), Color.White);
+            spriteBatch.Draw(currentHealth, new Rectangle(23, num * 100 + 65, (int)Width - 6, (int)Height - 50), Color.White);
             spriteBatch.DrawString(spriteFont, unit.Name, new Vector2(20, num * 100 + 10), Color.White);
-            spriteBatch.DrawString(spriteFont,"" +unit.Energy, new Vector2((float)(unit.Energy/100)*(Width-6)+23, num * 100 + 33), Color.White);
-            spriteBatch.DrawString(spriteFont, "" + unit.Health + " / " + unit.maxHealth, new Vector2(100, num * 100 + 52), Color.White);
+            spriteBatch.DrawString(spriteFont,"" +unit.Energy, new Vector2((float)(unit.Energy/100)*(Width-6)+23, num * 100 + 45), Color.White);
+            spriteBatch.DrawString(spriteFont, "" + unit.Health + " / " + unit.maxHealth, new Vector2(100, num * 100 + 72), Color.White);
 
         }
 

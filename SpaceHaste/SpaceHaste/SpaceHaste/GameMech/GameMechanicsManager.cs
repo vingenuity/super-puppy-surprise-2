@@ -27,7 +27,7 @@ namespace SpaceHaste.GameMech
             SelectShipAction,
             EnterShipAction,
         };
-
+        List<Line> AttackLineList;
         public bool MoveEnabled;
         public bool WaitEnabled;
         public bool AttackEnabled;
@@ -50,6 +50,7 @@ namespace SpaceHaste.GameMech
         {
             MechMan = this;
             GameObjectList = new List<GameObject>();
+            AttackLineList = new List<Line>();
             update = EmptyMethod;
         }
 
@@ -102,6 +103,7 @@ namespace SpaceHaste.GameMech
         }
         private void NextShipAction()
         {
+            ClearLineList();
             gamestate = GameState.SelectShipAction;
             ScrollDownInUnitListIfActionIsDisabled();
             GameObject nextShipToMove = GameObjectList[0];
@@ -124,6 +126,7 @@ namespace SpaceHaste.GameMech
         }
         private void ResetActionSelectionMenu()
         {
+            ClearLineList();
             GameObject nextShipToMove = GameObjectList[0];
             CurrentGridCubeSelected = nextShipToMove.GridPosition;
             double energy = nextShipToMove.Energy;
@@ -135,7 +138,14 @@ namespace SpaceHaste.GameMech
             ScrollDownInUnitListIfActionIsDisabled();
             UpdateSelectionLine();
         }
-
+        private void ClearLineList()
+        {
+            for (int i = 0; i < AttackLineList.Count; i++)
+            {
+                LineManager.RemoveLine(AttackLineList[i]);
+            }
+            AttackLineList.Clear();
+        }
         private void ScrollDownInUnitListIfActionIsDisabled()
         {
             if (ShipModeSelection == ShipSelectionMode.Movement && !MoveEnabled)
@@ -205,7 +215,9 @@ namespace SpaceHaste.GameMech
             if (Map.map.IsObjectInRange(offender, target))
             {
                 SoundManager.Sounds.PlaySound(SoundEffects.laser);
-                LineManager.AddLine(new Line(offender.DrawPosition, target.DrawPosition, Color.Aqua));
+                Line line = new Line(offender.DrawPosition, target.DrawPosition, Color.Aqua);
+                AttackLineList.Add(line);
+                LineManager.AddLine(line);
                 target.isHit(offender.LaserDamage);
                 offender.Energy -= offender.AttackEnergyCost;
                 if (offender.Energy < 0)
@@ -216,6 +228,7 @@ namespace SpaceHaste.GameMech
 
         void NextTurn()
         {
+            
             CheckVictory();
             GameObjectList.Sort();
         }

@@ -31,7 +31,7 @@ namespace SpaceHaste.Huds
         }
         public void Load()
         {
-            texture1 = Hud.Content.Load<Texture2D>("SketchTexture");
+            texture1 = Hud.Content.Load<Texture2D>("UI_backPane_blue");
         }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont spriteFont)
         {

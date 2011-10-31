@@ -109,6 +109,14 @@ namespace SpaceHaste.GameObjects
             }
         }
 
+        public double getHull() {
+            return hull[0];
+        }
+
+        public double getMaxHull() {
+            return hull[1];
+        }
+
         public void Generate(int amount_energy) { energy[0] += regen; }
 
         //public override void Unload() { }

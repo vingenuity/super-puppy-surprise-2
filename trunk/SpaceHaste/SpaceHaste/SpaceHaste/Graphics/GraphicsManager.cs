@@ -29,7 +29,7 @@ namespace SpaceHaste.Graphics
     {
         public static List<GameObject> GraphicsGameObjects;
 
-
+       
         public static GraphicsDeviceManager graphics;
 
         public static ContentManager Content;
@@ -49,7 +49,7 @@ namespace SpaceHaste.Graphics
             GraphicsGameObjects = new List<GameObject>();
         }
 
-
+        
         /// <summary>
         /// Load your graphics content.
         /// </summary>

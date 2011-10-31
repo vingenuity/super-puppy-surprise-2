@@ -92,7 +92,7 @@ namespace SpaceHaste.GameMech
 
         private void AddEnergyToShips(GameObject nextShipToMove)
         {
-            if (nextShipToMove.Energy == 0 && nextShipToMove.waitTime == 0)
+            if (nextShipToMove.Energy != 100)
             {
                 double energyAdded = nextShipToMove.Energy + nextShipToMove.waitTime;
                 for (int i = 0; i < GameObjectList.Count; i++)
@@ -179,7 +179,7 @@ namespace SpaceHaste.GameMech
 
                 Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;
                 float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
-                if (CurrentGameObjectSelected.Energy - DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost> 0)
+                if (CurrentGameObjectSelected.Energy - DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost>= 0)
                 {
                     Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
 
@@ -193,8 +193,10 @@ namespace SpaceHaste.GameMech
 
         void SelectionWait()
         {
-            //CurrentGameObjectSelected.Energy -= 40;
+            CurrentGameObjectSelected.Energy -= 5;
             CurrentGameObjectSelected.waitTime = 40;
+            if (CurrentGameObjectSelected.Energy < 0)
+                CurrentGameObjectSelected.Energy = 0;
             NextShipTurn();
         }
         void SelectionAttack()

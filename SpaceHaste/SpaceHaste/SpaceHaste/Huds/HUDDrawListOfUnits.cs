@@ -12,7 +12,7 @@ namespace SpaceHaste.Huds
 {
     public class HUDDrawListOfUnits
     {
-        Texture2D texture1, currentHealth, currentEnergy, maxEnergy;
+        Texture2D enemyHud, friendlyHud, currentHealth, currentEnergy, maxEnergy;
         //float Size;
         //float Size2;
         //int here;
@@ -23,10 +23,11 @@ namespace SpaceHaste.Huds
         }
         public void Load()
         {
-            texture1 = Hud.Content.Load<Texture2D>("SketchTexture");
-            maxEnergy = Hud.Content.Load<Texture2D>("EnergyBarEmpty");
-            currentHealth = Hud.Content.Load<Texture2D>("HealthBar");
-            currentEnergy = Hud.Content.Load<Texture2D>("EnergyBar");
+            enemyHud = Hud.Content.Load<Texture2D>("UI_backPane_red");
+            friendlyHud = Hud.Content.Load<Texture2D>("UI_backPane_blue");
+            maxEnergy = Hud.Content.Load<Texture2D>("UI_healthBar_grey");
+            currentHealth = Hud.Content.Load<Texture2D>("UI_healthBar_green");
+            currentEnergy = Hud.Content.Load<Texture2D>("UI_energyBar_blue");
 
         }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont spriteFont)
@@ -40,8 +41,8 @@ namespace SpaceHaste.Huds
         private void DrawGridInformation(GameObject unit, GameObject selected, SpriteBatch spriteBatch, SpriteFont spriteFont, float ScreenWidth, float ScreenHeight){
 
                     /* Under-Bar */
-            spriteBatch.Draw(texture1, new Rectangle(0, (int)(ScreenHeight-((ScreenHeight*5)/100)), (int)ScreenWidth, (int)(ScreenHeight*5)/100), Color.White);
-            spriteBatch.DrawString(spriteFont, "HP: " + unit.Health, new Vector2((float)((ScreenWidth * 1) / 100), (float)(ScreenHeight - ((ScreenHeight * 2.5) / 100))), Color.White);
+            //spriteBatch.Draw(texture1, new Rectangle(0, (int)(ScreenHeight-((ScreenHeight*5)/100)), (int)ScreenWidth, (int)(ScreenHeight*5)/100), Color.White);
+           // spriteBatch.DrawString(spriteFont, "HP: " + unit.Health, new Vector2((float)((ScreenWidth * 1) / 100), (float)(ScreenHeight - ((ScreenHeight * 2.5) / 100))), Color.White);
 
         }
 
@@ -53,7 +54,14 @@ namespace SpaceHaste.Huds
             //float multiply = ScreenHeight /30/50
 
             /* Unit List */
-            spriteBatch.Draw(texture1, new Rectangle(20, num * 100 + 20, (int)Width, (int) Height), Color.Gray);
+            if (unit.getTeam() == 0)
+            {
+                spriteBatch.Draw(friendlyHud, new Rectangle(20, num * 100 + 20, (int)Width, (int)Height), Color.White);
+            }
+            else
+            {
+                spriteBatch.Draw(enemyHud, new Rectangle(20, num * 100 + 20, (int)Width, (int)Height), Color.White);
+            }
             spriteBatch.Draw(currentEnergy, new Rectangle(23, num * 100 + 33,  (int)(Width - 6), (int)Height - 60), Color.White);
             spriteBatch.Draw(maxEnergy, new Rectangle((int)((unit.Energy / 100) * (Width - 6) + 26), num * 100 + 33, (int)((Width - 6) - ((unit.Energy / 100) * (Width - 6))-3), (int)Height - 60), Color.White);
             spriteBatch.Draw(currentHealth, new Rectangle(23, num * 100 + 45, (int)Width - 6, (int)Height - 50), Color.White);

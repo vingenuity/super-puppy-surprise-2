@@ -84,7 +84,12 @@ namespace SpaceHaste.Graphics
         private void UpdateWorldMatricies(GameTime gameTime)
         {
             for (int i = 0; i < GraphicsGameObjects.Count; i++)
-                GraphicsGameObjects[i].World = Matrix.CreateScale(GraphicsGameObjects[i].Scale) * Matrix.CreateTranslation(GraphicsGameObjects[i].DrawPosition) ;
+            {
+                if(GraphicsGameObjects[i].team == 0)
+                    GraphicsGameObjects[i].World = Matrix.CreateScale(GraphicsGameObjects[i].Scale) * Matrix.CreateTranslation(GraphicsGameObjects[i].DrawPosition) ;
+                else
+                    GraphicsGameObjects[i].World = Matrix.CreateScale(GraphicsGameObjects[i].Scale) * Matrix.CreateRotationY((float)Math.PI) * Matrix.CreateTranslation(GraphicsGameObjects[i].DrawPosition);
+            }
         }
 
 

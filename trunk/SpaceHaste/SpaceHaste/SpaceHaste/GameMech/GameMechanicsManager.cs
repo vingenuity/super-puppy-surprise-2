@@ -183,7 +183,7 @@ namespace SpaceHaste.GameMech
 
         void SelectionWait()
         {
-            CurrentGameObjectSelected.Energy -= 40;
+            //CurrentGameObjectSelected.Energy -= 40;
             CurrentGameObjectSelected.waitTime = 40;
             NextShipTurn();
         }

@@ -114,7 +114,7 @@ namespace SpaceHaste.GameMech
             if (energy - nextShipToMove.AttackEnergyCost < 0)
                 AttackEnabled = false;
 
-            if (nextShipToMove.team == 0)
+            if (nextShipToMove.team == GameObject.Team.Player)
             {
                 PlayerTurn(nextShipToMove);
             }
@@ -145,7 +145,6 @@ namespace SpaceHaste.GameMech
         }
         private void PlayerTurn(GameObject nextShipToMove)
         {
-
             update = PlayerSelectShipAction;
             CurrentGameObjectSelected = nextShipToMove;
             CurrentGridCubeSelected = nextShipToMove.GridPosition;
@@ -196,7 +195,7 @@ namespace SpaceHaste.GameMech
             GameObject offender = CurrentGameObjectSelected;
             GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
 
-            if (tempTarget == null || !(tempTarget is Ship))
+            if (tempTarget == null || !(tempTarget is Ship) || tempTarget.getTeam() == offender.getTeam())
                 return;
             Ship target = tempTarget as Ship;
 
@@ -217,6 +216,49 @@ namespace SpaceHaste.GameMech
             }
             else return;
         }
+        void NextTurn()
+        {
+            CheckVictory();
+            GameObjectList.Sort();
+        }
+
+        void UpdateSelectionLine()
+        {
+            if (YSelectedSquareLine != null)
+            {
+                LineManager.RemoveLine(YSelectedSquareLine);
+            }
+            Vector3 botCube = CurrentGridCubeSelected;
+            botCube.Y = 0;
+            botCube = Map.map.GetCubeAt(botCube).Center;
+            botCube.Y -= +400;
+            YSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
+            LineManager.AddLine(YSelectedSquareLine);
+        }
+
+        void CheckVictory()
+        {
+            bool PlayerFound = false;
+            bool EnemyFound = false;
+            foreach(GameObject obj in GameObjectList)
+            {
+                if (obj.getTeam() == GameObject.Team.Player)
+                    PlayerFound = true;
+                else
+                    EnemyFound = true;
+            }
+            if (!PlayerFound)
+                ; //Call Game Over
+            if (!EnemyFound)
+                ; //Call Victory
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            update(gameTime);
+            base.Update(gameTime);
+        }
+        #region Control Delegates
         /// <summary>
         /// The following functions all return void and take no arguments.
         /// During the instantiation of the class, these are tied to keys and used to perform actions.
@@ -227,22 +269,22 @@ namespace SpaceHaste.GameMech
             {
                 ShipModeSelection = (ShipSelectionMode)(((int)ShipModeSelection) % 3);
                 gamestate = GameState.EnterShipAction;
-               if(ShipModeSelection == ShipSelectionMode.Wait)
-                   SelectionWait();
+                if (ShipModeSelection == ShipSelectionMode.Wait)
+                    SelectionWait();
                 return;
             }
-            if(gamestate == GameState.EnterShipAction)
+            if (gamestate == GameState.EnterShipAction)
                 switch (ShipModeSelection)
                 {
-                    case(ShipSelectionMode.Attack):
+                    case (ShipSelectionMode.Attack):
                         SelectionAttack();
                         return;
-                  
+
                     case (ShipSelectionMode.Movement):
                         SelectionMovement();
                         return;
-                  
-                    case(ShipSelectionMode.Wait):
+
+                    case (ShipSelectionMode.Wait):
                         SelectionWait();
                         return;
                 }
@@ -254,11 +296,6 @@ namespace SpaceHaste.GameMech
                 gamestate = GameState.SelectShipAction;
                 ResetActionSelectionMenu();
             }
-        }
-        void NextTurn()
-        {
-            GameObjectList.Sort();
-            
         }
         internal void MoveSelectionUp()
         {
@@ -272,20 +309,6 @@ namespace SpaceHaste.GameMech
                 ScrollUpInUnitActionsList();
             }
         }
-
-        private void ScrollUpInUnitActionsList()
-        {
-            int i = (int)ShipModeSelection - 1;
-            if (i < 0)
-                i += 3;
-            i = i % 3;
-            if (i == 0 && MoveEnabled == false)
-                i++;
-            if (i == 1 && AttackEnabled == false)
-                i++;
-            ShipModeSelection = (ShipSelectionMode)(i % 3);
-            
-        }
         internal void MoveSelectionDown()
         {
             if (gamestate == GameState.EnterShipAction)
@@ -297,20 +320,6 @@ namespace SpaceHaste.GameMech
             {
                 ScrollDownInUnitActionList();
             }
-        }
-
-        private void ScrollDownInUnitActionList()
-        {
-            int i = (int)ShipModeSelection + 1;
-            i = i % 3;
-            if (i == 1 && AttackEnabled == false)
-                i--;
-            if (i == 0 && MoveEnabled == false)
-                i--;
-            if (i < 0)
-                i += 3;
-            i = i % 3;
-            ShipModeSelection = (ShipSelectionMode)(i);
         }
         internal void MoveSelectionLeft()
         {
@@ -346,27 +355,32 @@ namespace SpaceHaste.GameMech
             }
            
         }
-
-        void UpdateSelectionLine()
+        private void ScrollUpInUnitActionsList()
         {
-            if (YSelectedSquareLine != null)
-            {
-                LineManager.RemoveLine(YSelectedSquareLine);
-            }
-            Vector3 botCube = CurrentGridCubeSelected;
-            botCube.Y = 0;
-            botCube = Map.map.GetCubeAt(botCube).Center;
-            botCube.Y -= +400;
-            YSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
-            LineManager.AddLine(YSelectedSquareLine);
-        }
+            int i = (int)ShipModeSelection - 1;
+            if (i < 0)
+                i += 3;
+            i = i % 3;
+            if (i == 0 && MoveEnabled == false)
+                i++;
+            if (i == 1 && AttackEnabled == false)
+                i++;
+            ShipModeSelection = (ShipSelectionMode)(i % 3);
 
-        public override void Update(GameTime gameTime)
+        }
+        private void ScrollDownInUnitActionList()
         {
-            update(gameTime);
-            base.Update(gameTime);
+            int i = (int)ShipModeSelection + 1;
+            i = i % 3;
+            if (i == 1 && AttackEnabled == false)
+                i--;
+            if (i == 0 && MoveEnabled == false)
+                i--;
+            if (i < 0)
+                i += 3;
+            i = i % 3;
+            ShipModeSelection = (ShipSelectionMode)(i);
         }
-
-      
+    #endregion
     }
 }

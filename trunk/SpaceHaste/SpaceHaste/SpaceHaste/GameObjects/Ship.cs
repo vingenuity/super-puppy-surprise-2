@@ -26,10 +26,11 @@ namespace SpaceHaste.GameObjects
         int[] dmg = new int[2];           //Damage done by weapons 0 = Laser, 1 = Missile
         int numMiss;                            //Number of missiles ship has left              
 
-        public Ship(Vector3 location)
+        public Ship(String name, Vector3 location, Team side)
             : this(location, 100, 100, 13, 1, 20, 10, new double[] {.25, .5, .5})
         {
-            Name = "MovementShip";
+            Name = name;
+            team = side;
         }
 
         public Ship(Vector3 location, int maxHull, int maxShield, double regeneration, int numMissiles, int lsrDmg, int missDmg, double[] eff) 

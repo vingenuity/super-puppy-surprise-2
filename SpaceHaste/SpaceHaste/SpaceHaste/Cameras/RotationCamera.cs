@@ -13,7 +13,7 @@ namespace SpaceHaste.Cameras
     {
         GraphicsDevice device;
 
-        float verticalAngle = .4f;
+        float verticalAngle = 1.0f;
         float horizontalAngle = 0;
         float zoom = 10;
         float verticalAngleMin = .01f;

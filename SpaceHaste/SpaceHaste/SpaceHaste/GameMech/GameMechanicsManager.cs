@@ -253,9 +253,9 @@ namespace SpaceHaste.GameMech
                 return;
             string VictoryDefeatScreenText = "";
             if (!PlayerFound)
-                VictoryDefeatScreenText = "You have been Destoryed";
+                VictoryDefeatScreenText = "You have been Destroyed";
             else if (!EnemyFound)
-                VictoryDefeatScreenText = "Enemy Destoryed";
+                VictoryDefeatScreenText = "Enemy Destroyed";
             if (Game1.USEMENUS)
             {
                 enabled = false;

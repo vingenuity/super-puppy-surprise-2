@@ -82,7 +82,7 @@ namespace SpaceHaste.GameMech
         {
             if (nextShipToMove.Energy < 100)
             {
-                double energyAdded = nextShipToMove.Energy + nextShipToMove.waitTime;
+                double energyAdded = 100 - nextShipToMove.Energy;
                 for (int i = 0; i < GameObjectList.Count; i++)
                 {
                     GameObjectList[i].AddEnergy(energyAdded);
@@ -182,7 +182,7 @@ namespace SpaceHaste.GameMech
         void SelectionWait()
         {
             CurrentGameObjectSelected.Energy -= 5;
-            CurrentGameObjectSelected.waitTime = 40;
+            CurrentGameObjectSelected.waitTime += 40;
             if (CurrentGameObjectSelected.Energy < 0)
                 CurrentGameObjectSelected.Energy = 0;
             NextShipTurn();

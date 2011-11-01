@@ -37,7 +37,7 @@ namespace SpaceHaste.Graphics
         GraphicsShaders GraphicsShader;
 
         // Change the model to use our custom cartoon shading effect.
-        Effect cartoonEffect;
+        static Effect cartoonEffect;
 
         public GraphicsManager(Game game, GraphicsDeviceManager _graphics)
             : base(game)
@@ -49,7 +49,12 @@ namespace SpaceHaste.Graphics
             GraphicsGameObjects = new List<GameObject>();
         }
 
-        
+        public static void AddGameObject(GameObject gameObject)
+        {
+            GraphicsGameObjects.Add(gameObject);
+            GraphicsShaders.ChangeEffectUsedByModel(gameObject.Model, cartoonEffect);
+            //GraphicsShader.CreateEffectsForModel(gameObject);
+        }
         /// <summary>
         /// Load your graphics content.
         /// </summary>

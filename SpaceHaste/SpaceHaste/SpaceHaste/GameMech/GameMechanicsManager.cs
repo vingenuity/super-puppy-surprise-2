@@ -9,6 +9,7 @@ using SpaceHaste.Maps;
 using SpaceHaste.Primitives;
 using SpaceHaste.Huds;
 using SpaceHaste.Sounds;
+using GameStateManagement;
 
 namespace SpaceHaste.GameMech
 {
@@ -20,7 +21,7 @@ namespace SpaceHaste.GameMech
             Attack,
             Wait,
         };
-
+        bool enabled = true;
         public enum GameState
         {
             Other,
@@ -41,24 +42,23 @@ namespace SpaceHaste.GameMech
         Vector3 CurrentGridCubeSelected;
         GameObject CurrentGameObjectSelected;
         Line YSelectedSquareLine;
-
+        bool loaded = false;
         public static List<GameObject> GameObjectList;
-
-        Del update;
 
         public GameMechanicsManager(Game g): base(g)
         {
             MechMan = this;
             GameObjectList = new List<GameObject>();
             AttackLineList = new List<Line>();
-            update = EmptyMethod;
+           
         }
 
-        delegate void Del(GameTime gameTime);
-        void EmptyMethod(GameTime gameTime)
+        public override void Initialize()
         {
-            NextShipTurn();
+            
+            base.Initialize();
         }
+
         void SortGameObjectList()
         {
             List<GameObject> list = new List<GameObject>();
@@ -76,23 +76,11 @@ namespace SpaceHaste.GameMech
             }
             GameObjectList = list;
         }
-        void NextShipTurn()
-        {
-            SortGameObjectList();
-           // GameObjectList.Sort();
-            GameObject nextShipToMove = GameObjectList[0];
-            AddEnergyToShips(nextShipToMove);
-        
-            MoveEnabled = true;
-            WaitEnabled = true;
-            AttackEnabled = true;
-            UpdateSelectionLine();
-            NextShipAction();
-        }
+      
 
         private void AddEnergyToShips(GameObject nextShipToMove)
         {
-            if (nextShipToMove.Energy != 100)
+            if (nextShipToMove.Energy < 100)
             {
                 double energyAdded = nextShipToMove.Energy + nextShipToMove.waitTime;
                 for (int i = 0; i < GameObjectList.Count; i++)
@@ -100,6 +88,26 @@ namespace SpaceHaste.GameMech
                     GameObjectList[i].AddEnergy(energyAdded);
                 }
             }
+        }
+        void NextShipTurn()
+        {
+            CheckVictory();
+            SortGameObjectList();
+
+            GameObject nextShipToMove = GameObjectList[0];
+            AddEnergyToShips(nextShipToMove);
+
+            CurrentGameObjectSelected = nextShipToMove;
+            CurrentGridCubeSelected = nextShipToMove.GridPosition;
+
+            MoveEnabled = true;
+            WaitEnabled = true;
+            AttackEnabled = true;
+            UpdateSelectionLine();
+            if (nextShipToMove.team == GameObject.Team.Player)
+                NextShipAction();
+            else
+                SelectionWait();
         }
         private void NextShipAction()
         {
@@ -115,13 +123,8 @@ namespace SpaceHaste.GameMech
 
             if (energy - nextShipToMove.AttackEnergyCost < 0)
                 AttackEnabled = false;
+          
 
-            if (nextShipToMove.team == GameObject.Team.Player)
-            {
-                PlayerTurn(nextShipToMove);
-            }
-            else
-                ComputerTurn();
             UpdateSelectionLine();
         }
         private void ResetActionSelectionMenu()
@@ -153,23 +156,8 @@ namespace SpaceHaste.GameMech
             if (ShipModeSelection == ShipSelectionMode.Attack && !AttackEnabled)
                 ScrollDownInUnitActionList();
         }
-        private void PlayerTurn(GameObject nextShipToMove)
-        {
-            update = PlayerSelectShipAction;
-            CurrentGameObjectSelected = nextShipToMove;
-            CurrentGridCubeSelected = nextShipToMove.GridPosition;
-        }      
-        
-        void PlayerSelectShipAction(GameTime gameTime)
-        {
-            
-        }
-        void PlayerTurn(GameTime gameTime)
-        {
-        }
-        void ComputerTurn()
-        {
-        }
+
+
 
         void SelectionMovement()
         {
@@ -230,8 +218,7 @@ namespace SpaceHaste.GameMech
 
         void NextTurn()
         {
-            
-            CheckVictory();
+
             GameObjectList.Sort();
         }
 
@@ -251,6 +238,8 @@ namespace SpaceHaste.GameMech
 
         void CheckVictory()
         {
+            if (!enabled)
+                return;
             bool PlayerFound = false;
             bool EnemyFound = false;
             foreach(GameObject obj in GameObjectList)
@@ -260,15 +249,29 @@ namespace SpaceHaste.GameMech
                 else
                     EnemyFound = true;
             }
+            if (PlayerFound && EnemyFound)
+                return;
+            string VictoryDefeatScreenText = "";
             if (!PlayerFound)
-                ; //Call Game Over
-            if (!EnemyFound)
-                ; //Call Victory
+                VictoryDefeatScreenText = "You have been Destoryed";
+            else if (!EnemyFound)
+                VictoryDefeatScreenText = "Enemy Destoryed";
+            if (Game1.USEMENUS)
+            {
+                enabled = false;
+                Game1.game.ScreenManager.AddScreen(new VictoryDefeatScreen(VictoryDefeatScreenText, ""), PlayerIndex.One);
+            }
+            else
+                Game1.game.LoadGameComponents();
         }
 
         public override void Update(GameTime gameTime)
         {
-            update(gameTime);
+            if (!loaded)
+            {
+                loaded = true;
+                NextShipTurn();
+            }
             base.Update(gameTime);
         }
         #region Control Delegates

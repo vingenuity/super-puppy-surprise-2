@@ -54,7 +54,7 @@ namespace SpaceHaste.GameObjects
         //Creation and Deletion
         public virtual void Load()
         {
-            GraphicsManager.GraphicsGameObjects.Add(this);
+            GraphicsManager.AddGameObject(this);
             GameMechanicsManager.GameObjectList.Add(this);
         }
         public virtual void Unload()
@@ -70,6 +70,8 @@ namespace SpaceHaste.GameObjects
         {
             Energy += energy;
             waitTime -= energy;
+            if (Energy > 100)
+                Energy = 100;
         }
         public int LaserDamage
         {

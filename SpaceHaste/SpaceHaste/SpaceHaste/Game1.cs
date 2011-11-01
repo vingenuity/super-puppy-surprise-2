@@ -17,6 +17,7 @@ using SpaceHaste.Huds;
 using SpaceHaste.GameMech;
 using SpaceHaste.Controls;
 using SpaceHaste.Sounds;
+using GameStateManagement;
 
 namespace SpaceHaste
 {
@@ -29,6 +30,9 @@ namespace SpaceHaste
         SpriteBatch spriteBatch;
         public static Camera Camera;
         double seconds = 1000;
+        public static Game1 game;
+        public static bool USEMENUS = true;
+        public ScreenManager ScreenManager;
         public double Hours
         {
             get { return seconds / 3600; }
@@ -42,9 +46,58 @@ namespace SpaceHaste
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
+            game = this;
+            gameComponents = new List<GameComponent>(); 
         }
+        List<GameComponent> gameComponents;
+        public void LoadGameComponents()
+        {
 
+            ExitGameComponents();
+            gameComponents = new List<GameComponent>(); 
+            // TODO: Add your initialization logic here
+            GraphicsManager GraphicsManager = new GraphicsManager(this, graphics);
+            Components.Add(GraphicsManager);
+            gameComponents.Add(GraphicsManager);
+
+            SoundManager SoundManager = new SoundManager(this);
+            Components.Add(SoundManager);
+            SoundManager.Load();
+            gameComponents.Add(SoundManager);
+
+            GameMechanicsManager GameMechanicsManager = new GameMechanicsManager(this);
+            Components.Add(GameMechanicsManager);
+            gameComponents.Add(GameMechanicsManager);
+
+            Hud HudManager = new Hud(this, graphics);
+            Components.Add(HudManager);
+            gameComponents.Add(HudManager);
+
+            PrimitiveManager PrimitiveManager = new PrimitiveManager(this, graphics);
+            Components.Add(PrimitiveManager);
+            gameComponents.Add(PrimitiveManager);
+
+            LineManager LineManager = new LineManager(this, graphics);
+            Components.Add(LineManager);
+            gameComponents.Add(LineManager);
+
+            MapManager MapManager = new MapManager(this);
+            Components.Add(MapManager);
+            gameComponents.Add(MapManager);
+
+            ControlManager ControlManager = new ControlManager(this, graphics);
+            Components.Add(ControlManager);
+            gameComponents.Add(ControlManager);
+        }
+       
+        public void ExitGameComponents()
+        {
+           while (gameComponents.Count > 0)
+            {
+                Components.Remove(gameComponents[0]);
+                gameComponents.Remove(gameComponents[0]);
+            }
+        }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -60,31 +113,14 @@ namespace SpaceHaste
              //   graphics.ToggleFullScreen();
             graphics.ApplyChanges();
 
-            // TODO: Add your initialization logic here
-            GraphicsManager GraphicsManager = new GraphicsManager(this, graphics);
-            Components.Add(GraphicsManager);
-
-            SoundManager SoundManager = new SoundManager(this);
-            Components.Add(SoundManager);
-            SoundManager.Load();
-
-            GameMechanicsManager GameMechanicsManager = new GameMechanicsManager(this);
-            Components.Add(GameMechanicsManager);
-
-            Hud HudManager = new Hud(this, graphics);
-            Components.Add(HudManager);
-
-            PrimitiveManager PrimitiveManager = new PrimitiveManager(this, graphics);
-            Components.Add(PrimitiveManager);
-
-            LineManager LineManager = new LineManager(this, graphics);
-            Components.Add(LineManager);
-
-            MapManager MapManager = new MapManager(this);
-            Components.Add(MapManager);
-
-            ControlManager ControlManager = new ControlManager(this, graphics);
-            Components.Add(ControlManager);
+            if (USEMENUS)
+            {
+                ScreenManager = new ScreenManager(this);
+                ScreenManager.DrawOrder = 100;
+                Components.Add(ScreenManager);
+            }
+            else
+                LoadGameComponents();
 
             base.Initialize();
         }
@@ -97,7 +133,11 @@ namespace SpaceHaste
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+            if (USEMENUS)
+            {
+                ScreenManager.AddScreen(new BackgroundScreen(), null);
+                ScreenManager.AddScreen(new MainMenuScreen(), null);
+            }
             // TODO: use this.Content to load your game content here
         }
 

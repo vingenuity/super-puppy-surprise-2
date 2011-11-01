@@ -22,7 +22,7 @@ namespace SpaceHaste.Maps
 
             this.addGameObject(new Ship("Enemy Ship 1", new Vector3(1, 4, 3), GameObject.Team.Enemy));
             this.addGameObject(new Ship("Enemy Ship 2", new Vector3(4, 3, 3), GameObject.Team.Enemy));
-            this.addGameObject(new Ship("Enemy Ship 3", new Vector3(7, 4, 3), GameObject.Team.Enemy));
+            //this.addGameObject(new Ship("Enemy Ship 3", new Vector3(7, 4, 3), GameObject.Team.Enemy));
 
             AddGridIsometric();
         }

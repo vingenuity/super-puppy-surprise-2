@@ -70,6 +70,10 @@ namespace SpaceHaste.GameObjects
         {
             Energy += energy;
             waitTime -= energy;
+            if (waitTime < 0)
+                waitTime = 0;
+            if (Energy < 0)
+                Energy = 0;
             if (Energy > 100)
                 Energy = 100;
         }
@@ -86,13 +90,13 @@ namespace SpaceHaste.GameObjects
         //Operators(for sorting)
         public static bool operator >(GameObject go1, GameObject go2)
         {
-            if (go1.Energy + go1.waitTime > go2.Energy - go2.waitTime)
+            if (go1.Energy - go1.waitTime > go2.Energy - go2.waitTime)
                 return true;
             else return false;
         }
         public static bool operator <(GameObject go1, GameObject go2)
         {
-            if (go1.Energy + go1.waitTime < go2.Energy - go2.waitTime)
+            if (go1.Energy - go1.waitTime < go2.Energy - go2.waitTime)
                 return true;
             else return false;
         }

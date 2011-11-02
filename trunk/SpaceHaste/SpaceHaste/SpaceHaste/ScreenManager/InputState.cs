@@ -186,7 +186,7 @@ namespace GameStateManagement
         {
             PlayerIndex playerIndex;
 
-            return IsNewKeyPress(Keys.Up, controllingPlayer, out playerIndex) ||
+            return IsNewKeyPress(Keys.I, controllingPlayer, out playerIndex) ||
                    IsNewButtonPress(Buttons.DPadUp, controllingPlayer, out playerIndex) ||
                    IsNewButtonPress(Buttons.LeftThumbstickUp, controllingPlayer, out playerIndex);
         }
@@ -201,7 +201,7 @@ namespace GameStateManagement
         {
             PlayerIndex playerIndex;
 
-            return IsNewKeyPress(Keys.Down, controllingPlayer, out playerIndex) ||
+            return IsNewKeyPress(Keys.K, controllingPlayer, out playerIndex) ||
                    IsNewButtonPress(Buttons.DPadDown, controllingPlayer, out playerIndex) ||
                    IsNewButtonPress(Buttons.LeftThumbstickDown, controllingPlayer, out playerIndex);
         }

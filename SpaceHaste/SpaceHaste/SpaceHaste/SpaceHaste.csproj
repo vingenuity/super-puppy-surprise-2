@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI.cs" />
     <Compile Include="Cameras\Camera.cs" />
     <Compile Include="Cameras\RotationCamera.cs" />
     <Compile Include="Controls\ControlManager.cs" />

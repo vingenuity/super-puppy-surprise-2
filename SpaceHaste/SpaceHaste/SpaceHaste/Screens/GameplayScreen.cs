@@ -31,7 +31,7 @@ namespace GameStateManagement
     {
         #region Fields
        
-        SpriteFont gameFont;
+        //SpriteFont gameFont;
 
         float pauseAlpha;
 
@@ -47,6 +47,7 @@ namespace GameStateManagement
         /// </summary>
         public GameplayScreen()
         {
+            pauseAlpha = 0f;
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
             Restart();

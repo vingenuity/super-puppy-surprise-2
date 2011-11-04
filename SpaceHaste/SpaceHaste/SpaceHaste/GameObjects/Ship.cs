@@ -12,8 +12,6 @@ namespace SpaceHaste.GameObjects
 {
     public class Ship : GameObject
     {
-     
-
         public Ship(String name, Vector3 location, Team side)
             : this(location, 100, 100, 13, 1, 20, 10, new double[] {.25, .5, .5})
         {
@@ -25,7 +23,7 @@ namespace SpaceHaste.GameObjects
             : base(location)
         {
             //Fill hull and shields to max.
-            hull[0] = hull[1] = maxHull;
+            //hull[0] = hull[1] = maxHull;
             shield[0] = shield[1] = maxShield;
 
             //Start energy at zero. We will recharge energy starting on turn 1.
@@ -84,7 +82,7 @@ namespace SpaceHaste.GameObjects
             }
 
             //If our hull can take it, deal remaining damage and exit
-            if (hull[0] > damage)
+            /*if (hull[0] > damage)
             {
                 hull[0] -= damage;
                 return;
@@ -94,16 +92,16 @@ namespace SpaceHaste.GameObjects
             {
                 SoundManager.Sounds.PlaySound(SoundEffects.explode);
                 Unload();
-            }
+            }*/
         }
 
-        public double getHull() {
+        /*public double getHull() {
             return hull[0];
         }
 
         public double getMaxHull() {
             return hull[1];
-        }
+        }*/
 
         public void Generate(int amount_energy) { energy[0] += regen; }
 

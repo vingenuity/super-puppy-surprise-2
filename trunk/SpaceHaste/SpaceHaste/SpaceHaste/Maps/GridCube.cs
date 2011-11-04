@@ -33,6 +33,9 @@ namespace SpaceHaste.Maps
             Terrain = TerrainType.none;
         }
 
+        //Conversion
+        public Vector3 AsVector() { return new Vector3(X, Y, Z); }
+
         //Draw Function
         public void Draw() { }
 

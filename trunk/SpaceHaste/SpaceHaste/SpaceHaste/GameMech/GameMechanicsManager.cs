@@ -44,13 +44,14 @@ namespace SpaceHaste.GameMech
         Line YSelectedSquareLine;
         bool loaded = false;
         public static List<GameObject> GameObjectList;
+        private AI Enemy;
 
         public GameMechanicsManager(Game g): base(g)
         {
             MechMan = this;
             GameObjectList = new List<GameObject>();
             AttackLineList = new List<Line>();
-           
+            Enemy = new AI(Map.map);
         }
 
         public override void Initialize()
@@ -89,7 +90,8 @@ namespace SpaceHaste.GameMech
                 }
             }
         }
-        void NextShipTurn()
+
+        private void NextShipTurn()
         {
             CheckVictory();
             SortGameObjectList();
@@ -104,11 +106,23 @@ namespace SpaceHaste.GameMech
             WaitEnabled = true;
             AttackEnabled = true;
             UpdateSelectionLine();
+            Tuple<GridCube, ShipSelectionMode> action;
             if (nextShipToMove.team == GameObject.Team.Player)
                 NextShipAction();
             else
+            {
+                action = Enemy.TakeTurn(GameObjectList);
+                while (action.Item2 != ShipSelectionMode.Wait)
+                {
+                    CurrentGridCubeSelected = action.Item1.AsVector();
+                    ShipModeSelection = action.Item2;
+                    gamestate = GameState.EnterShipAction;
+                    Selection();
+                    action = Enemy.TakeTurn(GameObjectList);
+                }
                 SelectionWait();
-        }
+            }
+        }       
         private void NextShipAction()
         {
             ClearLineList();
@@ -123,10 +137,10 @@ namespace SpaceHaste.GameMech
 
             if (energy - nextShipToMove.AttackEnergyCost < 0)
                 AttackEnabled = false;
-          
 
             UpdateSelectionLine();
         }
+       
         private void ResetActionSelectionMenu()
         {
             ClearLineList();
@@ -157,36 +171,6 @@ namespace SpaceHaste.GameMech
                 ScrollDownInUnitActionList();
         }
 
-
-
-        void SelectionMovement()
-        {
-            List<GridCube> InRange = Map.map.GetGridCubesInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
-            if (InRange.Find(item => item == Map.map.GetCubeAt(CurrentGridCubeSelected)) != null)
-            {
-
-                Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;
-                float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
-                if (CurrentGameObjectSelected.Energy - DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost>= 0)
-                {
-                    Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
-
-                    CurrentGameObjectSelected.Energy -= DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost;
-                    if (CurrentGameObjectSelected.Energy - CurrentGameObjectSelected.MovementEnergyCost < 0)
-                        MoveEnabled = false;
-                    NextShipAction();
-                }
-            }
-        }
-
-        void SelectionWait()
-        {
-            CurrentGameObjectSelected.Energy -= 5;
-            CurrentGameObjectSelected.waitTime += 40;
-            if (CurrentGameObjectSelected.Energy < 0)
-                CurrentGameObjectSelected.Energy = 0;
-            NextShipTurn();
-        }
         void SelectionAttack()
         {
             GameObject offender = CurrentGameObjectSelected;
@@ -218,11 +202,32 @@ namespace SpaceHaste.GameMech
             else return; 
 
         }
-
-        void NextTurn()
+        void SelectionMovement()
         {
+            List<GridCube> InRange = Map.map.GetGridCubesInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
+            if (InRange.Find(item => item == Map.map.GetCubeAt(CurrentGridCubeSelected)) != null)
+            {
 
-            GameObjectList.Sort();
+                Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;
+                float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
+                if (CurrentGameObjectSelected.Energy - DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost>= 0)
+                {
+                    Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
+
+                    CurrentGameObjectSelected.Energy -= DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost;
+                    if (CurrentGameObjectSelected.Energy - CurrentGameObjectSelected.MovementEnergyCost < 0)
+                        MoveEnabled = false;
+                    NextShipAction();
+                }
+            }
+        }
+        void SelectionWait()
+        {
+            CurrentGameObjectSelected.Energy -= 5;
+            CurrentGameObjectSelected.waitTime += 40;
+            if (CurrentGameObjectSelected.Energy < 0)
+                CurrentGameObjectSelected.Energy = 0;
+            NextShipTurn();
         }
 
         void UpdateSelectionLine()

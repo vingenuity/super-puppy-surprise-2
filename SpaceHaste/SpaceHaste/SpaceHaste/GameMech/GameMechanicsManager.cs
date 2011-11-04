@@ -212,8 +212,11 @@ namespace SpaceHaste.GameMech
                 offender.Energy -= offender.AttackEnergyCost;
                 if (offender.Energy < 0)
                     offender.Energy = 0;
+
             }
-            else return;
+                               
+            else return; 
+
         }
 
         void NextTurn()

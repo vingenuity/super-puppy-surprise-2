@@ -70,7 +70,7 @@ namespace SpaceHaste.Huds
             spriteBatch.Draw(bracket, new Rectangle(23, num * 100 + 47, (int)(Width - 6), (2 * ((int)Height - 50)) + 3), Color.White); 
             spriteBatch.DrawString(spriteFont, unit.Name, new Vector2(20, num * 100 + 10), Color.White);
             spriteBatch.DrawString(spriteFont,"" +unit.Energy, new Vector2((float)(unit.Energy/100)*(Width-6)+23, num * 100 + 45), Color.White);
-            spriteBatch.DrawString(spriteFont, "" + unit.Health + " / " + unit.maxHealth, new Vector2(100, num * 100 + 72), Color.White);
+            spriteBatch.DrawString(spriteFont, "" + unit.hull[0] + " / " + unit.hull[1], new Vector2(100, num * 100 + 72), Color.White);
 
         }
 

@@ -15,6 +15,18 @@ namespace SpaceHaste.GameObjects
 {
     public class GameObject
     {
+        //Health
+        public int[] hull = new int[2];          //health  -- 0 = current, 1 = max
+        public int[] shield = new int[2];        //shields -- 0 = current, 1 = max
+
+        //Energy
+        public double[] energy = new double[2];        //energy  -- 0 = current, 1 = max
+        public double[] efficiency = new double[3];    //contains [moveEff,laserEff,shieldsEff] efficiencies track energy usage for specified action                        
+        public double regen;                           //The amount of energy each ship regenerates in one regeneration round.  Should be somewhere around 5 - 30.
+
+        //Weapons
+        public int[] dmg = new int[2];           //Damage done by weapons 0 = Laser, 1 = Missile
+        public int numMiss;                            //Number of missiles ship has left         
         //Model/Render Information
         public float Scale;
         public Model Model;             //Holds model info and effect information

@@ -12,19 +12,7 @@ namespace SpaceHaste.GameObjects
 {
     public class Ship : GameObject
     {
-
-        //Health
-        int[] hull = new int[2];          //health  -- 0 = current, 1 = max
-        int[] shield = new int[2];        //shields -- 0 = current, 1 = max
-
-        //Energy
-        double[] energy = new double[2];        //energy  -- 0 = current, 1 = max
-        double[] efficiency = new double[3];    //contains [moveEff,laserEff,shieldsEff] efficiencies track energy usage for specified action                        
-        double regen;                           //The amount of energy each ship regenerates in one regeneration round.  Should be somewhere around 5 - 30.
-
-        //Weapons
-        int[] dmg = new int[2];           //Damage done by weapons 0 = Laser, 1 = Missile
-        int numMiss;                            //Number of missiles ship has left              
+     
 
         public Ship(String name, Vector3 location, Team side)
             : this(location, 100, 100, 13, 1, 20, 10, new double[] {.25, .5, .5})

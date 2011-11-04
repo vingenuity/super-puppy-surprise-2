@@ -125,7 +125,7 @@ namespace SpaceHaste.GameMech
         }       
         private void NextShipAction()
         {
-            ClearLineList();
+            
             gamestate = GameState.SelectShipAction;
             ScrollDownInUnitListIfActionIsDisabled();
             GameObject nextShipToMove = GameObjectList[0];
@@ -176,11 +176,11 @@ namespace SpaceHaste.GameMech
             GameObject offender = CurrentGameObjectSelected;
             GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
 
-            if (tempTarget == null || !(tempTarget is Ship) || tempTarget.getTeam() == offender.getTeam())
+            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
                 return;
-            Ship target = tempTarget as Ship;
+            GameObject target = tempTarget as GameObject;
 
-            if (offender.Energy - offender.AttackEnergyCost < 0)
+            if (offender.Energy < offender.AttackEnergyCost)
             {
                 AttackEnabled = false;
                 NextShipAction();
@@ -196,6 +196,9 @@ namespace SpaceHaste.GameMech
                 offender.Energy -= offender.AttackEnergyCost;
                 if (offender.Energy < 0)
                     offender.Energy = 0;
+                if (offender.Energy < offender.AttackEnergyCost)
+                    AttackEnabled = false;
+                NextShipAction();
 
             }
                                
@@ -223,6 +226,7 @@ namespace SpaceHaste.GameMech
         }
         void SelectionWait()
         {
+            ClearLineList();
             CurrentGameObjectSelected.Energy -= 5;
             CurrentGameObjectSelected.waitTime += 40;
             if (CurrentGameObjectSelected.Energy < 0)

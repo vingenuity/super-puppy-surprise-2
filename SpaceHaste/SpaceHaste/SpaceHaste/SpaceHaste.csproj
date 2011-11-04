@@ -113,7 +113,6 @@
     <Compile Include="Controls\ControlManager.cs" />
     <Compile Include="GameMech\GameMechanicsManager.cs" />
     <Compile Include="GameObjects\Shields.cs" />
-    <Compile Include="GameObjects\Ship.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="Graphics\GraphicsManager.cs" />
     <Compile Include="Graphics\GraphicsShaders.cs" />

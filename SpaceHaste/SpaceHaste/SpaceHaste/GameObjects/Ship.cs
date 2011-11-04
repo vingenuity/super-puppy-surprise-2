@@ -20,7 +20,7 @@ namespace SpaceHaste.GameObjects
         }
 
         public Ship(Vector3 location, int maxHull, int maxShield, double regeneration, int numMissiles, int lsrDmg, int missDmg, double[] eff) 
-            : base(location)
+
         {
             //Fill hull and shields to max.
             //hull[0] = hull[1] = maxHull;
@@ -45,21 +45,9 @@ namespace SpaceHaste.GameObjects
             return regen;
         }
 
-        public override void Load()
-        {
-            //Set up our rendering options.
-            Model = GraphicsManager.Content.Load<Model>("Ship");
-            
-            Scale = .25f;
-            base.Load();
-        }
 
-        public void fireLaser(Ship ship)
-        {
-            SoundManager.Sounds.PlaySound(SoundEffects.laser);
-            ship.energy[0] -= 40;
-            ship.isHit(dmg[0]);
-        }
+
+
 
         public void fireMissile(Ship ship) 
         {

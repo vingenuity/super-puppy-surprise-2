@@ -168,8 +168,14 @@ namespace SpaceHaste.Graphics
         {
             for(int i = 0; i< GraphicsManager.GraphicsGameObjects.Count; i++)
                 DrawModel(GraphicsManager.GraphicsGameObjects[i].Model,
-                    GraphicsManager.GraphicsGameObjects[i].World, 
+                    GraphicsManager.GraphicsGameObjects[i].World,
                     ControlManager.View, ControlManager.Projection, effectTechniqueName);
+            for (int i = 0; i < Maps.Map.map.EnvMapObjects.Count; i++)
+            {
+                DrawModel(GraphicsManager.TestCube,
+                    Matrix.CreateScale(.1f)*Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
+                    ControlManager.View, ControlManager.Projection, effectTechniqueName);
+            }
         }
 
         

@@ -24,6 +24,8 @@ namespace SpaceHaste.Maps
             this.addGameObject(GameObject.createBasicShip("Enemy Ship 2", new Vector3(4, 3, 3), GameObject.Team.Enemy), new Vector3(4, 3, 3));
             //this.addGameObject(createBasicShip("Enemy Ship 3", new Vector3(7, 4, 3), GameObject.Team.Enemy));
 
+            this.AddEnvObject(GridCube.TerrainType.wreck, 1, 5, 3);
+
             AddGridIsometric();
         }
     }

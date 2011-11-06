@@ -12,10 +12,13 @@ namespace SpaceHaste.Maps
     {
         protected GridCube[, ,] MapGridCubes;
         protected GridCube[, ,] BottomMap;
+
         protected Line[,] XYMatrix;
         protected Line[,] XZMatrix;
         protected Line[,] YZMatrix;
-        public List<GameObject> MapObjects;
+
+        public List<GridCube> EnvMapObjects;
+        public List<GameObject> ShipMapObjects;
         public int Size;
 
         public static Map map;
@@ -23,7 +26,8 @@ namespace SpaceHaste.Maps
         public Map(int Size)
         {
             this.Size = Size;
-            MapObjects = new List<GameObject>();
+            ShipMapObjects = new List<GameObject>();
+            EnvMapObjects = new List<GridCube>();
 
             XYMatrix = new Line[2, Size + 1];
             XZMatrix = new Line[2, Size + 1];
@@ -39,7 +43,7 @@ namespace SpaceHaste.Maps
             go.GridPosition = position;
             go.DrawPosition = MapGridCubes[(int)position.X, (int)position.Y, (int)position.Z].Center;
             go.GridLocation = MapGridCubes[(int)position.X, (int)position.Y, (int)position.Z];
-            MapObjects.Add(go);
+            ShipMapObjects.Add(go);
         }
 
         public void addGameObject(GameObject go)
@@ -47,19 +51,37 @@ namespace SpaceHaste.Maps
             MapGridCubes[(int)go.GridPosition.X, (int)go.GridPosition.Y, (int)go.GridPosition.Z].AddObject(go);
             go.DrawPosition = MapGridCubes[(int)go.GridPosition.X, (int)go.GridPosition.Y, (int)go.GridPosition.Z].Center;
             go.GridLocation = MapGridCubes[(int)go.GridPosition.X, (int)go.GridPosition.Y, (int)go.GridPosition.Z];
-            MapObjects.Add(go);
+            ShipMapObjects.Add(go);
         }
 
         public void removeGameObject(GameObject go)
         {
-            MapObjects.Remove(go);
+
+            ShipMapObjects.Remove(go);
         }
 
         public void colorGrids()
         {
-            foreach (GameObject go in MapObjects)
+            foreach (GameObject go in ShipMapObjects)
             {
             }
+        }
+
+        public void AddEnvObject(GridCube.TerrainType e , int x, int y, int z)
+        {
+            switch (e)
+            {
+                case GridCube.TerrainType.asteroid:
+                    MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.asteroid);
+                    break;
+                case GridCube.TerrainType.nebula:
+                    MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.nebula);
+                    break;
+                case GridCube.TerrainType.wreck:
+                    MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.wreck);
+                    break;
+            };
+            EnvMapObjects.Add(MapGridCubes[x, y, z]);
         }
 
         protected virtual void InitMapGameObjects() { }
@@ -112,9 +134,9 @@ namespace SpaceHaste.Maps
             Ray ray = new Ray(go.GridPosition, rayDirection);
             float? distance = ray.Intersects(target.boundingSphere);
             float? r = 0;
-            for (int i = 0; i < MapObjects.Count; i++)
+            for (int i = 0; i < ShipMapObjects.Count; i++)
             {
-                r = ray.Intersects(MapObjects[i].boundingSphere);
+                r = ray.Intersects(ShipMapObjects[i].boundingSphere);
                 if (r == null || r < 1 || r > distance) continue;
                 else break; // 1 < r < d
             }
@@ -122,7 +144,6 @@ namespace SpaceHaste.Maps
                 return true;
             else return false;
         }
-        
         /// <summary>
         /// Finds the number of grid squares in range of a particular grid square.
         /// This will presumably be used to find valid moves for each ship.
@@ -140,17 +161,19 @@ namespace SpaceHaste.Maps
             GridQueue.Enqueue(loc);
             inRange.Add(loc);
             loc.distance = 0;
+            loc.SetPath(null); 
             while(GridQueue.Count != 0)
             {
                 GridCube gc = GridQueue.Dequeue();
                 if (gc.distance >= range) continue;
                 foreach (GridCube neighbor in gc.ConnectedGridSquares)
                 {
-                    if (neighbor.HasObject())
+                    if (neighbor.HasObject() || neighbor.GetTerrain() != GridCube.TerrainType.none)
                         continue;
                     if (gc.distance + neighbor.GetMoveCost() < neighbor.distance)
                     {
                         neighbor.distance = gc.distance + neighbor.GetMoveCost();
+                        neighbor.SetPath(gc);
                         GridQueue.Enqueue(neighbor);
                         inRange.Add(neighbor);
                     }
@@ -159,6 +182,8 @@ namespace SpaceHaste.Maps
             return inRange;
         }
        
+      
+
         /// <summary>
         /// Finds the number of grid squares in range of a grid square x, y, z.
         /// This extends the functionality of the above function for more general use.

@@ -32,6 +32,8 @@ namespace SpaceHaste.Maps
             ConnectedGridSquares = new List<GridCube>();
             Terrain = TerrainType.none;
         }
+        //Backtrack to get the Path to the GridCube
+        public GridCube PreviousGridSquare;
 
         //Conversion
         public Vector3 AsVector() { return new Vector3(X, Y, Z); }
@@ -49,5 +51,27 @@ namespace SpaceHaste.Maps
         public int GetMoveCost() { return (int)Terrain; }
         public TerrainType GetTerrain() { return Terrain; }
         public void SetTerrain(TerrainType t) { Terrain = t; }
+
+        public static Vector3 Root = new Vector3(-1000,0,0);
+       
+        /// <summary>
+        /// Backtrack to get the Path to the GridCube
+        /// </summary>
+        public List<Vector3> GetPath()
+        {
+            List<Vector3> Path = new List<Vector3>();
+            GridCube l = PreviousGridSquare;
+            while (l != null)
+            {
+                Path.Add(l.Position);
+                l = l.PreviousGridSquare;
+            }
+            return Path;
+        }
+        public void SetPath(GridCube PreviousGridSquare)
+        {
+            this.PreviousGridSquare = PreviousGridSquare;
+        }
+
     }
 }

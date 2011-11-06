@@ -35,7 +35,7 @@ namespace SpaceHaste.Graphics
         public static ContentManager Content;
 
         GraphicsShaders GraphicsShader;
-
+        public static Model TestCube;
         // Change the model to use our custom cartoon shading effect.
         static Effect cartoonEffect;
 
@@ -47,6 +47,12 @@ namespace SpaceHaste.Graphics
             Content.RootDirectory = "Content";
             GraphicsShader = new GraphicsShaders(graphics);
             GraphicsGameObjects = new List<GameObject>();
+           
+        }
+        static void InitTestCube()
+        {
+            TestCube = Content.Load<Model>("Ship");
+            GraphicsShaders.ChangeEffectUsedByModel(TestCube, cartoonEffect);
         }
 
         public static void AddGameObject(GameObject gameObject)
@@ -64,6 +70,7 @@ namespace SpaceHaste.Graphics
             cartoonEffect = GraphicsManager.Content.Load<Effect>("CartoonEffect");
             for(int i = 0; i<GraphicsGameObjects.Count; i++)
                 GraphicsShaders.ChangeEffectUsedByModel(GraphicsGameObjects[i].Model, cartoonEffect);
+            InitTestCube();
         }
 
 

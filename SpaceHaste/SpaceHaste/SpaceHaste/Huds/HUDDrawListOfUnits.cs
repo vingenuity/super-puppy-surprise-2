@@ -47,6 +47,8 @@ namespace SpaceHaste.Huds
 
         }
 
+        float leftcorner, rightcorner;
+
         private void DrawUnitInformation(GameObject unit, SpriteBatch spriteBatch, SpriteFont spriteFont, int num, float ScreenWidth, float ScreenHeight)
         {
            
@@ -63,10 +65,15 @@ namespace SpaceHaste.Huds
             {
                 spriteBatch.Draw(enemyHud, new Rectangle(20, num * 100 + 20, (int)Width, (int)Height), Color.White);
             }
-            
+
+
+            leftcorner = (float)((unit.hull[0] / 100.0) * (Width - 6));
+            rightcorner = ((Width - 6) - ((unit.hull[0] / 100) * (Width - 6)));
+
             spriteBatch.Draw(currentEnergy, new Rectangle(23, num * 100 + 47,  (int)(Width - 6), (int)Height - 50), Color.White);
             spriteBatch.Draw(maxEnergy, new Rectangle((int)((unit.Energy / 100) * (Width - 6) + 23), num * 100 + 47, (int)((Width - 6) - ((unit.Energy / 100) * (Width - 6))), (int)Height - 50), Color.White);
             spriteBatch.Draw(currentHealth, new Rectangle(23, num * 100 + 65, (int)Width - 6, (int)Height - 50), Color.White);
+            spriteBatch.Draw(maxEnergy, new Rectangle((int)((unit.hull[0] / 100.0) * (Width - 6) + 23), num * 100 + 65, (int)((Width - 6) - ((unit.hull[0] / 100.0) * (Width - 6))), (int)Height - 50), Color.White);
             spriteBatch.Draw(bracket, new Rectangle(23, num * 100 + 47, (int)(Width - 6), (2 * ((int)Height - 50)) + 3), Color.White); 
             spriteBatch.DrawString(spriteFont, unit.Name, new Vector2(20, num * 100 + 10), Color.White);
             spriteBatch.DrawString(spriteFont,"" +unit.Energy, new Vector2((float)(unit.Energy/100)*(Width-6)+23, num * 100 + 45), Color.White);

@@ -32,7 +32,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         public bool WaitEnabled;
         public bool AttackEnabled;
 
-        public GameState gamestate;
+        
         public ShipSelectionMode ShipModeSelection;
 
         public BattleMechanicsManager()
@@ -97,7 +97,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 {
                     CurrentGridCubeSelected = action.Item1.AsVector();
                     ShipModeSelection = action.Item2;
-                    gamestate = GameState.EnterShipAction;
+                    GameMechanicsManager.gamestate = GameState.EnterShipAction;
                     Selection();
                     action = Enemy.TakeTurn(GameMechanicsManager.GameObjectList);
                 }
@@ -106,8 +106,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }       
         private void NextShipAction()
         {
-            
-            gamestate = GameState.SelectShipAction;
+
+            GameMechanicsManager.gamestate = GameState.SelectShipAction;
             ScrollDownInUnitListIfActionIsDisabled();
             GameObject nextShipToMove = GameMechanicsManager.GameObjectList[0];
 
@@ -275,15 +275,15 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         /// </summary>
         internal void Selection()
         {
-            if (gamestate == GameState.SelectShipAction)
+            if (GameMechanicsManager.gamestate == GameState.SelectShipAction)
             {
                 ShipModeSelection = (ShipSelectionMode)(((int)ShipModeSelection) % 3);
-                gamestate = GameState.EnterShipAction;
+                GameMechanicsManager.gamestate = GameState.EnterShipAction;
                 if (ShipModeSelection == ShipSelectionMode.Wait)
                     SelectionWait();
                 return;
             }
-            if (gamestate == GameState.EnterShipAction)
+            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
                 switch (ShipModeSelection)
                 {
                     case (ShipSelectionMode.Attack):
@@ -301,39 +301,39 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         internal void Back()
         {
-            if (gamestate == GameState.EnterShipAction)
+            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
             {
-                gamestate = GameState.SelectShipAction;
+                GameMechanicsManager.gamestate = GameState.SelectShipAction;
                 ResetActionSelectionMenu();
             }
         }
         internal void MoveSelectionUp()
         {
-            if (gamestate == GameState.EnterShipAction)
+            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
             {
                 if (CurrentGridCubeSelected.X < Map.map.Size - 1) CurrentGridCubeSelected.X++;
                 UpdateSelectionLine();
             }
-            if (gamestate == GameState.SelectShipAction)
+            if (GameMechanicsManager.gamestate == GameState.SelectShipAction)
             {
                 ScrollUpInUnitActionsList();
             }
         }
         internal void MoveSelectionDown()
         {
-            if (gamestate == GameState.EnterShipAction)
+            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
             {
                 if (CurrentGridCubeSelected.X > 0) CurrentGridCubeSelected.X--;
                 UpdateSelectionLine();
             }
-            if (gamestate == GameState.SelectShipAction)
+            if (GameMechanicsManager.gamestate == GameState.SelectShipAction)
             {
                 ScrollDownInUnitActionList();
             }
         }
         internal void MoveSelectionLeft()
         {
-            if (gamestate == GameState.EnterShipAction)
+            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
             {
                 if (CurrentGridCubeSelected.Z > 0) CurrentGridCubeSelected.Z--;
                 UpdateSelectionLine();
@@ -341,7 +341,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         internal void MoveSelectionRight()
         {
-            if (gamestate == GameState.EnterShipAction)
+            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
             {
                 if (CurrentGridCubeSelected.Z < Map.map.Size - 1) CurrentGridCubeSelected.Z++;
                 UpdateSelectionLine();
@@ -349,7 +349,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         internal void MoveSelectionHigher()
         {
-            if (gamestate == GameState.EnterShipAction)
+            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
             {
                 if (CurrentGridCubeSelected.Y < Map.map.Size - 1) CurrentGridCubeSelected.Y++;
                 UpdateSelectionLine();
@@ -358,7 +358,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         internal void MoveSelectionLower()
         {
-            if (gamestate == GameState.EnterShipAction)
+            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
             {
                 if (CurrentGridCubeSelected.Y > 0) CurrentGridCubeSelected.Y--;
                 UpdateSelectionLine();

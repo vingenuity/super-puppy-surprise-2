@@ -18,7 +18,7 @@ namespace SpaceHaste.GameMech
     {
         public static List<GameObject> GameObjectList;
 
-        
+        public static GameState gamestate;
         BattleMechanicsManager BattleManager;
 
         //For controls, we need a singleton

@@ -190,7 +190,7 @@ namespace SpaceHaste.Controls
         public override void Update(GameTime gameTime)
         {
             //Remap Controls to standard if in menus, else remap dynamically to the camera perspective.
-            if (BattleMechanicsManager.Instance.gamestate == GameState.SelectShipAction)
+            if (GameMechanicsManager.gamestate == GameState.SelectShipAction)
                 RemapStandard();
             else
                 RemapToCameraPersp();

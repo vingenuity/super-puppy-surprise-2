@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using System.Threading;
 using SpaceHaste.GameObjects;
 using SpaceHaste.Primitives;
 using SpaceHaste.Maps;

@@ -72,7 +72,7 @@ namespace SpaceHaste.Controls
             KeyMap.Add(Keys.E,     new GameAction(camera.ZoomIn));
             KeyMap.Add(Keys.Q,     new GameAction(camera.ZoomOut));
             KeyMap.Add(Keys.Enter, new GameAction(BattleMechanicsManager.Instance.Selection));
-            KeyMap.Add(Keys.Escape, new GameAction(BattleMechanicsManager.Instance.Back));
+            KeyMap.Add(Keys.RightShift, new GameAction(BattleMechanicsManager.Instance.Back));
             KeyMap.Add(Keys.I,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionUp));
             KeyMap.Add(Keys.K,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionDown));
             KeyMap.Add(Keys.J,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionLeft));

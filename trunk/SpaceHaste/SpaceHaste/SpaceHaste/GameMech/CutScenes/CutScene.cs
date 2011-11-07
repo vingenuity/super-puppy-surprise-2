@@ -9,13 +9,15 @@ namespace SpaceHaste.GameMech.CutScenes
 {
     public class CutScene
     {
-        List<String> Text;
+        public List<String> Text;
         public static String currentLine;
-       
         public CutScene(String FileName)
         {
             Text = new List<String>();
             ReadFile(FileName);
+        }
+        public CutScene()
+        {
         }
         void ReadFile(String FileName)
         {
@@ -24,7 +26,7 @@ namespace SpaceHaste.GameMech.CutScenes
             //String s = Environment.CurrentDirectory;
             // Read the file and display it line by line.
             System.IO.StreamReader file =
-               new System.IO.StreamReader( "CutSceneText\\"+FileName+".txt");
+               new System.IO.StreamReader( "CutScenes\\"+FileName+".txt");
             while ((line = file.ReadLine()) != null)
             {
                 Text.Add(line);
@@ -34,18 +36,6 @@ namespace SpaceHaste.GameMech.CutScenes
             file.Close();
 
         }
-        internal void NextText()
-        {
-            if(GameMechanicsManager.gamestate == GameState.CutScene)
-            {
-                if (Text.Count > 0)
-                {
-                    currentLine = Text[0];
-                    Text.RemoveAt(0);
-                }
-                else
-                    GameMechanicsManager.gamestate = GameState.EnterShipAction;
-            }
-        }
+       
     }
 }

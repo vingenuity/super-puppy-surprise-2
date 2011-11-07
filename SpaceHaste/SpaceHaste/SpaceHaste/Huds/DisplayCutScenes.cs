@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceHaste.GameMech;
 using SpaceHaste.GameMech.BattleMechanicsManagers;
+using SpaceHaste.GameMech.CutScenes;
 
 namespace SpaceHaste.Huds
 {
@@ -34,7 +35,7 @@ namespace SpaceHaste.Huds
 
             spriteBatch.Draw(texture1, new Rectangle(10, 600, 150, 500), Color.White);
 
-            spriteBatch.DrawString(spriteFont, "Move", TextPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(spriteFont, CutScene.currentLine, TextPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
            
             
         }

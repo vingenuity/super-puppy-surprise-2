@@ -158,6 +158,7 @@
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
+    <Content Include="TestCutScene1.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpaceHasteContent\SpaceHasteContent.contentproj">

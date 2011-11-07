@@ -262,9 +262,9 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
         public void Update(GameTime gameTime)
         {
-            if (!loaded)
+            if (GameMechanicsManager.gamestate == GameState.StartBattle)
             {
-                loaded = true;
+                GameMechanicsManager.gamestate = GameState.EnterShipAction;
                 NextShipTurn();
             }
         }

@@ -15,6 +15,7 @@ namespace SpaceHaste.GameMech
     public enum GameState
     {
         Other,
+        StartBattle,
         SelectShipAction,
         EnterShipAction,
         CutScene,

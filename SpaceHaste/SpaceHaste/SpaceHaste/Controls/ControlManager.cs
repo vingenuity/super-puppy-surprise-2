@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using SpaceHaste.Cameras;
 using SpaceHaste.GameMech;
 using SpaceHaste.GameMech.BattleMechanicsManagers;
+using SpaceHaste.GameMech.LevelManagers;
 
 namespace SpaceHaste.Controls
 {
@@ -115,7 +116,11 @@ namespace SpaceHaste.Controls
             else
                 PadMap.Add(newButton, action);
         }
-
+        private void RemapCutScene()
+        {
+            Remap(Buttons.A, new GameAction(LevelManager.Instance.NextText));
+            Remap(Keys.Enter, new GameAction(LevelManager.Instance.NextText));
+        }
         //These functions dynamically remap the controls for the game situation.
         private void RemapStandard()
         {
@@ -123,10 +128,13 @@ namespace SpaceHaste.Controls
             Remap(Buttons.LeftThumbstickDown, BattleMechanicsManager.Instance.MoveSelectionDown);
             Remap(Buttons.LeftThumbstickLeft, BattleMechanicsManager.Instance.MoveSelectionLeft);
             Remap(Buttons.LeftThumbstickRight, BattleMechanicsManager.Instance.MoveSelectionRight);
+            Remap(Buttons.A, new GameAction(BattleMechanicsManager.Instance.Selection));
+            Remap(Keys.Enter, new GameAction(BattleMechanicsManager.Instance.Selection));
             Remap(Keys.I, BattleMechanicsManager.Instance.MoveSelectionUp);
             Remap(Keys.K, BattleMechanicsManager.Instance.MoveSelectionDown);
             Remap(Keys.J, BattleMechanicsManager.Instance.MoveSelectionLeft);
             Remap(Keys.L, BattleMechanicsManager.Instance.MoveSelectionRight);
+
         }
         private void RemapToCameraPersp()
         {
@@ -189,9 +197,12 @@ namespace SpaceHaste.Controls
 
         public override void Update(GameTime gameTime)
         {
+          
             //Remap Controls to standard if in menus, else remap dynamically to the camera perspective.
             if (GameMechanicsManager.gamestate == GameState.SelectShipAction)
                 RemapStandard();
+            else if (GameMechanicsManager.gamestate == GameState.CutScene)
+                RemapCutScene();
             else
                 RemapToCameraPersp();
 

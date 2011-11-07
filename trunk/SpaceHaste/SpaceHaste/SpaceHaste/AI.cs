@@ -29,14 +29,14 @@ namespace SpaceHaste
         /// A tuple of GridCube and ShipSelectionMode that represents the actions the AI wishes to take. 
         /// This is used by GameMechanics to perform the AI's actions.
         /// </returns>
-        public Tuple<GridCube, GameMechanicsManager.ShipSelectionMode> TakeTurn(List<GameObject> ships)
+        public Tuple<GridCube, ShipSelectionMode> TakeTurn(List<GameObject> ships)
         {
             GameObject myShip = ships[0];
             if(myShip.Energy == 0)
-                return new Tuple<GridCube, GameMechanicsManager.ShipSelectionMode>(myShip.GridLocation, GameMechanicsManager.ShipSelectionMode.Wait);
+                return new Tuple<GridCube, ShipSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait);
             GridCube location = myShip.GridLocation;
             location.X += 1;
-            return new Tuple<GridCube, GameMechanicsManager.ShipSelectionMode>(location, GameMechanicsManager.ShipSelectionMode.Movement);
+            return new Tuple<GridCube, ShipSelectionMode>(location, ShipSelectionMode.Movement);
         }
     }
 }

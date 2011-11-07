@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SpaceHaste.Cameras;
 using SpaceHaste.GameMech;
+using SpaceHaste.GameMech.BattleMechanicsManagers;
 
 namespace SpaceHaste.Controls
 {
@@ -70,32 +71,32 @@ namespace SpaceHaste.Controls
             KeyMap.Add(Keys.D,     new GameAction(camera.MoveCameraRight));
             KeyMap.Add(Keys.E,     new GameAction(camera.ZoomIn));
             KeyMap.Add(Keys.Q,     new GameAction(camera.ZoomOut));
-            KeyMap.Add(Keys.Enter, new GameAction(GameMechanicsManager.MechMan.Selection));
-            KeyMap.Add(Keys.Escape, new GameAction(GameMechanicsManager.MechMan.Back));
-            KeyMap.Add(Keys.I,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionUp));
-            KeyMap.Add(Keys.K,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionDown));
-            KeyMap.Add(Keys.J,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionLeft));
-            KeyMap.Add(Keys.L,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionRight));
-            KeyMap.Add(Keys.O,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionHigher));
-            KeyMap.Add(Keys.U,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionLower));
+            KeyMap.Add(Keys.Enter, new GameAction(BattleMechanicsManager.Instance.Selection));
+            KeyMap.Add(Keys.Escape, new GameAction(BattleMechanicsManager.Instance.Back));
+            KeyMap.Add(Keys.I,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionUp));
+            KeyMap.Add(Keys.K,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionDown));
+            KeyMap.Add(Keys.J,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionLeft));
+            KeyMap.Add(Keys.L,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionRight));
+            KeyMap.Add(Keys.O,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionHigher));
+            KeyMap.Add(Keys.U,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionLower));
 
             //alt keyboard
             KeyMap.Add(Keys.Home,     new GameAction(camera.ZoomIn));
             KeyMap.Add(Keys.End,      new GameAction(camera.ZoomOut));
-            KeyMap.Add(Keys.Right,    new GameAction(GameMechanicsManager.MechMan.MoveSelectionUp));
-            KeyMap.Add(Keys.Left,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionDown));
-            KeyMap.Add(Keys.Up,       new GameAction(GameMechanicsManager.MechMan.MoveSelectionLeft));
-            KeyMap.Add(Keys.Down,     new GameAction(GameMechanicsManager.MechMan.MoveSelectionRight));
-            KeyMap.Add(Keys.PageUp,   new GameAction(GameMechanicsManager.MechMan.MoveSelectionHigher));
-            KeyMap.Add(Keys.PageDown, new GameAction(GameMechanicsManager.MechMan.MoveSelectionLower));
+            KeyMap.Add(Keys.Right,    new GameAction(BattleMechanicsManager.Instance.MoveSelectionUp));
+            KeyMap.Add(Keys.Left,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionDown));
+            KeyMap.Add(Keys.Up,       new GameAction(BattleMechanicsManager.Instance.MoveSelectionLeft));
+            KeyMap.Add(Keys.Down,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionRight));
+            KeyMap.Add(Keys.PageUp,   new GameAction(BattleMechanicsManager.Instance.MoveSelectionHigher));
+            KeyMap.Add(Keys.PageDown, new GameAction(BattleMechanicsManager.Instance.MoveSelectionLower));
 
             //Add GamePad Buttons
-            PadMap.Add(Buttons.A, new GameAction(GameMechanicsManager.MechMan.Selection));
-            PadMap.Add(Buttons.B, new GameAction(GameMechanicsManager.MechMan.Back));
-            PadMap.Add(Buttons.LeftThumbstickUp, new GameAction(GameMechanicsManager.MechMan.MoveSelectionUp));
-            PadMap.Add(Buttons.LeftThumbstickDown, new GameAction(GameMechanicsManager.MechMan.MoveSelectionDown));
-            PadMap.Add(Buttons.LeftThumbstickLeft, new GameAction(GameMechanicsManager.MechMan.MoveSelectionLeft));
-            PadMap.Add(Buttons.LeftThumbstickRight, new GameAction(GameMechanicsManager.MechMan.MoveSelectionRight));
+            PadMap.Add(Buttons.A, new GameAction(BattleMechanicsManager.Instance.Selection));
+            PadMap.Add(Buttons.B, new GameAction(BattleMechanicsManager.Instance.Back));
+            PadMap.Add(Buttons.LeftThumbstickUp, new GameAction(BattleMechanicsManager.Instance.MoveSelectionUp));
+            PadMap.Add(Buttons.LeftThumbstickDown, new GameAction(BattleMechanicsManager.Instance.MoveSelectionDown));
+            PadMap.Add(Buttons.LeftThumbstickLeft, new GameAction(BattleMechanicsManager.Instance.MoveSelectionLeft));
+            PadMap.Add(Buttons.LeftThumbstickRight, new GameAction(BattleMechanicsManager.Instance.MoveSelectionRight));
             PadMap.Add(Buttons.LeftStick, new GameAction(VertSelection));
             PadMap.Add(Buttons.RightStick, new GameAction(CameraZoom));
         }
@@ -118,60 +119,60 @@ namespace SpaceHaste.Controls
         //These functions dynamically remap the controls for the game situation.
         private void RemapStandard()
         {
-            Remap(Buttons.LeftThumbstickUp, GameMechanicsManager.MechMan.MoveSelectionUp);
-            Remap(Buttons.LeftThumbstickDown, GameMechanicsManager.MechMan.MoveSelectionDown);
-            Remap(Buttons.LeftThumbstickLeft, GameMechanicsManager.MechMan.MoveSelectionLeft);
-            Remap(Buttons.LeftThumbstickRight, GameMechanicsManager.MechMan.MoveSelectionRight);
-            Remap(Keys.I, GameMechanicsManager.MechMan.MoveSelectionUp);
-            Remap(Keys.K, GameMechanicsManager.MechMan.MoveSelectionDown);
-            Remap(Keys.J, GameMechanicsManager.MechMan.MoveSelectionLeft);
-            Remap(Keys.L, GameMechanicsManager.MechMan.MoveSelectionRight);
+            Remap(Buttons.LeftThumbstickUp, BattleMechanicsManager.Instance.MoveSelectionUp);
+            Remap(Buttons.LeftThumbstickDown, BattleMechanicsManager.Instance.MoveSelectionDown);
+            Remap(Buttons.LeftThumbstickLeft, BattleMechanicsManager.Instance.MoveSelectionLeft);
+            Remap(Buttons.LeftThumbstickRight, BattleMechanicsManager.Instance.MoveSelectionRight);
+            Remap(Keys.I, BattleMechanicsManager.Instance.MoveSelectionUp);
+            Remap(Keys.K, BattleMechanicsManager.Instance.MoveSelectionDown);
+            Remap(Keys.J, BattleMechanicsManager.Instance.MoveSelectionLeft);
+            Remap(Keys.L, BattleMechanicsManager.Instance.MoveSelectionRight);
         }
         private void RemapToCameraPersp()
         {
             if (camera.getHorizontalAngle() < .785 || camera.getHorizontalAngle() > 5.497)
             {
-                Remap(Buttons.LeftThumbstickUp, GameMechanicsManager.MechMan.MoveSelectionLeft);
-                Remap(Buttons.LeftThumbstickDown, GameMechanicsManager.MechMan.MoveSelectionRight);
-                Remap(Buttons.LeftThumbstickLeft, GameMechanicsManager.MechMan.MoveSelectionDown);
-                Remap(Buttons.LeftThumbstickRight, GameMechanicsManager.MechMan.MoveSelectionUp);
-                Remap(Keys.I, GameMechanicsManager.MechMan.MoveSelectionLeft);
-                Remap(Keys.K, GameMechanicsManager.MechMan.MoveSelectionRight);
-                Remap(Keys.J, GameMechanicsManager.MechMan.MoveSelectionDown);
-                Remap(Keys.L, GameMechanicsManager.MechMan.MoveSelectionUp);
+                Remap(Buttons.LeftThumbstickUp, BattleMechanicsManager.Instance.MoveSelectionLeft);
+                Remap(Buttons.LeftThumbstickDown, BattleMechanicsManager.Instance.MoveSelectionRight);
+                Remap(Buttons.LeftThumbstickLeft, BattleMechanicsManager.Instance.MoveSelectionDown);
+                Remap(Buttons.LeftThumbstickRight, BattleMechanicsManager.Instance.MoveSelectionUp);
+                Remap(Keys.I, BattleMechanicsManager.Instance.MoveSelectionLeft);
+                Remap(Keys.K, BattleMechanicsManager.Instance.MoveSelectionRight);
+                Remap(Keys.J, BattleMechanicsManager.Instance.MoveSelectionDown);
+                Remap(Keys.L, BattleMechanicsManager.Instance.MoveSelectionUp);
             }
             else if (camera.getHorizontalAngle() > .785 && camera.getHorizontalAngle() < 2.356)
             {
-                Remap(Buttons.LeftThumbstickUp, GameMechanicsManager.MechMan.MoveSelectionDown);
-                Remap(Buttons.LeftThumbstickDown, GameMechanicsManager.MechMan.MoveSelectionUp);
-                Remap(Buttons.LeftThumbstickLeft, GameMechanicsManager.MechMan.MoveSelectionRight);
-                Remap(Buttons.LeftThumbstickRight, GameMechanicsManager.MechMan.MoveSelectionLeft);
-                Remap(Keys.I, GameMechanicsManager.MechMan.MoveSelectionDown);
-                Remap(Keys.K, GameMechanicsManager.MechMan.MoveSelectionUp);
-                Remap(Keys.J, GameMechanicsManager.MechMan.MoveSelectionRight);
-                Remap(Keys.L, GameMechanicsManager.MechMan.MoveSelectionLeft);
+                Remap(Buttons.LeftThumbstickUp, BattleMechanicsManager.Instance.MoveSelectionDown);
+                Remap(Buttons.LeftThumbstickDown, BattleMechanicsManager.Instance.MoveSelectionUp);
+                Remap(Buttons.LeftThumbstickLeft, BattleMechanicsManager.Instance.MoveSelectionRight);
+                Remap(Buttons.LeftThumbstickRight, BattleMechanicsManager.Instance.MoveSelectionLeft);
+                Remap(Keys.I, BattleMechanicsManager.Instance.MoveSelectionDown);
+                Remap(Keys.K, BattleMechanicsManager.Instance.MoveSelectionUp);
+                Remap(Keys.J, BattleMechanicsManager.Instance.MoveSelectionRight);
+                Remap(Keys.L, BattleMechanicsManager.Instance.MoveSelectionLeft);
             }
             else if (camera.getHorizontalAngle() > 2.356 && camera.getHorizontalAngle() < 3.926)
             {
-                Remap(Buttons.LeftThumbstickUp, GameMechanicsManager.MechMan.MoveSelectionRight);
-                Remap(Buttons.LeftThumbstickDown, GameMechanicsManager.MechMan.MoveSelectionLeft);
-                Remap(Buttons.LeftThumbstickLeft, GameMechanicsManager.MechMan.MoveSelectionUp);
-                Remap(Buttons.LeftThumbstickRight, GameMechanicsManager.MechMan.MoveSelectionDown);
-                Remap(Keys.I, GameMechanicsManager.MechMan.MoveSelectionRight);
-                Remap(Keys.K, GameMechanicsManager.MechMan.MoveSelectionLeft);
-                Remap(Keys.J, GameMechanicsManager.MechMan.MoveSelectionUp);
-                Remap(Keys.L, GameMechanicsManager.MechMan.MoveSelectionDown);
+                Remap(Buttons.LeftThumbstickUp, BattleMechanicsManager.Instance.MoveSelectionRight);
+                Remap(Buttons.LeftThumbstickDown, BattleMechanicsManager.Instance.MoveSelectionLeft);
+                Remap(Buttons.LeftThumbstickLeft, BattleMechanicsManager.Instance.MoveSelectionUp);
+                Remap(Buttons.LeftThumbstickRight, BattleMechanicsManager.Instance.MoveSelectionDown);
+                Remap(Keys.I, BattleMechanicsManager.Instance.MoveSelectionRight);
+                Remap(Keys.K, BattleMechanicsManager.Instance.MoveSelectionLeft);
+                Remap(Keys.J, BattleMechanicsManager.Instance.MoveSelectionUp);
+                Remap(Keys.L, BattleMechanicsManager.Instance.MoveSelectionDown);
             }
             else
             {
-                Remap(Buttons.LeftThumbstickUp, GameMechanicsManager.MechMan.MoveSelectionUp);
-                Remap(Buttons.LeftThumbstickDown, GameMechanicsManager.MechMan.MoveSelectionDown);
-                Remap(Buttons.LeftThumbstickLeft, GameMechanicsManager.MechMan.MoveSelectionLeft);
-                Remap(Buttons.LeftThumbstickRight, GameMechanicsManager.MechMan.MoveSelectionRight);
-                Remap(Keys.I, GameMechanicsManager.MechMan.MoveSelectionUp);
-                Remap(Keys.K, GameMechanicsManager.MechMan.MoveSelectionDown);
-                Remap(Keys.J, GameMechanicsManager.MechMan.MoveSelectionLeft);
-                Remap(Keys.L, GameMechanicsManager.MechMan.MoveSelectionRight);
+                Remap(Buttons.LeftThumbstickUp, BattleMechanicsManager.Instance.MoveSelectionUp);
+                Remap(Buttons.LeftThumbstickDown, BattleMechanicsManager.Instance.MoveSelectionDown);
+                Remap(Buttons.LeftThumbstickLeft, BattleMechanicsManager.Instance.MoveSelectionLeft);
+                Remap(Buttons.LeftThumbstickRight, BattleMechanicsManager.Instance.MoveSelectionRight);
+                Remap(Keys.I, BattleMechanicsManager.Instance.MoveSelectionUp);
+                Remap(Keys.K, BattleMechanicsManager.Instance.MoveSelectionDown);
+                Remap(Keys.J, BattleMechanicsManager.Instance.MoveSelectionLeft);
+                Remap(Keys.L, BattleMechanicsManager.Instance.MoveSelectionRight);
             }
         }
 
@@ -182,14 +183,14 @@ namespace SpaceHaste.Controls
         }
         private void VertSelection()
         {
-            if (reverse) GameMechanicsManager.MechMan.MoveSelectionLower();
-            else GameMechanicsManager.MechMan.MoveSelectionHigher();
+            if (reverse) BattleMechanicsManager.Instance.MoveSelectionLower();
+            else BattleMechanicsManager.Instance.MoveSelectionHigher();
         }
 
         public override void Update(GameTime gameTime)
         {
             //Remap Controls to standard if in menus, else remap dynamically to the camera perspective.
-            if (GameMechanicsManager.MechMan.gamestate == GameMechanicsManager.GameState.SelectShipAction)
+            if (BattleMechanicsManager.Instance.gamestate == GameState.SelectShipAction)
                 RemapStandard();
             else
                 RemapToCameraPersp();

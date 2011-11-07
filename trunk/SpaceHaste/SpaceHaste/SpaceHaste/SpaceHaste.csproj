@@ -111,7 +111,11 @@
     <Compile Include="Cameras\Camera.cs" />
     <Compile Include="Cameras\RotationCamera.cs" />
     <Compile Include="Controls\ControlManager.cs" />
+    <Compile Include="GameMech\BattleMechanicsManagers\BattleMechanicsManager.cs" />
+    <Compile Include="GameMech\CutScenes\CutScene.cs" />
+    <Compile Include="GameMech\Enumerations.cs" />
     <Compile Include="GameMech\GameMechanicsManager.cs" />
+    <Compile Include="GameMech\LevelManagers\LevelManager.cs" />
     <Compile Include="GameObjects\Shields.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="Graphics\GraphicsManager.cs" />
@@ -189,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Manager\" />
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

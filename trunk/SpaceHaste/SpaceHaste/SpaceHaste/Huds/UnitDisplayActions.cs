@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceHaste.GameMech;
+using SpaceHaste.GameMech.BattleMechanicsManagers;
 
 namespace SpaceHaste.Huds
 {
@@ -61,14 +62,14 @@ namespace SpaceHaste.Huds
         }
         public void Update(GameTime gameTime)
         {
-            Selected = (int)GameMechanicsManager.MechMan.ShipModeSelection;
-            if (GameMechanicsManager.MechMan.gamestate == GameMechanicsManager.GameState.SelectShipAction)
+            Selected = (int)BattleMechanicsManager.Instance.ShipModeSelection;
+            if (BattleMechanicsManager.Instance.gamestate == GameState.SelectShipAction)
                 ShowShipActions = true;
             else
                 ShowShipActions = false;
-            CanMove = GameMechanicsManager.MechMan.MoveEnabled;
-            CanAttack = GameMechanicsManager.MechMan.AttackEnabled;
-            CanWait = GameMechanicsManager.MechMan.WaitEnabled;
+            CanMove = BattleMechanicsManager.Instance.MoveEnabled;
+            CanAttack = BattleMechanicsManager.Instance.AttackEnabled;
+            CanWait = BattleMechanicsManager.Instance.WaitEnabled;
         }
         public void Attack()
         {

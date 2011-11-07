@@ -11,6 +11,7 @@ using SpaceHaste.Huds;
 using SpaceHaste.Sounds;
 using GameStateManagement;
 using SpaceHaste.GameMech.BattleMechanicsManagers;
+using SpaceHaste.GameMech.LevelManagers;
 
 namespace SpaceHaste.GameMech
 {
@@ -23,7 +24,7 @@ namespace SpaceHaste.GameMech
 
         //For controls, we need a singleton
         public static GameMechanicsManager MechMan;
-
+        LevelManager LevelManager;
 
         public GameMechanicsManager(Game g)
             : base(g)
@@ -31,6 +32,7 @@ namespace SpaceHaste.GameMech
             MechMan = this;
             GameObjectList = new List<GameObject>();
             BattleManager = new BattleMechanicsManager();
+            LevelManager = new LevelManager();
         }
 
         public override void Initialize()

@@ -11,6 +11,7 @@ namespace SpaceHaste.GameMech.CutScenes
     {
         List<String> Text;
         public static String currentLine;
+       
         public CutScene(String FileName)
         {
             Text = new List<String>();
@@ -20,10 +21,10 @@ namespace SpaceHaste.GameMech.CutScenes
         {
             int counter = 0;
             string line;
-
+            //String s = Environment.CurrentDirectory;
             // Read the file and display it line by line.
             System.IO.StreamReader file =
-               new System.IO.StreamReader(FileName);
+               new System.IO.StreamReader( "CutSceneText\\"+FileName+".txt");
             while ((line = file.ReadLine()) != null)
             {
                 Text.Add(line);

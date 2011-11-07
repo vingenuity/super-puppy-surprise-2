@@ -69,8 +69,8 @@ namespace SpaceHaste.GameObjects
 
             //Fill hull and shields to max.
             hull[0] = hull[1] = maxHull;
-            shield[0] = shield[1] = maxShield;
-
+            shield[1] = maxShield;
+            shield[0] = 0;
             //Start energy at zero. We will recharge energy starting on turn 1.
             energy[0] = 0;
             energy[1] = 100;

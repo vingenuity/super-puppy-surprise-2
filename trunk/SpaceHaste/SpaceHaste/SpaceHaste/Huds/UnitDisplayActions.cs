@@ -36,6 +36,7 @@ namespace SpaceHaste.Huds
         }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont spriteFont)
         {
+        
             if (!ShowShipActions)
                 return;
 
@@ -63,7 +64,7 @@ namespace SpaceHaste.Huds
         public void Update(GameTime gameTime)
         {
             Selected = (int)BattleMechanicsManager.Instance.ShipModeSelection;
-            if (BattleMechanicsManager.Instance.gamestate == GameState.SelectShipAction)
+            if (GameMechanicsManager.gamestate == GameState.SelectShipAction)
                 ShowShipActions = true;
             else
                 ShowShipActions = false;

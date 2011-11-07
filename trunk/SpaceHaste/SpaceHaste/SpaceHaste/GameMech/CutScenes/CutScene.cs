@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Microsoft.Xna.Framework;
 
 namespace SpaceHaste.GameMech.CutScenes
 {
     public class CutScene
     {
         List<String> Text;
-        String currentLine;
+        public static String currentLine;
         public CutScene(String FileName)
         {
             Text = new List<String>();
@@ -34,10 +35,16 @@ namespace SpaceHaste.GameMech.CutScenes
         }
         internal void NextText()
         {
-            //if(GameMechanicsManager.MechMan.)
-            //{
-            //}
+            if(GameMechanicsManager.gamestate == GameState.CutScene)
+            {
+                if (Text.Count > 0)
+                {
+                    currentLine = Text[0];
+                    Text.RemoveAt(0);
+                }
+                else
+                    GameMechanicsManager.gamestate = GameState.EnterShipAction;
+            }
         }
-
     }
 }

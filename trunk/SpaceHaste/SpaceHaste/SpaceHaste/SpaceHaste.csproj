@@ -121,6 +121,7 @@
     <Compile Include="Graphics\GraphicsManager.cs" />
     <Compile Include="Graphics\GraphicsShaders.cs" />
     <Compile Include="Graphics\NonPhotoRealisticSettings.cs" />
+    <Compile Include="Huds\DisplayCutScenes.cs" />
     <Compile Include="Huds\Hud.cs" />
     <Compile Include="Huds\HUDDrawListOfUnits.cs" />
     <Compile Include="Huds\UnitDisplayActions.cs" />

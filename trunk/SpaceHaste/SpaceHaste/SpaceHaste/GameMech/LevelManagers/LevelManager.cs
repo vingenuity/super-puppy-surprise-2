@@ -10,7 +10,7 @@ namespace SpaceHaste.GameMech.LevelManagers
     public class LevelManager
     {
 
-        bool loadCutScene = false;
+        bool loadCutScene = true;
         CutScene cutScene = new CutScene();
 
         public static LevelManager Instance;
@@ -43,7 +43,7 @@ namespace SpaceHaste.GameMech.LevelManagers
                     cutScene.Text.RemoveAt(0);
                 }
                 else
-                    GameMechanicsManager.gamestate = GameState.EnterShipAction;
+                    GameMechanicsManager.gamestate = GameState.StartBattle;
             }
         }
     }

@@ -181,7 +181,6 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 if (offender.Energy < offender.AttackEnergyCost)
                     AttackEnabled = false;
                 NextShipAction();
-
             }
                                
             else return; 

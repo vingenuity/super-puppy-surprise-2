@@ -134,16 +134,26 @@ namespace SpaceHaste.Maps
             Ray ray = new Ray(go.GridPosition, rayDirection);
             float? distance = ray.Intersects(target.boundingSphere);
             float? r = 0;
+
+            for (int i = 0; i < EnvMapObjects.Count; i++)
+            {
+                r = ray.Intersects(EnvMapObjects[i].boundingSphere);
+                if (r == null || r < 1 || r > distance) continue;
+                else return false; // 1 < r < d
+            }
+
             for (int i = 0; i < ShipMapObjects.Count; i++)
             {
                 r = ray.Intersects(ShipMapObjects[i].boundingSphere);
                 if (r == null || r < 1 || r > distance) continue;
                 else break; // 1 < r < d
             }
+
             if (!(r > 1 && r < distance) || r == null)
                 return true;
             else return false;
         }
+
         /// <summary>
         /// Finds the number of grid squares in range of a particular grid square.
         /// This will presumably be used to find valid moves for each ship.
@@ -181,9 +191,6 @@ namespace SpaceHaste.Maps
             }
             return inRange;
         }
-       
-      
-
         /// <summary>
         /// Finds the number of grid squares in range of a grid square x, y, z.
         /// This extends the functionality of the above function for more general use.

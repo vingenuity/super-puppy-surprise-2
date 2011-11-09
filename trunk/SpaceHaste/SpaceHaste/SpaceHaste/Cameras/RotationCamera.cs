@@ -71,7 +71,12 @@ namespace SpaceHaste.Cameras
         {
             zoom += 20F; 
         }
-        
+
+        /// <summary>
+        /// Keeps horizontalAngle keeps between 0 and 2 PI
+        /// Keeps verticalAngle between verticalAngleMin and verticalAngleMax
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void UpdateView(GameTime gameTime)
         {
             // Keep vertical angle within tolerances 

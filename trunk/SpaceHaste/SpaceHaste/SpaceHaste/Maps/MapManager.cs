@@ -21,9 +21,7 @@ namespace SpaceHaste.Maps
                 double a = Controls.ControlManager.camera.getVerticalAngle();
                 Map.RemoveXZMatrix();
                 Map.AddGridX1Z();
-            } 
-            else 
-            {
+            } else {
                 double a = Controls.ControlManager.camera.getVerticalAngle();
                 Map.RemoveXZMatrix();
                 Map.AddGridX0Z();
@@ -34,8 +32,7 @@ namespace SpaceHaste.Maps
             {
                 Map.RemoveXYMatrix();
                 Map.AddGridXY1();
-            }
-            else 
+            } else 
             {
                 Map.RemoveXYMatrix();
                 Map.AddGridXY0();

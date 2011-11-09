@@ -33,18 +33,22 @@ namespace SpaceHaste
         {
             //Pop the active ship off of the list.
             GameObject myShip = ships[0];
-            if(myShip.Energy <= 5)
+            GameObject enemy = ClosestEnemy(myShip, ships);
+            if(Map.map.IsObjectInRange(myShip, enemy) && myShip.Energy >= 30)
+            {
+                return new Tuple<GridCube, ShipSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack);
+            }
+            else if(myShip.Energy > 70)
+                return new Tuple<GridCube, ShipSelectionMode>(enemy.GridLocation, ShipSelectionMode.Movement);
+            else
                 return new Tuple<GridCube, ShipSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait);
-            GridCube enemySquare = ClosestEnemy(myShip, ships);
-            enemySquare.X += 1;
-            return new Tuple<GridCube, ShipSelectionMode>(enemySquare, ShipSelectionMode.Movement);
         }
 
         #region AI Considerations
-        private GridCube ClosestEnemy(GameObject self, List<GameObject> ships)
+        private GameObject ClosestEnemy(GameObject self, List<GameObject> ships)
         {
             if(ships.Count == 0)
-                return self.GridLocation;
+                return self;
             GameObject closestShip = null;
             float closestDistance = float.PositiveInfinity;
             foreach (GameObject ship in ships)
@@ -52,7 +56,7 @@ namespace SpaceHaste
                 if (ship.team == GameObject.Team.Player && DistanceBetween(self, ship) < closestDistance)
                     closestShip = ship;
             }
-            return closestShip.GridLocation;
+            return closestShip;
         }
 
         private float DistanceBetween(GameObject obj1, GameObject obj2)

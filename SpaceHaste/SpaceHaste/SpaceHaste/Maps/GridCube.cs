@@ -18,6 +18,7 @@ namespace SpaceHaste.Maps
         private GameObject ContainedObject;
         public List<GridCube> ConnectedGridSquares;
         public enum TerrainType { none = 1, asteroid=1000, nebula=2, wreck=2000 }
+        public BoundingSphere boundingSphere; 
         private TerrainType Terrain;
 
         public GridCube(int X, int Y, int Z)
@@ -31,6 +32,7 @@ namespace SpaceHaste.Maps
             ContainedObject = null;
             ConnectedGridSquares = new List<GridCube>();
             Terrain = TerrainType.none;
+            boundingSphere = new BoundingSphere(Position, 0f);
         }
         //Backtrack to get the Path to the GridCube
         public GridCube PreviousGridSquare;
@@ -50,7 +52,11 @@ namespace SpaceHaste.Maps
         //Terrain Functions
         public int GetMoveCost() { return (int)Terrain; }
         public TerrainType GetTerrain() { return Terrain; }
-        public void SetTerrain(TerrainType t) { Terrain = t; }
+        public void SetTerrain(TerrainType t) { 
+            Terrain = t;
+            if (Terrain == TerrainType.asteroid || Terrain == TerrainType.wreck)
+                boundingSphere = new BoundingSphere(Position, GRIDSQUARELENGTH * 0.5f);
+        }
 
         public static Vector3 Root = new Vector3(-1000,0,0);
        

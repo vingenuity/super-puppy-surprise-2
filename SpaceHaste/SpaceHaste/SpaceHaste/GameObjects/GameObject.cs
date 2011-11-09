@@ -39,14 +39,14 @@ namespace SpaceHaste.GameObjects
         public GridCube GridLocation;   //Cube of map where object is.
         public Vector3 GridPosition;    //Our notion of position within game grid
         //Energy Information
+        public double MaxEnergy = 100;
         public double Energy;
         public double MovementEnergyCost = 20;
         public double AttackEnergyCost = 30;
-        public double EnergyEfficiency = 4;
         //Ship Information(For HUD)
         public string Name;
         public double Health;
-        public double maxHealth;
+        public double MaxHealth;
         public enum Team { Player = 0, Enemy = 1 }
         public Team team;
         //Player Selection Information

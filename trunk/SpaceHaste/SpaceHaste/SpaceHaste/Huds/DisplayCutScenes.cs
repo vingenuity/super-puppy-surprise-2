@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SpaceHaste.GameMech;
 using SpaceHaste.GameMech.BattleMechanicsManagers;
 using SpaceHaste.GameMech.CutScenes;
+using SpaceHaste.GameMech.LevelManagers;
 
 namespace SpaceHaste.Huds
 {
@@ -14,29 +15,29 @@ namespace SpaceHaste.Huds
     {
         public bool DisplayCommands;
 
-       
-        Texture2D texture1;
-        private bool ShowCutSceneText;
-        Vector2 TextPosition;
+        CutScene scene;
+
+        private bool ShowCutSceneText = true;
+
 
         public DisplayCutScenes()
         {
-            TextPosition = new Vector2(10, 600);
+            scene = new CutScene();
         }
-        public void Load()
+
+        /*public void Load()
         {
             texture1 = Hud.Content.Load<Texture2D>("UI_backPane_blue");
-        }
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont spriteFont)
+        }*/
+
+        public void Draw()
         {
-        
+
+            scene = LevelManager.Instance.getScene();
             if (!ShowCutSceneText)
                 return;
 
-            spriteBatch.Draw(texture1, new Rectangle(10, 600, 150, 500), Color.White);
-
-            spriteBatch.DrawString(spriteFont, CutScene.currentLine, TextPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
-           
+            scene.drawCutscene();
             
         }
         public void Update(GameTime gameTime)

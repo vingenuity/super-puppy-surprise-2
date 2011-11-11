@@ -4,17 +4,23 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Microsoft.Xna.Framework;
+using SpaceHaste.Huds;
 
 namespace SpaceHaste.GameMech.CutScenes
 {
     public class CutScene
     {
         public List<String> Text;
-        public static String currentLine;
+        public String currentLine;
+        TextBox box;
+
+
         public CutScene(String FileName)
         {
+            box = new TextBox();
             Text = new List<String>();
             ReadFile(FileName);
+            currentLine = Text[0];
         }
         public CutScene()
         {
@@ -35,6 +41,14 @@ namespace SpaceHaste.GameMech.CutScenes
 
             file.Close();
 
+        }
+
+        public void drawCutscene() {
+            if(currentLine != null)
+                box.Draw(currentLine);
+
+            if (currentLine == null)
+                box = null;
         }
        
     }

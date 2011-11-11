@@ -26,10 +26,16 @@ namespace SpaceHaste.GameMech.LevelManagers
             {
                 GameMechanicsManager.gamestate = GameState.CutScene;
                 cutScene = new CutScene("TestCutScene1");
+                cutScene.drawCutscene();
             }
             else
                 GameMechanicsManager.gamestate = GameState.StartBattle;
         }
+
+        public CutScene getScene() {
+            return cutScene;
+        }
+
         public void Update(GameTime gameTime)
         {
         }
@@ -39,12 +45,14 @@ namespace SpaceHaste.GameMech.LevelManagers
             {
                 if (cutScene.Text.Count > 0)
                 {
-                    CutScene.currentLine = cutScene.Text[0];
+                    cutScene.currentLine = cutScene.Text[0];
                     cutScene.Text.RemoveAt(0);
+                    cutScene.drawCutscene();
                 }
                 else
                     GameMechanicsManager.gamestate = GameState.StartBattle;
             }
         }
+
     }
 }

@@ -10,12 +10,13 @@ namespace SpaceHaste.Huds
 {
     public class Hud : DrawableGameComponent
     {
-        SpriteBatch spriteBatch;
-        SpriteFont spriteFont;
+        public static SpriteBatch spriteBatch;
+        public static SpriteFont spriteFont;
         HUDDrawListOfUnits DrawUnitLists;
         UnitDisplayActions UnitActions;
         GraphicsDeviceManager graphics;
         public static ContentManager Content;
+        DisplayCutScenes scene;
 
         public Hud(Game game, GraphicsDeviceManager graphics) : base (game)
         {
@@ -25,6 +26,9 @@ namespace SpaceHaste.Huds
             UnitActions = new UnitDisplayActions();
             Content = new ContentManager(game.Services);
             Content.RootDirectory = "Content";
+
+            scene = new DisplayCutScenes();
+
         }
         protected override void LoadContent()
         {
@@ -38,12 +42,25 @@ namespace SpaceHaste.Huds
             UnitActions.Update(gameTime);
         }
 
+        public void showCutscene(GameTime gameTime) {
+            spriteBatch.Begin();
+            scene.Draw();
+            spriteBatch.End();
+                
+        }
+
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
+                
                 DrawUnitLists.Draw(gameTime,spriteBatch, spriteFont);
+
                 UnitActions.Draw(gameTime, spriteBatch, spriteFont);
             spriteBatch.End();
+            
+            scene.Draw();
+
+
         }
     }
 }

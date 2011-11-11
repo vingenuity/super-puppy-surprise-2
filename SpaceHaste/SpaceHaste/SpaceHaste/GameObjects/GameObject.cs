@@ -20,7 +20,7 @@ namespace SpaceHaste.GameObjects
         public int[] hull = new int[2];          //health  -- 0 = current, 1 = max
         public int[] shield = new int[2];        //shields -- 0 = current, 1 = max
 
-        //Energy
+        //energy[0]
         public double[] energy = new double[2];        //energy  -- 0 = current, 1 = max
         public double[] efficiency = new double[3];    //contains [moveEff,laserEff,shieldsEff] efficiencies track energy usage for specified action                        
         public double regen;                           //The amount of energy each ship regenerates in one regeneration round.  Should be somewhere around 5 - 30.
@@ -38,15 +38,11 @@ namespace SpaceHaste.GameObjects
         public Vector3 Direction;       //Unit Vector of the direction the ship is facing
         public GridCube GridLocation;   //Cube of map where object is.
         public Vector3 GridPosition;    //Our notion of position within game grid
-        //Energy Information
-        public double MaxEnergy = 100;
-        public double Energy;
+        //energy[0] Information
         public double MovementEnergyCost = 20;
         public double AttackEnergyCost = 30;
         //Ship Information(For HUD)
         public string Name;
-        public double Health;
-        public double MaxHealth;
         public enum Team { Player = 0, Enemy = 1 }
         public Team team;
         //Player Selection Information
@@ -58,13 +54,13 @@ namespace SpaceHaste.GameObjects
         public GameObject(String name, Vector3 location, Team side, int maxHull, int maxShield, double regeneration, int numMissiles, int lsrDmg, int missDmg, double[] eff)
         {
             Name = name;
-            Energy = 100;
+            energy[0] = 100;
             Load();
             GridPosition = location;
             team = side;
 
 
-            MovementRange = (int) (Energy / MovementEnergyCost);
+            MovementRange = (int) (energy[0] / MovementEnergyCost);
 	        LaserRange = 6;
 
             //Fill hull and shields to max.
@@ -163,16 +159,16 @@ namespace SpaceHaste.GameObjects
 
         public void Generate(int amount_energy) { energy[0] += regen; }
 
-        public void AddEnergy(double energy)
+        public void AddEnergy(double En)
         {
-            Energy += energy;
-            waitTime -= energy;
+            energy[0] += En;
+            waitTime -= En;
             if (waitTime < 0)
                 waitTime = 0;
-            if (Energy < 0)
-                Energy = 0;
-            if (Energy > 100)
-                Energy = 100;
+            if (energy[0] < 0)
+                energy[0] = 0;
+            if (energy[0] > 100)
+                energy[0] = 100;
         }
         public int LaserDamage
         {
@@ -187,13 +183,13 @@ namespace SpaceHaste.GameObjects
         //Operators(for sorting)
         public static bool operator >(GameObject go1, GameObject go2)
         {
-            if (go1.Energy - go1.waitTime > go2.Energy - go2.waitTime)
+            if (go1.energy[0] - go1.waitTime > go2.energy[0] - go2.waitTime)
                 return true;
             else return false;
         }
         public static bool operator <(GameObject go1, GameObject go2)
         {
-            if (go1.Energy - go1.waitTime < go2.Energy - go2.waitTime)
+            if (go1.energy[0] - go1.waitTime < go2.energy[0] - go2.waitTime)
                 return true;
             else return false;
         }

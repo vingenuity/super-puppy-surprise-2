@@ -62,9 +62,9 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
         private void AddEnergyToShips(GameObject nextShipToMove)
         {
-            if (nextShipToMove.Energy < 100)
+            if (nextShipToMove.energy[0] < 100)
             {
-                double energyAdded = 100 - nextShipToMove.Energy;
+                double energyAdded = 100 - nextShipToMove.energy[0];
                 for (int i = 0; i < GameMechanicsManager.GameObjectList.Count; i++)
                 {
                     GameMechanicsManager.GameObjectList[i].AddEnergy(energyAdded);
@@ -111,7 +111,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             ScrollDownInUnitListIfActionIsDisabled();
             GameObject nextShipToMove = GameMechanicsManager.GameObjectList[0];
 
-            double energy = nextShipToMove.Energy;
+            double energy = nextShipToMove.energy[0];
 
             if (energy - nextShipToMove.MovementEnergyCost < 0)
                 MoveEnabled = false;
@@ -127,7 +127,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             ClearLineList();
             GameObject nextShipToMove = GameMechanicsManager.GameObjectList[0];
             CurrentGridCubeSelected = nextShipToMove.GridPosition;
-            double energy = nextShipToMove.Energy;
+            double energy = nextShipToMove.energy[0];
             if (energy - nextShipToMove.MovementEnergyCost < 0)
                 MoveEnabled = false;
 
@@ -161,7 +161,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 return;
             GameObject target = tempTarget as GameObject;
 
-            if (offender.Energy < offender.AttackEnergyCost)
+            if (offender.energy[0] < offender.AttackEnergyCost)
             {
                 AttackEnabled = false;
                 NextShipAction();
@@ -174,10 +174,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 AttackLineList.Add(line);
                 LineManager.AddLine(line);
                 target.isHit(offender.LaserDamage);
-                offender.Energy -= offender.AttackEnergyCost;
-                if (offender.Energy < 0)
-                    offender.Energy = 0;
-                if (offender.Energy < offender.AttackEnergyCost)
+                offender.energy[0] -= offender.AttackEnergyCost;
+                if (offender.energy[0] < 0)
+                    offender.energy[0] = 0;
+                if (offender.energy[0] < offender.AttackEnergyCost)
                     AttackEnabled = false;
                 NextShipAction();
             }
@@ -195,12 +195,12 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 //OLD DISTANCE MOVING
                 //float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
                 float DistanceMoved = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath().Count;
-                if (CurrentGameObjectSelected.Energy - DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost>= 0)
+                if (CurrentGameObjectSelected.energy[0] - DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost >= 0)
                 {
                     Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
 
-                    CurrentGameObjectSelected.Energy -= DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost;
-                    if (CurrentGameObjectSelected.Energy - CurrentGameObjectSelected.MovementEnergyCost < 0)
+                    CurrentGameObjectSelected.energy[0] -= DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost;
+                    if (CurrentGameObjectSelected.energy[0] - CurrentGameObjectSelected.MovementEnergyCost < 0)
                         MoveEnabled = false;
                     NextShipAction();
                 }
@@ -209,10 +209,11 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         void SelectionWait()
         {
             ClearLineList();
-            CurrentGameObjectSelected.Energy -= 5;
+            if (CurrentGameObjectSelected.energy[0] == 100)
+                CurrentGameObjectSelected.energy[0] -= 5;
             CurrentGameObjectSelected.waitTime += 40;
-            if (CurrentGameObjectSelected.Energy < 0)
-                CurrentGameObjectSelected.Energy = 0;
+            if (CurrentGameObjectSelected.energy[0] < 0)
+                CurrentGameObjectSelected.energy[0] = 0;
             NextShipTurn();
         }
 

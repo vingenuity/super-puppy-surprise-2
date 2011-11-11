@@ -118,6 +118,7 @@
     <Compile Include="GameMech\LevelManagers\LevelManager.cs" />
     <Compile Include="GameObjects\Shields.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObjects\SuperTerrain.cs" />
     <Compile Include="Graphics\GraphicsManager.cs" />
     <Compile Include="Graphics\GraphicsShaders.cs" />
     <Compile Include="Graphics\NonPhotoRealisticSettings.cs" />

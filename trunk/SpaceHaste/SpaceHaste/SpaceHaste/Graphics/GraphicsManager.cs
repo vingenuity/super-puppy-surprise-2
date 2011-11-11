@@ -28,7 +28,7 @@ namespace SpaceHaste.Graphics
     public class GraphicsManager : DrawableGameComponent
     {
         public static List<GameObject> GraphicsGameObjects;
-
+        public static List<SuperTerrain> GraphicsSuperTerrain;
        
         public static GraphicsDeviceManager graphics;
 

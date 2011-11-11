@@ -36,11 +36,11 @@ namespace SpaceHaste
             GameObject enemy = ClosestEnemy(myShip, ships);
             if (EnemiesLeft(ships) == 0)
                 return new Tuple<GridCube, ShipSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait);
-            if(Map.map.IsObjectInRange(myShip, enemy) && myShip.Energy < myShip.AttackEnergyCost)
+            if (Map.map.IsObjectInRange(myShip, enemy) && myShip.energy[0] < myShip.AttackEnergyCost)
             {
                 return new Tuple<GridCube, ShipSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack);
             }
-            else if(myShip.MovementEnergyCost * DistanceBetween(myShip, enemy) < myShip.Energy)
+            else if (myShip.MovementEnergyCost * DistanceBetween(myShip, enemy) < myShip.energy[0])
                 return new Tuple<GridCube, ShipSelectionMode>(enemy.GridLocation, ShipSelectionMode.Movement);
             else
                 return new Tuple<GridCube, ShipSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait);
@@ -81,9 +81,9 @@ namespace SpaceHaste
             GameObject mostDamaged = null;
             foreach (GameObject ship in ships)
             {
-                if (ship.team == GameObject.Team.Player && ship.Health < leastHealth)
+                if (ship.team == GameObject.Team.Player && ship.hull[0] < leastHealth)
                 {
-                    leastHealth = ship.Health;
+                    leastHealth = ship.hull[0];
                     mostDamaged = ship;
                 }
             }

@@ -18,6 +18,7 @@ namespace SpaceHaste.GameMech
     public class GameMechanicsManager : GameComponent
     {
         public static List<GameObject> GameObjectList;
+        public static List<SuperTerrain> SuperTerrainList;
 
         public static GameState gamestate;
         BattleMechanicsManager BattleManager;
@@ -31,6 +32,7 @@ namespace SpaceHaste.GameMech
         {
             MechMan = this;
             GameObjectList = new List<GameObject>();
+            SuperTerrainList = new List<SuperTerrain>();
             BattleManager = new BattleMechanicsManager();
             LevelManager = new LevelManager();
         }

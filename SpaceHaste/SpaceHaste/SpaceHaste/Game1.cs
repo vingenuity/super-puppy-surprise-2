@@ -18,6 +18,7 @@ using SpaceHaste.GameMech;
 using SpaceHaste.Controls;
 using SpaceHaste.Sounds;
 using GameStateManagement;
+using SpaceHaste.GameMech.CutScenes;
 
 namespace SpaceHaste
 {
@@ -33,6 +34,7 @@ namespace SpaceHaste
         public static Game1 game;
         public static bool USEMENUS = true;
         public ScreenManager ScreenManager;
+        public static CutScene CutScene;
         public double Hours
         {
             get { return seconds / 3600; }
@@ -65,14 +67,14 @@ namespace SpaceHaste
             SoundManager.Load();
             gameComponents.Add(SoundManager);
 
-            GameMechanicsManager GameMechanicsManager = new GameMechanicsManager(this);
-            Components.Add(GameMechanicsManager);
-            gameComponents.Add(GameMechanicsManager);
-
             Hud HudManager = new Hud(this, graphics);
             Components.Add(HudManager);
             gameComponents.Add(HudManager);
 
+            GameMechanicsManager GameMechanicsManager = new GameMechanicsManager(this);
+            Components.Add(GameMechanicsManager);
+            gameComponents.Add(GameMechanicsManager);
+            
             PrimitiveManager PrimitiveManager = new PrimitiveManager(this, graphics);
             Components.Add(PrimitiveManager);
             gameComponents.Add(PrimitiveManager);

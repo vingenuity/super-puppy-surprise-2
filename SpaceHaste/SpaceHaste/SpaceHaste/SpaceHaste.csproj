@@ -125,6 +125,7 @@
     <Compile Include="Huds\DisplayCutScenes.cs" />
     <Compile Include="Huds\Hud.cs" />
     <Compile Include="Huds\HUDDrawListOfUnits.cs" />
+    <Compile Include="Huds\TextBox.cs" />
     <Compile Include="Huds\UnitDisplayActions.cs" />
     <Compile Include="Maps\GridCube.cs" />
     <Compile Include="Maps\Map.cs" />

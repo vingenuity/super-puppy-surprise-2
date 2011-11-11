@@ -34,11 +34,13 @@ namespace SpaceHaste
             //Pop the active ship off of the list.
             GameObject myShip = ships[0];
             GameObject enemy = ClosestEnemy(myShip, ships);
-            if(Map.map.IsObjectInRange(myShip, enemy) && myShip.Energy >= 30)
+            if (EnemiesLeft(ships) == 0)
+                return new Tuple<GridCube, ShipSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait);
+            if(Map.map.IsObjectInRange(myShip, enemy) && myShip.Energy < myShip.AttackEnergyCost)
             {
                 return new Tuple<GridCube, ShipSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack);
             }
-            else if(myShip.Energy > 70)
+            else if(myShip.MovementEnergyCost * DistanceBetween(myShip, enemy) < myShip.Energy)
                 return new Tuple<GridCube, ShipSelectionMode>(enemy.GridLocation, ShipSelectionMode.Movement);
             else
                 return new Tuple<GridCube, ShipSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait);
@@ -47,14 +49,15 @@ namespace SpaceHaste
         #region AI Considerations
         private GameObject ClosestEnemy(GameObject self, List<GameObject> ships)
         {
-            if(ships.Count == 0)
-                return self;
-            GameObject closestShip = null;
             float closestDistance = float.PositiveInfinity;
+            GameObject closestShip = null;
             foreach (GameObject ship in ships)
             {
                 if (ship.team == GameObject.Team.Player && DistanceBetween(self, ship) < closestDistance)
+                {
+                    closestDistance = DistanceBetween(self, ship);
                     closestShip = ship;
+                }
             }
             return closestShip;
         }
@@ -62,6 +65,29 @@ namespace SpaceHaste
         private float DistanceBetween(GameObject obj1, GameObject obj2)
         {
             return Vector3.Distance(obj1.GridPosition, obj2.GridPosition);
+        }
+
+        private int EnemiesLeft(List<GameObject> ships)
+        {
+            int enemies = 0;
+            foreach (GameObject ship in ships)
+                if (ship.team == GameObject.Team.Player) enemies++;
+            return enemies;
+        }
+
+        private GameObject MostDamagedEnemy(List<GameObject> ships)
+        {
+            double leastHealth = double.PositiveInfinity;
+            GameObject mostDamaged = null;
+            foreach (GameObject ship in ships)
+            {
+                if (ship.team == GameObject.Team.Player && ship.Health < leastHealth)
+                {
+                    leastHealth = ship.Health;
+                    mostDamaged = ship;
+                }
+            }
+            return mostDamaged;
         }
         #endregion
     }

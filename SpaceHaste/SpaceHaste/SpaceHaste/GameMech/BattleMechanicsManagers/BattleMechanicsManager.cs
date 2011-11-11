@@ -24,7 +24,6 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         GameObject CurrentGameObjectSelected;
 
         Line YSelectedSquareLine;
-        bool loaded = false;
         
         private AI Enemy;
 

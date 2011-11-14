@@ -120,8 +120,8 @@
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\SuperTerrain.cs" />
     <Compile Include="Graphics\GraphicsManager.cs" />
-    <Compile Include="Graphics\GraphicsShaders.cs" />
     <Compile Include="Graphics\NonPhotoRealisticSettings.cs" />
+    <Compile Include="Graphics\RegularShading.cs" />
     <Compile Include="Huds\DisplayCutScenes.cs" />
     <Compile Include="Huds\Hud.cs" />
     <Compile Include="Huds\HUDDrawListOfUnits.cs" />

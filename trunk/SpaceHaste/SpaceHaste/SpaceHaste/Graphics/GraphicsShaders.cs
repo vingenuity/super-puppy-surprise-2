@@ -10,6 +10,7 @@ namespace SpaceHaste.Graphics
 {
     public class GraphicsShaders
     {
+        static bool EnableShading = false;
         SpriteBatch spriteBatch;
         //SpriteFont spriteFont;
 
@@ -101,43 +102,46 @@ namespace SpaceHaste.Graphics
         /// </summary>
         public static void ChangeEffectUsedByModel(Model model, Effect replacementEffect)
         {
-            try
+            if (EnableShading)
             {
-                // Table mapping the original effects to our replacement versions.
-                Dictionary<Effect, Effect> effectMapping = new Dictionary<Effect, Effect>();
-
-                foreach (ModelMesh mesh in model.Meshes)
+                try
                 {
-                    // Scan over all the effects currently on the mesh.
-                    foreach (BasicEffect oldEffect in mesh.Effects)
+                    // Table mapping the original effects to our replacement versions.
+                    Dictionary<Effect, Effect> effectMapping = new Dictionary<Effect, Effect>();
+
+                    foreach (ModelMesh mesh in model.Meshes)
                     {
-                        // If we haven't already seen this effect...
-                        if (!effectMapping.ContainsKey(oldEffect))
+                        // Scan over all the effects currently on the mesh.
+                        foreach (BasicEffect oldEffect in mesh.Effects)
                         {
-                            // Make a clone of our replacement effect. We can't just use
-                            // it directly, because the same effect might need to be
-                            // applied several times to different parts of the model using
-                            // a different texture each time, so we need a fresh copy each
-                            // time we want to set a different texture into it.
-                            Effect newEffect = replacementEffect.Clone();
+                            // If we haven't already seen this effect...
+                            if (!effectMapping.ContainsKey(oldEffect))
+                            {
+                                // Make a clone of our replacement effect. We can't just use
+                                // it directly, because the same effect might need to be
+                                // applied several times to different parts of the model using
+                                // a different texture each time, so we need a fresh copy each
+                                // time we want to set a different texture into it.
+                                Effect newEffect = replacementEffect.Clone();
 
-                            // Copy across the texture from the original effect.
-                            newEffect.Parameters["Texture"].SetValue(oldEffect.Texture);
-                            newEffect.Parameters["TextureEnabled"].SetValue(oldEffect.TextureEnabled);
+                                // Copy across the texture from the original effect.
+                                newEffect.Parameters["Texture"].SetValue(oldEffect.Texture);
+                                newEffect.Parameters["TextureEnabled"].SetValue(oldEffect.TextureEnabled);
 
-                            effectMapping.Add(oldEffect, newEffect);
+                                effectMapping.Add(oldEffect, newEffect);
+                            }
+                        }
+
+                        // Now that we've found all the effects in use on this mesh,
+                        // update it to use our new replacement versions.
+                        foreach (ModelMeshPart meshPart in mesh.MeshParts)
+                        {
+                            meshPart.Effect = effectMapping[meshPart.Effect];
                         }
                     }
-
-                    // Now that we've found all the effects in use on this mesh,
-                    // update it to use our new replacement versions.
-                    foreach (ModelMeshPart meshPart in mesh.MeshParts)
-                    {
-                        meshPart.Effect = effectMapping[meshPart.Effect];
-                    }
                 }
+                catch { }
             }
-            catch { }
         }
 
 
@@ -164,6 +168,20 @@ namespace SpaceHaste.Graphics
             
         }
 
+        void DrawAllModels()
+        {
+            for (int i = 0; i < GraphicsManager.GraphicsGameObjects.Count; i++)
+                DrawModel(GraphicsManager.GraphicsGameObjects[i].Model,
+                    GraphicsManager.GraphicsGameObjects[i].World,
+                    ControlManager.View, ControlManager.Projection);
+            for (int i = 0; i < Maps.Map.map.EnvMapObjects.Count; i++)
+            {
+                DrawModel(GraphicsManager.TestCube,
+                    Matrix.CreateScale(.1f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
+                    ControlManager.View, ControlManager.Projection);
+            }
+        }
+
         void DrawAllModels(string effectTechniqueName)
         {
             for(int i = 0; i< GraphicsManager.GraphicsGameObjects.Count; i++)
@@ -185,59 +203,87 @@ namespace SpaceHaste.Graphics
         public void Draw(GameTime gameTime)
         {
             GraphicsDevice device = GraphicsManager.graphics.GraphicsDevice;
-
-            // Calculate the camera matrices.
-            float time = (float)gameTime.TotalGameTime.TotalSeconds;
-            
-            Matrix rotation = Matrix.CreateRotationY(time * 0.5f);
-
-            // If we are doing edge detection, first off we need to render the
-            // normals and depth of our model into a special rendertarget.
-            
-            if (Settings.EnableEdgeDetect)
+            if (EnableShading)
             {
-                device.SetRenderTarget(normalDepthRenderTarget);
+                // Calculate the camera matrices.
+                float time = (float)gameTime.TotalGameTime.TotalSeconds;
+
+                Matrix rotation = Matrix.CreateRotationY(time * 0.5f);
+
+                // If we are doing edge detection, first off we need to render the
+                // normals and depth of our model into a special rendertarget.
+
+                if (Settings.EnableEdgeDetect)
+                {
+                    device.SetRenderTarget(normalDepthRenderTarget);
+
+                    device.Clear(Color.Black);
+
+                    //DrawAllModels("NormalDepth");
+                    //DrawModel(rotation, CameraManager.View, CameraManager.Projection, "NormalDepth");
+                }
+
+                // If we are doing edge detection and/or pencil sketch processing, we
+                // need to draw the model into a special rendertarget which can then be
+                // fed into the postprocessing shader. Otherwise can just draw it
+                // directly onto the backbuffer.
+                if (Settings.EnableEdgeDetect || Settings.EnableSketch)
+                    device.SetRenderTarget(sceneRenderTarget);
+                else
+                    device.SetRenderTarget(null);
 
                 device.Clear(Color.Black);
 
-                //DrawAllModels("NormalDepth");
-                //DrawModel(rotation, CameraManager.View, CameraManager.Projection, "NormalDepth");
+                // Draw the model, using either the cartoon or lambert shading technique.
+                string effectTechniqueName;
+
+                if (Settings.EnableToonShading)
+                    effectTechniqueName = "Toon";
+                else
+                    effectTechniqueName = "Lambert";
+
+
+                DrawAllModels(effectTechniqueName);
+
+                //DrawModel(rotation, CameraManager.View, CameraManager.Projection, effectTechniqueName);
+
+                // Run the postprocessing filter over the scene that we just rendered.
+                if (Settings.EnableEdgeDetect || Settings.EnableSketch)
+                {
+                    device.SetRenderTarget(null);
+
+                    ApplyPostprocess();
+                }
             }
-
-            // If we are doing edge detection and/or pencil sketch processing, we
-            // need to draw the model into a special rendertarget which can then be
-            // fed into the postprocessing shader. Otherwise can just draw it
-            // directly onto the backbuffer.
-            if (Settings.EnableEdgeDetect || Settings.EnableSketch)
-                device.SetRenderTarget(sceneRenderTarget);
             else
-                device.SetRenderTarget(null);
-
-            device.Clear(Color.Black);
-
-            // Draw the model, using either the cartoon or lambert shading technique.
-            string effectTechniqueName;
-
-            if (Settings.EnableToonShading)
-                effectTechniqueName = "Toon";
-            else
-                effectTechniqueName = "Lambert";
-
-
-            DrawAllModels(effectTechniqueName);
-
-            //DrawModel(rotation, CameraManager.View, CameraManager.Projection, effectTechniqueName);
-
-            // Run the postprocessing filter over the scene that we just rendered.
-            if (Settings.EnableEdgeDetect || Settings.EnableSketch)
             {
-                device.SetRenderTarget(null);
+                device.Clear(Color.Black);
+                DrawAllModels();
 
-                ApplyPostprocess();
             }
-
         }
-        
+        void DrawModel(Model model, Matrix world, Matrix view, Matrix projection)
+        {
+             // Copy any parent transforms.
+            Matrix[] transforms = new Matrix[model.Bones.Count];
+            model.CopyAbsoluteBoneTransformsTo(transforms);
+
+            // Draw the model. A model can have multiple meshes, so loop.
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                // This is where the mesh orientation is set,
+                // as well as our camera and projection.
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                   // effect.EnableDefaultLighting();
+                    effect.World = world;
+                    effect.View = view;
+                    effect.Projection =projection;
+                }
+                // Draw the mesh, using the effects set above.
+                mesh.Draw();
+            }
+        }
         /// <summary>
         /// Helper for drawing the spinning model using the specified effect technique.
         /// </summary>
@@ -260,7 +306,7 @@ namespace SpaceHaste.Graphics
                 foreach (Effect effect in mesh.Effects)
                 {
                     // Specify which effect technique to use.
-                    effect.CurrentTechnique = effect.Techniques[effectTechniqueName];
+                    //effect.CurrentTechnique = effect.Techniques[effectTechniqueName];
 
                     Matrix localWorld = transforms[mesh.ParentBone.Index] * world;
 
@@ -312,58 +358,61 @@ namespace SpaceHaste.Graphics
         /// </summary>
         void ApplyPostprocess()
         {
-            EffectParameterCollection parameters = postprocessEffect.Parameters;
-            string effectTechniqueName;
-
-            // Set effect parameters controlling the pencil sketch effect.
-            if (Settings.EnableSketch)
+            if (EnableShading)
             {
-                parameters["SketchThreshold"].SetValue(Settings.SketchThreshold);
-                parameters["SketchBrightness"].SetValue(Settings.SketchBrightness);
-                parameters["SketchJitter"].SetValue(sketchJitter);
-                parameters["SketchTexture"].SetValue(sketchTexture);
-            }
+                EffectParameterCollection parameters = postprocessEffect.Parameters;
+                string effectTechniqueName;
 
-            // Set effect parameters controlling the edge detection effect.
-            if (Settings.EnableEdgeDetect)
-            {
-                Vector2 resolution = new Vector2(sceneRenderTarget.Width,
-                                                 sceneRenderTarget.Height);
-
-                Texture2D normalDepthTexture = normalDepthRenderTarget;
-
-                parameters["EdgeWidth"].SetValue(Settings.EdgeWidth);
-                parameters["EdgeIntensity"].SetValue(Settings.EdgeIntensity);
-                parameters["ScreenResolution"].SetValue(resolution);
-                parameters["NormalDepthTexture"].SetValue(normalDepthTexture);
-
-                // Choose which effect technique to use.
+                // Set effect parameters controlling the pencil sketch effect.
                 if (Settings.EnableSketch)
                 {
-                    if (Settings.SketchInColor)
-                        effectTechniqueName = "EdgeDetectColorSketch";
+                    parameters["SketchThreshold"].SetValue(Settings.SketchThreshold);
+                    parameters["SketchBrightness"].SetValue(Settings.SketchBrightness);
+                    parameters["SketchJitter"].SetValue(sketchJitter);
+                    parameters["SketchTexture"].SetValue(sketchTexture);
+                }
+
+                // Set effect parameters controlling the edge detection effect.
+                if (Settings.EnableEdgeDetect)
+                {
+                    Vector2 resolution = new Vector2(sceneRenderTarget.Width,
+                                                     sceneRenderTarget.Height);
+
+                    Texture2D normalDepthTexture = normalDepthRenderTarget;
+
+                    parameters["EdgeWidth"].SetValue(Settings.EdgeWidth);
+                    parameters["EdgeIntensity"].SetValue(Settings.EdgeIntensity);
+                    parameters["ScreenResolution"].SetValue(resolution);
+                    parameters["NormalDepthTexture"].SetValue(normalDepthTexture);
+
+                    // Choose which effect technique to use.
+                    if (Settings.EnableSketch)
+                    {
+                        if (Settings.SketchInColor)
+                            effectTechniqueName = "EdgeDetectColorSketch";
+                        else
+                            effectTechniqueName = "EdgeDetectMonoSketch";
+                    }
                     else
-                        effectTechniqueName = "EdgeDetectMonoSketch";
+                        effectTechniqueName = "EdgeDetect";
                 }
                 else
-                    effectTechniqueName = "EdgeDetect";
-            }
-            else
-            {
-                // If edge detection is off, just pick one of the sketch techniques.
-                if (Settings.SketchInColor)
-                    effectTechniqueName = "ColorSketch";
-                else
-                    effectTechniqueName = "MonoSketch";
-            }
+                {
+                    // If edge detection is off, just pick one of the sketch techniques.
+                    if (Settings.SketchInColor)
+                        effectTechniqueName = "ColorSketch";
+                    else
+                        effectTechniqueName = "MonoSketch";
+                }
 
-            // Activate the appropriate effect technique.
-            postprocessEffect.CurrentTechnique = postprocessEffect.Techniques[effectTechniqueName];
+                // Activate the appropriate effect technique.
+                postprocessEffect.CurrentTechnique = postprocessEffect.Techniques[effectTechniqueName];
 
-            // Draw a fullscreen sprite to apply the postprocessing effect.
-            spriteBatch.Begin(0, BlendState.Opaque, null, null, null, postprocessEffect);
-            spriteBatch.Draw(sceneRenderTarget, Vector2.Zero, Color.White);
-            spriteBatch.End();
+                // Draw a fullscreen sprite to apply the postprocessing effect.
+                spriteBatch.Begin(0, BlendState.Opaque, null, null, null, postprocessEffect);
+                spriteBatch.Draw(sceneRenderTarget, Vector2.Zero, Color.White);
+                spriteBatch.End();
+            }
         }
     }
 }

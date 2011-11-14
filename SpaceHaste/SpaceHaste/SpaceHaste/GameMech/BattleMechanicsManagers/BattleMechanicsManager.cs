@@ -21,7 +21,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
         //For selection and display thereof
         Vector3 CurrentGridCubeSelected;
-        GameObject CurrentGameObjectSelected;
+        public GameObject CurrentGameObjectSelected;
 
         Line YSelectedSquareLine;
         

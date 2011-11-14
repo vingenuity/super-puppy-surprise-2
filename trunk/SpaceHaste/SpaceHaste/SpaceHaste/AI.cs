@@ -96,10 +96,30 @@ namespace SpaceHaste
             return cube.ConnectedGridSquares[rand.Next(0, cube.ConnectedGridSquares.Count()-1)];
         }
 
+        /// <summary>
+        /// This function uses a version of A* to compute the best movement path to a cube.
+        /// </summary>
+        /// <param name="start">The cube in which we start moving.</param>
+        /// <param name="finish">The cube that we want to reach.</param>
+        /// <returns>List of GridCubes that is the best path to the finish.</returns>
         private List<GridCube> GetMovePath(GridCube start, GridCube finish)
         {
             List<GridCube> path = new List<GridCube>();
-            return path;
+            Stack<GridCube> closedSet = new Stack<GridCube>();
+            Stack<GridCube> openSet = new Stack<GridCube>();
+            openSet.Push(start);
+
+            float g_score = 0f;
+            float h_score = Vector3.Distance(start.Position, finish.Position);
+            float f_score = g_score + h_score;
+
+            while (openSet.Count() != 0)
+            {
+                GridCube currentCube = openSet.Pop();
+                if (currentCube == finish)
+                    return path;
+            }
+            return new List<GridCube>();
         }
         #endregion
     }

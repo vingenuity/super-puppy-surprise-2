@@ -13,6 +13,7 @@ namespace SpaceHaste.GameMech.CutScenes
         public List<String> Text;
         public String currentLine;
         TextBox box;
+        public Boolean end = false;
 
 
         public CutScene(String FileName)
@@ -50,6 +51,11 @@ namespace SpaceHaste.GameMech.CutScenes
             if (currentLine == null)
                 box = null;
         }
-       
+
+        public void destroyBox() {
+            box.endBox();
+        }
+
+
     }
 }

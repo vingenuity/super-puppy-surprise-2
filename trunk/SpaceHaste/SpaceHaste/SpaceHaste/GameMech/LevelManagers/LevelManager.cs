@@ -27,6 +27,7 @@ namespace SpaceHaste.GameMech.LevelManagers
                 GameMechanicsManager.gamestate = GameState.CutScene;
                 cutScene = new CutScene("TestCutScene1");
                 cutScene.drawCutscene();
+                cutScene.Text.RemoveAt(0);
             }
             else
                 GameMechanicsManager.gamestate = GameState.StartBattle;
@@ -48,9 +49,17 @@ namespace SpaceHaste.GameMech.LevelManagers
                     cutScene.currentLine = cutScene.Text[0];
                     cutScene.Text.RemoveAt(0);
                     cutScene.drawCutscene();
+
                 }
                 else
+                {
+
+
+                    cutScene.currentLine = "";
+                    cutScene.destroyBox();
+
                     GameMechanicsManager.gamestate = GameState.StartBattle;
+                }
             }
         }
 

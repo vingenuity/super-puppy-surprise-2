@@ -116,8 +116,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             if (energy - nextShipToMove.MovementEnergyCost < 0)
                 MoveEnabled = false;
 
-            if (energy - nextShipToMove.AttackEnergyCost < 0)
-                AttackEnabled = false;
+            //if (energy - nextShipToMove.AttackEnergyCost < 0)
+            //    AttackEnabled = false;
 
             UpdateSelectionLine();
         }
@@ -131,8 +131,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             if (energy - nextShipToMove.MovementEnergyCost < 0)
                 MoveEnabled = false;
 
-            if (energy - nextShipToMove.AttackEnergyCost < 0)
-                AttackEnabled = false;
+            //if (energy - nextShipToMove.AttackEnergyCost < 0)
+            //    AttackEnabled = false;
             ScrollDownInUnitListIfActionIsDisabled();
             UpdateSelectionLine();
         }
@@ -183,6 +183,32 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
                                
             else return; 
+
+        }
+        void SelectionMissile() 
+        {
+            GameObject offender = CurrentGameObjectSelected;
+            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
+
+            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
+                return;
+            GameObject target = tempTarget as GameObject;
+
+            if (offender.MissileCount <= 0)
+            {
+                AttackEnabled = false;
+                NextShipAction();
+            }
+
+            if (Map.map.IsTargetCubeInRange(offender.GridLocation, tempTarget.GridLocation))
+            {
+                //play missile sound
+                target.isHit(offender.dmg[1]);
+                offender.MissileCount--;
+                AttackEnabled = false;
+                NextShipAction();
+            }
+            else return;
 
         }
         void SelectionMovement()
@@ -287,7 +313,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 switch (ShipModeSelection)
                 {
                     case (ShipSelectionMode.Attack):
-                        SelectionAttack();
+                        SelectionMissile();
                         return;
 
                     case (ShipSelectionMode.Movement):

@@ -27,7 +27,8 @@ namespace SpaceHaste.GameObjects
 
         //Weapons
         public int[] dmg = new int[2];           //Damage done by weapons 0 = Laser, 1 = Missile
-        public int numMiss;                            //Number of missiles ship has left         
+        public int MissileCount;                            //Number of missiles ship has left        
+        public int MissileRange;
         //Model/Render Information
         public float Scale;
         public Model Model;             //Holds model info and effect information
@@ -63,6 +64,7 @@ namespace SpaceHaste.GameObjects
 
             MovementRange = (int) (energy[0] / MovementEnergyCost);
 	        LaserRange = 6;
+            MissileRange = MovementRange;
 
             //Fill hull and shields to max.
             hull[0] = hull[1] = maxHull;
@@ -76,7 +78,7 @@ namespace SpaceHaste.GameObjects
             regen = regeneration;
 
             //Set up our weapons
-            numMiss = numMissiles;
+            MissileCount = numMissiles;
             dmg[0] = lsrDmg;
             dmg[1] = missDmg;
 

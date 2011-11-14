@@ -59,6 +59,7 @@ namespace SpaceHaste.GameObjects
             GridPosition = location;
             team = side;
 
+            boundingSphere = new BoundingSphere(GridPosition, 1.0f);
 
             MovementRange = (int) (energy[0] / MovementEnergyCost);
 	        LaserRange = 6;

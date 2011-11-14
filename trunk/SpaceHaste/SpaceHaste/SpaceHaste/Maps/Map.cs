@@ -138,14 +138,16 @@ namespace SpaceHaste.Maps
             for (int i = 0; i < EnvMapObjects.Count; i++)
             {
                 r = ray.Intersects(EnvMapObjects[i].boundingSphere);
-                if (r == null || r < 1 || r > distance) continue;
-                else return false; // 1 < r < d
+                if (r == null || r < 0 || r > distance) 
+                    continue;
+                else 
+                    return false; // 1 < r < d
             }
 
             for (int i = 0; i < ShipMapObjects.Count; i++)
             {
                 r = ray.Intersects(ShipMapObjects[i].boundingSphere);
-                if (r == null || r < 1 || r > distance) continue;
+                if (r == null || r < 0 || r > distance) continue;
                 else break; // 1 < r < d
             }
 

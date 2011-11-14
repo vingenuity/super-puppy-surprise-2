@@ -33,7 +33,6 @@ namespace SpaceHaste.Maps
                     }
                 }
             }
-            
 
             AddGridIsometric();
         }

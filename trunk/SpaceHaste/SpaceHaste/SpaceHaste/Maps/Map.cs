@@ -156,6 +156,41 @@ namespace SpaceHaste.Maps
             else return false;
         }
 
+        public Boolean IsTargetCubeInRange(GridCube loc, GridCube target)
+        {
+            int range = (int)Math.Abs(loc.X - target.X) +
+                        (int)Math.Abs(loc.Y - target.Y) +
+                        (int)Math.Abs(loc.Z - target.Z);
+            //Create queues and initialize
+            RefreshGridSearch();
+            List<GridCube> inRange = new List<GridCube>();
+            Queue<GridCube> GridQueue = new Queue<GridCube>();
+            GridQueue.Enqueue(loc);
+            inRange.Add(loc);
+            loc.distance = 0;
+            loc.SetPath(null);
+            while (GridQueue.Count != 0)
+            {
+                GridCube gc = GridQueue.Dequeue();
+                if (gc.distance >= range) continue;
+                foreach (GridCube neighbor in gc.ConnectedGridSquares)
+                {
+                    if (neighbor.GetTerrain() != GridCube.TerrainType.none)
+                        continue;
+                    if (gc.distance + neighbor.GetMoveCost() < neighbor.distance)
+                    {
+                        neighbor.distance = gc.distance + neighbor.GetMoveCost();
+                        neighbor.SetPath(gc);
+                        GridQueue.Enqueue(neighbor);
+                        inRange.Add(neighbor);
+                    }
+                }
+            }
+            if (inRange.Contains(target))
+                return true;
+            else return false;
+        }
+
         /// <summary>
         /// Finds the number of grid squares in range of a particular grid square.
         /// This will presumably be used to find valid moves for each ship.
@@ -446,6 +481,3 @@ namespace SpaceHaste.Maps
         }
     }
 }
-
-
-

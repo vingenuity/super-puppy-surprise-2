@@ -16,8 +16,9 @@ namespace SpaceHaste
     {
         //Map information for strategic use.
         private Map map;
+        private Random rand;
 
-        public AI(Map battlefield) { map = battlefield; }
+        public AI(Map battlefield) { map = battlefield; rand = new Random(); }
 
         /// <summary>
         /// This is the function that does all of the work for the AI. 
@@ -36,12 +37,12 @@ namespace SpaceHaste
             GameObject enemy = ClosestEnemy(myShip, ships);
             if (EnemiesLeft(ships) == 0)
                 return new Tuple<GridCube, ShipSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait);
-            if (Map.map.IsObjectInRange(myShip, enemy) && myShip.energy[0] < myShip.AttackEnergyCost)
+            if (Map.map.IsObjectInRange(myShip, enemy) && myShip.AttackEnergyCost < myShip.energy[0])
             {
                 return new Tuple<GridCube, ShipSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack);
             }
             else if (myShip.MovementEnergyCost * DistanceBetween(myShip, enemy) < myShip.energy[0])
-                return new Tuple<GridCube, ShipSelectionMode>(enemy.GridLocation, ShipSelectionMode.Movement);
+                return new Tuple<GridCube, ShipSelectionMode>(randNeighborCube(myShip.GridLocation), ShipSelectionMode.Movement);
             else
                 return new Tuple<GridCube, ShipSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait);
         }
@@ -88,6 +89,17 @@ namespace SpaceHaste
                 }
             }
             return mostDamaged;
+        }
+
+        private GridCube randNeighborCube(GridCube cube)
+        {
+            return cube.ConnectedGridSquares[rand.Next(0, cube.ConnectedGridSquares.Count()-1)];
+        }
+
+        private List<GridCube> GetMovePath(GridCube start, GridCube finish)
+        {
+            List<GridCube> path = new List<GridCube>();
+            return path;
         }
         #endregion
     }

@@ -177,14 +177,19 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="heavy_ship2.fbx">
-      <Name>heavy_ship2</Name>
+    <Folder Include="CutScenes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="heavy_ship_top_wing.fbx">
+      <Name>heavy_ship_top_wing</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CutScenes\" />
+    <Compile Include="heavy_ship_top_wingBIN.fbx">
+      <Name>heavy_ship_top_wingBIN</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

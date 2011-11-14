@@ -93,9 +93,9 @@ namespace SpaceHaste.GameObjects
         public virtual void Load()
         {
             //Set up our rendering options.
-            Model = GraphicsManager.Content.Load<Model>("Ship");
+            Model = GraphicsManager.Content.Load<Model>("heavy_ship_combined");
 
-            Scale = .25f;
+            Scale = 2f;
 
             GraphicsManager.AddGameObject(this);
             GameMechanicsManager.GameObjectList.Add(this);

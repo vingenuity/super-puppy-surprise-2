@@ -55,7 +55,7 @@ namespace SpaceHaste.Maps
         public void SetTerrain(TerrainType t) { 
             Terrain = t;
             if (Terrain == TerrainType.asteroid || Terrain == TerrainType.wreck)
-                boundingSphere = new BoundingSphere(Position, GRIDSQUARELENGTH * 0.5f);
+                boundingSphere = new BoundingSphere(Position, 1.0f);
         }
 
         public static Vector3 Root = new Vector3(-1000,0,0);

@@ -151,7 +151,7 @@ namespace SpaceHaste.Maps
                 else break; // 1 < r < d
             }
 
-            if (!(r > 1 && r < distance) || r == null)
+            if (!(r > 0 && r < distance) || r == null)
                 return true;
             else return false;
         }

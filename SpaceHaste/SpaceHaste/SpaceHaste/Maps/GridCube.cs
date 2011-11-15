@@ -21,6 +21,11 @@ namespace SpaceHaste.Maps
         public BoundingSphere boundingSphere; 
         private TerrainType Terrain;
 
+        //For AI pathfinding
+        public float f_score { get; set; }
+        public float g_score { get; set; }
+        public float h_score { get; set; }
+
         public GridCube(int X, int Y, int Z)
         {
             distance = 1000;

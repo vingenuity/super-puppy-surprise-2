@@ -41,8 +41,20 @@ namespace SpaceHaste
             {
                 return new Tuple<GridCube, ShipSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack);
             }
-            else if (myShip.MovementEnergyCost * DistanceBetween(myShip, enemy) < myShip.energy[0])
-                return new Tuple<GridCube, ShipSelectionMode>(randNeighborCube(myShip.GridLocation), ShipSelectionMode.Movement);
+            List<GridCube> path = GetMovePath(myShip.GridLocation, enemy.GridLocation);
+            if (myShip.energy[0] > myShip.MovementEnergyCost)
+            {
+                GridCube selection = new GridCube(0, 0, 0);
+                for (int i = path.Count() - 1; i > 0; i--)
+                {
+                    if (i * myShip.MovementEnergyCost < myShip.energy[0])
+                    {
+                        selection = path[i];
+                        break;
+                    }
+                }
+                return new Tuple<GridCube, ShipSelectionMode>(selection, ShipSelectionMode.Movement);
+            }
             else
                 return new Tuple<GridCube, ShipSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait);
         }
@@ -91,11 +103,6 @@ namespace SpaceHaste
             return mostDamaged;
         }
 
-        private GridCube randNeighborCube(GridCube cube)
-        {
-            return cube.ConnectedGridSquares[rand.Next(0, cube.ConnectedGridSquares.Count()-1)];
-        }
-
         /// <summary>
         /// This function uses a version of A* to compute the best movement path to a cube.
         /// </summary>
@@ -105,19 +112,46 @@ namespace SpaceHaste
         private List<GridCube> GetMovePath(GridCube start, GridCube finish)
         {
             List<GridCube> path = new List<GridCube>();
-            Stack<GridCube> closedSet = new Stack<GridCube>();
-            Stack<GridCube> openSet = new Stack<GridCube>();
-            openSet.Push(start);
+            List<GridCube> closedSet = new List<GridCube>();
+            List<GridCube> openSet = new List<GridCube>();
+            openSet.Add(start);
+            bool guess_is_better = false;
 
-            float g_score = 0f;
-            float h_score = Vector3.Distance(start.Position, finish.Position);
-            float f_score = g_score + h_score;
+            start.g_score = 0f;
+            start.h_score = Vector3.Distance(start.Position, finish.Position);
+            start.f_score = start.g_score + start.h_score;
 
             while (openSet.Count() != 0)
             {
-                GridCube currentCube = openSet.Pop();
+                openSet.Sort(new Comparison<GridCube>((x, y) => x.f_score.CompareTo(y.f_score)));
+                GridCube currentCube = openSet[0];
                 if (currentCube == finish)
                     return path;
+                openSet.RemoveAt(0);
+                closedSet.Add(currentCube);
+                foreach (GridCube neighbor in currentCube.ConnectedGridSquares)
+                {
+                    if (closedSet.Find(x => x == neighbor) != null)
+                        continue;
+                    float g_guess = currentCube.g_score + Vector3.Distance(currentCube.Position, neighbor.Position);
+
+                    if (openSet.Find(x => x == neighbor) == null)
+                    {
+                        openSet.Add(neighbor);
+                        guess_is_better = true;
+                    }
+                    else if (g_guess < neighbor.g_score)
+                        guess_is_better = true;
+                    else
+                        guess_is_better = false;
+                    if (guess_is_better == true)
+                    {
+                        path.Add(neighbor);
+                        neighbor.g_score = g_guess;
+                        neighbor.h_score = Vector3.Distance(neighbor.Position, finish.Position);
+                        neighbor.f_score = neighbor.g_score + neighbor.h_score;
+                    }
+                }
             }
             return new List<GridCube>();
         }

@@ -90,11 +90,21 @@ namespace SpaceHaste.GameObjects
         public static GameObject createBasicShip(String name, Vector3 location, Team team) {
             return new GameObject(name, location, team, 100, 100, 20, 3, 50, 100, new double[] { .25, .5, .5 });
         }
+        //Creation and Deletion
+        public static GameObject createBasicHeavyShip(String name, Vector3 location, Team team)
+        {
+            return (GameObject)(new HeavyShip(name, location, team, 100, 100, 20, 3, 50, 100, new double[] { .25, .5, .5 }));
+        }
+        //Creation and Deletion
+        public static GameObject createBasicLightShip(String name, Vector3 location, Team team)
+        {
+            return new LightShip(name, location, team, 100, 100, 20, 3, 50, 100, new double[] { .25, .5, .5 });
+        }
 
         public virtual void Load()
         {
             //Set up our rendering options.
-            Model = GraphicsManager.Content.Load<Model>("heavy_ship_combined");
+            Model = GraphicsManager.Content.Load<Model>("light_ship_combined");
 
             Scale = 2f;
 

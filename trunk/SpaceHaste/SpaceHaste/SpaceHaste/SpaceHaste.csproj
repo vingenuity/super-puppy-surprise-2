@@ -164,6 +164,7 @@
     <Compile Include="GameMech\Enumerations.cs" />
     <Compile Include="GameMech\GameMechanicsManager.cs" />
     <Compile Include="GameMech\LevelManagers\LevelManager.cs" />
+    <Compile Include="GameObjects\LightShip.cs" />
     <Compile Include="GameObjects\Shields.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\SuperTerrain.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Huds\TextBox.cs" />
     <Compile Include="Huds\UnitDisplayActions.cs" />
     <Compile Include="Maps\GridCube.cs" />
+    <Compile Include="GameObjects\HeavyShip.cs" />
     <Compile Include="Maps\Map.cs" />
     <Compile Include="Maps\Map1.cs" />
     <Compile Include="Maps\MapManager.cs" />

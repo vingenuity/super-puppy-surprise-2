@@ -23,8 +23,8 @@ namespace SpaceHaste.Cameras
         float zoom = 10;
         float verticalAngleMin = .01f;
         float verticalAngleMax = (float) Math.PI - .01f;
-        float zoomMin = 5000;
-        float zoomMax = 1000000;
+        float zoomMin = 600;
+        float zoomMax = 10000;
         public CameraFocusType FocusOn = CameraFocusType.Center;
     
         public RotationCamera(GraphicsDeviceManager graphics)

@@ -22,6 +22,7 @@ namespace SpaceHaste.Maps
         private TerrainType Terrain;
 
         //For AI pathfinding
+        public GridCube came_from { get; set; }
         public float f_score { get; set; }
         public float g_score { get; set; }
         public float h_score { get; set; }
@@ -84,5 +85,13 @@ namespace SpaceHaste.Maps
             this.PreviousGridSquare = PreviousGridSquare;
         }
 
+        public bool BlocksMovement()
+        {
+            if(this.Terrain == TerrainType.wreck || this.Terrain == TerrainType.asteroid || this.HasObject())
+                return true;
+            return false;
+        }
     }
+
+    
 }

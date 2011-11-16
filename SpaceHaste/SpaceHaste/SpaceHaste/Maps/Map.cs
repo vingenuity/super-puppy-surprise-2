@@ -10,7 +10,7 @@ namespace SpaceHaste.Maps
 {
     public class Map
     {
-        protected GridCube[, ,] MapGridCubes;
+        public GridCube[, ,] MapGridCubes;
         protected GridCube[, ,] BottomMap;
 
         protected Line[,] XYMatrix;

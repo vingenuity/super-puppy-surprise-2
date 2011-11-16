@@ -44,19 +44,20 @@ namespace SpaceHaste
             List<GridCube> path = GetMovePath(myShip.GridLocation, enemy.GridLocation);
             if (myShip.energy[0] > myShip.MovementEnergyCost)
             {
-                GridCube selection = new GridCube(0, 0, 0);
+                GridCube selection = null;
                 for (int i = path.Count() - 1; i > 0; i--)
                 {
-                    if (i * myShip.MovementEnergyCost < myShip.energy[0])
+                    if (i * myShip.MovementEnergyCost < myShip.energy[0] && !path[i].BlocksMovement())
                     {
                         selection = path[i];
                         break;
                     }
                 }
-                return new Tuple<GridCube, ShipSelectionMode>(selection, ShipSelectionMode.Movement);
+                if(selection != null)
+                    return new Tuple<GridCube, ShipSelectionMode>(selection, ShipSelectionMode.Movement);
+
             }
-            else
-                return new Tuple<GridCube, ShipSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait);
+            return new Tuple<GridCube, ShipSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait);
         }
 
         #region AI Considerations
@@ -116,6 +117,7 @@ namespace SpaceHaste
             List<GridCube> openSet = new List<GridCube>();
             openSet.Add(start);
             bool guess_is_better = false;
+            clearPath();
 
             start.g_score = 0f;
             start.h_score = Vector3.Distance(start.Position, finish.Position);
@@ -126,12 +128,12 @@ namespace SpaceHaste
                 openSet.Sort(new Comparison<GridCube>((x, y) => x.f_score.CompareTo(y.f_score)));
                 GridCube currentCube = openSet[0];
                 if (currentCube == finish)
-                    return path;
+                    return ReconstructPath(path, finish);
                 openSet.RemoveAt(0);
                 closedSet.Add(currentCube);
                 foreach (GridCube neighbor in currentCube.ConnectedGridSquares)
                 {
-                    if (closedSet.Find(x => x == neighbor) != null)
+                    if (closedSet.Find(x => x == neighbor) != null || (neighbor.BlocksMovement() && neighbor != finish))
                         continue;
                     float g_guess = currentCube.g_score + Vector3.Distance(currentCube.Position, neighbor.Position);
 
@@ -146,14 +148,33 @@ namespace SpaceHaste
                         guess_is_better = false;
                     if (guess_is_better == true)
                     {
-                        path.Add(neighbor);
+                        neighbor.came_from = currentCube;
                         neighbor.g_score = g_guess;
                         neighbor.h_score = Vector3.Distance(neighbor.Position, finish.Position);
                         neighbor.f_score = neighbor.g_score + neighbor.h_score;
                     }
                 }
             }
-            return new List<GridCube>();
+            return null;
+        }
+
+        void clearPath()
+        {
+            foreach (GridCube cube in Map.map.MapGridCubes)
+            {
+                cube.came_from = null;
+            }
+        }
+        List<GridCube> ReconstructPath(List<GridCube> path, GridCube current)
+        {
+            if (current.came_from != null)
+            {
+                List<GridCube> p = ReconstructPath(path, current.came_from);
+                p.Add(current);
+                return p;
+            }
+            else
+                return path;
         }
         #endregion
     }

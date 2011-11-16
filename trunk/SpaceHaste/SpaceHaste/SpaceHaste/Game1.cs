@@ -19,6 +19,8 @@ using SpaceHaste.Controls;
 using SpaceHaste.Sounds;
 using GameStateManagement;
 using SpaceHaste.GameMech.CutScenes;
+using SpaceHaste.DPSFParticles;
+using SpaceHaste.ClearScreen;
 
 namespace SpaceHaste
 {
@@ -71,6 +73,15 @@ namespace SpaceHaste
             Components.Add(HudManager);
             gameComponents.Add(HudManager);
 
+
+            ClearScreenManager ClearScreenManager = new ClearScreenManager(this, graphics);
+            Components.Add(ClearScreenManager);
+            gameComponents.Add(ClearScreenManager);
+
+            ParticleManager ParticleManager = new ParticleManager(this);
+            Components.Add(ParticleManager);
+            gameComponents.Add(ParticleManager);
+
             GameMechanicsManager GameMechanicsManager = new GameMechanicsManager(this);
             Components.Add(GameMechanicsManager);
             gameComponents.Add(GameMechanicsManager);
@@ -82,6 +93,10 @@ namespace SpaceHaste
             LineManager LineManager = new LineManager(this, graphics);
             Components.Add(LineManager);
             gameComponents.Add(LineManager);
+
+            QuadManager QuadManager = new QuadManager(this, graphics);
+            Components.Add(QuadManager);
+            gameComponents.Add(QuadManager);
 
             MapManager MapManager = new MapManager(this);
             Components.Add(MapManager);

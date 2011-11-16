@@ -4,24 +4,23 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using DPSF;
+using SpaceHaste.Controls;
 
-namespace SuperPuppySurprise.DPSFParticles
+namespace SpaceHaste.DPSFParticles
 {
-    public class ParticleManager
+    public class ParticleManager : DrawableGameComponent
     {
         ParticleSystemManager particleSystemManager;
         public List<Particle> ParticleList;
         IDPSFParticleSystem mcCurrentParticleSystem;
-        Vector3 CameraPosition;
-        Matrix View;
-        Matrix Projection;
-        public ParticleManager()
+        public static ParticleManager Instance;
+        public ParticleManager(Game game): base(game)
         {
             particleSystemManager = new ParticleSystemManager();
             ParticleList = new List<Particle>();
-            CameraPosition = new Vector3(0,0,-200);
-            View = Matrix.CreateLookAt(CameraPosition, new Vector3(0, 0, 0), Vector3.Up);
-            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)Game1.ScreenWidth / (float)Game1.ScreenHeight, 1, 10000);
+            DrawOrder = 5;
+            //CameraPosition = new Vector3(0,0,-200);
+          
            // CameraPosition = new Vector3(0, 50, 200);
             //orthographic not ready yet
            /* 
@@ -46,6 +45,7 @@ namespace SuperPuppySurprise.DPSFParticles
 
            
             particleSystemManager.UpdatesPerSecond = 0;
+            Instance = this;
         }
         public void Add(Particle p)
         {
@@ -57,44 +57,22 @@ namespace SuperPuppySurprise.DPSFParticles
             ParticleList.Remove(p);
             particleSystemManager.RemoveParticleSystem(p.ParticleSystem);
         }
-
-        public void Update(GameTime gameTime)
+        public override void  Update(GameTime gameTime)   
         {
             for (int i = 0; i < ParticleList.Count; i++)
             {
                 ParticleList[i].Update(gameTime);
             }
-            particleSystemManager.SetCameraPositionForAllParticleSystems(CameraPosition);
+            particleSystemManager.SetCameraPositionForAllParticleSystems(ControlManager.CameraPosition);
 
             particleSystemManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
         }
-        public void Draw()
+        public override void  Draw(GameTime gameTime)
         {
-            particleSystemManager.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, View, Projection);
+            particleSystemManager.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, ControlManager.View, ControlManager.Projection);
 
             // Draw the Particle Systems manually
             particleSystemManager.DrawAllParticleSystems();
-        }
-        public static Vector3 To3D(Vector2 vector)
-        {
-            float x, y, z;
-            z = 0;
-            y = (vector.Y / Game1.ScreenHeight);
-            y = 1 - y;
-            y -= .5f;
-            y *= 160;
-         
-           
-            x = (vector.X / Game1.ScreenWidth);
-            x = 1 - x;
-            x -= .5f;
-            x *= 250;
-     
-            return new Vector3(x,y,z);
-        }
-        public static Vector3 ToVector3(Vector2 vector)
-        {
-            return new Vector3(vector.X, vector.Y, -10);
         }
     }
 }

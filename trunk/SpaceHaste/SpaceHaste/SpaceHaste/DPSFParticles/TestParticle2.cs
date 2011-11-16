@@ -1,10 +1,10 @@
 ﻿using DPSF.ParticleSystems;
 using System;
 using Microsoft.Xna.Framework;
-using SuperPuppySurprise.GameObjects;
+using SpaceHaste.GameObjects;
 using Microsoft.Xna.Framework.Input;
 
-namespace SuperPuppySurprise.DPSFParticles
+namespace SpaceHaste.DPSFParticles
 {
     public class TestParticle2 : Particle
     {
@@ -49,7 +49,7 @@ namespace SuperPuppySurprise.DPSFParticles
 
             }
             mcSphereParticleSystem.Pos = new Vector3(-126,0,0);//ParticleManager.To3D(gameObject.Position);*/
-            mcSphereParticleSystem.Pos = ParticleManager.To3D(gameObject.Position);
+            //mcSphereParticleSystem.Pos = ParticleManager.To3D(gameObject.Position);
             //mcSphereParticleSystem.Emitter.PositionData.Position = Position;
             base.Update(gameTime);
         }

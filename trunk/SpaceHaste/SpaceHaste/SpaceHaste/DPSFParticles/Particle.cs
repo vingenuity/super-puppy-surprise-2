@@ -7,7 +7,7 @@ using DPSF;
 using DPSF.ParticleSystems;
 
 
-namespace SuperPuppySurprise.DPSFParticles
+namespace SpaceHaste.DPSFParticles
 {
     public class Particle
     {
@@ -33,7 +33,7 @@ namespace SuperPuppySurprise.DPSFParticles
                 ParticleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, null);
                 
                 
-                Game1.ParticleEngine.Add(this);
+                ParticleManager.Instance.Add(this);
             }
         }
 
@@ -44,7 +44,7 @@ namespace SuperPuppySurprise.DPSFParticles
             {
                 ParticleSystem.Destroy();
             }
-            Game1.ParticleEngine.Remove(this);
+            ParticleManager.Instance.Remove(this);
         }
     }
 }

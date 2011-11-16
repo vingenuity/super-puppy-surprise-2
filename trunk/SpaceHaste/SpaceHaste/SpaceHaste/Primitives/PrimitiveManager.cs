@@ -53,7 +53,7 @@ namespace SpaceHaste.Grids
             : base(game)
         {
             this.graphics = graphics;
-
+           // DrawOrder = 11;
         }
 
         /// <summary>

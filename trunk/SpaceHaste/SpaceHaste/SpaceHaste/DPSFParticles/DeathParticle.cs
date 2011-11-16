@@ -4,36 +4,38 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using DPSF.ParticleSystems;
+using SpaceHaste.Graphics;
+using SpaceHaste.Huds;
 
-namespace SuperPuppySurprise.DPSFParticles
+namespace SpaceHaste.DPSFParticles
 {
     public class DeathParticle : Particle
     {
         Random2DParticleSystem deathParicleSystem;
         public int counter = 0;
-        public Vector2 Position;
+        public Vector3 Position;
        
         public void ChangeStatus(bool on)
         {
             deathParicleSystem.on = on;
         }
-        public static void CreateDeathParticle(Vector2 pos)
+        public static void CreateDeathParticle(Vector3 pos)
         {
-            Game1.ParticleEngine.Add(new DeathParticle(pos));
+            ParticleManager.Instance.Add(new DeathParticle(pos));
         }
-        public DeathParticle(Vector2 Position)
+        public DeathParticle(Vector3 Position)
             : base()
         {
             this.Position = Position;
             deathParicleSystem = new Random2DParticleSystem(Game1.game);
-            deathParicleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Game1.spriteBatch);
-            deathParicleSystem.Emitter.EmitParticlesAutomatically = false;
+            deathParicleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);
+            //deathParicleSystem.Emitter.EmitParticlesAutomatically = false;
 
-            deathParicleSystem.Emitter.BurstParticles = (10);
+            //deathParicleSystem.Emitter.BurstParticles = (10);
 
-            deathParicleSystem.Emitter.Enabled = true;
+            //deathParicleSystem.Emitter.Enabled = true;
 
-            deathParicleSystem.Emitter.BurstComplete += BurstFinished;
+            //deathParicleSystem.Emitter.BurstComplete += BurstFinished;
             ParticleSystem = deathParicleSystem;
         }
         void BurstFinished(object sender, EventArgs e)
@@ -48,10 +50,10 @@ namespace SuperPuppySurprise.DPSFParticles
 
            if (timercd > 5)
            {
-               Game1.ParticleEngine.Remove(this);
+               ParticleManager.Instance.Remove(this);
            }
 
-           deathParicleSystem.Pos = ParticleManager.To3D(Position);
+           deathParicleSystem.Pos = Position;
             //mcSphereParticleSystem.Emitter.PositionData.Position = Position;
             base.Update(gameTime);
         }

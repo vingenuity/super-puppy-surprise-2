@@ -9,10 +9,15 @@ using System;
 
 namespace SpaceHaste.Cameras
 {
+    public enum CameraFocusType
+    {
+        Center,
+        OnSquare,
+    };
     public class RotationCamera : Camera
     {
         GraphicsDevice device;
-
+        Vector3 FocusedPosition;
         float verticalAngle = 1.0f;
         float horizontalAngle = 0;
         float zoom = 10;
@@ -20,6 +25,8 @@ namespace SpaceHaste.Cameras
         float verticalAngleMax = (float) Math.PI - .01f;
         float zoomMin = 5000;
         float zoomMax = 1000000;
+        public CameraFocusType FocusOn = CameraFocusType.Center;
+    
         public RotationCamera(GraphicsDeviceManager graphics)
             : base()
         {
@@ -33,11 +40,11 @@ namespace SpaceHaste.Cameras
                new Vector3(0.0f, 0.0f, 0.0f),
                Vector3.Up
                );
-
+            ControlManager.CameraPosition = new Vector3(1000f, 1f, 0f);
             ControlManager.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
                                                                   device.Viewport.AspectRatio,
                                                                   10, 100000);
-
+            FocusOn = CameraFocusType.Center;
             
         }
 
@@ -98,17 +105,30 @@ namespace SpaceHaste.Cameras
             cameraPosition = Vector3.Transform(cameraPosition, Matrix.CreateRotationX(verticalAngle)); 
  
             // Rotate horizontally 
-            cameraPosition = Vector3.Transform(cameraPosition, Matrix.CreateRotationY(horizontalAngle)); 
- 
-            Vector3 targetPosition = Vector3.Zero; 
- 
+            cameraPosition = Vector3.Transform(cameraPosition, Matrix.CreateRotationY(horizontalAngle));
+            Vector3 targetPosition;
+            if(FocusOn == CameraFocusType.Center)
+                targetPosition  = Vector3.Zero; 
+            else
+            {
+                targetPosition = FocusedPosition;
+            }
             Vector3 position = cameraPosition + targetPosition; 
            
  
             // Compute view matrix 
-            ControlManager.View = Matrix.CreateLookAt(position, targetPosition, Vector3.Up); 
+            ControlManager.View = Matrix.CreateLookAt(position, targetPosition, Vector3.Up);
+            ControlManager.CameraPosition = position;
         }
-
+        public void ChangeToFocusedPosition(Vector3 focusedPosition)
+        {
+            FocusOn = CameraFocusType.OnSquare;
+            FocusedPosition = focusedPosition;
+        }
+        public void ChangeToFocusCenter()
+        {
+            FocusOn = CameraFocusType.Center;
+        }
         public float getVerticalAngle() { return verticalAngle; }
         public float getHorizontalAngle() { return horizontalAngle; }
 

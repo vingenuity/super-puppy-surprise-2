@@ -30,7 +30,7 @@ namespace SpaceHaste.Huds
             Content.RootDirectory = "Content";
 
             scene = new DisplayCutScenes();
-
+            DrawOrder = 12;
         }
         protected override void LoadContent()
         {

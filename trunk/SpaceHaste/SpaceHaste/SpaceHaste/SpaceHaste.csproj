@@ -60,6 +60,9 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DPSF">
+      <HintPath>.\DPSF.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -110,7 +113,52 @@
     <Compile Include="AI.cs" />
     <Compile Include="Cameras\Camera.cs" />
     <Compile Include="Cameras\RotationCamera.cs" />
+    <Compile Include="ClearScreen\ClearScreenManager.cs" />
     <Compile Include="Controls\ControlManager.cs" />
+    <Compile Include="DPSFParticles\DeathParticle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DPSFParticles\Particle Systems\AnimatedQuadPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\AnimatedSpritePS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\BallPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\BoxPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\DotPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\ExplosionDebrisPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\ExplosionFireSmokePS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\ExplosionFlash.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\ExplosionFlyingSparksPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\ExplosionPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\ExplosionRoundSparksPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\ExplosionShockwavePS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\ExplosionSmokeTrailsPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\Figure8PS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\FirePS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\FireworksPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\FountainPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\GasFallPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\GridQuadPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\ImagePS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\MagnetsPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\MultipleParticleImagesPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\QuadSprayPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\Random2DPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\RandomPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\RotatingQuadsPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\SmokePS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\SnowPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\SparklerPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\SpherePS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\SpritePS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\SquarePatternPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\StarPS.cs" />
+    <Compile Include="DPSFParticles\Particle.cs" />
+    <Compile Include="DPSFParticles\ParticleManager.cs" />
+    <Compile Include="DPSFParticles\Templates\DefaultQuadParticleSystem.cs" />
+    <Compile Include="DPSFParticles\Templates\DefaultSpriteParticleSystemTemplate.cs" />
+    <Compile Include="DPSFParticles\Templates\DefaultTexturedQuadParticleSystemTemplate.cs" />
+    <Compile Include="DPSFParticles\Templates\QuadParticleSystemTemplate.cs" />
+    <Compile Include="DPSFParticles\Templates\SpriteParticleSystemTemplate.cs" />
+    <Compile Include="DPSFParticles\Templates\TexturedQuadParticleSystemTemplate.cs" />
     <Compile Include="GameMech\BattleMechanicsManagers\BattleMechanicsManager.cs" />
     <Compile Include="GameMech\CutScenes\CutScene.cs" />
     <Compile Include="GameMech\Enumerations.cs" />

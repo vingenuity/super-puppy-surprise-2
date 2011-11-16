@@ -231,6 +231,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     if (CurrentGameObjectSelected.energy[0] - CurrentGameObjectSelected.MovementEnergyCost < 0)
                         MoveEnabled = false;
                     NextShipAction();
+                    //CurrentGameObjectSelected.
+                   // GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
                 }
             }
         }
@@ -341,6 +343,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 Game1.game.LoadGameComponents();
         }
         double timer = 0;
+        List<Vector3> ListOfMovementSquares = new List<Vector3>();
         public void Update(GameTime gameTime)
         {
             timer += gameTime.ElapsedGameTime.TotalSeconds;
@@ -356,6 +359,23 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             if (GameMechanicsManager.gamestate == GameState.AttackingAnimation)
             {
 
+            }
+            if (GameMechanicsManager.gamestate == GameState.MovingShipAnimation)
+            {
+                while (ListOfMovementSquares.Count > 0)
+                {
+                    if (timer < 1)
+                    {
+
+                    }
+                    else
+                    {
+                        timer = 0;
+                        ListOfMovementSquares.RemoveAt(0);
+                    }
+                }
+                if(ListOfMovementSquares.Count == 0)
+                    NextShipAction();
             }
         }
         #region Control Delegates

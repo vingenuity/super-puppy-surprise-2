@@ -18,6 +18,8 @@ namespace SpaceHaste.GameMech
         StartBattle,
         SelectShipAction,
         EnterShipAction,
+        MovingShipAnimation,
+        AttackingAnimation,
         CutScene,
     };
     public class Enumerations

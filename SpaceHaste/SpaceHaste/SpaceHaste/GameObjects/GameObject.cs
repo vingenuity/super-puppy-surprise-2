@@ -8,6 +8,7 @@ using SpaceHaste.Maps;
 using SpaceHaste.GameMech;
 using SpaceHaste.Graphics;
 using SpaceHaste.Sounds;
+using SpaceHaste.DPSFParticles;
 //------------------------------------------------------
 //Game object holds the model information for all assets in game ie: Ships, Environmental Obstacles, Visual Assets
 //Most game objects take up space in the grid with the exception of Visual assets ie: The Sun, extra stuff
@@ -146,6 +147,7 @@ namespace SpaceHaste.GameObjects
             else
             {
                 SoundManager.Sounds.PlaySound(SoundEffects.explode);
+                DeathParticle.CreateDeathParticle(DrawPosition);
                 Unload();
             }
         }

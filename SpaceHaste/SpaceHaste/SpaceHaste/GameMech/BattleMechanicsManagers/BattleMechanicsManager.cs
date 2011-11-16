@@ -9,6 +9,7 @@ using SpaceHaste.Primitives;
 using SpaceHaste.Maps;
 using SpaceHaste.Sounds;
 using GameStateManagement;
+using SpaceHaste.Controls;
 
 namespace SpaceHaste.GameMech.BattleMechanicsManagers
 {
@@ -24,7 +25,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         public GameObject CurrentGameObjectSelected;
 
         Line YSelectedSquareLine;
-        
+        Line ZSelectedSquareLine;
+        Line XSelectedSquareLine;
         private AI Enemy;
 
         List<Line> AttackLineList;
@@ -245,6 +247,59 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
         void UpdateSelectionLine()
         {
+            UpdateYSlectionLine();
+            UpdateZSlectionLine();
+            UpdateXSelectionLine();
+        }
+
+        private void UpdateXSelectionLine()
+        {
+            if (XSelectedSquareLine != null)
+            {
+                LineManager.RemoveLine(XSelectedSquareLine);
+            }
+            Vector3 botCube = CurrentGridCubeSelected;
+            if (!MapManager.isDrawingXGridBottom)
+            {
+                botCube.X = 0;
+                botCube = Map.map.GetCubeAt(botCube).Center;
+                botCube.X -= 400;
+            }
+            else
+            {
+                botCube.X = Map.map.Size - 1;
+                botCube = Map.map.GetCubeAt(botCube).Center;
+                botCube.X += +400;
+            }
+            XSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
+            LineManager.AddLine(XSelectedSquareLine);
+        }
+        
+        private void UpdateZSlectionLine()
+        {
+            if (ZSelectedSquareLine != null)
+            {
+                LineManager.RemoveLine(ZSelectedSquareLine);
+            }
+            Vector3 botCube = CurrentGridCubeSelected;
+            if (MapManager.isDrawingZGridBottom)
+            {
+                botCube.Z = 0;
+                botCube = Map.map.GetCubeAt(botCube).Center;
+                botCube.Z -= 400;
+            }
+            else
+            {
+                botCube.Z = Map.map.Size - 1;
+                botCube = Map.map.GetCubeAt(botCube).Center;
+                botCube.Z += +400;
+            }
+            ZSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
+            LineManager.AddLine(ZSelectedSquareLine);
+        }
+
+        private void UpdateYSlectionLine()
+        {
             if (YSelectedSquareLine != null)
             {
                 LineManager.RemoveLine(YSelectedSquareLine);
@@ -285,16 +340,40 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             else
                 Game1.game.LoadGameComponents();
         }
-
+        double timer = 0;
         public void Update(GameTime gameTime)
         {
+            timer += gameTime.ElapsedGameTime.TotalSeconds;
             if (GameMechanicsManager.gamestate == GameState.StartBattle)
             {
+                QuadManager.AddQuad(new Quad(Vector3.Zero, Vector3.Left, Vector3.Up, 400, 400));
                 GameMechanicsManager.gamestate = GameState.EnterShipAction;
                 NextShipTurn();
+
+            }
+            if(GameMechanicsManager.gamestate == GameState.EnterShipAction ||  GameMechanicsManager.gamestate == GameState.SelectShipAction)
+                UpdateSelectionLine();
+            if (GameMechanicsManager.gamestate == GameState.AttackingAnimation)
+            {
+
             }
         }
         #region Control Delegates
+        int i = 0;
+        internal void ChangeCameraFocus()
+        {
+            if (i == 0)
+            {
+                ControlManager.camera.ChangeToFocusedPosition(Map.map.GetCubeAt(CurrentGridCubeSelected).Center);
+                i++;
+            }
+            else
+            {
+                ControlManager.camera.ChangeToFocusCenter();
+                i = 0;
+            }
+        }
+
         /// <summary>
         /// The following functions all return void and take no arguments.
         /// During the instantiation of the class, these are tied to keys and used to perform actions.

@@ -19,11 +19,11 @@ namespace SpaceHaste.Primitives
 
         public override void Draw(GameTime gameTime)
         {
-            //for (int i = 0; i < Quads.Count; i++)
-                //Quads[i].DrawLine(graphics);
+            for (int i = 0; i < Quads.Count; i++)
+                Quads[i].DrawQuad();
             base.Draw(gameTime);
         }
-        public static void AddLine(Quad quad)
+        public static void AddQuad(Quad quad)
         {
             Quads.Add(quad);
         }
@@ -31,7 +31,7 @@ namespace SpaceHaste.Primitives
         {
             Quads = new List<Quad>();
         }
-        public static void RemoveLine(Quad quad)
+        public static void RemoveQuad(Quad quad)
         {
             Quads.Remove(quad);
         }

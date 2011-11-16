@@ -90,7 +90,7 @@ namespace SpaceHaste.Primitives
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsManager.graphics.GraphicsDevice);
-            texture = GraphicsManager.Content.Load<Texture2D>("Glass");
+            texture = GraphicsManager.Content.Load<Texture2D>("Textures/AnimatedButterfly");
             quadEffect = new BasicEffect(GraphicsManager.graphics.GraphicsDevice);
             quadEffect.EnableDefaultLighting();
 
@@ -113,7 +113,7 @@ namespace SpaceHaste.Primitives
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        public void Draw(GameTime gameTime)
+        public void DrawQuad()
         {
             foreach (EffectPass pass in quadEffect.CurrentTechnique.Passes)
             {

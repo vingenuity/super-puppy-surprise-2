@@ -2,7 +2,7 @@
 using DPSF.ParticleSystems;
 using Microsoft.Xna.Framework;
 
-namespace SuperPuppySurprise.DPSFParticles
+namespace SpaceHaste.DPSFParticles
 {
     public class TestParticle3 : Particle
     {

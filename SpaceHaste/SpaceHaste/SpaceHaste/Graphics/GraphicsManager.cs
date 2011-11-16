@@ -48,7 +48,7 @@ namespace SpaceHaste.Graphics
             Content.RootDirectory = "Content";
            // GraphicsShader = new GraphicsShaders(graphics);
             GraphicsGameObjects = new List<GameObject>();
-           
+            DrawOrder = 10;
         }
         static void InitTestCube()
         {
@@ -146,7 +146,7 @@ namespace SpaceHaste.Graphics
         {
             GraphicsDevice device = graphics.GraphicsDevice;
 
-            device.Clear(Color.CornflowerBlue);
+          //  device.Clear(Color.Black);
 
             graphics.GraphicsDevice.BlendState = BlendState.Opaque;
             graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;

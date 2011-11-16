@@ -22,9 +22,30 @@ namespace SpaceHaste.Huds
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont spriteFont)
         {
+            int height = Graphics.GraphicsManager.graphics.PreferredBackBufferHeight;
+            int widthL = Graphics.GraphicsManager.graphics.PreferredBackBufferWidth / 2;
+             
 
+            //int numMissiles, int lsrDmg, int missDmg, double[move laser shield] eff
             spriteBatch.Draw(backpaneLeft, left, Color.White);
-            //spriteBatch.DrawString(spriteFont, "HULL: " + BattleMechanicsManager.Instance.CurrentGameObjectSelected.getHull(), 
+            spriteBatch.DrawString(spriteFont, "Missiles:", new Vector2( 0*widthL / 6 + 15, (height / 20) * 19 + 5 ), Color.White); 
+            spriteBatch.DrawString(spriteFont, "" + GameMechanicsManager.GameObjectList[0].MissileCount, new Vector2( 0*widthL / 6 + 15, (height / 20) * 19 + 25), Color.White);
+
+            spriteBatch.DrawString(spriteFont, "Lasers:", new Vector2(1*widthL / 6, (height / 20) * 19 + 5), Color.White); 
+            spriteBatch.DrawString(spriteFont, "" + GameMechanicsManager.GameObjectList[0].dmg[0], new Vector2(1*widthL / 6, (height / 20) * 19 + 25), Color.White);
+            
+            spriteBatch.DrawString(spriteFont, "Munitions:", new Vector2(2*widthL / 6 - 10, (height / 20) * 19 + 5), Color.White);
+            spriteBatch.DrawString(spriteFont, "" + GameMechanicsManager.GameObjectList[0].dmg[1], new Vector2(2*widthL / 6 - 10, (height / 20) * 19 + 25), Color.White);
+
+            spriteBatch.DrawString(spriteFont, "Move Cost:", new Vector2(3*widthL / 6 - 10, (height / 20) * 19 + 5), Color.White);
+            spriteBatch.DrawString(spriteFont, "" + GameMechanicsManager.GameObjectList[0].efficiency[0], new Vector2(3*widthL / 6 - 10, (height / 20) * 19 + 25), Color.White);
+
+            spriteBatch.DrawString(spriteFont, "Laser Cost:", new Vector2(4*widthL / 6 - 10, (height / 20) * 19 + 5), Color.White);
+            spriteBatch.DrawString(spriteFont, "" + GameMechanicsManager.GameObjectList[0].efficiency[1], new Vector2(4*widthL / 6 - 10, (height / 20) * 19 + 25), Color.White);
+
+            spriteBatch.DrawString(spriteFont, "Shield Cost:", new Vector2(5*widthL / 6 - 10, (height / 20) * 19 + 5), Color.White);
+            spriteBatch.DrawString(spriteFont, "" + GameMechanicsManager.GameObjectList[0].efficiency[2], new Vector2(5*widthL / 6 - 10, (height / 20) * 19 + 25), Color.White);
+
 
             spriteBatch.Draw(backpaneRight, right, Color.White);
 

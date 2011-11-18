@@ -81,7 +81,7 @@ namespace SpaceHaste.Controls
             KeyMap.Add(Keys.L,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionRight));
             KeyMap.Add(Keys.O,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionHigher));
             KeyMap.Add(Keys.U,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionLower));
-            KeyMap.Add(Keys.Divide,     new GameAction(BattleMechanicsManager.Instance.ChangeCameraFocus));
+            KeyMap.Add(Keys.Tab,     new GameAction(BattleMechanicsManager.Instance.ChangeCameraFocus));
 
             //alt keyboard
             KeyMap.Add(Keys.Home,     new GameAction(camera.ZoomIn));

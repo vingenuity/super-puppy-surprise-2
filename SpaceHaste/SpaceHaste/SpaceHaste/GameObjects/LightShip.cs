@@ -11,8 +11,8 @@ namespace SpaceHaste.GameObjects
 {
     public class LightShip : GameObject
     {
-        public LightShip(String name, Vector3 location, Team side, int maxHull, int maxShield, double regeneration, int numMissiles, int lsrDmg, int missDmg, double[] eff)
-            : base(name, location, side, maxHull, maxShield, regeneration, numMissiles, lsrDmg, missDmg, eff)
+        public LightShip(String name, Vector3 location, Team side)
+            : base(name, location, side, 100, 80, 20, 1, 8, 50, new double[] {1.66, 1, .8})
         {
         }
         public override void Load()

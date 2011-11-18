@@ -394,6 +394,9 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 }
             }
         }
+
+        public Vector3 getSelectedCube() { return CurrentGridCubeSelected; }
+
         #region Control Delegates
         int i = 0;
         internal void ChangeCameraFocus()

@@ -17,7 +17,7 @@ namespace SpaceHaste.Huds
         float ScreenHeight = GraphicsManager.graphics.PreferredBackBufferHeight;
 
         public TextBox() {
-            TextPosition = new Vector2((int)(ScreenWidth / 3) + 10, (int)(4 * (ScreenHeight / 5)));
+            TextPosition = new Vector2((int)(ScreenWidth / 3) + 10, (int)(4 * (ScreenHeight / 5) - ScreenHeight / 20 - 5));
             texture1 = Hud.Content.Load<Texture2D>("UI_backPane_blue");
 
         }
@@ -29,7 +29,7 @@ namespace SpaceHaste.Huds
             Hud.spriteBatch.Begin();
            
             
-            Hud.spriteBatch.Draw(texture1, new Rectangle((int)(ScreenWidth / 3), (int)(4 * (ScreenHeight / 5)), (int)(ScreenWidth/3), (int)(ScreenHeight/5)), Color.White);
+            Hud.spriteBatch.Draw(texture1, new Rectangle((int)(ScreenWidth / 3), (int)(4 * (ScreenHeight / 5) - ScreenHeight / 20 - 5), (int)(ScreenWidth/3), (int)(ScreenHeight/5)), Color.Plum);
             Hud.spriteBatch.DrawString(Hud.spriteFont, text, TextPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
             
             

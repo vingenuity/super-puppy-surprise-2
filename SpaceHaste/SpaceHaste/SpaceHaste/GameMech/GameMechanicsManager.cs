@@ -21,7 +21,7 @@ namespace SpaceHaste.GameMech
         public static List<SuperTerrain> SuperTerrainList;
 
         public static GameState gamestate;
-        BattleMechanicsManager BattleManager;
+        public BattleMechanicsManager BattleManager;
 
         //For controls, we need a singleton
         public static GameMechanicsManager MechMan;
@@ -47,6 +47,7 @@ namespace SpaceHaste.GameMech
             BattleManager.Update(gameTime);
             base.Update(gameTime);
         }
+
 
     }
 }

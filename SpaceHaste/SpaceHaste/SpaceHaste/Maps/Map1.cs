@@ -29,7 +29,7 @@ namespace SpaceHaste.Maps
                 {
                     for (int z = 4; z < 7; z++)
                     {
-                        this.AddEnvObject(GridCube.TerrainType.wreck, x, y, z);
+                      //  this.AddEnvObject(GridCube.TerrainType.wreck, x, y, z);
                     }
                 }
             }

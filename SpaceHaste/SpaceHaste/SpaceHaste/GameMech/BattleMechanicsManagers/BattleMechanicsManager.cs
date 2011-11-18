@@ -226,14 +226,15 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 float DistanceMoved = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath().Count;
                 if (CurrentGameObjectSelected.energy[0] - DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost >= 0)
                 {
-                    Map.map.MoveObject(CurrentGameObjectSelected, (int)CurrentGridCubeSelected.X, (int)CurrentGridCubeSelected.Y, (int)CurrentGridCubeSelected.Z);
-
-                    CurrentGameObjectSelected.energy[0] -= DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost;
-                    if (CurrentGameObjectSelected.energy[0] - CurrentGameObjectSelected.MovementEnergyCost < 0)
-                        MoveEnabled = false;
-                    NextShipAction();
+                    
+                    //NextShipAction();
                     //CurrentGameObjectSelected.
-                   // GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
+                    ListOfMovementSquares = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath();
+                    
+                    ListOfMovementSquares.Add(CurrentGridCubeSelected);
+                    if (ListOfMovementSquares.Count > 0)
+                        ListOfMovementSquares.RemoveAt(0);
+                    GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
                 }
             }
             CurrentGameObjectSelected.updateBoundingSphere();
@@ -346,6 +347,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         double timer = 0;
         List<Vector3> ListOfMovementSquares = new List<Vector3>();
+        Vector3 InterpDistance;
         public void Update(GameTime gameTime)
         {
             timer += gameTime.ElapsedGameTime.TotalSeconds;
@@ -364,20 +366,32 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
             if (GameMechanicsManager.gamestate == GameState.MovingShipAnimation)
             {
-                while (ListOfMovementSquares.Count > 0)
+                if (ListOfMovementSquares.Count > 0)
                 {
+
+                    GridCube c =  Map.map.GetCubeAt(ListOfMovementSquares[0]);
                     if (timer < 1)
                     {
-
+                          InterpDistance = CurrentGameObjectSelected.GridLocation.Center - c.Center;
+                          CurrentGameObjectSelected.DrawPosition = CurrentGameObjectSelected.GridLocation.Center - InterpDistance * (float)(timer / 1.0);
                     }
                     else
                     {
-                        timer = 0;
+                        Map.map.MoveObject(CurrentGameObjectSelected, (int)c.AsVector().X, (int)c.AsVector().Y, (int)c.AsVector().Z);
+
+                        CurrentGameObjectSelected.energy[0] -= CurrentGameObjectSelected.MovementEnergyCost;
+                        
+                        
                         ListOfMovementSquares.RemoveAt(0);
+                        timer = 0;
                     }
                 }
-                if(ListOfMovementSquares.Count == 0)
+                if (ListOfMovementSquares.Count == 0)
+                {
+                    if (CurrentGameObjectSelected.energy[0] - CurrentGameObjectSelected.MovementEnergyCost < 0)
+                        MoveEnabled = false;
                     NextShipAction();
+                }
             }
         }
         #region Control Delegates

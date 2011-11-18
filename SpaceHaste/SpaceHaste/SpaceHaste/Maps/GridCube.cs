@@ -75,7 +75,7 @@ namespace SpaceHaste.Maps
             GridCube l = PreviousGridSquare;
             while (l != null)
             {
-                Path.Add(l.Position);
+                Path.Insert(0,l.Position);
                 l = l.PreviousGridSquare;
             }
             return Path;

@@ -61,11 +61,11 @@ namespace SpaceHaste.GameObjects
             GridPosition = location;
             team = side;
 
-            boundingSphere = new BoundingSphere(GridPosition, 1.0f);
+            boundingSphere = new BoundingSphere(GridPosition, 0.5f);
 
             MovementRange = (int) (energy[0] / MovementEnergyCost);
 	        LaserRange = 6;
-            MissileRange = MovementRange;
+            MissileRange = 4;
 
             //Fill hull and shields to max.
             hull[0] = hull[1] = maxHull;
@@ -88,7 +88,7 @@ namespace SpaceHaste.GameObjects
 
         //Creation and Deletion
         public static GameObject createBasicShip(String name, Vector3 location, Team team) {
-            return new GameObject(name, location, team, 100, 100, 20, 3, 50, 100, new double[] { .25, .5, .5 });
+            return new GameObject(name, location, team, 100, 100, 20, 2, 20, 60, new double[] { .25, .5, .5 });
         }
 
         public virtual void Load()
@@ -179,6 +179,24 @@ namespace SpaceHaste.GameObjects
         {
             get;
             set;
+        }
+
+        public int GetLaserDamage(GameObject target) 
+        {
+            int distance = (int) Math.Abs(GridPosition.X - target.GridPosition.X) +
+                           (int) Math.Abs(GridPosition.Y - target.GridPosition.Y) +
+                           (int) Math.Abs(GridPosition.Z - target.GridPosition.Z);
+
+            if (distance <= 2)
+                return (int) (LaserDamage * 1);
+            else if (distance <= 5)
+                return (int) (LaserDamage * 0.6f);
+            else return (int) (LaserDamage * 0.4f);
+        }
+
+        public void updateBoundingSphere() 
+        {
+            boundingSphere.Center = GridPosition;
         }
 
         //Team Operations

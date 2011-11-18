@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System.Threading;
 using SpaceHaste.GameObjects;
 using SpaceHaste.Primitives;
@@ -16,6 +17,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
     
     public class BattleMechanicsManager
     {
+        public KeyboardState kState;
         public static BattleMechanicsManager Instance;
 
         bool enabled = true;
@@ -60,7 +62,6 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
             GameMechanicsManager.GameObjectList = list;
         }
-      
 
         private void AddEnergyToShips(GameObject nextShipToMove)
         {
@@ -175,7 +176,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 Line line = new Line(offender.DrawPosition, target.DrawPosition, Color.Aqua);
                 AttackLineList.Add(line);
                 LineManager.AddLine(line);
-                target.isHit(offender.LaserDamage);
+                target.isHit(offender.GetLaserDamage(target));
                 offender.energy[0] -= offender.AttackEnergyCost;
                 if (offender.energy[0] < 0)
                     offender.energy[0] = 0;
@@ -235,6 +236,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                    // GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
                 }
             }
+            CurrentGameObjectSelected.updateBoundingSphere();
         }
         void SelectionWait()
         {
@@ -412,7 +414,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 switch (ShipModeSelection)
                 {
                     case (ShipSelectionMode.Attack):
-                        SelectionMissile();
+                        SelectionAttack();
                         return;
 
                     case (ShipSelectionMode.Movement):

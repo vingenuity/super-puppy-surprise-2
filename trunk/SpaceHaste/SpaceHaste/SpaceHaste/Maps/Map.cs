@@ -45,7 +45,6 @@ namespace SpaceHaste.Maps
             go.GridLocation = MapGridCubes[(int)position.X, (int)position.Y, (int)position.Z];
             ShipMapObjects.Add(go);
         }
-
         public void addGameObject(GameObject go)
         {
             MapGridCubes[(int)go.GridPosition.X, (int)go.GridPosition.Y, (int)go.GridPosition.Z].AddObject(go);
@@ -53,21 +52,12 @@ namespace SpaceHaste.Maps
             go.GridLocation = MapGridCubes[(int)go.GridPosition.X, (int)go.GridPosition.Y, (int)go.GridPosition.Z];
             ShipMapObjects.Add(go);
         }
-
         public void removeGameObject(GameObject go)
         {
 
             ShipMapObjects.Remove(go);
         }
-
-        public void colorGrids()
-        {
-            foreach (GameObject go in ShipMapObjects)
-            {
-            }
-        }
-
-        public void AddEnvObject(GridCube.TerrainType e , int x, int y, int z)
+        public void AddEnvObject(GridCube.TerrainType e, int x, int y, int z)
         {
             switch (e)
             {
@@ -83,9 +73,22 @@ namespace SpaceHaste.Maps
             };
             EnvMapObjects.Add(MapGridCubes[x, y, z]);
         }
+        public void AddGameObjectToGridSquare(GameObject gameObject, int x, int y, int z)
+        {
+            gameObject.GridLocation = MapGridCubes[x, y, z];
+            gameObject.GridPosition = MapGridCubes[x, y, z].Center;
+        }
 
-        protected virtual void InitMapGameObjects() { }
+        public void colorGrids()
+        {
+            foreach (GameObject go in ShipMapObjects)
+            {
+            }
+        }
 
+        protected virtual void InitMapGameObjects() 
+        {
+        }
         void InitMapGridCubes()
         {
             float bounds = -GridCube.GRIDSQUARELENGTH * Size / 2 + GridCube.GRIDSQUARELENGTH/2;
@@ -131,6 +134,7 @@ namespace SpaceHaste.Maps
                 return false;
 
             Vector3 rayDirection = target.GridPosition - go.GridPosition;
+            rayDirection.Normalize();
             Ray ray = new Ray(go.GridPosition, rayDirection);
             float? distance = ray.Intersects(target.boundingSphere);
             float? r = 0;
@@ -155,7 +159,6 @@ namespace SpaceHaste.Maps
                 return true;
             else return false;
         }
-
         public Boolean IsTargetCubeInRange(GridCube loc, GridCube target)
         {
             int range = (int)Math.Abs(loc.X - target.X) +
@@ -463,12 +466,6 @@ namespace SpaceHaste.Maps
             float y = Size / 2 * GridCube.GRIDSQUARELENGTH;
             LineManager.AddLine(new Line(new Vector3(10, 10, 10),
                                 new Vector3(0, 0, 0)));
-        }
-
-        public void AddGameObjectToGridSquare(GameObject gameObject, int x, int y, int z)
-        {
-            gameObject.GridLocation = MapGridCubes[x, y, z];
-            gameObject.GridPosition = MapGridCubes[x, y, z].Center;
         }
 
         public void MoveObject(GameObject obj, int x, int y, int z)

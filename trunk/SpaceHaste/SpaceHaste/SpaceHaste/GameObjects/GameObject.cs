@@ -63,6 +63,11 @@ namespace SpaceHaste.GameObjects
 
             boundingSphere = new BoundingSphere(GridPosition, 0.5f);
 
+            //Set efficiencies
+            efficiency = eff;
+            MovementEnergyCost = Math.Round(20 * efficiency[0]);
+            AttackEnergyCost = Math.Round(30 * efficiency[1]);
+
             MovementRange = (int) (energy[0] / MovementEnergyCost);
 	        LaserRange = 6;
             MissileRange = 4;
@@ -84,11 +89,6 @@ namespace SpaceHaste.GameObjects
             dmg[1] = missDmg;
 
             LaserDamage = 50;
-
-            //Set efficiencies
-            efficiency = eff;
-            MovementEnergyCost = 20 * efficiency[0];
-            AttackEnergyCost = 30 * efficiency[1];
         }
 
         public virtual void Load()

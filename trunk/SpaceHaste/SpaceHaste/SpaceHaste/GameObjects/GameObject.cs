@@ -41,8 +41,8 @@ namespace SpaceHaste.GameObjects
         public GridCube GridLocation;   //Cube of map where object is.
         public Vector3 GridPosition;    //Our notion of position within game grid
         //energy[0] Information
-        public double MovementEnergyCost = 20;
-        public double AttackEnergyCost = 30;
+        public double MovementEnergyCost;
+        public double AttackEnergyCost;
         //Ship Information(For HUD)
         public string Name;
         public enum Team { Player = 0, Enemy = 1 }
@@ -84,11 +84,11 @@ namespace SpaceHaste.GameObjects
             dmg[1] = missDmg;
 
             LaserDamage = 50;
-        }
 
-        //Creation and Deletion
-        public static GameObject createBasicShip(String name, Vector3 location, Team team) {
-            return new GameObject(name, location, team, 100, 100, 20, 2, 20, 60, new double[] { .25, .5, .5 });
+            //Set efficiencies
+            efficiency = eff;
+            MovementEnergyCost = 20 * efficiency[0];
+            AttackEnergyCost = 30 * efficiency[1];
         }
 
         public virtual void Load()

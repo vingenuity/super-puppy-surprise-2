@@ -102,6 +102,7 @@ namespace SpaceHaste.Controls
             PadMap.Add(Buttons.LeftThumbstickRight, new GameAction(BattleMechanicsManager.Instance.MoveSelectionRight));
             PadMap.Add(Buttons.LeftStick, new GameAction(VertSelection));
             PadMap.Add(Buttons.RightStick, new GameAction(CameraZoom));
+            PadMap.Add(Buttons.LeftTrigger, new GameAction(BattleMechanicsManager.Instance.ChangeCameraFocus));
         }
         internal void Remap(Keys newKey, GameAction action)
         {

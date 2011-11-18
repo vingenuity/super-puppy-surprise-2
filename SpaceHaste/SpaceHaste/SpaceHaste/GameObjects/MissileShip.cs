@@ -9,20 +9,19 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceHaste.GameObjects
 {
-    public class LightShip : GameObject
+    class MissileShip : GameObject
     {
-        public LightShip(String name, Vector3 location, Team side)
-            : base(name, location, side, 100, 80, 20, 1, 8, 50, new double[] { .8, 1, 1.66 })
+        public MissileShip(String name, Vector3 location, Team side)
+            : base(name, location, side, 100, 100, 8, 8, 6, 75, new double[] { 1.44, 1.44, 1.44 })
         {
         }
         public override void Load()
         {
             base.Load();
-            Model = GraphicsManager.Content.Load<Model>("light_ship_combined");
+            Model = GraphicsManager.Content.Load<Model>("heavy_ship_combined");
 
-            Scale = 15f;
+            Scale = 2f;
 
         }
     }
-
 }

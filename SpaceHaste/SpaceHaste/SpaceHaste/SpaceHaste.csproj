@@ -164,9 +164,12 @@
     <Compile Include="GameMech\Enumerations.cs" />
     <Compile Include="GameMech\GameMechanicsManager.cs" />
     <Compile Include="GameMech\LevelManagers\LevelManager.cs" />
+    <Compile Include="GameObjects\AttackShip.cs" />
     <Compile Include="GameObjects\LightShip.cs" />
+    <Compile Include="GameObjects\MissileShip.cs" />
     <Compile Include="GameObjects\Shields.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObjects\StandardShip.cs" />
     <Compile Include="GameObjects\SuperTerrain.cs" />
     <Compile Include="Graphics\GraphicsManager.cs" />
     <Compile Include="Graphics\NonPhotoRealisticSettings.cs" />

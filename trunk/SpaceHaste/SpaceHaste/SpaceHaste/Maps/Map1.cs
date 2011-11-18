@@ -15,12 +15,12 @@ namespace SpaceHaste.Maps
 
         protected override void InitMapGameObjects()
         {
-            this.addGameObject(GameObject.createBasicHeavyShip("Player Ship 1", new Vector3(1, 4, 7), GameObject.Team.Player), new Vector3(1, 4, 7));
-            this.addGameObject(GameObject.createBasicHeavyShip("Player Ship 2", new Vector3(4, 3, 7), GameObject.Team.Player), new Vector3(4, 3, 7));
-            this.addGameObject(GameObject.createBasicLightShip("Player Ship 3", new Vector3(7, 4, 7), GameObject.Team.Player), new Vector3(7, 4, 7));
+            this.addGameObject(new HeavyShip("Player Ship 1", new Vector3(1, 4, 7), GameObject.Team.Player), new Vector3(1, 4, 7));
+            this.addGameObject(new HeavyShip("Player Ship 2", new Vector3(4, 3, 7), GameObject.Team.Player), new Vector3(4, 3, 7));
+            this.addGameObject(new LightShip("Player Ship 3", new Vector3(7, 4, 7), GameObject.Team.Player), new Vector3(7, 4, 7));
 
-            this.addGameObject(GameObject.createBasicLightShip("Enemy Ship 1", new Vector3(1, 4, 3), GameObject.Team.Enemy), new Vector3(1, 4, 3));
-            this.addGameObject(GameObject.createBasicHeavyShip("Enemy Ship 2", new Vector3(4, 3, 3), GameObject.Team.Enemy), new Vector3(4, 3, 3));
+            this.addGameObject(new LightShip("Enemy Ship 1", new Vector3(1, 4, 3), GameObject.Team.Enemy), new Vector3(1, 4, 3));
+            this.addGameObject(new HeavyShip("Enemy Ship 2", new Vector3(4, 3, 3), GameObject.Team.Enemy), new Vector3(4, 3, 3));
             //this.addGameObject(createBasicShip("Enemy Ship 3", new Vector3(7, 4, 3), GameObject.Team.Enemy));
 
             for (int x = 1; x < 9; x++)

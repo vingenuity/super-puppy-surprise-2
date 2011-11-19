@@ -64,7 +64,7 @@ namespace SpaceHaste.Huds
         public void Update(GameTime gameTime)
         {
             Selected = (int)BattleMechanicsManager.Instance.ShipModeSelection;
-            if (GameMechanicsManager.gamestate == GameState.SelectShipAction)
+            if (GameMechanicsManager.gamestate == GameState.SelectShipAction || GameMechanicsManager.gamestate == GameState.SelectShipAttackAction)
                 ShowShipActions = true;
             else
                 ShowShipActions = false;

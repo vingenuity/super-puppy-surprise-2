@@ -38,7 +38,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
         
         public ShipSelectionMode ShipModeSelection;
-
+        public ShipAttackSelectionMode ShipAttackModeSelection;
         public BattleMechanicsManager()
         {
             Instance = this;
@@ -220,7 +220,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             if (InRange.Find(item => item == Map.map.GetCubeAt(CurrentGridCubeSelected)) != null)
             {
                 GridCube c = Map.map.GetCubeAt(CurrentGridCubeSelected);
-                Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;
+               // Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;
                 //OLD DISTANCE MOVING
                 //float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
                 float DistanceMoved = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath().Count;
@@ -419,12 +419,15 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         /// </summary>
         internal void Selection()
         {
+            
             if (GameMechanicsManager.gamestate == GameState.SelectShipAction)
             {
                 ShipModeSelection = (ShipSelectionMode)(((int)ShipModeSelection) % 3);
                 GameMechanicsManager.gamestate = GameState.EnterShipAction;
                 if (ShipModeSelection == ShipSelectionMode.Wait)
                     SelectionWait();
+                if (ShipModeSelection == ShipSelectionMode.Attack)
+                    GameMechanicsManager.gamestate = GameState.SelectShipAttackAction;
                 return;
             }
             if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
@@ -442,6 +445,19 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                         SelectionWait();
                         return;
                 }
+            if (GameMechanicsManager.gamestate == GameState.SelectShipAttackAction)
+            {
+                GameMechanicsManager.gamestate = GameState.EnterShipAction;
+                switch (ShipAttackModeSelection)
+                {
+                    case (ShipAttackSelectionMode.Laser):
+                        SelectionAttack();
+                        return;
+                    case (ShipAttackSelectionMode.Missile):
+                        SelectionAttack();
+                        return;
+                }
+            }
         }
         internal void Back()
         {
@@ -462,6 +478,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             {
                 ScrollUpInUnitActionsList();
             }
+            if (GameMechanicsManager.gamestate == GameState.SelectShipAttackAction)
+            {
+                ScrollUpInAttackUnitActionsList();
+            }
         }
         internal void MoveSelectionDown()
         {
@@ -473,6 +493,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             if (GameMechanicsManager.gamestate == GameState.SelectShipAction)
             {
                 ScrollDownInUnitActionList();
+            }
+            if (GameMechanicsManager.gamestate == GameState.SelectShipAttackAction)
+            {
+                ScrollDownInAttackUnitActionsList();
             }
         }
         internal void MoveSelectionLeft()
@@ -509,6 +533,17 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
            
         }
+
+        private void ScrollUpInAttackUnitActionsList()
+        {
+            ShipAttackModeSelection = (ShipAttackSelectionMode)(((int)(ShipAttackModeSelection)-1) % 2);
+        }
+
+        private void ScrollDownInAttackUnitActionsList()
+        {
+            ShipAttackModeSelection = (ShipAttackSelectionMode)(((int)(ShipAttackModeSelection) + 1) % 2);
+        }
+
         private void ScrollUpInUnitActionsList()
         {
             int i = (int)ShipModeSelection - 1;
@@ -519,6 +554,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 i++;
             if (i == 1 && AttackEnabled == false)
                 i++;
+
             ShipModeSelection = (ShipSelectionMode)(i % 3);
 
         }

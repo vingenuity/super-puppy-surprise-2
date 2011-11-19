@@ -12,11 +12,18 @@ namespace SpaceHaste.GameMech
         Attack,
         Wait,
     };
+
+    public enum ShipAttackSelectionMode
+    {
+        Laser,
+        Missile,
+    };
     public enum GameState
     {
         Other,
         StartBattle,
         SelectShipAction,
+        SelectShipAttackAction,
         EnterShipAction,
         MovingShipAnimation,
         AttackingAnimation,

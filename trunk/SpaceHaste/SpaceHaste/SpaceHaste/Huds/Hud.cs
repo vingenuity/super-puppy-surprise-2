@@ -14,6 +14,7 @@ namespace SpaceHaste.Huds
         public static SpriteFont spriteFont;
         HUDDrawListOfUnits DrawUnitLists;
         UnitDisplayActions UnitActions;
+        AttackUnitDisplayActions AttackUnitActions;
         StatsBar Stats;
         GraphicsDeviceManager graphics;
         public static ContentManager Content;
@@ -25,6 +26,7 @@ namespace SpaceHaste.Huds
             
             DrawUnitLists = new HUDDrawListOfUnits();
             UnitActions = new UnitDisplayActions();
+            AttackUnitActions = new AttackUnitDisplayActions();
             Stats = new StatsBar();
             Content = new ContentManager(game.Services);
             Content.RootDirectory = "Content";
@@ -38,10 +40,12 @@ namespace SpaceHaste.Huds
             spriteFont = Hud.Content.Load<SpriteFont>("hudFont");
             DrawUnitLists.Load();
             UnitActions.Load();
+            AttackUnitActions.Load();
         }
         public override void Update(GameTime gameTime)
         {
             UnitActions.Update(gameTime);
+            AttackUnitActions.Update(gameTime);
         }
 
         public void showCutscene(GameTime gameTime) {
@@ -60,6 +64,7 @@ namespace SpaceHaste.Huds
                 DrawUnitLists.Draw(gameTime,spriteBatch, spriteFont);
 
                 UnitActions.Draw(gameTime, spriteBatch, spriteFont);
+                AttackUnitActions.Draw(gameTime, spriteBatch, spriteFont);
             spriteBatch.End();
             
             scene.Draw();

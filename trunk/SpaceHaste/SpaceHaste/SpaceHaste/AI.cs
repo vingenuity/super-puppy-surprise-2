@@ -30,16 +30,18 @@ namespace SpaceHaste
         /// A tuple of GridCube and ShipSelectionMode that represents the actions the AI wishes to take. 
         /// This is used by GameMechanics to perform the AI's actions.
         /// </returns>
-        public Tuple<GridCube, ShipSelectionMode> TakeTurn(List<GameObject> ships)
+        public Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> TakeTurn(List<GameObject> ships)
         {
             //Pop the active ship off of the list.
             GameObject myShip = ships[0];
             GameObject enemy = ClosestEnemy(myShip, ships);
             if (EnemiesLeft(ships) == 0)
-                return new Tuple<GridCube, ShipSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait);
+                return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
+            if (Map.map.IsObjectInRange(myShip, enemy) && myShip.MissileCount > 0)
+                return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(myShip.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
             if (Map.map.IsObjectInRange(myShip, enemy) && myShip.AttackEnergyCost < myShip.energy[0])
             {
-                return new Tuple<GridCube, ShipSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack);
+                return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser);
             }
             List<GridCube> path = GetMovePath(myShip.GridLocation, enemy.GridLocation);
             if (myShip.energy[0] > myShip.MovementEnergyCost)
@@ -54,10 +56,10 @@ namespace SpaceHaste
                     }
                 }
                 if(selection != null)
-                    return new Tuple<GridCube, ShipSelectionMode>(selection, ShipSelectionMode.Movement);
+                    return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
 
             }
-            return new Tuple<GridCube, ShipSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait);
+            return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
         }
 
         #region AI Considerations
@@ -177,5 +179,12 @@ namespace SpaceHaste
                 return path;
         }
         #endregion
+
+        public static bool IsSameAction(Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action1, Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action2)
+        {
+            if (action1.Item1 == action2.Item1 && action1.Item2 == action2.Item2 && action1.Item3 == action2.Item3)
+                return true;
+            else return false;
+        }
     }
 }

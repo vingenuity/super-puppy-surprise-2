@@ -115,6 +115,8 @@
     <Compile Include="Cameras\RotationCamera.cs" />
     <Compile Include="ClearScreen\ClearScreenManager.cs" />
     <Compile Include="Controls\ControlManager.cs" />
+    <Compile Include="DPSFParticles\ShipThrustersParticle.cs" />
+    <Compile Include="DPSFParticles\LaserParticle.cs" />
     <Compile Include="DPSFParticles\DeathParticle.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -151,6 +153,7 @@
     <Compile Include="DPSFParticles\Particle Systems\SpritePS.cs" />
     <Compile Include="DPSFParticles\Particle Systems\SquarePatternPS.cs" />
     <Compile Include="DPSFParticles\Particle Systems\StarPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\TrailPS.cs" />
     <Compile Include="DPSFParticles\Particle.cs" />
     <Compile Include="DPSFParticles\ParticleManager.cs" />
     <Compile Include="DPSFParticles\Templates\DefaultQuadParticleSystem.cs" />

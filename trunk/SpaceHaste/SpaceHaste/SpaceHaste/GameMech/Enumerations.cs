@@ -26,7 +26,7 @@ namespace SpaceHaste.GameMech
         SelectShipAttackAction,
         EnterShipAction,
         MovingShipAnimation,
-        AttackingAnimation,
+        AttackingLaserAnimation,
         CutScene,
     };
     public class Enumerations

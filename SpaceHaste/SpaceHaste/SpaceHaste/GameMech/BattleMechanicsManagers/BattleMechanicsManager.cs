@@ -177,10 +177,14 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
             if (Map.map.IsObjectInRange(offender, target))
             {
+                GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
+                
                 SoundManager.Sounds.PlaySound(SoundEffects.laser);
+                LaserParticle.CreateLaserParticle(offender.DrawPosition, target.DrawPosition);
+                /*
                 Line line = new Line(offender.DrawPosition, target.DrawPosition, Color.Aqua);
                 AttackLineList.Add(line);
-                LineManager.AddLine(line);
+                LineManager.AddLine(line);*/
                 target.isHit(offender.GetLaserDamage(target));
                 offender.energy[0] -= offender.AttackEnergyCost;
                 if (offender.energy[0] < 0)
@@ -188,6 +192,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 if (offender.energy[0] < offender.AttackEnergyCost)
                     AttackEnabled = false;
                 NextShipAction();
+               
+                GameMechanicsManager.gamestate = GameState.AttackingLaserAnimation;
             }
                                
             else return; 
@@ -353,6 +359,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         double timer = 0;
         List<Vector3> ListOfMovementSquares = new List<Vector3>();
         Vector3 InterpDistance;
+
         public void Update(GameTime gameTime)
         {
             timer += gameTime.ElapsedGameTime.TotalSeconds;
@@ -366,9 +373,15 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
             if(GameMechanicsManager.gamestate == GameState.EnterShipAction ||  GameMechanicsManager.gamestate == GameState.SelectShipAction)
                 UpdateSelectionLine();
-            if (GameMechanicsManager.gamestate == GameState.AttackingAnimation)
+            if (GameMechanicsManager.gamestate == GameState.AttackingLaserAnimation)
             {
-
+                if (timer > 1)
+                {
+                     NextShipAction();
+                     timer = 0;
+                }
+                
+               
             }
             if (GameMechanicsManager.gamestate == GameState.MovingShipAnimation)
             {
@@ -457,7 +470,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 switch (ShipAttackModeSelection)
                 {
                     case (ShipAttackSelectionMode.Laser):
-                        SelectionMissile();
+                        SelectionAttack();
                         return;
                     case (ShipAttackSelectionMode.Missile):
                         SelectionMissile();

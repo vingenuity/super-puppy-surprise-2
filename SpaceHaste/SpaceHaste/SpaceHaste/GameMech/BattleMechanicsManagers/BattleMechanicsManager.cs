@@ -94,20 +94,27 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             WaitEnabled = true;
             AttackEnabled = true;
             UpdateSelectionLine();
-            Tuple<GridCube, ShipSelectionMode> action;
+            Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> lastAction = new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(new GridCube(0, 0, 0), ShipSelectionMode.Wait, ShipAttackSelectionMode.Missile);
             if (nextShipToMove.team == GameObject.Team.Player)
                 NextShipAction();
             else
             {
-                action = Enemy.TakeTurn(GameMechanicsManager.GameObjectList);
+                Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action = Enemy.TakeTurn(GameMechanicsManager.GameObjectList);
                 while (action.Item2 != ShipSelectionMode.Wait)
                 {
                     CheckVictory();
                     CurrentGridCubeSelected = action.Item1.AsVector();
                     ShipModeSelection = action.Item2;
-                    GameMechanicsManager.gamestate = GameState.EnterShipAction;
+                    ShipAttackModeSelection = action.Item3;
+                    if (action.Item2 == ShipSelectionMode.Attack)
+                        GameMechanicsManager.gamestate = GameState.SelectShipAttackAction;
+                    else
+                        GameMechanicsManager.gamestate = GameState.EnterShipAction;
                     Selection();
-                    action = Enemy.TakeTurn(GameMechanicsManager.GameObjectList);
+                    action = Enemy.TakeTurn(GameMechanicsManager.GameObjectList); 
+                    if (AI.IsSameAction(action,lastAction))
+                        action = new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(new GridCube(0, 0, 0), ShipSelectionMode.Wait, ShipAttackSelectionMode.Missile);
+                    lastAction = action;
                 }
                 SelectionWait();
             }

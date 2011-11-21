@@ -49,7 +49,7 @@ namespace SpaceHaste.DPSFParticles
                 exploded = true;
                 deathParicleSystem.Explode();
             }
-           if (timercd > 25)
+           if (timercd > 3)
            {
                ParticleManager.Instance.Remove(this);
            }

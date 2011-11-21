@@ -21,30 +21,6 @@ namespace SpaceHaste.DPSFParticles
         {
 
         }
-        public virtual void Start()
-        {
-            if (!started)
-            {
-                started = true;
-                if (ParticleSystem != null)
-                {
-                    ParticleSystem.Destroy();
-                }
-                ParticleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, null);
-                
-                
-                ParticleManager.Instance.Add(this);
-            }
-        }
-
-        public virtual void End()
-        {
-            started = false;
-            if (ParticleSystem != null)
-            {
-                ParticleSystem.Destroy();
-            }
-            ParticleManager.Instance.Remove(this);
-        }
+       
     }
 }

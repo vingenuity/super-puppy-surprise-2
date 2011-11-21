@@ -11,6 +11,7 @@ using SpaceHaste.Maps;
 using SpaceHaste.Sounds;
 using GameStateManagement;
 using SpaceHaste.Controls;
+using SpaceHaste.DPSFParticles;
 
 namespace SpaceHaste.GameMech.BattleMechanicsManagers
 {
@@ -355,6 +356,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             {
                 QuadManager.AddQuad(new Quad(Vector3.Zero, Vector3.Left, Vector3.Up, 400, 400));
                 GameMechanicsManager.gamestate = GameState.EnterShipAction;
+                DeathParticle.CreateDeathParticle(Vector3.Zero);
                 NextShipTurn();
 
             }
@@ -451,10 +453,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 switch (ShipAttackModeSelection)
                 {
                     case (ShipAttackSelectionMode.Laser):
-                        SelectionAttack();
+                        SelectionMissile();
                         return;
                     case (ShipAttackSelectionMode.Missile):
-                        SelectionAttack();
+                        SelectionMissile();
                         return;
                 }
             }

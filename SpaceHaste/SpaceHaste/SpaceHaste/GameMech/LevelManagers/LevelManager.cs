@@ -10,7 +10,7 @@ namespace SpaceHaste.GameMech.LevelManagers
     public class LevelManager
     {
 
-        bool loadCutScene = true;
+        bool loadCutScene = false;
         CutScene cutScene = new CutScene();
 
         public static LevelManager Instance;

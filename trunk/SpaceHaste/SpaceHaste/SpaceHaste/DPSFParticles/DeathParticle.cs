@@ -24,8 +24,9 @@ namespace SpaceHaste.DPSFParticles
             : base()
         {
             deathParicleSystem = new ExplosionParticleSystem(Game1.game);
+           
             deathParicleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);
-            deathParicleSystem.Emitter.PositionData.Position = Position;
+             deathParicleSystem.Emitter.PositionData.Position = Position;
            
             //deathParicleSystem.Emitter.BurstParticles = (10);
 

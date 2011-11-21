@@ -80,7 +80,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         {
             CheckVictory();
             SortGameObjectList();
-
+            if (!enabled)
+            {
+                return;
+            }
             GameObject nextShipToMove = GameMechanicsManager.GameObjectList[0];
             AddEnergyToShips(nextShipToMove);
 
@@ -99,6 +102,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 action = Enemy.TakeTurn(GameMechanicsManager.GameObjectList);
                 while (action.Item2 != ShipSelectionMode.Wait)
                 {
+                    CheckVictory();
                     CurrentGridCubeSelected = action.Item1.AsVector();
                     ShipModeSelection = action.Item2;
                     GameMechanicsManager.gamestate = GameState.EnterShipAction;
@@ -356,7 +360,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             {
                 QuadManager.AddQuad(new Quad(Vector3.Zero, Vector3.Left, Vector3.Up, 400, 400));
                 GameMechanicsManager.gamestate = GameState.EnterShipAction;
-                DeathParticle.CreateDeathParticle(Vector3.Zero);
+               //USE THIS LINE TO TEST PARITCLES DeathParticle.CreateDeathParticle(Vector3.Zero);
                 NextShipTurn();
 
             }

@@ -555,7 +555,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
         private void ScrollUpInAttackUnitActionsList()
         {
-            ShipAttackModeSelection = (ShipAttackSelectionMode)(((int)(ShipAttackModeSelection)-1) % 2);
+            int a = ((int)(ShipAttackModeSelection)-1);
+            if(a < 0)
+                a = 1;
+            ShipAttackModeSelection = (ShipAttackSelectionMode)(a % 2);
         }
 
         private void ScrollDownInAttackUnitActionsList()

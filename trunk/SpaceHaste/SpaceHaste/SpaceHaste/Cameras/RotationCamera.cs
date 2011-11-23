@@ -20,7 +20,7 @@ namespace SpaceHaste.Cameras
         public Vector3 FocusedPosition { get; set; }
         float verticalAngle = 1.0f;
         float horizontalAngle = 0;
-        float zoom = 10;
+        float zoom = 2000;
         float verticalAngleMin = .01f;
         float verticalAngleMax = (float) Math.PI - .01f;
         float zoomMin = 600;

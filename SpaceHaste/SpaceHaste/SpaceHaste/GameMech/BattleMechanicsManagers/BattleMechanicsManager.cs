@@ -300,7 +300,6 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             XSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
             LineManager.AddLine(XSelectedSquareLine);
         }
-        
         private void UpdateZSlectionLine()
         {
             if (ZSelectedSquareLine != null)
@@ -323,7 +322,6 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             ZSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
             LineManager.AddLine(ZSelectedSquareLine);
         }
-
         private void UpdateYSlectionLine()
         {
             if (YSelectedSquareLine != null)

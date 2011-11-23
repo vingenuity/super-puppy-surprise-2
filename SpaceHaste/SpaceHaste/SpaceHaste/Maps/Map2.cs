@@ -10,14 +10,14 @@ namespace SpaceHaste.Maps
     public class Map2 : Map
     {
         public Map2()
-            : base(new Vector3(12, 4, 12))
+            : base(new Vector3(6, 4, 18))
         { }
 
         protected override void InitMapGameObjects()
         {
-            this.addGameObject(new HeavyShip("Player Ship 1", new Vector3(1, 1, 7), GameObject.Team.Player), new Vector3(1, 1, 7));
-            this.addGameObject(new HeavyShip("Player Ship 2", new Vector3(4, 1, 7), GameObject.Team.Player), new Vector3(4, 1, 7));
-            this.addGameObject(new LightShip("Player Ship 3", new Vector3(7, 1, 7), GameObject.Team.Player), new Vector3(7, 1, 7));
+            this.addGameObject(new HeavyShip("Player Ship 1", new Vector3(1, 1, 14), GameObject.Team.Player), new Vector3(1, 1, 14));
+            this.addGameObject(new HeavyShip("Player Ship 2", new Vector3(4, 1, 14), GameObject.Team.Player), new Vector3(4, 1, 14));
+            //this.addGameObject(new LightShip("Player Ship 3", new Vector3(7, 1, 7), GameObject.Team.Player), new Vector3(7, 1, 7));
 
             this.addGameObject(new LightShip("Enemy Ship 1", new Vector3(1, 1, 3), GameObject.Team.Enemy), new Vector3(1, 1, 3));
             this.addGameObject(new HeavyShip("Enemy Ship 2", new Vector3(4, 2, 3), GameObject.Team.Enemy), new Vector3(4, 2, 3));

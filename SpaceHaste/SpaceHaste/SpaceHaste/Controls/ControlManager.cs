@@ -81,7 +81,9 @@ namespace SpaceHaste.Controls
             KeyMap.Add(Keys.L,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionRight));
             KeyMap.Add(Keys.O,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionHigher));
             KeyMap.Add(Keys.U,     new GameAction(BattleMechanicsManager.Instance.MoveSelectionLower));
-            KeyMap.Add(Keys.Tab,     new GameAction(BattleMechanicsManager.Instance.ChangeCameraFocus));
+            KeyMap.Add(Keys.Tab, new GameAction(BattleMechanicsManager.Instance.ChangeCameraMode));
+            KeyMap.Add(Keys.Z, new GameAction(BattleMechanicsManager.Instance.CenterOnPrevShip));
+            KeyMap.Add(Keys.C, new GameAction(BattleMechanicsManager.Instance.CenterOnNextShip));
 
             //alt keyboard
             KeyMap.Add(Keys.Home,     new GameAction(camera.ZoomIn));
@@ -102,7 +104,9 @@ namespace SpaceHaste.Controls
             PadMap.Add(Buttons.LeftThumbstickRight, new GameAction(BattleMechanicsManager.Instance.MoveSelectionRight));
             PadMap.Add(Buttons.LeftStick, new GameAction(VertSelection));
             PadMap.Add(Buttons.RightStick, new GameAction(CameraZoom));
-            PadMap.Add(Buttons.LeftTrigger, new GameAction(BattleMechanicsManager.Instance.ChangeCameraFocus));
+            PadMap.Add(Buttons.LeftTrigger, new GameAction(BattleMechanicsManager.Instance.ChangeCameraMode));
+            PadMap.Add(Buttons.LeftShoulder, new GameAction(BattleMechanicsManager.Instance.CenterOnPrevShip));
+            PadMap.Add(Buttons.RightShoulder, new GameAction(BattleMechanicsManager.Instance.CenterOnNextShip));
         }
         internal void Remap(Keys newKey, GameAction action)
         {

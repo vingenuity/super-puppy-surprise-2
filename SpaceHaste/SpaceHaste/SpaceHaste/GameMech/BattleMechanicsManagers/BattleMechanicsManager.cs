@@ -21,6 +21,9 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         public KeyboardState kState;
         public static BattleMechanicsManager Instance;
 
+        enum CameraMode { OnCenter, OnShip }
+        private CameraMode currentCameraMode = CameraMode.OnCenter;
+
         bool enabled = true;
 
         //For selection and display thereof
@@ -424,19 +427,39 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         public Vector3 getSelectedCube() { return CurrentGridCubeSelected; }
 
         #region Control Delegates
-        int i = 0;
-        internal void ChangeCameraFocus()
+        internal void ChangeCameraMode()
         {
-            if (i == 0)
+            if (currentCameraMode == CameraMode.OnCenter)
             {
                 ControlManager.camera.ChangeToFocusedPosition(Map.map.GetCubeAt(CurrentGridCubeSelected).Center);
-                i++;
+                currentCameraMode = CameraMode.OnShip;
             }
             else
             {
                 ControlManager.camera.ChangeToFocusCenter();
-                i = 0;
+                currentCameraMode = CameraMode.OnCenter;
             }
+        }
+        internal void CenterOnShip(int PlusMinus)
+        {
+            if (currentCameraMode != CameraMode.OnShip)
+                return;
+            int focusIndex = GameMechanicsManager.GameObjectList.FindIndex(obj => obj.GridLocation.Center == ControlManager.camera.FocusedPosition);
+            if (focusIndex == -1)
+                return;
+            if (focusIndex == 0 && PlusMinus < 0)
+                focusIndex = GameMechanicsManager.GameObjectList.Count;
+            if (focusIndex == GameMechanicsManager.GameObjectList.Count - 1 && PlusMinus > 0)
+                focusIndex = -1;
+            ControlManager.camera.ChangeToFocusedPosition(GameMechanicsManager.GameObjectList[focusIndex + PlusMinus].GridLocation.Center);
+        }
+        internal void CenterOnNextShip()
+        {
+            CenterOnShip(1);
+        }
+        internal void CenterOnPrevShip()
+        {
+            CenterOnShip(-1);
         }
 
         /// <summary>

@@ -290,7 +290,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
             else
             {
-                botCube.X = Map.map.Size - 1;
+                botCube.X = Map.map.Size.X - 1;
                 botCube = Map.map.GetCubeAt(botCube).Center;
                 botCube.X += +400;
             }
@@ -313,7 +313,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
             else
             {
-                botCube.Z = Map.map.Size - 1;
+                botCube.Z = Map.map.Size.Z - 1;
                 botCube = Map.map.GetCubeAt(botCube).Center;
                 botCube.Z += +400;
             }
@@ -497,7 +497,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         {
             if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
             {
-                if (CurrentGridCubeSelected.X < Map.map.Size - 1) CurrentGridCubeSelected.X++;
+                if (CurrentGridCubeSelected.X < Map.map.Size.X - 1) CurrentGridCubeSelected.X++;
                 UpdateSelectionLine();
             }
             if (GameMechanicsManager.gamestate == GameState.SelectShipAction)
@@ -537,7 +537,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         {
             if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
             {
-                if (CurrentGridCubeSelected.Z < Map.map.Size - 1) CurrentGridCubeSelected.Z++;
+                if (CurrentGridCubeSelected.Z < Map.map.Size.X - 1) CurrentGridCubeSelected.Z++;
                 UpdateSelectionLine();
             }
         }
@@ -545,7 +545,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         {
             if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
             {
-                if (CurrentGridCubeSelected.Y < Map.map.Size - 1) CurrentGridCubeSelected.Y++;
+                if (CurrentGridCubeSelected.Y < Map.map.Size.Y - 1) CurrentGridCubeSelected.Y++;
                 UpdateSelectionLine();
             }
             

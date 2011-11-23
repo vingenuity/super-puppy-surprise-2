@@ -176,6 +176,7 @@ namespace SpaceHaste
                 return p;
             }
             else
+                path.Add(current);
                 return path;
         }
         #endregion

@@ -64,8 +64,6 @@ namespace SpaceHaste.Maps
                 boundingSphere = new BoundingSphere(Position, 0.5f);
         }
 
-        public static Vector3 Root = new Vector3(-1000,0,0);
-       
         /// <summary>
         /// Backtrack to get the Path to the GridCube
         /// </summary>

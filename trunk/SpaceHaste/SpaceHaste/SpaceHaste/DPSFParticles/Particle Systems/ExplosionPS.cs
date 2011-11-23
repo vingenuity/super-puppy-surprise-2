@@ -314,7 +314,7 @@ namespace DPSF.ParticleSystems
             _flashParticleSystem.Explode();
             _flyingSparksParticleSystem.Explode();
             _roundSparksParticleSystem.Explode();
-            _shockwaveParticleSystem.Explode();
+           // _shockwaveParticleSystem.Explode();
             _smokeTrailsParticleSystem.Explode();
         }
 

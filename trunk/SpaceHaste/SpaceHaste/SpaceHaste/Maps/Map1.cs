@@ -10,7 +10,7 @@ namespace SpaceHaste.Maps
     public class Map1 : Map
     {
         public Map1()
-            : base(12)
+            : base(new Vector3(12,12,12))
         { }
 
         protected override void InitMapGameObjects()

@@ -19,19 +19,19 @@ namespace SpaceHaste.Maps
 
         public List<GridCube> EnvMapObjects;
         public List<GameObject> ShipMapObjects;
-        public int Size;
+        public Vector3 Size;
 
         public static Map map;
 
-        public Map(int Size)
+        public Map(Vector3 Size)
         {
             this.Size = Size;
             ShipMapObjects = new List<GameObject>();
             EnvMapObjects = new List<GridCube>();
 
-            XYMatrix = new Line[2, Size + 1];
-            XZMatrix = new Line[2, Size + 1];
-            YZMatrix = new Line[2, Size + 1];
+            XYMatrix = new Line[2, (int)Size.X + 1];
+            XZMatrix = new Line[2, (int)Size.Y + 1];
+            YZMatrix = new Line[2, (int)Size.Z + 1];
 
             InitMapGridCubes();
             InitMapGameObjects();
@@ -91,28 +91,28 @@ namespace SpaceHaste.Maps
         }
         void InitMapGridCubes()
         {
-            float bounds = -GridCube.GRIDSQUARELENGTH * Size / 2 + GridCube.GRIDSQUARELENGTH/2;
+            Vector3 bounds = -GridCube.GRIDSQUARELENGTH * Size / 2 + GridCube.GRIDSQUARELENGTH/2 * new Vector3(1,1,1);
 
-            MapGridCubes = new GridCube[Size, Size, Size];
-            for (int i = 0; i < Size; i++)
-                for (int j = 0; j < Size; j++)
-                    for (int k = 0; k < Size; k++)
+            MapGridCubes = new GridCube[(int)Size.X, (int)Size.Y, (int)Size.Z];
+            for (int i = 0; i < Size.X; i++)
+                for (int j = 0; j < Size.Y; j++)
+                    for (int k = 0; k < Size.Z; k++)
                     {
                         MapGridCubes[i, j, k] = new GridCube(i, j, k);
-                        MapGridCubes[i, j, k].Center = new Vector3(bounds + GridCube.GRIDSQUARELENGTH * i,
-                            bounds + GridCube.GRIDSQUARELENGTH * j,
-                            bounds + GridCube.GRIDSQUARELENGTH * k);
+                        MapGridCubes[i, j, k].Center = new Vector3(bounds.X + GridCube.GRIDSQUARELENGTH * i,
+                            bounds.Y + GridCube.GRIDSQUARELENGTH * j,
+                            bounds.Z + GridCube.GRIDSQUARELENGTH * k);
                     }
 
-            BottomMap = new GridCube[Size, 1, Size];
-            for (int i = 0; i < Size; i++)
-                for (int k = 0; k < Size; k++)
+            BottomMap = new GridCube[(int)Size.X, 1, (int)Size.Z];
+            for (int i = 0; i < Size.X; i++)
+                for (int k = 0; k < Size.Z; k++)
                 {
                     int j = 0;
                     BottomMap[i, j, k] = new GridCube(i, j, k);
-                    BottomMap[i, j, k].Center = new Vector3(bounds + GridCube.GRIDSQUARELENGTH * i,
-                        bounds + GridCube.GRIDSQUARELENGTH * j,
-                        bounds + GridCube.GRIDSQUARELENGTH * k);
+                    BottomMap[i, j, k].Center = new Vector3(bounds.X + GridCube.GRIDSQUARELENGTH * i,
+                        bounds.Y + GridCube.GRIDSQUARELENGTH * j,
+                        bounds.Z + GridCube.GRIDSQUARELENGTH * k);
                 }
             ConnectGridSquares();
         }
@@ -266,15 +266,15 @@ namespace SpaceHaste.Maps
             {
                 if (gs.X > 0)
                     gs.ConnectedGridSquares.Add(MapGridCubes[gs.X - 1, gs.Y, gs.Z]);
-                if (gs.X < Size - 1)
+                if (gs.X < Size.X - 1)
                     gs.ConnectedGridSquares.Add(MapGridCubes[gs.X + 1, gs.Y, gs.Z]);
                 if (gs.Y > 0)
                     gs.ConnectedGridSquares.Add(MapGridCubes[gs.X, gs.Y - 1, gs.Z]);
-                if (gs.Y < Size - 1)
+                if (gs.Y < Size.Y - 1)
                     gs.ConnectedGridSquares.Add(MapGridCubes[gs.X, gs.Y + 1, gs.Z]);
                 if (gs.Z > 0)
                     gs.ConnectedGridSquares.Add(MapGridCubes[gs.X, gs.Y, gs.Z - 1]);
-                if (gs.Z < Size - 1)
+                if (gs.Z < Size.Z - 1)
                     gs.ConnectedGridSquares.Add(MapGridCubes[gs.X, gs.Y, gs.Z + 1]);
             }
         }
@@ -288,19 +288,19 @@ namespace SpaceHaste.Maps
         /// </summary>
         public void AddGridXY0()
         {
-            for (int i = 0; i <= Size; i++)
+            for (int i = 0; i <= Size.X; i++)
             {
-                float x = ((Size / 2) - i) * GridCube.GRIDSQUARELENGTH;
-                float y = Size / 2 * GridCube.GRIDSQUARELENGTH;
-                float z = -1 * Size / 2 * GridCube.GRIDSQUARELENGTH;
+                float x = ((Size.X / 2) - i) * GridCube.GRIDSQUARELENGTH;
+                float y = Size.Y / 2 * GridCube.GRIDSQUARELENGTH;
+                float z = -1 * Size.Z / 2 * GridCube.GRIDSQUARELENGTH;
 
                 Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
-                                     new Color((float)(Size - i) * .1f, 0, 0));
+                                     new Color((float)((Size.X+Size.Z+Size.Y)/3 - i) * .1f, 0, 0));
                 LineManager.AddLine(line);
                 XYMatrix[0, i] = line;
 
                 Line orthongal = new Line(new Vector3(y, x, z), new Vector3(-y, x, z),
-                                          new Color((float)(Size - i) * .1f, 0, 0));
+                                          new Color((float)((Size.X+Size.Z+Size.Y)/3 - i) * .1f, 0, 0));
                 LineManager.AddLine(orthongal);
                 XYMatrix[1, i] = orthongal;
             }
@@ -309,19 +309,19 @@ namespace SpaceHaste.Maps
         }
         public void AddGrid0YZ()
         {
-            for (int i = 0; i <= Size; i++)
+            for (int i = 0; i <= Size.X; i++)
             {
-                float x = -1 * Size / 2 * GridCube.GRIDSQUARELENGTH;
-                float y = Size / 2 * GridCube.GRIDSQUARELENGTH;
-                float z = ((Size / 2) - i) * GridCube.GRIDSQUARELENGTH;
+                float x = -1 * Size.X / 2 * GridCube.GRIDSQUARELENGTH;
+                float y = Size.Y / 2 * GridCube.GRIDSQUARELENGTH;
+                float z = ((Size.Z / 2) - i) * GridCube.GRIDSQUARELENGTH;
 
                 Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
-                                     new Color(0, (float)(Size - i) * .1f, 0));
+                                     new Color(0, (float)(Size.X - i) * .1f, 0));
                 LineManager.AddLine(line);
                 YZMatrix[0, i] = line;
 
                 Line orthogonal = new Line(new Vector3(x, z, y), new Vector3(x, z, -y),
-                                           new Color(0, (float)(Size - i) * .1f, 0));
+                                           new Color(0, (float)(Size.X - i) * .1f, 0));
                 LineManager.AddLine(orthogonal);
                 YZMatrix[1, i] = orthogonal;
             }
@@ -330,19 +330,19 @@ namespace SpaceHaste.Maps
         }
         public void AddGridX0Z()
         {
-            for (int i = 0; i <= Size; i++) 
+            for (int i = 0; i <= Size.Y; i++) 
             {
-                float x = ((Size / 2) - i) * GridCube.GRIDSQUARELENGTH;
-                float z = Size / 2 * GridCube.GRIDSQUARELENGTH;
-                float y = -1 * (Size / 2) * GridCube.GRIDSQUARELENGTH;
+                float x = ((Size.X / 2) - i) * GridCube.GRIDSQUARELENGTH;
+                float z = Size.Z / 2 * GridCube.GRIDSQUARELENGTH;
+                float y = -1 * (Size.Y / 2) * GridCube.GRIDSQUARELENGTH;
 
                 Line line = new Line(new Vector3(x, y, z), new Vector3(x, y, -z), 
-                                    new Color(0, 0, (float) (Size - i) * .1f ));
+                                    new Color(0, 0, (float) (Size.Y - i) * .1f ));
                 LineManager.AddLine(line);
                 XZMatrix[0, i] = line;
 
                 Line orthogonal = new Line(new Vector3(z, y, x), new Vector3(-z, y, x),
-                                    new Color(0, 0, (float) (Size - i) * .1f));
+                                    new Color(0, 0, (float) (Size.Y - i) * .1f));
                 LineManager.AddLine(orthogonal);
                 XZMatrix[1, i] = orthogonal;
             }
@@ -362,19 +362,19 @@ namespace SpaceHaste.Maps
         /// </summary>
         public void AddGridXY1()
         {
-            for (int i = 0; i <= Size; i++)
+            for (int i = 0; i <= Size.X; i++)
             {
-                float x = ((Size / 2) - i) * GridCube.GRIDSQUARELENGTH;
-                float y = Size / 2 * GridCube.GRIDSQUARELENGTH;
-                float z = Size / 2 * GridCube.GRIDSQUARELENGTH;
+                float x = ((Size.X / 2) - i) * GridCube.GRIDSQUARELENGTH;
+                float y = Size.Y / 2 * GridCube.GRIDSQUARELENGTH;
+                float z = Size.Z / 2 * GridCube.GRIDSQUARELENGTH;
 
                 Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
-                                     new Color((float) 1 - ((Size - i) * .1f), 0, 0));
+                                     new Color((float) 1 - ((Size.X - i) * .1f), 0, 0));
                 LineManager.AddLine(line);
                 XYMatrix[0, i] = line;
 
                 Line orthongal = new Line(new Vector3(y, x, z), new Vector3(-y, x, z),
-                                          new Color((float)1 - ((Size - i) * .1f), 0, 0));
+                                          new Color((float)1 - ((Size.X - i) * .1f), 0, 0));
                 LineManager.AddLine(orthongal);
                 XYMatrix[1, i] = orthongal;
             }
@@ -383,19 +383,19 @@ namespace SpaceHaste.Maps
         }
         public void AddGrid1YZ()
         {
-            for (int i = 0; i <= Size; i++)
+            for (int i = 0; i <= Size.X; i++)
             {
-                float x = Size / 2 * GridCube.GRIDSQUARELENGTH;
-                float y = Size / 2 * GridCube.GRIDSQUARELENGTH;
-                float z = ((Size / 2) - i) * GridCube.GRIDSQUARELENGTH;
+                float x = Size.X / 2 * GridCube.GRIDSQUARELENGTH;
+                float y = Size.Y / 2 * GridCube.GRIDSQUARELENGTH;
+                float z = ((Size.Z / 2) - i) * GridCube.GRIDSQUARELENGTH;
 
                 Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
-                                     new Color(0, (float)1 - ((Size - i) * .1f), 0));
+                                     new Color(0, (float)1 - ((Size.X - i) * .1f), 0));
                 LineManager.AddLine(line);
                 YZMatrix[0, i] = line;
 
                 Line orthogonal = new Line(new Vector3(x, z, y), new Vector3(x, z, -y),
-                                           new Color(0, (float)1 - ((Size - i) * .1f), 0));
+                                           new Color(0, (float)1 - ((Size.X - i) * .1f), 0));
                 LineManager.AddLine(orthogonal);
                 YZMatrix[1, i] = orthogonal;
             }
@@ -404,19 +404,19 @@ namespace SpaceHaste.Maps
         }
         public void AddGridX1Z()
         {
-            for (int i = 0; i <= Size; i++)
+            for (int i = 0; i <= Size.Y; i++)
             {
-                float x = ((Size / 2) - i) * GridCube.GRIDSQUARELENGTH;
-                float z = Size / 2 * GridCube.GRIDSQUARELENGTH;
-                float y = (Size / 2) * GridCube.GRIDSQUARELENGTH;
+                float x = ((Size.X / 2) - i) * GridCube.GRIDSQUARELENGTH;
+                float z = Size.Z / 2 * GridCube.GRIDSQUARELENGTH;
+                float y = (Size.Y / 2) * GridCube.GRIDSQUARELENGTH;
 
                 Line line = new Line(new Vector3(x, y, z), new Vector3(x, y, -z),
-                                    new Color(0, 0, (float) 1 - ((Size - i) * .1f)));
+                                    new Color(0, 0, (float) 1 - ((Size.Y - i) * .1f)));
                 LineManager.AddLine(line);
                 XZMatrix[0, i] = line;
 
                 Line orthogonal = new Line(new Vector3(z, y, x), new Vector3(-z, y, x),
-                                    new Color(0, 0, (float) 1 - ((Size - i) * .1f)));
+                                    new Color(0, 0, (float) 1 - ((Size.Y - i) * .1f)));
                 LineManager.AddLine(orthogonal);
                 XZMatrix[1, i] = orthogonal;
             }
@@ -433,7 +433,7 @@ namespace SpaceHaste.Maps
         /// </summary>
         public void RemoveXYMatrix()
         {
-            for(int i = 0; i <= Size; i++)
+            for(int i = 0; i <= Size.Z; i++)
             {
                 LineManager.RemoveLine(XYMatrix[0, i]);
                 LineManager.RemoveLine(XYMatrix[1, i]);
@@ -441,7 +441,7 @@ namespace SpaceHaste.Maps
         }
         public void RemoveXZMatrix()
         {
-            for (int i = 0; i <= Size; i++)
+            for (int i = 0; i <= Size.Y; i++)
             {
                 LineManager.RemoveLine(XZMatrix[0, i]);
                 LineManager.RemoveLine(XZMatrix[1, i]);
@@ -449,7 +449,7 @@ namespace SpaceHaste.Maps
         }
         public void RemoveYZMatrix()
         {
-            for (int i = 0; i <= Size; i++)
+            for (int i = 0; i <= Size.X; i++)
             {
                 LineManager.RemoveLine(YZMatrix[0, i]);
                 LineManager.RemoveLine(YZMatrix[1, i]);
@@ -463,7 +463,7 @@ namespace SpaceHaste.Maps
 
         public void DrawLineTest()
         {
-            float y = Size / 2 * GridCube.GRIDSQUARELENGTH;
+            float y = Size.X / 2 * GridCube.GRIDSQUARELENGTH;
             LineManager.AddLine(new Line(new Vector3(10, 10, 10),
                                 new Vector3(0, 0, 0)));
         }

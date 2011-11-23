@@ -216,6 +216,5 @@ namespace SpaceHaste.GameObjects
                 return true;
             else return false;
         }
-        //REDUNDANT FUNCTIONS
     }
 }

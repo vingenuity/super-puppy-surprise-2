@@ -17,7 +17,7 @@ namespace SpaceHaste.Cameras
     public class RotationCamera : Camera
     {
         GraphicsDevice device;
-        Vector3 FocusedPosition;
+        public Vector3 FocusedPosition { get; set; }
         float verticalAngle = 1.0f;
         float horizontalAngle = 0;
         float zoom = 10;

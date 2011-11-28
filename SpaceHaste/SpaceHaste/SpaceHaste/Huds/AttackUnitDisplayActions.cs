@@ -20,15 +20,18 @@ namespace SpaceHaste.Huds
         Vector2 MenuAttackStringPosition;
         Vector2 MenuMoveStringPosition;
         Vector2 MenuWaitStringPosition;
+        Vector2 MenutargetWeaponStringPosition;
         Texture2D texture1;
         private bool ShowShipAttackActions;
         public AttackUnitDisplayActions()
         {
-            MenuMoveStringPosition = new Vector2(560, 40);
+            MenuMoveStringPosition = new Vector2(560, 29);
             MenuAttackStringPosition = MenuMoveStringPosition;
-            MenuAttackStringPosition.Y += 40;
+            MenuAttackStringPosition.Y += 35;
             MenuWaitStringPosition = MenuAttackStringPosition;
-            MenuWaitStringPosition.Y += 40;
+            MenuWaitStringPosition.Y += 35;
+            MenutargetWeaponStringPosition = MenuWaitStringPosition;
+            MenutargetWeaponStringPosition.Y += 35;
         }
         public void Load()
         {
@@ -54,15 +57,15 @@ namespace SpaceHaste.Huds
             else
                 spriteBatch.DrawString(spriteFont, "Missile", MenuAttackStringPosition, Color.White);
             if (Selected == 2)
-                spriteBatch.DrawString(spriteFont, "Target Weapons", MenuAttackStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
+                spriteBatch.DrawString(spriteFont, "Target Weapons", MenuWaitStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
             // else if (CanAttack)
             else
-                spriteBatch.DrawString(spriteFont, "Target Weapons", MenuAttackStringPosition, Color.White);
+                spriteBatch.DrawString(spriteFont, "Target Weapons", MenuWaitStringPosition, Color.White);
             if (Selected == 3)
-                spriteBatch.DrawString(spriteFont, "Target Engines", MenuAttackStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
+                spriteBatch.DrawString(spriteFont, "Target Engines", MenutargetWeaponStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
             // else if (CanAttack)
             else
-                spriteBatch.DrawString(spriteFont, "Target Engines", MenuAttackStringPosition, Color.White);
+                spriteBatch.DrawString(spriteFont, "Target Engines", MenutargetWeaponStringPosition, Color.White);
           //  else
           //      spriteBatch.DrawString(spriteFont, "Missile", MenuAttackStringPosition, Color.Gray);
         }

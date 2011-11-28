@@ -33,6 +33,8 @@ namespace SpaceHaste
         public Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> TakeTurn(List<GameObject> ships)
         {
             GameObject myShip = ships[0];
+            GridCube bestFiringLocation;
+            List<GridCube> path;
             //If there aren't any enemies, we need to wait and do nothing or the game will freeze.
             if (EnemiesLeft(ships) == 0)
                 return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
@@ -40,35 +42,32 @@ namespace SpaceHaste
             GameObject enemy = ClosestEnemy(myShip, ships);
             if (myShip.MissileCount > 0)
             {
-                GridCube bestFiringLocation;
-                if (myShip.MissileCount * myShip.dmg[1] > enemy.hull[0])
+                if (myShip.MissileCount * myShip.dmg[1] > enemy.hull[0] && DistanceBetween(myShip, enemy) <= myShip.MissileRange)
                     return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
                 if (DistanceBetween(myShip, enemy) != myShip.MissileRange)
+                {
                     bestFiringLocation = ClosestCubeAtDistanceFrom(myShip, enemy, myShip.MissileRange);
-                
+                    path = GetMovePath(myShip.GridLocation, bestFiringLocation);
+                    GridCube selection = MoveMaxAlongPath(myShip, path);
+                    if (selection != null)
+                        return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
+                    else
+                        return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
+                }
+                else
+                    return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
             }
             else
             {
+                if(((myShip.energy[0] / myShip.AttackEnergyCost) * myShip.LaserDamage) > enemy.hull[0] && Map.map.IsObjectInRange(myShip, enemy))
+                    return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser);
             }
-            if (Map.map.IsObjectInRange(myShip, enemy) && myShip.AttackEnergyCost < myShip.energy[0])
-            {
-                return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser);
-            }
-            List<GridCube> path = GetMovePath(myShip.GridLocation, enemy.GridLocation);
+            path = GetMovePath(myShip.GridLocation, enemy.GridLocation);
             if (myShip.energy[0] > myShip.MovementEnergyCost)
             {
-                GridCube selection = null;
-                for (int i = path.Count() - 1; i > 0; i--)
-                {
-                    if (i * myShip.MovementEnergyCost < myShip.energy[0] && !path[i].BlocksMovement())
-                    {
-                        selection = path[i];
-                        break;
-                    }
-                }
+                GridCube selection = MoveMaxAlongPath(myShip, path);
                 if(selection != null)
                     return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
-
             }
             return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
         }
@@ -206,6 +205,20 @@ namespace SpaceHaste
             else
                 path.Add(current);
                 return path;
+        }
+
+        GridCube MoveMaxAlongPath(GameObject ship, List<GridCube> path)
+        {
+            GridCube selection = null;
+            for (int i = path.Count() - 1; i > 0; i--)
+            {
+                if (i * ship.MovementEnergyCost < ship.energy[0] && !path[i].BlocksMovement())
+                {
+                    selection = path[i];
+                    break;
+                }
+            }
+            return selection;
         }
         #endregion
 

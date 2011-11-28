@@ -63,7 +63,7 @@ namespace DPSF.ParticleSystems
 												UpdateVertexProperties, "Textures/Fire");
 			LoadEvents();
             Emitter.ParticlesPerSecond = 100; 
-            Emitter.EmitParticlesAutomatically = false;
+            Emitter.EmitParticlesAutomatically = true;
 			Name = "Random 2D";
 		}
 
@@ -71,7 +71,7 @@ namespace DPSF.ParticleSystems
 		{
 			ParticleInitializationFunction = InitializeParticleRandom2D;
 
-			Emitter.PositionData.Position = new Vector3(0, 50, 0);
+			Emitter.PositionData.Position = new Vector3(0, 0, 0);
 
 			ParticleEvents.RemoveAllEvents();
 			ParticleEvents.AddEveryTimeEvent(UpdateParticlePositionAndVelocityUsingAcceleration);
@@ -83,7 +83,7 @@ namespace DPSF.ParticleSystems
 		{
 			ParticleInitializationFunction = InitializeParticleRandom2D;
            
-			Emitter.PositionData.Position = new Vector3(0, 50, 0);
+			Emitter.PositionData.Position = new Vector3(0, 0, 0);
 
 			ParticleEvents.RemoveAllEvents();
 			ParticleEvents.AddEveryTimeEvent(UpdateParticlePositionAndVelocityUsingAcceleration);

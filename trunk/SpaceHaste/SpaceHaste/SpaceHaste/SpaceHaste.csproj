@@ -119,6 +119,8 @@
     <Compile Include="DPSFParticles\LaserHitParticle.cs" />
     <Compile Include="DPSFParticles\MissileHitParticle.cs" />
     <Compile Include="DPSFParticles\NebulaParticleSystem.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\FireOnPointPS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\NebulaePS.cs" />
     <Compile Include="DPSFParticles\ShipThrustersParticle.cs" />
     <Compile Include="DPSFParticles\LaserParticle.cs" />
     <Compile Include="DPSFParticles\DeathParticle.cs">

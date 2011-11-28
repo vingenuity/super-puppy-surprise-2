@@ -121,9 +121,11 @@ namespace SpaceHaste.GameObjects
         {
             ship.isHit(dmg[1]);
         }
-
+        bool OnFire = false;
+        FireOnShipsParticle FireParticle;
         public void isHit(int damage)
         {
+            LaserHitParticle.CreateLaserHitParticle(DrawPosition);
             //If our shield can absorb it all, deal damage and return.
             if (shield[0] > damage)
             {
@@ -141,6 +143,10 @@ namespace SpaceHaste.GameObjects
             if (hull[0] > damage)
             {
                 hull[0] -= damage;
+                if (hull[0] < 50 && !OnFire)
+                {
+                    FireParticle = FireOnShipsParticle.CreateParticle(DrawPosition+Vector3.UnitY*GridCube.GRIDSQUARELENGTH*1/5);
+                }
                 return;
             }
             //Otherwise, we're dead. Get rid of us.

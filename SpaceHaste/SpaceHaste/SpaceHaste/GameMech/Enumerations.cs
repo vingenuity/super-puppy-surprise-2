@@ -17,6 +17,8 @@ namespace SpaceHaste.GameMech
     {
         Laser,
         Missile,
+        TargetWeapon,
+        TargetEngine,
     };
     public enum GameState
     {

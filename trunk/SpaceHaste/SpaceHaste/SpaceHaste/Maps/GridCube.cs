@@ -17,7 +17,7 @@ namespace SpaceHaste.Maps
         public Vector3 Center;
         public GameObject ContainedObject;
         public List<GridCube> ConnectedGridSquares;
-        public enum TerrainType { none = 1, asteroid=1000, nebula=2, wreck=2000 }
+        public enum TerrainType { none = 1, asteroid=1000, nebula=2, wreck=2000, planet }
         public BoundingSphere boundingSphere; 
         private TerrainType Terrain;
 

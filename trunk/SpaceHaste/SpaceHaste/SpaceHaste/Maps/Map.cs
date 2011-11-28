@@ -63,16 +63,43 @@ namespace SpaceHaste.Maps
             {
                 case GridCube.TerrainType.asteroid:
                     MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.asteroid);
+                    EnvMapObjects.Add(MapGridCubes[x, y, z]);
                     break;
                 case GridCube.TerrainType.nebula:
                     MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.nebula);
                     break;
                 case GridCube.TerrainType.wreck:
+                    EnvMapObjects.Add(MapGridCubes[x, y, z]);
                     MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.wreck);
                     break;
             };
-            EnvMapObjects.Add(MapGridCubes[x, y, z]);
+           
         }
+        /// <summary>
+        /// Adds planets to grid coords with a scale in grid coords
+        /// Planet goes from x to x + length in grid
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="z"></param>
+        /// <param name="scale"></param>
+        public void AddPlanet(int x, int y, int z, float length)
+        {
+            for(int i = x; i < x+length; i++)
+                for(int j = y; j < y+length; j++)
+                    for (int k = z; k < z+ length; k++)
+                    {
+                        try
+                        {
+                            MapGridCubes[i, j, k].SetTerrain(GridCube.TerrainType.planet);
+                            EnvMapObjects.Add(MapGridCubes[i, j, k]);
+                            
+                        }
+                        catch { }
+                    }
+            Graphics.GraphicsManager.Planets.Add(new Tuple<Vector3, float>(new Vector3((float)x, (float)y, (float)z), length));
+        }
+
         public void AddGameObjectToGridSquare(GameObject gameObject, int x, int y, int z)
         {
             gameObject.GridLocation = MapGridCubes[x, y, z];

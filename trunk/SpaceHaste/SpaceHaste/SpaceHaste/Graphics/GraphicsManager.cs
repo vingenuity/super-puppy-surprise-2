@@ -18,6 +18,7 @@ using SpaceHaste.Cameras;
 using SpaceHaste.Grids;
 using SpaceHaste.GameObjects;
 using SpaceHaste.Controls;
+using SpaceHaste.Maps;
 #endregion
 
 namespace SpaceHaste.Graphics
@@ -30,7 +31,15 @@ namespace SpaceHaste.Graphics
     {
         public static List<GameObject> GraphicsGameObjects;
         public static List<SuperTerrain> GraphicsSuperTerrain;
-       
+        /// <summary>
+        /// Position of planet and scale (Draw Coords, Draw Scale) 
+        /// </summary>
+        public static List<Tuple<Vector3,float>> Planets;
+        /// <summary>
+        /// Position of Nebula (Draw Coords) 
+        /// </summary>
+        public static List<Vector3> Nebula;
+
         public static GraphicsDeviceManager graphics;
 
         public static ContentManager Content;
@@ -43,6 +52,8 @@ namespace SpaceHaste.Graphics
         public GraphicsManager(Game game, GraphicsDeviceManager _graphics)
             : base(game)
         {
+            Planets = new List<Tuple<Vector3, float>>();
+            Nebula = new List<Vector3>();
             graphics = _graphics;
             Content = new ContentManager(game.Services);
             Content.RootDirectory = "Content";
@@ -102,8 +113,22 @@ namespace SpaceHaste.Graphics
                     ControlManager.View, ControlManager.Projection);
             for (int i = 0; i < Maps.Map.map.EnvMapObjects.Count; i++)
             {
+                if(Maps.Map.map.EnvMapObjects[i].GetTerrain() == Maps.GridCube.TerrainType.asteroid)
+                    DrawModel(GraphicsManager.TestCube,
+                        Matrix.CreateScale(.1f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
+                        ControlManager.View, ControlManager.Projection);
+                if (Maps.Map.map.EnvMapObjects[i].GetTerrain() == Maps.GridCube.TerrainType.wreck)
+                    DrawModel(GraphicsManager.TestCube,
+                        Matrix.CreateScale(.2f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
+                        ControlManager.View, ControlManager.Projection);
+            }
+            for (int i = 0; i < Planets.Count; i++)
+            {
+
                 DrawModel(GraphicsManager.TestCube,
-                    Matrix.CreateScale(.1f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
+                    Matrix.CreateScale(.2f * Planets[i].Item2) 
+                    * Matrix.CreateTranslation(Maps.Map.map.GetCubeAt(Planets[i].Item1).Center-new Vector3(GridCube.GRIDSQUARELENGTH/2, GridCube.GRIDSQUARELENGTH/2, GridCube.GRIDSQUARELENGTH/2)
+                        + new Vector3(GridCube.GRIDSQUARELENGTH, GridCube.GRIDSQUARELENGTH, GridCube.GRIDSQUARELENGTH) * (Planets[i].Item2)/2),
                     ControlManager.View, ControlManager.Projection);
             }
         }

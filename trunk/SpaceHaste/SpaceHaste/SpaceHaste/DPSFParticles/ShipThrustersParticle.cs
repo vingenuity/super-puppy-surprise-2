@@ -48,6 +48,7 @@ namespace SpaceHaste.DPSFParticles
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             paricleSystem.Emitter.PositionData.Position = Position + Offset;
+            
             base.Update(gameTime);
         }
     }

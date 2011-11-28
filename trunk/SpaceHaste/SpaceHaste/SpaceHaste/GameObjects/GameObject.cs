@@ -113,6 +113,8 @@ namespace SpaceHaste.GameObjects
         public virtual void Unload()
         {
             GridLocation.RemoveObject(this);
+            if(FireParticle != null)
+                ParticleManager.Instance.Remove(FireParticle);
             Map.map.removeGameObject(this);
             GraphicsManager.GraphicsGameObjects.Remove(this);
             GameMechanicsManager.GameObjectList.Remove(this);

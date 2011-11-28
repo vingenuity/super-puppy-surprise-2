@@ -171,6 +171,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 ScrollDownInUnitActionList();
         }
 
+
         void SelectionAttack()
         {
             GameObject offender = CurrentGameObjectSelected;
@@ -518,6 +519,12 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     case (ShipAttackSelectionMode.Missile):
                         SelectionMissile();
                         return;
+                    case (ShipAttackSelectionMode.TargetEngine):
+                        SelectionTargetEngine();
+                        return;
+                    case (ShipAttackSelectionMode.TargetWeapon):
+                        SelectionTargetWeapon();
+                        return;
                 }
             }
         }
@@ -613,27 +620,27 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         {
             int i = (int)ShipModeSelection - 1;
             if (i < 0)
-                i += 5;
+                i += 3;
             i = i % 3;
             if (i == 0 && MoveEnabled == false)
                 i++;
             if (i == 1 && AttackEnabled == false)
                 i++;
 
-            ShipModeSelection = (ShipSelectionMode)(i % 5);
+            ShipModeSelection = (ShipSelectionMode)(i % 3);
 
         }
         private void ScrollDownInUnitActionList()
         {
             int i = (int)ShipModeSelection + 1;
-            i = i % 5;
+            i = i % 3;
             if (i == 1 && AttackEnabled == false)
                 i--;
             if (i == 0 && MoveEnabled == false)
                 i--;
             if (i < 0)
-                i += 5;
-            i = i % 5;
+                i += 3;
+            i = i % 3;
             ShipModeSelection = (ShipSelectionMode)(i);
         }
     #endregion

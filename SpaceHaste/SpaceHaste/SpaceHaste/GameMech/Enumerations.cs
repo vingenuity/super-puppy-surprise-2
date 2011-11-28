@@ -30,6 +30,8 @@ namespace SpaceHaste.GameMech
         MovingShipAnimation,
         AttackingLaserAnimation,
         AttackingMissileAnimation,
+        AttackingDisableWeaponAnimation,
+        AttackingDisableEngineAnimation,
         CutScene,
     };
     public class Enumerations

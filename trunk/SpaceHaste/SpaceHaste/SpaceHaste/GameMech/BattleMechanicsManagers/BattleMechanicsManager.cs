@@ -393,9 +393,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 {
                      NextShipAction();
                      timer = 0;
-                }
-                
-               
+                }                
             }
             if (GameMechanicsManager.gamestate == GameState.AttackingMissileAnimation)
             {
@@ -615,27 +613,27 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         {
             int i = (int)ShipModeSelection - 1;
             if (i < 0)
-                i += 3;
+                i += 5;
             i = i % 3;
             if (i == 0 && MoveEnabled == false)
                 i++;
             if (i == 1 && AttackEnabled == false)
                 i++;
 
-            ShipModeSelection = (ShipSelectionMode)(i % 3);
+            ShipModeSelection = (ShipSelectionMode)(i % 5);
 
         }
         private void ScrollDownInUnitActionList()
         {
             int i = (int)ShipModeSelection + 1;
-            i = i % 3;
+            i = i % 5;
             if (i == 1 && AttackEnabled == false)
                 i--;
             if (i == 0 && MoveEnabled == false)
                 i--;
             if (i < 0)
-                i += 3;
-            i = i % 3;
+                i += 5;
+            i = i % 5;
             ShipModeSelection = (ShipSelectionMode)(i);
         }
     #endregion

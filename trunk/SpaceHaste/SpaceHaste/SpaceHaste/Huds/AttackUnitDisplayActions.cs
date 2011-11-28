@@ -53,6 +53,16 @@ namespace SpaceHaste.Huds
            // else if (CanAttack)
             else
                 spriteBatch.DrawString(spriteFont, "Missile", MenuAttackStringPosition, Color.White);
+            if (Selected == 2)
+                spriteBatch.DrawString(spriteFont, "Target Weapons", MenuAttackStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
+            // else if (CanAttack)
+            else
+                spriteBatch.DrawString(spriteFont, "Target Weapons", MenuAttackStringPosition, Color.White);
+            if (Selected == 3)
+                spriteBatch.DrawString(spriteFont, "Target Engines", MenuAttackStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
+            // else if (CanAttack)
+            else
+                spriteBatch.DrawString(spriteFont, "Target Engines", MenuAttackStringPosition, Color.White);
           //  else
           //      spriteBatch.DrawString(spriteFont, "Missile", MenuAttackStringPosition, Color.Gray);
         }

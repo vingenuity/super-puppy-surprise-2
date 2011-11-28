@@ -172,6 +172,8 @@ namespace SpaceHaste.Maps
 
             for (int i = 0; i < EnvMapObjects.Count; i++)
             {
+                if ((int)EnvMapObjects[i].GetTerrain() == 2)
+                    continue;
                 r = ray.Intersects(EnvMapObjects[i].boundingSphere);
                 if (r == null || r < 0 || r > distance) 
                     continue;

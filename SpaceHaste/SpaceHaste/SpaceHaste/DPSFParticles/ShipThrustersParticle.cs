@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,59 +9,45 @@ using SpaceHaste.Huds;
 
 namespace SpaceHaste.DPSFParticles
 {
-    public class ShipThrustersParticle : Particle
+    public class ThrustersParticle : Particle
     {
-       TrailParticleSystem laserParicleSystem;
+        NebulaeParticleSystem paricleSystem;
         public int counter = 0;
         public Vector3 Position;
+        public Vector3 Offset;
 
-        public static void CreateLaserParticle(Vector3 pos1, Vector3 pos2)
+        public static ThrustersParticle CreateParticle(Vector3 pos, Vector3 offset)
         {
-            ParticleManager.Instance.Add(new LaserParticle(pos1, pos2));
+            ThrustersParticle p = new ThrustersParticle(pos, offset);
+            ParticleManager.Instance.Add(p);
+            return p;
         }
-        Vector3 Start;
-        Vector3 End;
-        Vector3 Length;
-        double timeToEnd = .5;
-        public ShipThrustersParticle(Vector3 Start, Vector3 End)
+        public ThrustersParticle(Vector3 Position, Vector3 offset)
             : base()
         {
-            this.Start = Start;
-            this.End = End;
-            Length = End - Start;
-            laserParicleSystem = new TrailParticleSystem(Game1.game);
+            Offset = offset;
+            paricleSystem = new NebulaeParticleSystem(Game1.game);
 
-            laserParicleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);
-            laserParicleSystem.Emitter.PositionData.Position = Position;
+            paricleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);
+            paricleSystem.Emitter.PositionData.Position = Position;
 
             //deathParicleSystem.Emitter.BurstParticles = (10);
 
             //  deathParicleSystem.Emitter.Enabled = true;
 
             //deathParicleSystem.Emitter.BurstComplete += BurstFinished;
-            ParticleSystem = laserParicleSystem;
+            ParticleSystem = paricleSystem;
         }
         void BurstFinished(object sender, EventArgs e)
         {
-            laserParicleSystem.Emitter.Enabled = false;
+            paricleSystem.Emitter.Enabled = false;
         }
         double timercd = 0;
         bool exploded = false;
         //126... 42....-38
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            timercd += gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (timercd > timeToEnd)
-            {
-                ParticleManager.Instance.Remove(this);
-                return;
-            }
-            laserParicleSystem.Emitter.PositionData.Position = Start + (float)(timercd / timeToEnd) * Length;
-
-           
-
-            //mcSphereParticleSystem.Emitter.PositionData.Position = Position;
+            paricleSystem.Emitter.PositionData.Position = Position + Offset;
             base.Update(gameTime);
         }
     }

@@ -172,72 +172,6 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 ScrollDownInUnitActionList();
         }
 
-        void SelectionTargetLasers()
-        {
-            GameObject offender = CurrentGameObjectSelected;
-            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
-
-            int percent = random.Next(0, 100);
-            if (percent > offender.accuracy) return;
-
-            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
-                return;
-            GameObject target = tempTarget as GameObject;
-
-            if (offender.energy[0] < offender.AttackEnergyCost)
-            {
-                AttackEnabled = false;
-                NextShipAction();
-            }
-
-            if (Map.map.IsObjectInRange(offender, target))
-            {
-                GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
-
-                SoundManager.Sounds.PlaySound(SoundEffects.laser);
-                //make a new color
-                LaserParticle.CreateLaserParticle(offender.DrawPosition, target.DrawPosition);
-
-                target.LasersDisabled = true;
-
-                NextShipAction();
-                GameMechanicsManager.gamestate = GameState.AttackingDisableEngineAnimation;
-            }
-            else return;
-        }
-        void SelectionTargetEngines()
-        {
-            GameObject offender = CurrentGameObjectSelected;
-            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
-
-            int percent = random.Next(0, 100);
-            if (percent > offender.accuracy) return;
-
-            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
-                return;
-            GameObject target = tempTarget as GameObject;
-
-            if (offender.energy[0] < offender.AttackEnergyCost)
-            {
-                AttackEnabled = false;
-                NextShipAction();
-            }
-
-            if (Map.map.IsObjectInRange(offender, target))
-            {
-                GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
-                
-                SoundManager.Sounds.PlaySound(SoundEffects.laser);
-                //make a new color
-                LaserParticle.CreateLaserParticle(offender.DrawPosition, target.DrawPosition);
-
-                target.EnginesDisabled = true;
-                
-                NextShipAction();
-                GameMechanicsManager.gamestate = GameState.AttackingDisableEngineAnimation;
-            }
-            else return; 
-        }
         void SelectionAttack()
         {
             GameObject offender = CurrentGameObjectSelected;
@@ -300,6 +234,72 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
             else return;
 
+        }
+        void SelectionTargetLasers()
+        {
+            GameObject offender = CurrentGameObjectSelected;
+            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
+
+            int percent = random.Next(0, 100);
+            if (percent > offender.accuracy) return;
+
+            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
+                return;
+            GameObject target = tempTarget as GameObject;
+
+            if (offender.energy[0] < offender.AttackEnergyCost)
+            {
+                AttackEnabled = false;
+                NextShipAction();
+            }
+
+            if (Map.map.IsObjectInRange(offender, target))
+            {
+                GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
+
+                SoundManager.Sounds.PlaySound(SoundEffects.laser);
+                //make a new color
+                LaserParticle.CreateLaserParticle(offender.DrawPosition, target.DrawPosition);
+
+                target.LasersDisabled = true;
+
+                NextShipAction();
+                GameMechanicsManager.gamestate = GameState.AttackingDisableEngineAnimation;
+            }
+            else return;
+        }
+        void SelectionTargetEngines()
+        {
+            GameObject offender = CurrentGameObjectSelected;
+            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
+
+            int percent = random.Next(0, 100);
+            if (percent > offender.accuracy) return;
+
+            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
+                return;
+            GameObject target = tempTarget as GameObject;
+
+            if (offender.energy[0] < offender.AttackEnergyCost)
+            {
+                AttackEnabled = false;
+                NextShipAction();
+            }
+
+            if (Map.map.IsObjectInRange(offender, target))
+            {
+                GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
+
+                SoundManager.Sounds.PlaySound(SoundEffects.laser);
+                //make a new color
+                LaserParticle.CreateLaserParticle(offender.DrawPosition, target.DrawPosition);
+
+                target.EnginesDisabled = true;
+
+                NextShipAction();
+                GameMechanicsManager.gamestate = GameState.AttackingDisableEngineAnimation;
+            }
+            else return;
         }
 
         ThrustersParticle ShipThrustersParticle;
@@ -672,10 +672,9 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         {
             int a = ((int)(ShipAttackModeSelection)-1);
             if(a < 0)
-                a = 1;
+                a = 3;
             ShipAttackModeSelection = (ShipAttackSelectionMode)(a % 4);
         }
-
         private void ScrollDownInAttackUnitActionsList()
         {
             ShipAttackModeSelection = (ShipAttackSelectionMode)(((int)(ShipAttackModeSelection) + 1) % 4);

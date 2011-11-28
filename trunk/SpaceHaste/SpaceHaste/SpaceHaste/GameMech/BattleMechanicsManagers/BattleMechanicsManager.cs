@@ -673,12 +673,12 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             int a = ((int)(ShipAttackModeSelection)-1);
             if(a < 0)
                 a = 1;
-            ShipAttackModeSelection = (ShipAttackSelectionMode)(a % 2);
+            ShipAttackModeSelection = (ShipAttackSelectionMode)(a % 4);
         }
 
         private void ScrollDownInAttackUnitActionsList()
         {
-            ShipAttackModeSelection = (ShipAttackSelectionMode)(((int)(ShipAttackModeSelection) + 1) % 2);
+            ShipAttackModeSelection = (ShipAttackSelectionMode)(((int)(ShipAttackModeSelection) + 1) % 4);
         }
 
         private void ScrollUpInUnitActionsList()

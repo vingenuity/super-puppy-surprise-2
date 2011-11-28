@@ -51,6 +51,10 @@ namespace SpaceHaste.GameObjects
         public int LaserRange;
         public int MovementRange;
         public double waitTime;
+        //support for targeting
+        public int accuracy;
+        public bool LasersDisabled;
+        public bool EnginesDisabled;
 
         //Constructor
         public GameObject(String name, Vector3 location, Team side, int maxHull, int maxShield, double regeneration, int numMissiles, int lsrDmg, int missDmg, double[] eff)
@@ -89,6 +93,10 @@ namespace SpaceHaste.GameObjects
             dmg[1] = missDmg;
 
             LaserDamage = 50;
+
+            accuracy = 60;
+            LasersDisabled = false;
+            EnginesDisabled = false;
         }
 
         public virtual void Load()

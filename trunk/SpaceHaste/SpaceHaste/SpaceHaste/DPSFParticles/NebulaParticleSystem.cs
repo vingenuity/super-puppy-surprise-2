@@ -11,19 +11,21 @@ namespace SpaceHaste.DPSFParticles
 {
     public class NebulaParticle : Particle
     {
-        ExplosionParticleSystem paricleSystem;
+        NebulaeParticleSystem paricleSystem;
         public int counter = 0;
         public Vector3 Position;
 
 
-        public static void CreateNebulaParticle(Vector3 pos)
+        public static NebulaParticle CreateParticle(Vector3 pos)
         {
-            ParticleManager.Instance.Add(new DeathParticle(pos));
+            NebulaParticle p = new NebulaParticle(pos);
+            ParticleManager.Instance.Add(p);
+            return p;
         }
         public NebulaParticle(Vector3 Position)
             : base()
         {
-            paricleSystem = new ExplosionParticleSystem(Game1.game);
+            paricleSystem = new NebulaeParticleSystem(Game1.game);
 
             paricleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);
             paricleSystem.Emitter.PositionData.Position = Position;
@@ -44,19 +46,7 @@ namespace SpaceHaste.DPSFParticles
         //126... 42....-38
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            timercd += gameTime.ElapsedGameTime.TotalSeconds;
-            if (timercd > .01 && !exploded)
-            {
-                exploded = true;
-                paricleSystem.Explode();
-            }
-            if (timercd > 3)
-            {
-                ParticleManager.Instance.Remove(this);
-            }
-
-
-            //mcSphereParticleSystem.Emitter.PositionData.Position = Position;
+           
             base.Update(gameTime);
         }
     }

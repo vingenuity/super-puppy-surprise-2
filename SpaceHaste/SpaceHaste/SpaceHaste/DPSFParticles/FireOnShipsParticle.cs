@@ -11,19 +11,21 @@ namespace SpaceHaste.DPSFParticles
 {
     public class FireOnShipsParticle : Particle
     {
-        ExplosionParticleSystem LaserHitParicleSystem;
+        FireOnPointParticleSystem LaserHitParicleSystem;
         public int counter = 0;
         public Vector3 Position;
 
 
-        public static void CreateFireOnShipsParticle(Vector3 pos)
+        public static FireOnShipsParticle CreateParticle(Vector3 pos)
         {
-            ParticleManager.Instance.Add(new FireOnShipsParticle(pos));
+            FireOnShipsParticle p = new FireOnShipsParticle(pos);
+            ParticleManager.Instance.Add(p);
+            return p;
         }
         public FireOnShipsParticle(Vector3 Position)
             : base()
         {
-            LaserHitParicleSystem = new ExplosionParticleSystem(Game1.game);
+            LaserHitParicleSystem = new FireOnPointParticleSystem(Game1.game);
 
             LaserHitParicleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);
             LaserHitParicleSystem.Emitter.PositionData.Position = Position;
@@ -45,15 +47,7 @@ namespace SpaceHaste.DPSFParticles
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             timercd += gameTime.ElapsedGameTime.TotalSeconds;
-            if (timercd > .01 && !exploded)
-            {
-                exploded = true;
-                LaserHitParicleSystem.Explode();
-            }
-            if (timercd > 3)
-            {
-                ParticleManager.Instance.Remove(this);
-            }
+           
 
 
             //mcSphereParticleSystem.Emitter.PositionData.Position = Position;

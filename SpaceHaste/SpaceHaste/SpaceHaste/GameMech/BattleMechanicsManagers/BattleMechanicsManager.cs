@@ -41,6 +41,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         public bool AttackEnabled;
 
         
+        
         public ShipSelectionMode ShipModeSelection;
         public ShipAttackSelectionMode ShipAttackModeSelection;
         public BattleMechanicsManager()
@@ -235,6 +236,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             else return;
 
         }
+        ThrustersParticle ShipThrustersParticle;
         void SelectionMovement()
         {
             List<GridCube> InRange = Map.map.GetGridCubesInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
@@ -256,6 +258,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     if (ListOfMovementSquares.Count > 0)
                         ListOfMovementSquares.RemoveAt(0);
                     GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
+                    Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(CurrentGridCubeSelected).Center ;
+                    offset.Normalize();
+                    offset *= GridCube.GRIDSQUARELENGTH * 4 / 5;
+                    ShipThrustersParticle = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
                 }
             }
             CurrentGameObjectSelected.updateBoundingSphere();
@@ -391,11 +397,21 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 
                
             }
+            if (GameMechanicsManager.gamestate == GameState.AttackingMissileAnimation)
+            {
+                if (timer > 1)
+                {
+                    NextShipAction();
+                    timer = 0;
+                }
+
+
+            }
             if (GameMechanicsManager.gamestate == GameState.MovingShipAnimation)
             {
                 if (ListOfMovementSquares.Count > 0)
                 {
-
+                    ShipThrustersParticle.Position = CurrentGameObjectSelected.DrawPosition; 
                     GridCube c =  Map.map.GetCubeAt(ListOfMovementSquares[0]);
                     if (timer < 1)
                     {
@@ -418,6 +434,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     if (CurrentGameObjectSelected.energy[0] - CurrentGameObjectSelected.MovementEnergyCost < 0)
                         MoveEnabled = false;
                     NextShipAction();
+                    ParticleManager.Instance.Remove(ShipThrustersParticle);
                 }
             }
         }

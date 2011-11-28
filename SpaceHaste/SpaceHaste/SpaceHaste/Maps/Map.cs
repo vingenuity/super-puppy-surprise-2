@@ -5,6 +5,7 @@ using System.Text;
 using SpaceHaste.GameObjects;
 using SpaceHaste.Primitives;
 using Microsoft.Xna.Framework;
+using SpaceHaste.DPSFParticles;
 
 namespace SpaceHaste.Maps
 {
@@ -19,6 +20,7 @@ namespace SpaceHaste.Maps
 
         public List<GridCube> EnvMapObjects;
         public List<GameObject> ShipMapObjects;
+        public static List<NebulaParticle> Nebulae;
         public Vector3 Size;
 
         public static Map map;
@@ -28,7 +30,7 @@ namespace SpaceHaste.Maps
             this.Size = Size;
             ShipMapObjects = new List<GameObject>();
             EnvMapObjects = new List<GridCube>();
-
+            Nebulae = new List<NebulaParticle>();
             XYMatrix = new Line[2, Math.Max((int)Size.X + 1, (int)Size.Y + 1)];
             XZMatrix = new Line[2, Math.Max((int)Size.X + 1, (int)Size.Z + 1)];
             YZMatrix = new Line[2, Math.Max((int)Size.Y + 1, (int)Size.Z + 1)];
@@ -36,6 +38,7 @@ namespace SpaceHaste.Maps
             InitMapGridCubes();
             InitMapGameObjects();
             map = this;
+           
         }
 
         public void addGameObject(GameObject go, Vector3 position) {
@@ -67,6 +70,7 @@ namespace SpaceHaste.Maps
                     break;
                 case GridCube.TerrainType.nebula:
                     MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.nebula);
+                    Nebulae.Add(NebulaParticle.CreateParticle( MapGridCubes[x, y, z].Center));
                     break;
                 case GridCube.TerrainType.wreck:
                     EnvMapObjects.Add(MapGridCubes[x, y, z]);

@@ -98,14 +98,25 @@ namespace DPSF.ParticleSystems
 			InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 1000, 50000,
 												UpdateVertexProperties, "Textures/Fire");
 			Name = "Fire and Smoke";
-			LoadFireRingEvents();
+            LoadFireSmokeFireEvents();
 			Emitter.ParticlesPerSecond = 500;
 			SetAmountOfSmokeToRelease(0.5f);
 		}
+        public void LoadFireSmokeFireEvents()
+        {
+            ParticleInitializationFunction = InitializeParticleFirePoint;
 
+            ParticleEvents.RemoveAllEvents();
+            ParticleEvents.AddEveryTimeEvent(UpdateParticlePositionAndVelocityUsingAcceleration, 500);
+            ParticleEvents.AddEveryTimeEvent(UpdateParticleRotationUsingRotationalVelocity);
+         //   ParticleEvents.AddEveryTimeEvent(UpdateColor);
+            ParticleEvents.AddEveryTimeEvent(UpdateParticleTransparencyWithQuickFadeInAndSlowFadeOut, 100);
+          //  ParticleEvents.AddEveryTimeEvent(IncreaseSizeBasedOnLifetime);
+            ParticleEvents.AddEveryTimeEvent(UpdateParticleToFaceTheCamera, 200);
+        }
 		public void LoadFireRingEvents()
 		{
-			ParticleInitializationFunction = InitializeParticleFireOnVerticalRing;
+            ParticleInitializationFunction = InitializeParticleFirePoint;
 
 			// Set the Events to use
 			ParticleEvents.RemoveAllEvents();
@@ -143,6 +154,22 @@ namespace DPSF.ParticleSystems
 
 			mcSmokeParticleSystem.LoadEvents();
 		}
+        public void InitializeParticleFirePoint(DefaultTexturedQuadParticle cParticle)
+        {
+            cParticle.Lifetime = RandomNumber.Between(1.0f, 3.0f);
+
+            cParticle.Position = Emitter.PositionData.Position;
+            cParticle.Position += new Vector3(RandomNumber.Next(-500, 500), 0, RandomNumber.Next(-500, 500));
+            cParticle.Size = RandomNumber.Next(10, 25);
+            cParticle.Orientation = DPSF.Orientation3D.Rotate(Matrix.CreateRotationZ(RandomNumber.Between(0, MathHelper.TwoPi)), cParticle.Orientation);
+
+            cParticle.Velocity = new Vector3(RandomNumber.Next(-30, 30), RandomNumber.Next(0, 10), RandomNumber.Next(-30, 30));
+            cParticle.Acceleration = Vector3.Zero;
+            cParticle.RotationalVelocity.Z = RandomNumber.Between(-MathHelper.Pi, MathHelper.Pi);
+
+            cParticle.StartSize = cParticle.Size;
+        }
+       
 
 		public void InitializeParticleFireOnVerticalRing(DefaultTexturedQuadParticle cParticle)
 		{

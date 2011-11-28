@@ -32,13 +32,24 @@ namespace SpaceHaste
         /// </returns>
         public Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> TakeTurn(List<GameObject> ships)
         {
-            //Pop the active ship off of the list.
             GameObject myShip = ships[0];
-            GameObject enemy = ClosestEnemy(myShip, ships);
+            //If there aren't any enemies, we need to wait and do nothing or the game will freeze.
             if (EnemiesLeft(ships) == 0)
                 return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
-            if (Map.map.IsObjectInRange(myShip, enemy) && myShip.MissileCount > 0)
-                return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
+            
+            GameObject enemy = ClosestEnemy(myShip, ships);
+            if (myShip.MissileCount > 0)
+            {
+                GridCube bestFiringLocation;
+                if (myShip.MissileCount * myShip.dmg[1] > enemy.hull[0])
+                    return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
+                if (DistanceBetween(myShip, enemy) != myShip.MissileRange)
+                    bestFiringLocation = ClosestCubeAtDistanceFrom(myShip, enemy, myShip.MissileRange);
+                
+            }
+            else
+            {
+            }
             if (Map.map.IsObjectInRange(myShip, enemy) && myShip.AttackEnergyCost < myShip.energy[0])
             {
                 return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser);
@@ -91,19 +102,37 @@ namespace SpaceHaste
             return enemies;
         }
 
-        private GameObject MostDamagedEnemy(List<GameObject> ships)
+        private GridCube ClosestCubeAtDistanceFrom(GameObject self, GameObject target, int distance)
         {
-            double leastHealth = double.PositiveInfinity;
-            GameObject mostDamaged = null;
-            foreach (GameObject ship in ships)
+            Vector3 center = target.GridPosition;
+            List<Vector3> possibles = new List<Vector3>();
+            for (int i = 0; i <= distance; i++)
             {
-                if (ship.team == GameObject.Team.Player && ship.hull[0] < leastHealth)
+                for (int j = 0; j <= distance; j++)
                 {
-                    leastHealth = ship.hull[0];
-                    mostDamaged = ship;
+                    if (i + j > distance)
+                        continue;
+                    for (int k = 0; k <= distance; k++)
+                    {
+                        int sum = i + j + k;
+                        if (sum == distance)
+                            possibles.Add(new Vector3(center.X + i, center.Y + j, center.Z + k));
+                        else if (sum > distance)
+                            continue;
+                    }
                 }
             }
-            return mostDamaged;
+            float closestDistance = 100f;
+            Vector3 closestLoc = new Vector3();
+            foreach (Vector3 loc in possibles)
+            {
+                if (Vector3.Distance(loc, self.GridPosition) < closestDistance)
+                {
+                    closestDistance = Vector3.Distance(loc, self.GridPosition);
+                    closestLoc = loc;
+                }
+            }
+            return Map.map.GetCubeAt(closestLoc);
         }
 
         /// <summary>
@@ -159,7 +188,6 @@ namespace SpaceHaste
             }
             return null;
         }
-
         void clearPath()
         {
             foreach (GridCube cube in Map.map.MapGridCubes)
@@ -181,6 +209,13 @@ namespace SpaceHaste
         }
         #endregion
 
+        /// <summary>
+        /// This function checks to see if two actions are exactly the same.
+        /// This is used to keep the AI from taking invalid actions repeatedly, which causes the game to "freeze."
+        /// </summary>
+        /// <param name="action1">First action to compare.</param>
+        /// <param name="action2">Second action to compare.</param>
+        /// <returns>True if the actions are the same; false if not.</returns>
         public static bool IsSameAction(Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action1, Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action2)
         {
             if (action1.Item1 == action2.Item1 && action1.Item2 == action2.Item2 && action1.Item3 == action2.Item3)

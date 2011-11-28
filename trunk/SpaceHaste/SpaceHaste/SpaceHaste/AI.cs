@@ -16,9 +16,16 @@ namespace SpaceHaste
     {
         //Map information for strategic use.
         private Map map;
-        private Random rand;
 
-        public AI(Map battlefield) { map = battlefield; rand = new Random(); }
+        //Strategic variables that are used every turn for evaluation in TakeTurn.
+        GameObject myShip;
+        GameObject enemy;
+        GridCube bestFiringLocation;
+        List<GridCube> path;
+        Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> lastAction;
+        int frustration;
+
+        public AI(Map battlefield) { map = battlefield; frustration = 0; }
 
         /// <summary>
         /// This is the function that does all of the work for the AI. 
@@ -32,44 +39,62 @@ namespace SpaceHaste
         /// </returns>
         public Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> TakeTurn(List<GameObject> ships)
         {
-            GameObject myShip = ships[0];
-            GridCube bestFiringLocation;
-            List<GridCube> path;
+            myShip = ships[0];
+            Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
             //If there aren't any enemies, we need to wait and do nothing or the game will freeze.
             if (EnemiesLeft(ships) == 0)
-                return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
+                return action;
             
-            GameObject enemy = ClosestEnemy(myShip, ships);
+            enemy = ClosestEnemy(myShip, ships);
             if (myShip.MissileCount > 0)
             {
                 if (myShip.MissileCount * myShip.dmg[1] > enemy.hull[0] && DistanceBetween(myShip, enemy) <= myShip.MissileRange)
-                    return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
-                if (DistanceBetween(myShip, enemy) != myShip.MissileRange)
+                    action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
+                else if (DistanceBetween(myShip, enemy) != myShip.MissileRange)
                 {
                     bestFiringLocation = ClosestCubeAtDistanceFrom(myShip, enemy, myShip.MissileRange);
                     path = GetMovePath(myShip.GridLocation, bestFiringLocation);
                     GridCube selection = MoveMaxAlongPath(myShip, path);
                     if (selection != null)
-                        return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
+                        action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
                     else
-                        return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
+                        action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
                 }
                 else
-                    return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
+                    action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
             }
             else
             {
-                if(((myShip.energy[0] / myShip.AttackEnergyCost) * myShip.LaserDamage) > enemy.hull[0] && Map.map.IsObjectInRange(myShip, enemy))
-                    return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser);
+                if (MaxDamageThisTurn(myShip, enemy) > enemy.hull[0] && Map.map.IsObjectInRange(myShip, enemy))
+                    action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser);
+                else
+                {
+                    path = GetMovePath(myShip.GridLocation, enemy.GridLocation);
+                    bestFiringLocation = FindKillCube(myShip, path);
+                    if (bestFiringLocation != null)
+                        action = Tuple.Create(bestFiringLocation, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
+                    else
+                    {
+                        path = GetMovePath(myShip.GridLocation, enemy.GridLocation);
+                        if (myShip.energy[0] > myShip.MovementEnergyCost)
+                        {
+                            GridCube selection = MoveMaxAlongPath(myShip, path);
+                            if (selection != null)
+                                action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
+                        }
+                    }
+                }
             }
-            path = GetMovePath(myShip.GridLocation, enemy.GridLocation);
-            if (myShip.energy[0] > myShip.MovementEnergyCost)
+
+            //If we perform the same action 5 times in a row, we must be being limited by the game, so wait instead.
+            if (lastAction != action)
             {
-                GridCube selection = MoveMaxAlongPath(myShip, path);
-                if(selection != null)
-                    return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
+                lastAction = action;
+                frustration = 0;
             }
-            return new Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode>(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
+            else if (frustration < 5) frustration++;
+            else action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
+            return action;
         }
 
         #region AI Considerations
@@ -219,6 +244,29 @@ namespace SpaceHaste
                 }
             }
             return selection;
+        }
+
+        GridCube FindKillCube(GameObject ship, List<GridCube> path)
+        {
+            GridCube selection = null;
+            GameObject target = path[path.Count - 1].GetObject();
+            GameObject testShip = ship;
+            for (int i = path.Count() - 1; i > 0; i--)
+            {
+                testShip.GridPosition = path[i].Position;
+                testShip.energy[0] = ship.energy[0] - i * ship.MovementEnergyCost;
+                if (!path[i].BlocksMovement() && MaxDamageThisTurn(testShip, target) > target.hull[0])
+                {
+                    selection = path[i];
+                    break;
+                }
+            }
+            return selection;
+        }
+
+        int MaxDamageThisTurn(GameObject self, GameObject target)
+        {
+            return (int) Math.Floor(self.energy[0] / self.AttackEnergyCost) * self.GetLaserDamage(target);
         }
         #endregion
 

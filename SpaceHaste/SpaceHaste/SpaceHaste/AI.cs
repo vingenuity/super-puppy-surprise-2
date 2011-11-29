@@ -46,6 +46,7 @@ namespace SpaceHaste
                 return action;
             
             enemy = ClosestEnemy(myShip, ships);
+            //If we have missiles, attempt to stay at missile range and pummel the enemy from there.
             if (myShip.MissileCount > 0)
             {
                 if (myShip.MissileCount * myShip.dmg[1] > enemy.hull[0] && DistanceBetween(myShip, enemy) <= myShip.MissileRange)
@@ -63,6 +64,7 @@ namespace SpaceHaste
                 else
                     action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
             }
+            //If not, if we can kill the enemy with lasers without a return volley, close in and fire; otherwise take evasive action.
             else
             {
                 if (MaxDamageThisTurn(myShip, enemy) > enemy.hull[0] && Map.map.IsObjectInRange(myShip, enemy))
@@ -75,7 +77,7 @@ namespace SpaceHaste
                         action = Tuple.Create(bestFiringLocation, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
                     else
                     {
-                        path = GetMovePath(myShip.GridLocation, enemy.GridLocation);
+                        path = FindEvasionPath(myShip, enemy);
                         if (myShip.energy[0] > myShip.MovementEnergyCost)
                         {
                             GridCube selection = MoveMaxAlongPath(myShip, path);
@@ -86,7 +88,7 @@ namespace SpaceHaste
                 }
             }
 
-            //If we perform the same action 5 times in a row, we must be being limited by the game, so wait instead.
+            //If we perform the same action 5 times in a row, we must be performing an illegal action and the game is stopping us, so wait instead.
             if (lastAction != action)
             {
                 lastAction = action;
@@ -97,7 +99,7 @@ namespace SpaceHaste
             return action;
         }
 
-        #region AI Considerations
+        #region AI Helper Functions
         private GameObject ClosestEnemy(GameObject self, List<GameObject> ships)
         {
             float closestDistance = float.PositiveInfinity;
@@ -126,6 +128,14 @@ namespace SpaceHaste
             return enemies;
         }
 
+        /// <summary>
+        /// This function finds the closest cube at a set distance from a target.
+        /// This is used by the AI to find the best cubes to fire from maximum missile range.
+        /// </summary>
+        /// <param name="self">The playing ship</param>
+        /// <param name="target">The Game Object we want to stay at range from.</param>
+        /// <param name="distance">The distance to stay at.</param>
+        /// <returns>The best gridcube meeting the qualifications.</returns>
         private GridCube ClosestCubeAtDistanceFrom(GameObject self, GameObject target, int distance)
         {
             Vector3 center = target.GridPosition;
@@ -246,6 +256,8 @@ namespace SpaceHaste
             return selection;
         }
 
+        //This function attempts to find a cube to fire upon that will kill the player before they can return fire.
+        //If no such path is found, it returns null.
         GridCube FindKillCube(GameObject ship, List<GridCube> path)
         {
             GridCube selection = null;
@@ -264,9 +276,29 @@ namespace SpaceHaste
             return selection;
         }
 
+        //This function finds the maximum damage we can possibly do from our square to an enemy using lasers.
         int MaxDamageThisTurn(GameObject self, GameObject target)
         {
             return (int) Math.Floor(self.energy[0] / self.AttackEnergyCost) * self.GetLaserDamage(target);
+        }
+
+        /// <summary>
+        /// This function finds the best path to take to achieve maximum distance from an enemy.
+        /// It is used by the AI to run away from battles that it doesn't think it can win.
+        /// </summary>
+        /// <param name="self">The playing Game Object.</param>
+        /// <param name="enemy">The Game Object to run from.</param>
+        /// <returns>A list of GridCubes representing the optimal running path.</returns>
+        List<GridCube> FindEvasionPath(GameObject self, GameObject enemy)
+        {
+            Vector3 awayVector = 2 * (self.GridPosition - enemy.GridPosition);
+            if (awayVector.X < 0) awayVector.X = 0;
+            if (awayVector.Y < 0) awayVector.Y = 0;
+            if (awayVector.Z < 0) awayVector.Z = 0;
+            if (awayVector.X > Map.map.Size.X) awayVector.X = Map.map.Size.X;
+            if (awayVector.Y > Map.map.Size.Y) awayVector.Y = Map.map.Size.Y;
+            if (awayVector.Z > Map.map.Size.Z) awayVector.Z = Map.map.Size.Z;
+            return GetMovePath(self.GridLocation, Map.map.GetCubeAt(awayVector));
         }
         #endregion
 

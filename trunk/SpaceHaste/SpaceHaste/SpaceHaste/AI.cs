@@ -84,6 +84,8 @@ namespace SpaceHaste
                             if (selection != null)
                                 action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
                         }
+                        else
+                            action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
                     }
                 }
             }
@@ -260,19 +262,22 @@ namespace SpaceHaste
         //If no such path is found, it returns null.
         GridCube FindKillCube(GameObject ship, List<GridCube> path)
         {
+            double originalEnergy = ship.energy[0];
+            Vector3 originalPosition = ship.GridPosition;
             GridCube selection = null;
             GameObject target = path[path.Count - 1].GetObject();
-            GameObject testShip = ship;
             for (int i = path.Count() - 1; i > 0; i--)
             {
-                testShip.GridPosition = path[i].Position;
-                testShip.energy[0] = ship.energy[0] - i * ship.MovementEnergyCost;
-                if (!path[i].BlocksMovement() && MaxDamageThisTurn(testShip, target) > target.hull[0])
+                ship.GridPosition = path[i].Position;
+                ship.energy[0] = originalEnergy - i * ship.MovementEnergyCost;
+                if (!path[i].BlocksMovement() && MaxDamageThisTurn(ship, target) > target.hull[0])
                 {
                     selection = path[i];
                     break;
                 }
             }
+            ship.GridPosition = originalPosition;
+            ship.energy[0] = originalEnergy;
             return selection;
         }
 

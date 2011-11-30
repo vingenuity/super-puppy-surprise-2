@@ -18,32 +18,34 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
     
     public class BattleMechanicsManager
     {
-        public KeyboardState kState;
+        private AI Enemy;
         public static BattleMechanicsManager Instance;
+        public KeyboardState kState;
+        public Random random;
 
+        //Current Modes
         enum CameraMode { OnCenter, OnShip }
         private CameraMode currentCameraMode = CameraMode.OnCenter;
-
-        bool enabled = true;
+        public ShipSelectionMode ShipModeSelection;
+        public ShipAttackSelectionMode ShipAttackModeSelection;
 
         //For selection and display thereof
         Vector3 CurrentGridCubeSelected;
         public GameObject CurrentGameObjectSelected;
-
         Line YSelectedSquareLine;
         Line ZSelectedSquareLine;
         Line XSelectedSquareLine;
-        private AI Enemy;
-
         List<Line> AttackLineList;
+
+        //Player checks 
+        bool enabled = true;
         public bool MoveEnabled;
         public bool WaitEnabled;
         public bool AttackEnabled;
-
-        public Random random;
         
-        public ShipSelectionMode ShipModeSelection;
-        public ShipAttackSelectionMode ShipAttackModeSelection;
+        //Particles
+        ThrustersParticle ShipThrustersParticle;
+
         public BattleMechanicsManager()
         {
             random = new Random();
@@ -51,6 +53,9 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             AttackLineList = new List<Line>();
             Enemy = new AI(Map.map);
         }
+
+        public Vector3 getSelectedCube() { return CurrentGridCubeSelected; }
+
         void SortGameObjectList()
         {
             List<GameObject> list = new List<GameObject>();
@@ -149,6 +154,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 ScrollDownInUnitActionList();
         }
 
+        #region Selection Functions
         void SelectionAttack()
         {
             GameObject offender = CurrentGameObjectSelected;
@@ -213,7 +219,6 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 GameMechanicsManager.gamestate = GameState.AttackingMissileAnimation;
             }
             else return;
-
         }
         void SelectionTargetLasers()
         {
@@ -281,8 +286,6 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
             else return;
         }
-
-        ThrustersParticle ShipThrustersParticle;
         void SelectionMovement()
         {
             List<GridCube> InRange = Map.map.GetGridCubesInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
@@ -325,7 +328,9 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 CurrentGameObjectSelected.energy[0] = 0;
             NextShipTurn();
         }
-        #region Update Selection
+        #endregion
+
+        #region Update Selection Lines
         void UpdateSelectionLine()
         {
             UpdateYSelectionLine();
@@ -469,8 +474,6 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     NextShipAction();
                     timer = 0;
                 }
-
-
             }
             if (GameMechanicsManager.gamestate == GameState.MovingShipAnimation)
             {
@@ -506,8 +509,6 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 }
             }
         }
-
-        public Vector3 getSelectedCube() { return CurrentGridCubeSelected; }
 
         #region Control Delegates
         internal void ChangeCameraMode()

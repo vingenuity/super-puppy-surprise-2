@@ -57,9 +57,9 @@ namespace SpaceHaste
                     path = GetMovePath(myShip.GridLocation, bestFiringLocation);
                     GridCube selection = MoveMaxAlongPath(myShip, path);
                     if (selection != null)
-                        action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
+                        action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Missile);
                     else
-                        action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
+                        action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Missile);
                 }
                 else
                     action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
@@ -77,15 +77,32 @@ namespace SpaceHaste
                         action = Tuple.Create(bestFiringLocation, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
                     else
                     {
-                        path = FindEvasionPath(myShip, enemy);
-                        if (myShip.energy[0] > myShip.MovementEnergyCost)
+                        int enemyHighDamageRadius = (int)Math.Floor(100 / enemy.MovementEnergyCost);
+                        if (DistanceBetween(myShip, enemy) <= enemyHighDamageRadius)
                         {
-                            GridCube selection = MoveMaxAlongPath(myShip, path);
-                            if (selection != null)
-                                action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
+                            path = FindEvasionPath(myShip, enemy);
+                            if (myShip.energy[0] > myShip.MovementEnergyCost)
+                            {
+                                GridCube selection = MoveMaxAlongPath(myShip, path);
+                                if (selection != null)
+                                    action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
+                            }
+                            else
+                                action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
                         }
                         else
-                            action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
+                        {
+                            GridCube bestLocation = ClosestCubeAtDistanceFrom(myShip, enemy, enemyHighDamageRadius + 1);
+                            path = GetMovePath(myShip.GridLocation, bestLocation);
+                            if (myShip.energy[0] > myShip.MovementEnergyCost)
+                            {
+                                GridCube selection = MoveMaxAlongPath(myShip, path);
+                                if (selection != null)
+                                    action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
+                            }
+                            else
+                                action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
+                        }
                     }
                 }
             }
@@ -306,19 +323,5 @@ namespace SpaceHaste
             return GetMovePath(self.GridLocation, Map.map.GetCubeAt(awayVector));
         }
         #endregion
-
-        /// <summary>
-        /// This function checks to see if two actions are exactly the same.
-        /// This is used to keep the AI from taking invalid actions repeatedly, which causes the game to "freeze."
-        /// </summary>
-        /// <param name="action1">First action to compare.</param>
-        /// <param name="action2">Second action to compare.</param>
-        /// <returns>True if the actions are the same; false if not.</returns>
-        public static bool IsSameAction(Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action1, Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action2)
-        {
-            if (action1.Item1 == action2.Item1 && action1.Item2 == action2.Item2 && action1.Item3 == action2.Item3)
-                return true;
-            else return false;
-        }
     }
 }

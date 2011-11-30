@@ -157,249 +157,6 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 ScrollDownInUnitActionList();
         }
 
-        #region Selection Functions
-        void SelectionAttack()
-        {
-            GameObject offender = CurrentGameObjectSelected;
-            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
-
-            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
-                return;
-            GameObject target = tempTarget as GameObject;
-
-            if (offender.energy[0] < offender.AttackEnergyCost)
-            {
-                AttackEnabled = false;
-                NextShipAction();
-            }
-
-            if (Map.map.IsObjectInRange(offender, target))
-            {
-                GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
-                
-                SoundManager.Sounds.PlaySound(SoundEffects.laser);
-
-                LaserParticle.CreateLaserParticle(offender.DrawPosition, target.DrawPosition);
-                /*
-                Line line = new Line(offender.DrawPosition, target.DrawPosition, Color.Aqua);
-                AttackLineList.Add(line);
-                LineManager.AddLine(line);*/
-                target.isHit(offender.GetLaserDamage(target));
-                offender.energy[0] -= offender.AttackEnergyCost;
-                if (offender.energy[0] < 0)
-                    offender.energy[0] = 0;
-                if (offender.energy[0] < offender.AttackEnergyCost)
-                    AttackEnabled = false;
-                NextShipAction();
-               
-                GameMechanicsManager.gamestate = GameState.AttackingLaserAnimation;
-            }      
-            else return; 
-        }
-        void SelectionMissile() 
-        {
-            GameObject offender = CurrentGameObjectSelected;
-            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
-
-            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
-                return;
-            GameObject target = tempTarget as GameObject;
-
-            if (offender.MissileCount <= 0)
-            {
-                AttackEnabled = false;
-                NextShipAction();
-            }
-
-            if (Map.map.IsTargetCubeInRange(offender.GridLocation, tempTarget.GridLocation))
-            {
-                //ListOfMissilePath = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath();
-                //play missile sound
-                SoundManager.Sounds.PlaySound(SoundEffects.missExpl);
-                target.isHit(offender.dmg[1]);
-                offender.MissileCount--;
-                AttackEnabled = false;
-                NextShipAction();
-                GameMechanicsManager.gamestate = GameState.AttackingMissileAnimation;
-            }
-            else return;
-        }
-        void SelectionTargetLasers()
-        {
-            GameObject offender = CurrentGameObjectSelected;
-            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
-
-            int percent = random.Next(0, 100);
-            if (percent > offender.accuracy) return;
-
-            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
-                return;
-            GameObject target = tempTarget as GameObject;
-
-            if (offender.energy[0] < offender.AttackEnergyCost)
-            {
-                AttackEnabled = false;
-                NextShipAction();
-            }
-
-            if (Map.map.IsObjectInRange(offender, target))
-            {
-                GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
-
-                SoundManager.Sounds.PlaySound(SoundEffects.laser);
-                //make a new color
-                LaserParticle.CreateLaserParticle(offender.DrawPosition, target.DrawPosition);
-
-                target.LasersDisabled = true;
-
-                NextShipAction();
-                GameMechanicsManager.gamestate = GameState.AttackingDisableEngineAnimation;
-            }
-            else return;
-        }
-        void SelectionTargetEngines()
-        {
-            GameObject offender = CurrentGameObjectSelected;
-            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
-
-            int percent = random.Next(0, 100);
-            if (percent > offender.accuracy) return;
-
-            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
-                return;
-            GameObject target = tempTarget as GameObject;
-
-            if (offender.energy[0] < offender.AttackEnergyCost)
-            {
-                AttackEnabled = false;
-                NextShipAction();
-            }
-
-            if (Map.map.IsObjectInRange(offender, target))
-            {
-                GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
-
-                SoundManager.Sounds.PlaySound(SoundEffects.laser);
-                //make a new color
-                LaserParticle.CreateLaserParticle(offender.DrawPosition, target.DrawPosition);
-
-                target.EnginesDisabled = true;
-
-                NextShipAction();
-                GameMechanicsManager.gamestate = GameState.AttackingDisableEngineAnimation;
-            }
-            else return;
-        }
-        void SelectionMovement()
-        {
-            List<GridCube> InRange = Map.map.GetGridCubesInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
-            if (InRange.Find(item => item == Map.map.GetCubeAt(CurrentGridCubeSelected)) != null)
-            {
-                GridCube c = Map.map.GetCubeAt(CurrentGridCubeSelected);
-               // Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;
-                //OLD DISTANCE MOVING
-                //float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
-                float DistanceMoved = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath().Count;
-                if (CurrentGameObjectSelected.energy[0] - DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost >= 0)
-                {
-                    
-                    //NextShipAction();
-                    //CurrentGameObjectSelected.
-                    ListOfMovementSquares = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath();
-                    
-                    ListOfMovementSquares.Add(CurrentGridCubeSelected);
-                    timer = 0;
-                    GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
-                    SoundManager.Sounds.PlaySound(SoundEffects.engines);
-                    if (ListOfMovementSquares.Count > 0)
-                        ListOfMovementSquares.RemoveAt(0);
-                    
-                    Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(CurrentGridCubeSelected).Center ;
-                    offset.Normalize();
-                    offset *= GridCube.GRIDSQUARELENGTH * 4 / 5;
-                    ShipThrustersParticle = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
-                }
-            }
-            CurrentGameObjectSelected.updateBoundingSphere();
-        }
-        void SelectionWait()
-        {
-            ClearLineList();
-            if (CurrentGameObjectSelected.energy[0] == 100)
-                CurrentGameObjectSelected.energy[0] -= 5;
-            CurrentGameObjectSelected.waitTime += 40;
-            if (CurrentGameObjectSelected.energy[0] < 0)
-                CurrentGameObjectSelected.energy[0] = 0;
-            NextShipTurn();
-        }
-        #endregion
-
-        #region Update Selection Lines
-        void UpdateSelectionLine()
-        {
-            UpdateYSelectionLine();
-            UpdateZSelectionLine();
-            UpdateXSelectionLine();
-        }
-        private void UpdateXSelectionLine()
-        {
-            if (XSelectedSquareLine != null)
-            {
-                LineManager.RemoveLine(XSelectedSquareLine);
-            }
-            Vector3 botCube = CurrentGridCubeSelected;
-            if (!MapManager.isDrawingXGridBottom)
-            {
-                botCube.X = 0;
-                botCube = Map.map.GetCubeAt(botCube).Center;
-                botCube.X -= 400;
-            }
-            else
-            {
-                botCube.X = Map.map.Size.X - 1;
-                botCube = Map.map.GetCubeAt(botCube).Center;
-                botCube.X += +400;
-            }
-            XSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
-            LineManager.AddLine(XSelectedSquareLine);
-        }
-        private void UpdateYSelectionLine()
-        {
-            if (YSelectedSquareLine != null)
-            {
-                LineManager.RemoveLine(YSelectedSquareLine);
-            }
-            Vector3 botCube = CurrentGridCubeSelected;
-            botCube.Y = 0;
-            botCube = Map.map.GetCubeAt(botCube).Center;
-            botCube.Y -= +400;
-            YSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
-            LineManager.AddLine(YSelectedSquareLine);
-        }
-        private void UpdateZSelectionLine()
-        {
-            if (ZSelectedSquareLine != null)
-            {
-                LineManager.RemoveLine(ZSelectedSquareLine);
-            }
-            Vector3 botCube = CurrentGridCubeSelected;
-            if (MapManager.isDrawingZGridBottom)
-            {
-                botCube.Z = 0;
-                botCube = Map.map.GetCubeAt(botCube).Center;
-                botCube.Z -= 400;
-            }
-            else
-            {
-                botCube.Z = Map.map.Size.Z - 1;
-                botCube = Map.map.GetCubeAt(botCube).Center;
-                botCube.Z += +400;
-            }
-            ZSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
-            LineManager.AddLine(ZSelectedSquareLine);
-        }
-        #endregion
-
         void CheckVictory()
         {
             if (!enabled)
@@ -526,6 +283,248 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 }
             }
         }
+        #region Selection Functions
+        void SelectionAttack()
+        {
+            GameObject offender = CurrentGameObjectSelected;
+            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
+
+            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
+                return;
+            GameObject target = tempTarget as GameObject;
+
+            if (offender.energy[0] < offender.AttackEnergyCost)
+            {
+                AttackEnabled = false;
+                NextShipAction();
+            }
+
+            if (Map.map.IsObjectInRange(offender, target))
+            {
+                GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
+
+                SoundManager.Sounds.PlaySound(SoundEffects.laser);
+
+                LaserParticle.CreateLaserParticle(offender.DrawPosition, target.DrawPosition);
+                /*
+                Line line = new Line(offender.DrawPosition, target.DrawPosition, Color.Aqua);
+                AttackLineList.Add(line);
+                LineManager.AddLine(line);*/
+                target.isHit(offender.GetLaserDamage(target));
+                offender.energy[0] -= offender.AttackEnergyCost;
+                if (offender.energy[0] < 0)
+                    offender.energy[0] = 0;
+                if (offender.energy[0] < offender.AttackEnergyCost)
+                    AttackEnabled = false;
+                NextShipAction();
+
+                GameMechanicsManager.gamestate = GameState.AttackingLaserAnimation;
+            }
+            else return;
+        }
+        void SelectionMissile()
+        {
+            GameObject offender = CurrentGameObjectSelected;
+            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
+
+            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
+                return;
+            GameObject target = tempTarget as GameObject;
+
+            if (offender.MissileCount <= 0)
+            {
+                AttackEnabled = false;
+                NextShipAction();
+            }
+
+            if (Map.map.IsTargetCubeInRange(offender.GridLocation, tempTarget.GridLocation))
+            {
+                //ListOfMissilePath = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath();
+                //play missile sound
+                SoundManager.Sounds.PlaySound(SoundEffects.missExpl);
+                target.isHit(offender.dmg[1]);
+                offender.MissileCount--;
+                AttackEnabled = false;
+                NextShipAction();
+                GameMechanicsManager.gamestate = GameState.AttackingMissileAnimation;
+            }
+            else return;
+        }
+        void SelectionTargetLasers()
+        {
+            GameObject offender = CurrentGameObjectSelected;
+            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
+
+            int percent = random.Next(0, 100);
+            if (percent > offender.accuracy) return;
+
+            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
+                return;
+            GameObject target = tempTarget as GameObject;
+
+            if (offender.energy[0] < offender.AttackEnergyCost)
+            {
+                AttackEnabled = false;
+                NextShipAction();
+            }
+
+            if (Map.map.IsObjectInRange(offender, target))
+            {
+                GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
+
+                SoundManager.Sounds.PlaySound(SoundEffects.laser);
+                //make a new color
+                LaserParticle.CreateLaserParticle(offender.DrawPosition, target.DrawPosition);
+
+                target.LasersDisabled = true;
+
+                NextShipAction();
+                GameMechanicsManager.gamestate = GameState.AttackingDisableEngineAnimation;
+            }
+            else return;
+        }
+        void SelectionTargetEngines()
+        {
+            GameObject offender = CurrentGameObjectSelected;
+            GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
+
+            int percent = random.Next(0, 100);
+            if (percent > offender.accuracy) return;
+
+            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
+                return;
+            GameObject target = tempTarget as GameObject;
+
+            if (offender.energy[0] < offender.AttackEnergyCost)
+            {
+                AttackEnabled = false;
+                NextShipAction();
+            }
+
+            if (Map.map.IsObjectInRange(offender, target))
+            {
+                GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
+
+                SoundManager.Sounds.PlaySound(SoundEffects.laser);
+                //make a new color
+                LaserParticle.CreateLaserParticle(offender.DrawPosition, target.DrawPosition);
+
+                target.EnginesDisabled = true;
+
+                NextShipAction();
+                GameMechanicsManager.gamestate = GameState.AttackingDisableEngineAnimation;
+            }
+            else return;
+        }
+        void SelectionMovement()
+        {
+            List<GridCube> InRange = Map.map.GetGridCubesInRange(CurrentGameObjectSelected.GridPosition, CurrentGameObjectSelected.MovementRange);
+            if (InRange.Find(item => item == Map.map.GetCubeAt(CurrentGridCubeSelected)) != null)
+            {
+                GridCube c = Map.map.GetCubeAt(CurrentGridCubeSelected);
+                // Vector3 Distance = CurrentGameObjectSelected.GridPosition - CurrentGridCubeSelected;
+                //OLD DISTANCE MOVING
+                //float DistanceMoved = Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z);
+                float DistanceMoved = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath().Count;
+                if (CurrentGameObjectSelected.energy[0] - DistanceMoved * CurrentGameObjectSelected.MovementEnergyCost >= 0)
+                {
+
+                    //NextShipAction();
+                    //CurrentGameObjectSelected.
+                    ListOfMovementSquares = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath();
+
+                    ListOfMovementSquares.Add(CurrentGridCubeSelected);
+                    timer = 0;
+                    GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
+                    SoundManager.Sounds.PlaySound(SoundEffects.engines);
+                    if (ListOfMovementSquares.Count > 0)
+                        ListOfMovementSquares.RemoveAt(0);
+
+                    Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(CurrentGridCubeSelected).Center;
+                    offset.Normalize();
+                    offset *= GridCube.GRIDSQUARELENGTH * 4 / 5;
+                    ShipThrustersParticle = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                }
+            }
+            CurrentGameObjectSelected.updateBoundingSphere();
+        }
+        void SelectionWait()
+        {
+            ClearLineList();
+            if (CurrentGameObjectSelected.energy[0] == 100)
+                CurrentGameObjectSelected.energy[0] -= 5;
+            CurrentGameObjectSelected.waitTime += 40;
+            if (CurrentGameObjectSelected.energy[0] < 0)
+                CurrentGameObjectSelected.energy[0] = 0;
+            NextShipTurn();
+        }
+        #endregion
+
+        #region Update Selection Lines
+        void UpdateSelectionLine()
+        {
+            UpdateYSelectionLine();
+            UpdateZSelectionLine();
+            UpdateXSelectionLine();
+        }
+        private void UpdateXSelectionLine()
+        {
+            if (XSelectedSquareLine != null)
+            {
+                LineManager.RemoveLine(XSelectedSquareLine);
+            }
+            Vector3 botCube = CurrentGridCubeSelected;
+            if (!MapManager.isDrawingXGridBottom)
+            {
+                botCube.X = 0;
+                botCube = Map.map.GetCubeAt(botCube).Center;
+                botCube.X -= 400;
+            }
+            else
+            {
+                botCube.X = Map.map.Size.X - 1;
+                botCube = Map.map.GetCubeAt(botCube).Center;
+                botCube.X += +400;
+            }
+            XSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
+            LineManager.AddLine(XSelectedSquareLine);
+        }
+        private void UpdateYSelectionLine()
+        {
+            if (YSelectedSquareLine != null)
+            {
+                LineManager.RemoveLine(YSelectedSquareLine);
+            }
+            Vector3 botCube = CurrentGridCubeSelected;
+            botCube.Y = 0;
+            botCube = Map.map.GetCubeAt(botCube).Center;
+            botCube.Y -= +400;
+            YSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
+            LineManager.AddLine(YSelectedSquareLine);
+        }
+        private void UpdateZSelectionLine()
+        {
+            if (ZSelectedSquareLine != null)
+            {
+                LineManager.RemoveLine(ZSelectedSquareLine);
+            }
+            Vector3 botCube = CurrentGridCubeSelected;
+            if (MapManager.isDrawingZGridBottom)
+            {
+                botCube.Z = 0;
+                botCube = Map.map.GetCubeAt(botCube).Center;
+                botCube.Z -= 400;
+            }
+            else
+            {
+                botCube.Z = Map.map.Size.Z - 1;
+                botCube = Map.map.GetCubeAt(botCube).Center;
+                botCube.Z += +400;
+            }
+            ZSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
+            LineManager.AddLine(ZSelectedSquareLine);
+        }
+        #endregion
 
         #region Control Delegates
         /// <summary>

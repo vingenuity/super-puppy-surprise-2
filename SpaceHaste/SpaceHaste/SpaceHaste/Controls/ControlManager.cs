@@ -206,7 +206,7 @@ namespace SpaceHaste.Controls
         {
           
             //Remap Controls to standard if in menus, else remap dynamically to the camera perspective.
-            if (GameMechanicsManager.gamestate == GameState.SelectShipAction)
+            if (GameMechanicsManager.gamestate == GameState.SelectShipAction || GameMechanicsManager.gamestate == GameState.SelectShipAttackAction)
                 RemapStandard();
             else if (GameMechanicsManager.gamestate == GameState.CutScene)
                 RemapCutScene();

@@ -18,6 +18,13 @@ namespace SpaceHaste.Maps
         protected Line[,] XZMatrix;
         protected Line[,] YZMatrix;
 
+        //protected Line[,] XY0Matrix;
+        //protected Line[,] XZ0Matrix;
+        //protected Line[,] YZ0Matrix;
+        //protected Line[,] XY1Matrix;
+        //protected Line[,] XZ1Matrix;
+        //protected Line[,] YZ1Matrix;
+
         public List<GridCube> EnvMapObjects;
         public List<GameObject> ShipMapObjects;
         public static List<NebulaParticle> Nebulae;
@@ -31,9 +38,9 @@ namespace SpaceHaste.Maps
             ShipMapObjects = new List<GameObject>();
             EnvMapObjects = new List<GridCube>();
             Nebulae = new List<NebulaParticle>();
-            XYMatrix = new Line[2, Math.Max((int)Size.X + 1, (int)Size.Y + 1)];
-            XZMatrix = new Line[2, Math.Max((int)Size.X + 1, (int)Size.Z + 1)];
-            YZMatrix = new Line[2, Math.Max((int)Size.Y + 1, (int)Size.Z + 1)];
+            XYMatrix = new Line[4, Math.Max((int)Size.X + 1, (int)Size.Y + 1)];
+            XZMatrix = new Line[4, Math.Max((int)Size.X + 1, (int)Size.Z + 1)];
+            YZMatrix = new Line[4, Math.Max((int)Size.Y + 1, (int)Size.Z + 1)];
 
             InitMapGridCubes();
             InitMapGameObjects();
@@ -79,6 +86,7 @@ namespace SpaceHaste.Maps
             };
            
         }
+        //please add adjacent cubes as "nearplanet"
         /// <summary>
         /// Adds planets to grid coords with a scale in grid coords
         /// Planet goes from x to x + length in grid
@@ -227,10 +235,11 @@ namespace SpaceHaste.Maps
             else return false;
         }
 
+        //change to allow near planet objects
         /// <summary>
         /// Finds the number of grid squares in range of a particular grid square.
         /// This will presumably be used to find valid moves for each ship.
-        /// This function does a depth first search
+        /// This function does a breth first search
         /// </summary>
         /// <param name="loc">Grid square to start the search.</param>
         /// <param name="range">Distance of squares away to search.</param>
@@ -505,13 +514,6 @@ namespace SpaceHaste.Maps
             AddGrid0YZ();
             AddGridX0Z();
             AddGridXY0();
-
-            //AddGrid0YZLines();
-            //AddGridX0ZLines();
-            //AddGridXY0Lines();
-            //AddGrid0YZOrthogonal();
-            //AddGridX0ZOrthogonal();
-            //AddGridXY0Orthogonal();
         }
 
         /// <summary>
@@ -562,7 +564,7 @@ namespace SpaceHaste.Maps
                 Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
                                      new Color(1.0f, 0, 0));
                 LineManager.AddLine(line);
-                XYMatrix[0, i] = line;
+                XYMatrix[2, i] = line;
             }
         }
         public void AddGridXY1Orthogonal()
@@ -576,7 +578,7 @@ namespace SpaceHaste.Maps
                 Line orthongal = new Line(new Vector3(y, x, z), new Vector3(-y, x, z),
                                           new Color(1.0f, 0, 0));
                 LineManager.AddLine(orthongal);
-                XYMatrix[1, i] = orthongal;
+                XYMatrix[3, i] = orthongal;
             }
         }
 
@@ -621,7 +623,7 @@ namespace SpaceHaste.Maps
                 Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
                                      new Color(0, 1.0f, 0));
                 LineManager.AddLine(line);
-                YZMatrix[0, i] = line;
+                YZMatrix [2, i] = line;
             }
         }
         public void AddGrid1YZOrthogonal()
@@ -635,7 +637,7 @@ namespace SpaceHaste.Maps
                 Line orthogonal = new Line(new Vector3(x, z, y), new Vector3(x, z, -y),
                                            new Color(0, 1.0f, 0));
                 LineManager.AddLine(orthogonal);
-                YZMatrix[1, i] = orthogonal;
+                YZMatrix [3, i] = orthogonal;
             }
         }
 
@@ -680,7 +682,8 @@ namespace SpaceHaste.Maps
                 Line line = new Line(new Vector3(x, y, z), new Vector3(x, y, -z),
                                     new Color(0, 0, 1.0f));
                 LineManager.AddLine(line);
-                XZMatrix[0, i] = line;
+                XZMatrix[2, i] = line;
+                
             }
         }
         public void AddGridX1ZOrthogonal()
@@ -694,9 +697,10 @@ namespace SpaceHaste.Maps
                 Line orthogonal = new Line(new Vector3(z, y, x), new Vector3(-z, y, x),
                                     new Color(0, 0, 1.0f));
                 LineManager.AddLine(orthogonal);
-                XZMatrix[1, i] = orthogonal;
+                XZMatrix[3, i] = orthogonal;
             }
         }
+
         public void AddGridAltIsometric()
         {
             AddGrid1YZ();
@@ -728,6 +732,55 @@ namespace SpaceHaste.Maps
                 LineManager.RemoveLine(line);
             }
         }
+        public void Remove0YZMatrix()
+        {
+            for (int i = 0; i < Math.Max((int)Size.Y + 1, (int)Size.Z + 1); i++)
+            {
+                LineManager.RemoveLine(YZMatrix[0, i]);
+                LineManager.RemoveLine(YZMatrix[1, i]);
+            }
+        }
+        public void Remove1YZMatrix()
+        {
+            for (int i = 0; i < Math.Max((int)Size.Y + 1, (int)Size.Z + 1); i++)
+            {
+                LineManager.RemoveLine(YZMatrix[2, i]);
+                LineManager.RemoveLine(YZMatrix[3, i]);
+            }
+        }
+        public void RemoveXY0Matrix()
+        {
+            for (int i = 0; i < Math.Max((int)Size.X + 1, (int)Size.Y + 1); i++)
+            {
+                LineManager.RemoveLine(XYMatrix[0, i]);
+                LineManager.RemoveLine(XYMatrix[1, i]);
+            }
+        }
+        public void RemoveXY1Matrix()
+        {
+            for (int i = 0; i < Math.Max((int)Size.X + 1, (int)Size.Y + 1); i++)
+            {
+                LineManager.RemoveLine(XYMatrix[2, i]);
+                LineManager.RemoveLine(XYMatrix[3, i]);
+            }
+        }
+        public void RemoveX0ZMatrix()
+        {
+            for (int i = 0; i < Math.Max((int)Size.X + 1, (int)Size.Z + 1); i++)
+            {
+                LineManager.RemoveLine(XZMatrix[0, i]);
+                LineManager.RemoveLine(XZMatrix[1, i]);
+            }
+        }
+        public void RemoveX1ZMatrix()
+        {
+            for (int i = 0; i < Math.Max((int)Size.X + 1, (int)Size.Z + 1); i++)
+            {
+                LineManager.RemoveLine(XZMatrix[2, i]);
+                LineManager.RemoveLine(XZMatrix[3, i]);
+            }
+        }
+
 
         public GridCube GetCubeAt(Vector3 loc)
         {

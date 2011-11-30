@@ -17,7 +17,7 @@ namespace SpaceHaste.Maps
         public Vector3 Center;
         public GameObject ContainedObject;
         public List<GridCube> ConnectedGridSquares;
-        public enum TerrainType { none = 1, asteroid=1000, nebula=2, wreck=2000, planet }
+        public enum TerrainType { none = 1, asteroid=1000, nebula=2, wreck=2000, planet=3, nearplanet=4 }
         public BoundingSphere boundingSphere; 
         private TerrainType Terrain;
 
@@ -26,7 +26,7 @@ namespace SpaceHaste.Maps
         public float f_score { get; set; }
         public float g_score { get; set; }
         public float h_score { get; set; }
-
+        
         public GridCube(int X, int Y, int Z)
         {
             distance = 1000;

@@ -18,10 +18,13 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
     
     public class BattleMechanicsManager
     {
-        private AI Enemy;
         public static BattleMechanicsManager Instance;
         public KeyboardState kState;
         public Random random;
+
+        //AI
+        private AI Enemy;
+        Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action;
 
         //Current Modes
         enum CameraMode { OnCenter, OnShip }
@@ -434,21 +437,15 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             timer += gameTime.ElapsedGameTime.TotalSeconds;
             if (GameMechanicsManager.GameObjectList[0].team == GameObject.Team.Enemy && GameMechanicsManager.gamestate == GameState.SelectShipAction)
             {
-                Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action = Enemy.TakeTurn(GameMechanicsManager.GameObjectList);
-                if (action.Item2 != ShipSelectionMode.Wait)
-                {
-                    CheckVictory();
-                    CurrentGridCubeSelected = action.Item1.AsVector();
-                    ShipModeSelection = action.Item2;
-                    ShipAttackModeSelection = action.Item3;
-                    if (action.Item2 == ShipSelectionMode.Attack)
-                        GameMechanicsManager.gamestate = GameState.SelectShipAttackAction;
-                    else
-                        GameMechanicsManager.gamestate = GameState.EnterShipAction;
-                    Selection();
-                }
-                else
+                CheckVictory();
+                action = Enemy.TakeTurn(GameMechanicsManager.GameObjectList);
+                if (action.Item2 == ShipSelectionMode.Wait)
                     SelectionWait();
+                else
+                {
+                    timer = 0;
+                    GameMechanicsManager.gamestate = GameState.AITurnAnimation;
+                }
             }
             if (GameMechanicsManager.gamestate == GameState.StartBattle)
             {
@@ -460,6 +457,25 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
             if(GameMechanicsManager.gamestate == GameState.EnterShipAction ||  GameMechanicsManager.gamestate == GameState.SelectShipAction)
                 UpdateSelectionLine();
+            if (GameMechanicsManager.gamestate == GameState.AITurnAnimation)
+            {
+                if (timer > 1 && timer < 2)
+                {
+                    CurrentGridCubeSelected = action.Item1.AsVector();
+                    ShipModeSelection = action.Item2;
+                    ShipAttackModeSelection = action.Item3;
+                    UpdateSelectionLine();
+                }
+                else if (timer > 2)
+                {
+                    timer = 0;
+                    if (action.Item2 == ShipSelectionMode.Attack)
+                        GameMechanicsManager.gamestate = GameState.SelectShipAttackAction;
+                    else
+                        GameMechanicsManager.gamestate = GameState.EnterShipAction;
+                    Selection();
+                }
+            }
             if (GameMechanicsManager.gamestate == GameState.AttackingLaserAnimation)
             {
                 if (timer > 1)
@@ -512,6 +528,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
 
         #region Control Delegates
+        /// <summary>
+        /// The following functions all return void and take no arguments.
+        /// During the instantiation of the class, these are tied to keys and used to perform actions.
+        /// </summary>
         internal void ChangeCameraMode()
         {
             if (currentCameraMode == CameraMode.OnCenter)
@@ -546,11 +566,6 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         {
             CenterOnShip(-1);
         }
-
-        /// <summary>
-        /// The following functions all return void and take no arguments.
-        /// During the instantiation of the class, these are tied to keys and used to perform actions.
-        /// </summary>
         internal void Selection()
         {
             

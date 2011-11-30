@@ -27,6 +27,7 @@ namespace SpaceHaste.GameMech
         SelectShipAction,
         SelectShipAttackAction,
         EnterShipAction,
+        AITurnAnimation,
         MovingShipAnimation,
         AttackingLaserAnimation,
         AttackingMissileAnimation,

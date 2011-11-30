@@ -13,7 +13,16 @@ namespace SpaceHaste.Maps
         bool gridX0Z;
         bool gridX1Z;
         bool grid0YZ;
-        bool grid1YZ;
+        bool grid1YZ; 
+        bool gridXY0was;
+        bool gridXY1was;
+        bool gridX0Zwas;
+        bool gridX1Zwas;
+        bool grid0YZwas;
+        bool grid1YZwas;
+        int gridXYwas;
+        int gridXZwas;
+        int gridYZwas;
         public static Map Map;
         public static bool isDrawingXGridBottom = false;
         public static bool isDrawingZGridBottom = false;
@@ -26,90 +35,82 @@ namespace SpaceHaste.Maps
             gridX1Z = false;
             grid0YZ = false;
             grid1YZ = false;
+            gridXY0was = true;
+            gridXY1was = true;
+            gridX0Zwas = true;
+            gridX1Zwas = true;
+            grid0YZwas = true;
+            grid1YZwas = true;
             Map = new Map1();
+            Map.AddGrid1YZ();
+            Map.AddGrid0YZ();
+            Map.AddGridX0Z();
+            Map.AddGridX1Z();
+            Map.AddGridXY0();
+            Map.AddGridXY1();
         }
         
         public override void Update(GameTime gameTime)
         {
-            //double horizontalAngle = Controls.ControlManager.camera.getHorizontalAngle();
-            //if (horizontalAngle > 1.54)
-            //{
-            //    gridX1Z = true;
-            //    gridX0Z = false;
-            //}
-            //else
-            //{
-            //    gridX0Z = true;
-            //    gridX1Z = false;
-            //}
+            double horizontalAngle = Controls.ControlManager.camera.getHorizontalAngle();
+            double verticalAngle = Controls.ControlManager.camera.getVerticalAngle();
 
-            //double verticalAngle = Controls.ControlManager.camera.getVerticalAngle();
-            //if (horizontalAngle > 1.57 && horizontalAngle < 1.57 + Math.PI)
-            //{
-            //    gridXY1 = true;
-            //    gridXY0 = false;
-            //}
-            //else 
-            //{
-            //    gridXY0 = true;
-            //    gridXY1 = false;
-            //}
+            if (horizontalAngle > 0.34f && horizontalAngle < 2.80f)
+                 grid1YZ = false;
+            else grid1YZ = true;
+            if (horizontalAngle > 3.48f && horizontalAngle < 5.91f)
+                 grid0YZ = false;
+            else grid0YZ = true;
+            if (horizontalAngle > 1.22f && horizontalAngle < 5.06f)
+                 gridXY0 = false;
+            else gridXY0 = true;
+            if (horizontalAngle < 1.91f || horizontalAngle > 4.37f)
+                 gridXY1 = false;
+            else gridXY1 = true;
 
-            //if (horizontalAngle > 0 && horizontalAngle < Math.PI)
-            //{
-            //    grid0YZ = true;
-            //    grid1YZ = false;
-            //}
-            //else
-            //{
-            //    grid1YZ = true;
-            //    grid0YZ = false;
-            //}
-
-            if (Controls.ControlManager.camera.getVerticalAngle() > 1.54)
+            if (grid0YZ && !grid0YZwas)
             {
-                double a = Controls.ControlManager.camera.getVerticalAngle();
-                Map.RemoveXZMatrix();
-                Map.AddGridX1Z();
-
-            }
-            else
-            {
-                double a = Controls.ControlManager.camera.getVerticalAngle();
-                Map.RemoveXZMatrix();
-                Map.AddGridX0Z();
-
-            }
-
-            if (Controls.ControlManager.camera.getHorizontalAngle() > 1.57
-             && Controls.ControlManager.camera.getHorizontalAngle() < 1.57 + Math.PI)
-            {
-                Map.RemoveXYMatrix();
-                Map.AddGridXY1();
-                isDrawingZGridBottom = false;
-            }
-            else
-            {
-                Map.RemoveXYMatrix();
-                Map.AddGridXY0();
-                isDrawingZGridBottom = true;
-            }
-
-            if (Controls.ControlManager.camera.getHorizontalAngle() > 0
-             && Controls.ControlManager.camera.getHorizontalAngle() < Math.PI)
-            {
-                Map.RemoveYZMatrix();
                 Map.AddGrid0YZ();
-                isDrawingXGridBottom = false;
+                grid0YZwas = true;
             }
-            else
+            if (!grid0YZ && grid0YZwas)
             {
-                Map.RemoveYZMatrix();
+                Map.Remove0YZMatrix();
+                grid0YZwas = false;
+            }
+            if (grid1YZ && !grid1YZwas)
+            {
                 Map.AddGrid1YZ();
-                isDrawingXGridBottom = true;
+                grid1YZwas = true;
+            }
+            if (!grid1YZ && grid1YZwas)
+            {
+                Map.Remove1YZMatrix();
+                grid1YZwas = false;
             }
 
-                base.Update(gameTime);
+            if (gridXY0 && !gridXY0was)
+            {
+                Map.AddGridXY0();
+                gridXY0was = true;
+            }
+            if (!gridXY0 && gridXY0was)
+            {
+                Map.RemoveXY0Matrix();
+                gridXY0was = false;
+            }
+            if (gridXY1 && !gridXY1was)
+            {
+                Map.AddGridXY1();
+                gridXY1was = true;
+            }
+            if (!gridXY1 && gridXY1was)
+            {
+                Map.RemoveXY1Matrix();
+                gridXY1was = false;
+            }
+
+            base.Update(gameTime);
         }
     }
 }

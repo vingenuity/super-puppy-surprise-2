@@ -210,6 +210,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
             if (Map.map.IsTargetCubeInRange(offender.GridLocation, tempTarget.GridLocation))
             {
+                //ListOfMissilePath = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath();
                 //play missile sound
                 SoundManager.Sounds.PlaySound(SoundEffects.missExpl);
                 target.isHit(offender.dmg[1]);

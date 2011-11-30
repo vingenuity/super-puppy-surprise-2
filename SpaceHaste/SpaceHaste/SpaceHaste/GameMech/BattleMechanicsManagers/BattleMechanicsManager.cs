@@ -188,6 +188,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
                 
                 SoundManager.Sounds.PlaySound(SoundEffects.laser);
+
                 LaserParticle.CreateLaserParticle(offender.DrawPosition, target.DrawPosition);
                 /*
                 Line line = new Line(offender.DrawPosition, target.DrawPosition, Color.Aqua);
@@ -223,6 +224,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             if (Map.map.IsTargetCubeInRange(offender.GridLocation, tempTarget.GridLocation))
             {
                 //play missile sound
+                SoundManager.Sounds.PlaySound(SoundEffects.missExpl);
                 target.isHit(offender.dmg[1]);
                 offender.MissileCount--;
                 AttackEnabled = false;
@@ -317,9 +319,12 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     ListOfMovementSquares = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath();
                     
                     ListOfMovementSquares.Add(CurrentGridCubeSelected);
+                    timer = 0;
+                    GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
+                    SoundManager.Sounds.PlaySound(SoundEffects.engines);
                     if (ListOfMovementSquares.Count > 0)
                         ListOfMovementSquares.RemoveAt(0);
-                    GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
+                    
                     Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(CurrentGridCubeSelected).Center ;
                     offset.Normalize();
                     offset *= GridCube.GRIDSQUARELENGTH * 4 / 5;
@@ -473,6 +478,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 {
                     ShipThrustersParticle.Position = CurrentGameObjectSelected.DrawPosition; 
                     GridCube c =  Map.map.GetCubeAt(ListOfMovementSquares[0]);
+
+
                     if (timer < 1)
                     {
                           InterpDistance = CurrentGameObjectSelected.GridLocation.Center - c.Center;

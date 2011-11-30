@@ -99,27 +99,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             WaitEnabled = true;
             AttackEnabled = true;
             UpdateSelectionLine();
-            if (nextShipToMove.team == GameObject.Team.Player)
-                NextShipAction();
-            else
-            {
-                Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action = Enemy.TakeTurn(GameMechanicsManager.GameObjectList);
-                while (action.Item2 != ShipSelectionMode.Wait)
-                {
-                    CheckVictory();
-                    CurrentGridCubeSelected = action.Item1.AsVector();
-                    ShipModeSelection = action.Item2;
-                    ShipAttackModeSelection = action.Item3;
-                    if (action.Item2 == ShipSelectionMode.Attack)
-                        GameMechanicsManager.gamestate = GameState.SelectShipAttackAction;
-                    else
-                        GameMechanicsManager.gamestate = GameState.EnterShipAction;
-                    Selection();
-                    action = Enemy.TakeTurn(GameMechanicsManager.GameObjectList);
-                }
-                SelectionWait();
-            }
-        }       
+            NextShipAction();
+        }
         private void NextShipAction()
         {
 
@@ -229,6 +210,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 offender.MissileCount--;
                 AttackEnabled = false;
                 NextShipAction();
+                GameMechanicsManager.gamestate = GameState.AttackingMissileAnimation;
             }
             else return;
 
@@ -343,14 +325,13 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 CurrentGameObjectSelected.energy[0] = 0;
             NextShipTurn();
         }
-
+        #region Update Selection
         void UpdateSelectionLine()
         {
-            UpdateYSlectionLine();
-            UpdateZSlectionLine();
+            UpdateYSelectionLine();
+            UpdateZSelectionLine();
             UpdateXSelectionLine();
         }
-
         private void UpdateXSelectionLine()
         {
             if (XSelectedSquareLine != null)
@@ -373,7 +354,20 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             XSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
             LineManager.AddLine(XSelectedSquareLine);
         }
-        private void UpdateZSlectionLine()
+        private void UpdateYSelectionLine()
+        {
+            if (YSelectedSquareLine != null)
+            {
+                LineManager.RemoveLine(YSelectedSquareLine);
+            }
+            Vector3 botCube = CurrentGridCubeSelected;
+            botCube.Y = 0;
+            botCube = Map.map.GetCubeAt(botCube).Center;
+            botCube.Y -= +400;
+            YSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
+            LineManager.AddLine(YSelectedSquareLine);
+        }
+        private void UpdateZSelectionLine()
         {
             if (ZSelectedSquareLine != null)
             {
@@ -395,19 +389,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             ZSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
             LineManager.AddLine(ZSelectedSquareLine);
         }
-        private void UpdateYSlectionLine()
-        {
-            if (YSelectedSquareLine != null)
-            {
-                LineManager.RemoveLine(YSelectedSquareLine);
-            }
-            Vector3 botCube = CurrentGridCubeSelected;
-            botCube.Y = 0;
-            botCube = Map.map.GetCubeAt(botCube).Center;
-            botCube.Y -= +400;
-            YSelectedSquareLine = new Line(Map.map.GetCubeAt(CurrentGridCubeSelected).Center, botCube);
-            LineManager.AddLine(YSelectedSquareLine);
-        }
+        #endregion
 
         void CheckVictory()
         {
@@ -444,11 +426,29 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         public void Update(GameTime gameTime)
         {
             timer += gameTime.ElapsedGameTime.TotalSeconds;
+            if (GameMechanicsManager.GameObjectList[0].team == GameObject.Team.Enemy && GameMechanicsManager.gamestate == GameState.SelectShipAction)
+            {
+                Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action = Enemy.TakeTurn(GameMechanicsManager.GameObjectList);
+                if (action.Item2 != ShipSelectionMode.Wait)
+                {
+                    CheckVictory();
+                    CurrentGridCubeSelected = action.Item1.AsVector();
+                    ShipModeSelection = action.Item2;
+                    ShipAttackModeSelection = action.Item3;
+                    if (action.Item2 == ShipSelectionMode.Attack)
+                        GameMechanicsManager.gamestate = GameState.SelectShipAttackAction;
+                    else
+                        GameMechanicsManager.gamestate = GameState.EnterShipAction;
+                    Selection();
+                }
+                else
+                    SelectionWait();
+            }
             if (GameMechanicsManager.gamestate == GameState.StartBattle)
             {
                 QuadManager.AddQuad(new Quad(Vector3.Zero, Vector3.Left, Vector3.Up, 400, 400));
                 GameMechanicsManager.gamestate = GameState.EnterShipAction;
-               //USE THIS LINE TO TEST PARITCLES DeathParticle.CreateDeathParticle(Vector3.Zero);
+               //USE THIS LINE TO TEST PARTICLES DeathParticle.CreateDeathParticle(Vector3.Zero);
                 NextShipTurn();
 
             }

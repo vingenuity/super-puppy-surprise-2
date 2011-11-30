@@ -163,8 +163,10 @@ namespace SpaceHaste.GameObjects
             else
             {
                 SoundManager.Sounds.PlaySound(SoundEffects.explode);
+                
                 DeathParticle.CreateDeathParticle(DrawPosition);
                 Unload();
+                GridLocation.SetTerrain(GridCube.TerrainType.wreck);
             }
         }
 

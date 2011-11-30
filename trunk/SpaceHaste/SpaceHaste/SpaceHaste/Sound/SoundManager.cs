@@ -10,12 +10,12 @@ namespace SpaceHaste.Sounds
 {
     public enum ConstantSounds
     {
-
+        FightorFlight,
     };
 
     public enum SoundEffects
     {
-        laser, explode
+        laser, explode, engines, missLaunch, missExpl
     };
     public class SoundManager : GameComponent
     {
@@ -26,7 +26,7 @@ namespace SpaceHaste.Sounds
         AudioEngine engine;
         WaveBank waveBank;
         SoundBank soundBank;
-        static Cue laser, explode;
+        static Cue laser, explode, engines, missLaunch, missExpl;
         Game gameref;
 
 
@@ -38,7 +38,8 @@ namespace SpaceHaste.Sounds
         //SoundEffect playerattacklong;
         //Random random;
 
-        //SoundEffect MenuBackground;
+        SoundEffect FightorFlight;
+        SoundEffectInstance FoF;
         //SoundEffectInstance menubackground;
         public SoundManager(Game game) : base(game)
         {
@@ -67,7 +68,13 @@ namespace SpaceHaste.Sounds
 
                 laser = soundBank.GetCue("laser");
                 explode = soundBank.GetCue("explode");
-                
+                engines = soundBank.GetCue("Engines");
+                FightorFlight = soundContent.Load<SoundEffect>("Sound/sounds/SpaceHasteFlight(v0.9)");
+                missLaunch = soundBank.GetCue("RocketExpl");
+                missExpl = soundBank.GetCue("RocketFire");
+                FoF = FightorFlight.CreateInstance();
+                FoF.IsLooped = true;
+                FoF.Volume = 0.1F;
                 
             }
             catch { }
@@ -103,6 +110,21 @@ namespace SpaceHaste.Sounds
                         explode.Play();
                         break;
 
+                    case SoundEffects.engines:
+                        Cue engines = soundBank.GetCue("Engines");
+                        engines.Play();
+                        break;
+
+                    case SoundEffects.missExpl:
+                        Cue missExpl = soundBank.GetCue("RocketExpl");
+                        missExpl.Play();
+                        break;
+
+                    case SoundEffects.missLaunch:
+                        Cue missLaunch = soundBank.GetCue("RocketFire");
+                        missLaunch.Play();
+                        break;
+
  
                 };
             }
@@ -118,19 +140,15 @@ namespace SpaceHaste.Sounds
         {
             try
             {
-                /*switch (sound)
+                switch (sound)
                 {
-                    case ConstantSounds.MenuBackground:
-                         if (!menuback.IsPlaying)
-                             menuback.Play();
-                         menuback.Resume();
+                    case ConstantSounds.FightorFlight:
+                         if (FoF.State.Equals(2))
+                             FoF.Play();
+                         FoF.Resume();
                          break;
-                     case ConstantSounds.Ambient:
-                        if (!ambient.IsPlaying)
-                            ambient.Play();
-                        ambient.Resume();
-                        break;
-                };*/
+
+                };
             }
             catch { }
         }
@@ -138,22 +156,17 @@ namespace SpaceHaste.Sounds
         {
             try
             {
-                /*switch (sound)
+                switch (sound)
                 {
                     
-                case ConstantSounds.MenuBackground:
-                    if (menuback.IsPlaying)
-                        menuback.Pause();
+                case ConstantSounds.FightorFlight:
+                    if (FoF.State.Equals(0))
+                        FoF.Stop();
                     
                     break;
-                     
 
-                    case ConstantSounds.Ambient:
-                        if (ambient.IsPlaying)
-                            ambient.Pause();
-                        break;
 
-                };*/
+                };
             }
             catch { }
         }

@@ -615,7 +615,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         internal void Back()
         {
-            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
+            if (GameMechanicsManager.gamestate == GameState.EnterShipAction || GameMechanicsManager.gamestate == GameState.SelectShipAttackAction)
             {
                 GameMechanicsManager.gamestate = GameState.SelectShipAction;
                 ResetActionSelectionMenu();

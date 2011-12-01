@@ -136,11 +136,11 @@ namespace SpaceHaste.Controls
             Remap(Buttons.LeftThumbstickLeft, BattleMechanicsManager.Instance.MoveSelectionLeft);
             Remap(Buttons.LeftThumbstickRight, BattleMechanicsManager.Instance.MoveSelectionRight);
             Remap(Buttons.A, new GameAction(BattleMechanicsManager.Instance.Selection));
-            Remap(Keys.Enter, new GameAction(BattleMechanicsManager.Instance.Selection));
             Remap(Keys.I, BattleMechanicsManager.Instance.MoveSelectionUp);
             Remap(Keys.K, BattleMechanicsManager.Instance.MoveSelectionDown);
             Remap(Keys.J, BattleMechanicsManager.Instance.MoveSelectionLeft);
             Remap(Keys.L, BattleMechanicsManager.Instance.MoveSelectionRight);
+            Remap(Keys.Enter, new GameAction(BattleMechanicsManager.Instance.Selection));
 
         }
         private void RemapToCameraPersp()

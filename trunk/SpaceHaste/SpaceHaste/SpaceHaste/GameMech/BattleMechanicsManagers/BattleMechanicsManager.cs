@@ -14,8 +14,7 @@ using SpaceHaste.Controls;
 using SpaceHaste.DPSFParticles;
 
 namespace SpaceHaste.GameMech.BattleMechanicsManagers
-{
-    
+{    
     public class BattleMechanicsManager
     {
         public static BattleMechanicsManager Instance;

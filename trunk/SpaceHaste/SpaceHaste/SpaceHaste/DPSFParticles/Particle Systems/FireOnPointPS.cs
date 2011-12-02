@@ -172,7 +172,7 @@ namespace DPSF.ParticleSystems
 
         public void MakeParticlesAttractToExternalObject()
         {
-            // Make sure we only apply the Attract function once by first removing the function if it already exists
+            //Make sure we only apply the Attract function once by first removing the function if it already exists
             this.ParticleEvents.RemoveEveryTimeEvents(AttractParticleToExternalObject);
             this.ParticleEvents.AddEveryTimeEvent(AttractParticleToExternalObject);
         }

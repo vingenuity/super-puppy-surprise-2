@@ -43,7 +43,6 @@ namespace SpaceHaste
             set { seconds = value * 3600; }
         }
 
-
         public double Hours2;
 
         public Game1()
@@ -72,7 +71,6 @@ namespace SpaceHaste
             Hud HudManager = new Hud(this, graphics);
             Components.Add(HudManager);
             gameComponents.Add(HudManager);
-
 
             ClearScreenManager ClearScreenManager = new ClearScreenManager(this, graphics);
             Components.Add(ClearScreenManager);
@@ -125,9 +123,8 @@ namespace SpaceHaste
         {
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-
-     //       if (!graphics.IsFullScreen)
-             //   graphics.ToggleFullScreen();
+            //if (!graphics.IsFullScreen)
+                //   graphics.ToggleFullScreen();
             graphics.ApplyChanges();
 
             if (USEMENUS)
@@ -138,7 +135,6 @@ namespace SpaceHaste
             }
             else
                 LoadGameComponents();
-
             base.Initialize();
         }
 
@@ -174,9 +170,7 @@ namespace SpaceHaste
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-
             // TODO: Add your update logic here
-
             base.Update(gameTime);
         }
 

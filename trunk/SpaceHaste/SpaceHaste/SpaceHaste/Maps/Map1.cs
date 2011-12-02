@@ -20,8 +20,8 @@ namespace SpaceHaste.Maps
             this.addGameObject(new HeavyShip("Player Ship 2", new Vector3(4, 3, 7), GameObject.Team.Player), new Vector3(4, 3, 7));
             this.addGameObject(new LightShip("Player Ship 3", new Vector3(7, 4, 7), GameObject.Team.Player), new Vector3(7, 4, 7));
             this.AddEnvObject(GridCube.TerrainType.nebula, 2, 2, 2);
-            this.AddPlanet(6, 6, 6, 1);
-            FireOnShipsParticle.CreateParticle(Vector3.Zero);
+            this.AddPlanet(6, 6, 6, 2);
+            //FireOnShipsParticle.CreateParticle(Vector3.Zero);
             this.addGameObject(new LightShip("Enemy Ship 1", new Vector3(1, 4, 3), GameObject.Team.Enemy), new Vector3(1, 4, 3));
             this.addGameObject(new HeavyShip("Enemy Ship 2", new Vector3(4, 3, 3), GameObject.Team.Enemy), new Vector3(4, 3, 3));
             //this.addGameObject(createBasicShip("Enemy Ship 3", new Vector3(7, 4, 3), GameObject.Team.Enemy));
@@ -36,7 +36,6 @@ namespace SpaceHaste.Maps
                     }
                 }
             }
-
             //AddGridIsometric();
             Sounds.SoundManager.Sounds.TurnSoundOn(Sounds.ConstantSounds.FightorFlight);
         }

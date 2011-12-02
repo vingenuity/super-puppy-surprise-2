@@ -46,6 +46,8 @@ namespace SpaceHaste.Graphics
 
       //  GraphicsShaders GraphicsShader;
         public static Model TestCube;
+
+        public static Model IcePlanet;
         // Change the model to use our custom cartoon shading effect.
         //static Effect cartoonEffect;
 
@@ -64,6 +66,7 @@ namespace SpaceHaste.Graphics
         static void InitTestCube()
         {
             TestCube = Content.Load<Model>("Ship");
+            IcePlanet = Content.Load<Model>("icePlanet");
            // GraphicsShaders.ChangeEffectUsedByModel(TestCube, cartoonEffect);
         }
 
@@ -125,8 +128,8 @@ namespace SpaceHaste.Graphics
             for (int i = 0; i < Planets.Count; i++)
             {
 
-                DrawModel(GraphicsManager.TestCube,
-                    Matrix.CreateScale(.2f * Planets[i].Item2) 
+                DrawModel(GraphicsManager.IcePlanet,
+                    Matrix.CreateScale(15f * Planets[i].Item2) 
                     * Matrix.CreateTranslation(Maps.Map.map.GetCubeAt(Planets[i].Item1).Center-new Vector3(GridCube.GRIDSQUARELENGTH/2, GridCube.GRIDSQUARELENGTH/2, GridCube.GRIDSQUARELENGTH/2)
                         + new Vector3(GridCube.GRIDSQUARELENGTH, GridCube.GRIDSQUARELENGTH, GridCube.GRIDSQUARELENGTH) * (Planets[i].Item2)/2),
                     ControlManager.View, ControlManager.Projection);

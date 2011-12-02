@@ -77,6 +77,8 @@ namespace SpaceHaste
                         action = Tuple.Create(bestFiringLocation, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
                     else
                     {
+                        if(lastAction != Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser))
+                            action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser);
                         int enemyHighDamageRadius = (int)Math.Floor(100 / enemy.MovementEnergyCost);
                         if (DistanceBetween(myShip, enemy) <= enemyHighDamageRadius)
                         {

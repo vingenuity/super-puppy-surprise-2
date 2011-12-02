@@ -20,9 +20,6 @@ namespace SpaceHaste.Maps
         bool gridX1Zwas;
         bool grid0YZwas;
         bool grid1YZwas;
-        int gridXYwas;
-        int gridXZwas;
-        int gridYZwas;
         public static Map Map;
         public static bool isDrawingXGridBottom = false;
         public static bool isDrawingZGridBottom = false;
@@ -61,12 +58,18 @@ namespace SpaceHaste.Maps
             if (horizontalAngle > 3.48f && horizontalAngle < 5.91f)
                  grid0YZ = false;
             else grid0YZ = true;
-            if (horizontalAngle > 1.22f && horizontalAngle < 5.06f)
+            if (horizontalAngle > 1.91f && horizontalAngle < 4.37f)
                  gridXY0 = false;
             else gridXY0 = true;
-            if (horizontalAngle < 1.91f || horizontalAngle > 4.37f)
+            if (horizontalAngle < 1.28f || horizontalAngle > 5.06f)
                  gridXY1 = false;
             else gridXY1 = true;
+            if (verticalAngle < 1.25)
+                 gridX1Z = false;
+            else gridX1Z = true;
+            if (verticalAngle > 1.88)
+                 gridX0Z = false;
+            else gridX0Z = true;
 
             if (grid0YZ && !grid0YZwas)
             {
@@ -108,6 +111,27 @@ namespace SpaceHaste.Maps
             {
                 Map.RemoveXY1Matrix();
                 gridXY1was = false;
+            }
+
+            if (gridX0Z && !gridX0Zwas)
+            {
+                Map.AddGridX0Z();
+                gridX0Zwas = true;
+            }
+            if (!gridX0Z && gridX0Zwas)
+            {
+                Map.RemoveX0ZMatrix();
+                gridX0Zwas = false;
+            }
+            if (gridX1Z && !gridX1Zwas)
+            {
+                Map.AddGridX1Z();
+                gridX1Zwas = true;
+            }
+            if (!gridX1Z && gridX1Zwas)
+            {
+                Map.RemoveX1ZMatrix();
+                gridX1Zwas = false;
             }
 
             base.Update(gameTime);

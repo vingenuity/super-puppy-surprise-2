@@ -40,7 +40,6 @@ namespace SpaceHaste.Controls
             lastKState = Keyboard.GetState();
             lastGState = GamePad.GetState(PlayerIndex.One);
         }
-
         private bool isCameraButton(Buttons b)
         {
             if (b == Buttons.RightStick) return true;
@@ -201,10 +200,8 @@ namespace SpaceHaste.Controls
             if (reverse) BattleMechanicsManager.Instance.MoveSelectionLower();
             else BattleMechanicsManager.Instance.MoveSelectionHigher();
         }
-
         public override void Update(GameTime gameTime)
         {
-          
             //Remap Controls to standard if in menus, else remap dynamically to the camera perspective.
             if (GameMechanicsManager.gamestate == GameState.SelectShipAction || GameMechanicsManager.gamestate == GameState.SelectShipAttackAction)
                 RemapStandard();

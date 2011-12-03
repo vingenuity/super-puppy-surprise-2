@@ -107,6 +107,7 @@ namespace SpaceHaste
        
         public void ExitGameComponents()
         {
+            GameMechanicsManager.gamestate = GameState.Exiting;
            while (gameComponents.Count > 0)
             {
                 Components.Remove(gameComponents[0]);

@@ -32,8 +32,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         public ShipAttackSelectionMode ShipAttackModeSelection;
 
         //For selection and display thereof
-        Vector3 CurrentGridCubeSelected;
-        public GameObject CurrentGameObjectSelected;
+        public static Vector3 CurrentGridCubeSelected;
+        public static GameObject CurrentGameObjectSelected;
         Line YSelectedSquareLine;
         Line ZSelectedSquareLine;
         Line XSelectedSquareLine;

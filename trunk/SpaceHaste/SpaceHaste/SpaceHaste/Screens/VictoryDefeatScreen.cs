@@ -9,6 +9,7 @@
 
 #region Using Statements
 using Microsoft.Xna.Framework;
+using SpaceHaste;
 
 #endregion
 
@@ -92,6 +93,7 @@ namespace GameStateManagement
                 ScreenManager.RemoveScreen(screen);
             ScreenManager.AddScreen(new BackgroundScreen(), null);
             ScreenManager.AddScreen(new MainMenuScreen(), null);
+            Game1.game.LoadGameComponents();
            
         }
 

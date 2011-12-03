@@ -104,12 +104,11 @@ namespace SpaceHaste.Graphics
         /// </summary>
         public override void Update(GameTime gameTime)
         {
-         //   GraphicsShader.Update(gameTime);
+            //GraphicsShader.Update(gameTime);
             UpdateWorldMatricies(gameTime);
         }
         void DrawAllModels()
         {
-           
             for (int i = 0; i < GraphicsManager.GraphicsGameObjects.Count; i++)
                 DrawModel(GraphicsManager.GraphicsGameObjects[i].Model,
                     GraphicsManager.GraphicsGameObjects[i].World,
@@ -127,7 +126,6 @@ namespace SpaceHaste.Graphics
             }
             for (int i = 0; i < Planets.Count; i++)
             {
-
                 DrawModel(GraphicsManager.IcePlanet,
                     Matrix.CreateScale(15f * Planets[i].Item2) 
                     * Matrix.CreateTranslation(Maps.Map.map.GetCubeAt(Planets[i].Item1).Center-new Vector3(GridCube.GRIDSQUARELENGTH/2, GridCube.GRIDSQUARELENGTH/2, GridCube.GRIDSQUARELENGTH/2)
@@ -158,10 +156,24 @@ namespace SpaceHaste.Graphics
         {
             for (int i = 0; i < GraphicsGameObjects.Count; i++)
             {
-                if(GraphicsGameObjects[i].team == 0)
-                    GraphicsGameObjects[i].World = Matrix.CreateScale(GraphicsGameObjects[i].Scale) * Matrix.CreateRotationY((float)Math.PI) * Matrix.CreateTranslation(GraphicsGameObjects[i].DrawPosition);
+                if (GraphicsGameObjects[i].AnimationRotation == Vector3.Zero)
+                {
+                    GraphicsGameObjects[i].World = Matrix.CreateScale(GraphicsGameObjects[i].Scale) *
+                        Matrix.CreateFromYawPitchRoll(
+                        GraphicsGameObjects[i].IdleAngle.Y + GraphicsGameObjects[i].AnimationRotation.Y,
+                        GraphicsGameObjects[i].IdleAngle.X + GraphicsGameObjects[i].AnimationRotation.X,
+                        GraphicsGameObjects[i].IdleAngle.Z + GraphicsGameObjects[i].AnimationRotation.Z)
+                        * Matrix.CreateTranslation(GraphicsGameObjects[i].DrawPosition);
+                }
                 else
-                     GraphicsGameObjects[i].World = Matrix.CreateScale(GraphicsGameObjects[i].Scale) * Matrix.CreateTranslation(GraphicsGameObjects[i].DrawPosition) ;
+                {
+                    GraphicsGameObjects[i].World = Matrix.CreateScale(GraphicsGameObjects[i].Scale) *
+                        Matrix.CreateFromYawPitchRoll(
+                        GraphicsGameObjects[i].AnimationRotation.Y,
+                        GraphicsGameObjects[i].AnimationRotation.X,
+                        GraphicsGameObjects[i].AnimationRotation.Z)
+                        * Matrix.CreateTranslation(GraphicsGameObjects[i].DrawPosition);
+                }
             }
         }
 

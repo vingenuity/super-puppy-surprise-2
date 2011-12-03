@@ -255,6 +255,16 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     ShipThrustersParticle.Position = CurrentGameObjectSelected.DrawPosition; 
                     GridCube c =  Map.map.GetCubeAt(ListOfMovementSquares[0]);
 
+                    Vector3 v = (c.Position - CurrentGameObjectSelected.GridPosition);
+
+                    if(v.X == 1 && v.Y == 0 && v.Z == 0) { CurrentGameObjectSelected.AnimationRotation = new Vector3(0, (float)(Math.PI / 2), 0); }
+                    if (v.X == -1 && v.Y == 0 && v.Z == 0) { CurrentGameObjectSelected.AnimationRotation = new Vector3(0, -(float)(Math.PI / 2), 0); }
+                    if (v.X == 0 && v.Y == 0 && v.Z == 1) { 
+                        CurrentGameObjectSelected.AnimationRotation = new Vector3(0, 2*(float)(Math.PI), 0); }
+                    if (v.X == 0 && v.Y == 0 && v.Z == -1) { CurrentGameObjectSelected.AnimationRotation = new Vector3(0, (float)(Math.PI), 0); }
+
+                    if (v.X == 0 && v.Y == 1 && v.Z == 0) { CurrentGameObjectSelected.AnimationRotation = new Vector3(-(float)(Math.PI)/2, 0, 0); }
+                    if (v.X == 0 && v.Y == -1 && v.Z == 0) { CurrentGameObjectSelected.AnimationRotation = new Vector3((float)(Math.PI) / 2, 0, 0); }
 
                     if (timer < 1)
                     {
@@ -275,6 +285,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 }
                 if (ListOfMovementSquares.Count == 0)
                 {
+                    CurrentGameObjectSelected.AnimationRotation = new Vector3(0, 0, 0);
                     if (CurrentGameObjectSelected.energy[0] - CurrentGameObjectSelected.MovementEnergyCost < 0)
                         MoveEnabled = false;
                     NextShipAction();

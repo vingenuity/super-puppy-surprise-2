@@ -55,7 +55,9 @@ namespace SpaceHaste.GameObjects
         public int accuracy;
         public bool LasersDisabled;
         public bool EnginesDisabled;
-
+        public Vector3 IdleAngle;
+        public Vector3 AnimationRotation;
+        public Vector3 DefaultRotation;
         //Constructor
         public GameObject(String name, Vector3 location, Team side, int maxHull, int maxShield, double regeneration, int numMissiles, int lsrDmg, int missDmg, double[] eff)
         {
@@ -97,6 +99,13 @@ namespace SpaceHaste.GameObjects
             accuracy = 60;
             LasersDisabled = false;
             EnginesDisabled = false;
+
+            if (team == Team.Enemy)
+                IdleAngle = new Vector3(0, 0, 0);
+            else
+                IdleAngle = new Vector3(0,(float)Math.PI,0);
+
+            AnimationRotation = new Vector3(0, 0, 0);
         }
 
         public virtual void Load()
@@ -113,8 +122,10 @@ namespace SpaceHaste.GameObjects
         public virtual void Unload()
         {
             GridLocation.RemoveObject(this);
+            
             if(FireParticle != null)
                 ParticleManager.Instance.Remove(FireParticle);
+
             Map.map.removeGameObject(this);
             GraphicsManager.GraphicsGameObjects.Remove(this);
             GameMechanicsManager.GameObjectList.Remove(this);

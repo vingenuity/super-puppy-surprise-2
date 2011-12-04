@@ -67,6 +67,7 @@ namespace SpaceHaste.Graphics
         {
             TestCube = Content.Load<Model>("Ship");
             IcePlanet = Content.Load<Model>("icePlanet");
+            Missile.Model = Content.Load<Model>("Ship");
            // GraphicsShaders.ChangeEffectUsedByModel(TestCube, cartoonEffect);
         }
 
@@ -131,6 +132,17 @@ namespace SpaceHaste.Graphics
                     * Matrix.CreateTranslation(Maps.Map.map.GetCubeAt(Planets[i].Item1).Center-new Vector3(GridCube.GRIDSQUARELENGTH/2, GridCube.GRIDSQUARELENGTH/2, GridCube.GRIDSQUARELENGTH/2)
                         + new Vector3(GridCube.GRIDSQUARELENGTH, GridCube.GRIDSQUARELENGTH, GridCube.GRIDSQUARELENGTH) * (Planets[i].Item2)/2),
                     ControlManager.View, ControlManager.Projection);
+            }
+            if (Missile.shouldDraw == true)
+            {
+                Matrix world = Matrix.CreateScale(.05f) *
+                        Matrix.CreateFromYawPitchRoll(
+                        Missile.Direction.X,
+                        Missile.Direction.Y,
+                        Missile.Direction.Z)
+                        * Matrix.CreateTranslation(Missile.DrawPosition);
+                DrawModel(Missile.Model, world, ControlManager.View, ControlManager.Projection);
+                     
             }
         }
         private void DrawModel(Model model, Matrix world, Matrix View, Matrix Projections)

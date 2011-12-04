@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using SpaceHaste.GameMech.CutScenes;
+using GameStateManagement;
 
 namespace SpaceHaste.GameMech.LevelManagers
 {
@@ -11,7 +12,8 @@ namespace SpaceHaste.GameMech.LevelManagers
     {
 
         bool loadCutScene = true;
-        CutScene cutScene = new CutScene();
+        CutScene cutSceneStart = new CutScene();
+        public CutScene cutSceneEnd = new CutScene();
 
         public static LevelManager Instance;
 
@@ -25,40 +27,70 @@ namespace SpaceHaste.GameMech.LevelManagers
             if (loadCutScene)
             {
                 GameMechanicsManager.gamestate = GameState.CutScene;
-                cutScene = new CutScene("TestCutScene1");
-                cutScene.drawCutscene();
-                cutScene.Text.RemoveAt(0);
+                cutSceneStart = new CutScene("TestCutScene1");
+                cutSceneStart.drawCutscene();
+                cutSceneStart.Text.RemoveAt(0);
+                try {
+                    cutSceneEnd = new CutScene("TestCutScene1");
+                    //cutSceneEnd.drawCutscene();
+                    cutSceneEnd.Text.RemoveAt(0);
+                }
+                catch { }
             }
             else
                 GameMechanicsManager.gamestate = GameState.StartBattle;
         }
 
         public CutScene getScene() {
-            return cutScene;
+            if (GameMechanicsManager.gamestate == GameState.CutSceneEnd)
+                return cutSceneEnd;
+            return cutSceneStart;
         }
 
         public void Update(GameTime gameTime)
         {
         }
-        internal void NextText()
+        internal void NextTextStart()
         {
             if (GameMechanicsManager.gamestate == GameState.CutScene)
             {
-                if (cutScene.Text.Count > 0)
+                if (cutSceneStart.Text.Count > 0)
                 {
-                    cutScene.currentLine = cutScene.Text[0];
-                    cutScene.Text.RemoveAt(0);
-                    cutScene.drawCutscene();
+                    cutSceneStart.currentLine = cutSceneStart.Text[0];
+                    cutSceneStart.Text.RemoveAt(0);
+                    cutSceneStart.drawCutscene();
 
                 }
                 else
                 {
 
 
-                    cutScene.currentLine = "";
-                    cutScene.destroyBox();
+                    cutSceneStart.currentLine = "";
+                    cutSceneStart.destroyBox();
 
                     GameMechanicsManager.gamestate = GameState.StartBattle;
+                }
+            }
+        }
+        internal void NextTextEnd()
+        {
+            if (GameMechanicsManager.gamestate == GameState.CutSceneEnd)
+            {
+                if (cutSceneEnd.Text.Count > 0)
+                {
+                    cutSceneEnd.currentLine = cutSceneEnd.Text[0];
+                    cutSceneEnd.Text.RemoveAt(0);
+                    cutSceneEnd.drawCutscene();
+
+                }
+                else
+                {
+
+
+                    cutSceneEnd.currentLine = "";
+                    cutSceneEnd.destroyBox();
+
+                    Game1.game.ScreenManager.AddScreen(new VictoryDefeatScreen(BattleMechanicsManagers.BattleMechanicsManager.VictoryDefeatScreenText, ""), PlayerIndex.One);
                 }
             }
         }

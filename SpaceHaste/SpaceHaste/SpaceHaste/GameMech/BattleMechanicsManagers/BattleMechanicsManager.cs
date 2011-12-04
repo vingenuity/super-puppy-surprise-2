@@ -12,6 +12,7 @@ using SpaceHaste.Sounds;
 using GameStateManagement;
 using SpaceHaste.Controls;
 using SpaceHaste.DPSFParticles;
+using SpaceHaste.Graphics;
 
 namespace SpaceHaste.GameMech.BattleMechanicsManagers
 {    
@@ -226,7 +227,16 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 {
                     timer = 0;
                     if (action.Item2 == ShipSelectionMode.Attack)
-                        GameMechanicsManager.gamestate = GameState.SelectShipAttackAction;
+                    {
+                        if ((action.Item3 == ShipAttackSelectionMode.Laser))
+                            GameMechanicsManager.gamestate = GameState.EnterShipActionAttackLasers;
+                        else if ((action.Item3 == ShipAttackSelectionMode.Missile))
+                            GameMechanicsManager.gamestate = GameState.EnterShipActionAttackMissiles;
+                        else if ((action.Item3 == ShipAttackSelectionMode.TargetEngine))
+                            GameMechanicsManager.gamestate = GameState.EnterShipActionTargetEngines;
+                        else if ((action.Item3 == ShipAttackSelectionMode.TargetWeapon))
+                            GameMechanicsManager.gamestate = GameState.EnterShipActionTargetLasers;
+                    }
                     else
                         GameMechanicsManager.gamestate = GameState.EnterShipAction;
                     Selection();
@@ -241,15 +251,51 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 }                
             }
             if (GameMechanicsManager.gamestate == GameState.AttackingMissileAnimation)
-            {
-                if (timer > 1)
-                {
-                    NextShipAction();
-                    timer = 0;
+            {           
+                    if (ListOfMovementSquares.Count > 0)
+                    {
+                        //ShipThrustersParticle.Position = CurrentGameObjectSelected.DrawPosition; 
+                        GridCube c = Map.map.GetCubeAt(ListOfMovementSquares[0]);
+
+                        Vector3 v = (c.Position - Missile.GridPosition);
+
+                        if (v.X == 1 && v.Y == 0 && v.Z == 0) { Missile.Direction = new Vector3(0, (float)(Math.PI / 2), 0); }
+                        if (v.X == -1 && v.Y == 0 && v.Z == 0) { Missile.Direction = new Vector3(0, -(float)(Math.PI / 2), 0); }
+                        if (v.X == 0 && v.Y == 0 && v.Z == 1)
+                        {
+                            Missile.Direction = new Vector3(0, 2 * (float)(Math.PI), 0);
+                        }
+                        if (v.X == 0 && v.Y == 0 && v.Z == -1) { Missile.Direction = new Vector3(0, (float)(Math.PI), 0); }
+
+                        if (v.X == 0 && v.Y == 1 && v.Z == 0) { Missile.Direction = new Vector3(-(float)(Math.PI) / 2, 0, 0); }
+                        if (v.X == 0 && v.Y == -1 && v.Z == 0) { Missile.Direction = new Vector3((float)(Math.PI) / 2, 0, 0); }
+
+                        if (timer < 1)
+                        {
+                           // InterpDistance = CurrentGameObjectSelected.GridLocation.Center - c.Center;
+                          //  CurrentGameObjectSelected.DrawPosition = CurrentGameObjectSelected.GridLocation.Center - InterpDistance * (float)(timer / 1.0);
+                        }
+                        else
+                        {
+                            //Map.map.MoveObject(CurrentGameObjectSelected, (int)c.AsVector().X, (int)c.AsVector().Y, (int)c.AsVector().Z);
+
+                            //CurrentGameObjectSelected.energy[0] -= CurrentGameObjectSelected.MovementEnergyCost;
+
+
+                            ListOfMovementSquares.RemoveAt(0);
+                            timer = 0;
+                            //ParticleManager.Instance.Remove(ShipThrustersParticle);
+                        }
+                    }
+                    if (ListOfMovementSquares.Count == 0)
+                    {
+                        //CurrentGameObjectSelected.AnimationRotation = new Vector3(0, 0, 0);
+                        NextShipAction();
+                        // ParticleManager.Instance.Remove(ShipThrustersParticle);
+                    }
                 }
-            }
-            if (GameMechanicsManager.gamestate == GameState.MovingShipAnimation)
-            {
+                if (GameMechanicsManager.gamestate == GameState.MovingShipAnimation)
+               {
                 if (ListOfMovementSquares.Count > 0)
                 {
                     ShipThrustersParticle.Position = CurrentGameObjectSelected.DrawPosition; 
@@ -292,6 +338,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     ParticleManager.Instance.Remove(ShipThrustersParticle);
                 }
             }
+            
         }
         #region Selection Functions
         void SelectionAttack()
@@ -349,11 +396,20 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
             if (Map.map.IsTargetCubeInRange(offender.GridLocation, tempTarget.GridLocation))
             {
-                //ListOfMissilePath = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath();
+
+                ListOfMovementSquares = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath();
+
+                ListOfMovementSquares.Add(CurrentGridCubeSelected);
+                timer = 0;
+               // GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
+               // SoundManager.Sounds.PlaySound(SoundEffects.engines);
+                if (ListOfMovementSquares.Count > 0)
+                    ListOfMovementSquares.RemoveAt(0);
+
                 //play missile sound
                 SoundManager.Sounds.PlaySound(SoundEffects.missExpl);
                 target.isHit(offender.dmg[1]);
-                offender.MissileCount--;
+                offender.MissileCount--;         
                 AttackEnabled = false;
                 NextShipAction();
                 GameMechanicsManager.gamestate = GameState.AttackingMissileAnimation;
@@ -609,18 +665,43 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 switch (ShipAttackModeSelection)
                 {
                     case (ShipAttackSelectionMode.Laser):
-                        SelectionAttack();
+                        GameMechanicsManager.gamestate = GameState.EnterShipActionAttackLasers;    
+                    //SelectionAttack();
                         return;
                     case (ShipAttackSelectionMode.Missile):
-                        SelectionMissile();
+                        GameMechanicsManager.gamestate = GameState.EnterShipActionAttackMissiles;    
+                    //SelectionMissile();
                         return;
                     case (ShipAttackSelectionMode.TargetEngine):
-                        SelectionTargetEngines();
+                        GameMechanicsManager.gamestate = GameState.EnterShipActionTargetEngines;        
+                    //SelectionTargetEngines();
                         return;
                     case (ShipAttackSelectionMode.TargetWeapon):
-                        SelectionTargetLasers();
+                        GameMechanicsManager.gamestate = GameState.EnterShipActionTargetLasers;    
+                        //SelectionTargetLasers();
                         return;
                 }
+            }
+            if (GameMechanicsManager.gamestate == GameState.EnterShipActionAttackLasers)
+            {
+                SelectionAttack();
+                return;
+            }
+            if (GameMechanicsManager.gamestate == GameState.EnterShipActionAttackMissiles)
+            {
+                SelectionMissile();
+                return;
+            }
+            if (GameMechanicsManager.gamestate == GameState.EnterShipActionTargetEngines)
+            {
+                SelectionTargetEngines();
+                return;
+
+            }
+            if (GameMechanicsManager.gamestate == GameState.EnterShipActionTargetLasers )
+            {
+                SelectionTargetLasers();
+                return;
             }
         }
         internal void Back()
@@ -647,9 +728,19 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 ScrollUpInAttackUnitActionsList();
             }
         }
+        bool isInsideAnEnterShipAction()
+        {
+            if (GameMechanicsManager.gamestate == GameState.EnterShipAction
+                || GameMechanicsManager.gamestate == GameState.EnterShipActionTargetLasers
+                || GameMechanicsManager.gamestate == GameState.EnterShipActionAttackMissiles
+                || GameMechanicsManager.gamestate == GameState.EnterShipActionTargetEngines
+                || GameMechanicsManager.gamestate == GameState.EnterShipActionAttackLasers)
+                return true;
+            return false;
+        }
         internal void MoveSelectionDown()
         {
-            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
+            if (isInsideAnEnterShipAction())
             {
                 if (CurrentGridCubeSelected.X > 0) CurrentGridCubeSelected.X--;
                 UpdateSelectionLine();
@@ -665,7 +756,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         internal void MoveSelectionLeft()
         {
-            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
+            if (isInsideAnEnterShipAction())
             {
                 if (CurrentGridCubeSelected.Z > 0) CurrentGridCubeSelected.Z--;
                 UpdateSelectionLine();
@@ -673,7 +764,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         internal void MoveSelectionRight()
         {
-            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
+            if (isInsideAnEnterShipAction())
             {
                 if (CurrentGridCubeSelected.Z < Map.map.Size.X - 1) CurrentGridCubeSelected.Z++;
                 UpdateSelectionLine();
@@ -681,7 +772,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         internal void MoveSelectionHigher()
         {
-            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
+            if (isInsideAnEnterShipAction())
             {
                 if (CurrentGridCubeSelected.Y < Map.map.Size.Y - 1) CurrentGridCubeSelected.Y++;
                 UpdateSelectionLine();
@@ -690,7 +781,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         internal void MoveSelectionLower()
         {
-            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
+            if (isInsideAnEnterShipAction())
             {
                 if (CurrentGridCubeSelected.Y > 0) CurrentGridCubeSelected.Y--;
                 UpdateSelectionLine();

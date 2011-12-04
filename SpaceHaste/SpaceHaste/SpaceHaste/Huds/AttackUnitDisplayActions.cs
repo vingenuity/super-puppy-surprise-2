@@ -13,9 +13,10 @@ namespace SpaceHaste.Huds
     public class AttackUnitDisplayActions
     {
         public bool DisplayCommands;
-        public bool CanAttack;
-        public bool CanWait;
-        public bool CanMove;
+        public bool CanMissiles;
+        public bool CanLasers;
+        public bool CanTargetLasers;
+        public bool CanTargetEngines;
         int Selected = 0;
         Vector2 MenuAttackStringPosition;
         Vector2 MenuMoveStringPosition;
@@ -46,7 +47,8 @@ namespace SpaceHaste.Huds
             spriteBatch.Draw(texture1, new Rectangle(550, 20, 150, 150), Color.White);
             if (Selected == 0)
                 spriteBatch.DrawString(spriteFont, "Laser", MenuMoveStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
-           // else if (CanMove)
+            else if (!CanLasers)
+                spriteBatch.DrawString(spriteFont, "Laser", MenuMoveStringPosition, Color.Gray);
             else
                 spriteBatch.DrawString(spriteFont, "Laser", MenuMoveStringPosition, Color.White);
            // else
@@ -54,16 +56,20 @@ namespace SpaceHaste.Huds
             if (Selected == 1)
                 spriteBatch.DrawString(spriteFont, "Missile", MenuAttackStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
            // else if (CanAttack)
+            else if (!CanMissiles)
+                spriteBatch.DrawString(spriteFont, "Missile", MenuAttackStringPosition, Color.Gray);
             else
                 spriteBatch.DrawString(spriteFont, "Missile", MenuAttackStringPosition, Color.White);
             if (Selected == 2)
                 spriteBatch.DrawString(spriteFont, "Target Weapons", MenuWaitStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
-            // else if (CanAttack)
+            else if (!CanTargetLasers)
+                spriteBatch.DrawString(spriteFont, "Target Weapons", MenuWaitStringPosition, Color.Gray);
             else
                 spriteBatch.DrawString(spriteFont, "Target Weapons", MenuWaitStringPosition, Color.White);
             if (Selected == 3)
                 spriteBatch.DrawString(spriteFont, "Target Engines", MenutargetWeaponStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
-            // else if (CanAttack)
+            else if (!CanTargetEngines)
+                spriteBatch.DrawString(spriteFont, "Target Engines", MenutargetWeaponStringPosition, Color.Gray);
             else
                 spriteBatch.DrawString(spriteFont, "Target Engines", MenutargetWeaponStringPosition, Color.White);
           //  else
@@ -77,6 +83,10 @@ namespace SpaceHaste.Huds
                 ShowShipAttackActions = true;
             else
                 ShowShipAttackActions = false;
+            CanLasers = BattleMechanicsManager.Instance.AttackLasers;
+            CanMissiles = BattleMechanicsManager.Instance.AttackMissiles;
+            CanTargetEngines = BattleMechanicsManager.Instance.AttackTargetEngines;
+            CanTargetLasers = BattleMechanicsManager.Instance.AttackTargetLasers;
         }
         public void Attack()
         {

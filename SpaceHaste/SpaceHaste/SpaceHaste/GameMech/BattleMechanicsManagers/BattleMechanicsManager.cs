@@ -45,7 +45,12 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         public bool MoveEnabled;
         public bool WaitEnabled;
         public bool AttackEnabled;
-        
+
+        public bool AttackMissiles;
+        public bool AttackLasers;
+        public bool AttackTargetEngines;
+        public bool AttackTargetLasers;
+
         //Particles
         ThrustersParticle ShipThrustersParticle;
 
@@ -106,11 +111,37 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             MoveEnabled = true;
             WaitEnabled = true;
             AttackEnabled = true;
+
+            AttackLasers = true;
+            AttackMissiles = true;
+            AttackTargetEngines = true;
+            AttackTargetLasers = true;
+
             UpdateSelectionLine();
             NextShipAction();
         }
         private void NextShipAction()
         {
+
+            if (CurrentGameObjectSelected.MissileCount > 0)
+                AttackMissiles = true;
+            else
+                AttackMissiles = false;
+
+            if (CurrentGameObjectSelected.energy[0] > CurrentGameObjectSelected.AttackEnergyCost)
+            {
+                AttackTargetEngines = true;
+                AttackTargetLasers = true;
+                AttackLasers = true;
+            }
+            else
+            {
+                AttackTargetEngines = false;
+                AttackTargetLasers = false;
+                AttackLasers = false;
+            }
+            if (AttackMissiles || AttackTargetEngines || AttackTargetLasers || AttackLasers)
+                AttackEnabled = true;
 
             GameMechanicsManager.gamestate = GameState.SelectShipAction;
             ScrollDownInUnitListIfActionIsDisabled();
@@ -273,10 +304,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                         if (v.X == 0 && v.Y == 1 && v.Z == 0) { Missile.Direction = new Vector3(-(float)(Math.PI) / 2, 0, 0); }
                         if (v.X == 0 && v.Y == -1 && v.Z == 0) { Missile.Direction = new Vector3((float)(Math.PI) / 2, 0, 0); }
 
-                        if (timer < 1)
+                        if (timer < .3)
                         {
                              InterpDistance = Map.map.GetCubeAt(Missile.GridPosition).Center - c.Center;
-                             Missile.DrawPosition =  Map.map.GetCubeAt(Missile.GridPosition).Center - InterpDistance * (float)(timer / 1.0);
+                             Missile.DrawPosition =  Map.map.GetCubeAt(Missile.GridPosition).Center - InterpDistance * (float)(timer / .3f);
                         }
                         else
                         {
@@ -394,7 +425,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
             if (offender.MissileCount <= 0)
             {
-                AttackEnabled = false;
+               // AttackEnabled = false;
                 NextShipAction();
             }
 
@@ -415,7 +446,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 target.isHit(offender.dmg[1]);
                 Missile.GridPosition = CurrentGameObjectSelected.GridPosition;
                 offender.MissileCount--;         
-                AttackEnabled = false;
+                //AttackEnabled = false;
                 NextShipAction();
                 GameMechanicsManager.gamestate = GameState.AttackingMissileAnimation;
             }
@@ -435,7 +466,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
             if (offender.energy[0] < offender.AttackEnergyCost)
             {
-                AttackEnabled = false;
+                //AttackEnabled = false;
                 NextShipAction();
             }
 
@@ -641,7 +672,9 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             
             if (GameMechanicsManager.gamestate == GameState.SelectShipAction)
             {
+                
                 ShipModeSelection = (ShipSelectionMode)(((int)ShipModeSelection) % 3);
+               
                 GameMechanicsManager.gamestate = GameState.EnterShipAction;
                 if (ShipModeSelection == ShipSelectionMode.Wait)
                     SelectionWait();
@@ -719,7 +752,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         internal void MoveSelectionUp()
         {
-            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
+            if (isInsideAnEnterShipAction())
             {
                 if (CurrentGridCubeSelected.X < Map.map.Size.X - 1) CurrentGridCubeSelected.X++;
                 UpdateSelectionLine();
@@ -800,10 +833,24 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             if(a < 0)
                 a = 3;
             ShipAttackModeSelection = (ShipAttackSelectionMode)(a % 4);
+            if ((ShipAttackModeSelection == ShipAttackSelectionMode.Laser && !AttackLasers)
+                || (ShipAttackModeSelection == ShipAttackSelectionMode.Missile && !AttackMissiles)
+                || (ShipAttackModeSelection == ShipAttackSelectionMode.TargetEngine && !AttackTargetEngines)
+                || (ShipAttackModeSelection == ShipAttackSelectionMode.TargetWeapon && !AttackTargetLasers))
+            {
+                ScrollUpInAttackUnitActionsList();
+            }
         }
         private void ScrollDownInAttackUnitActionsList()
         {
             ShipAttackModeSelection = (ShipAttackSelectionMode)(((int)(ShipAttackModeSelection) + 1) % 4);
+            if ((ShipAttackModeSelection == ShipAttackSelectionMode.Laser && !AttackLasers)
+                || (ShipAttackModeSelection == ShipAttackSelectionMode.Missile && !AttackMissiles)
+                || (ShipAttackModeSelection == ShipAttackSelectionMode.TargetEngine && !AttackTargetEngines)
+                || (ShipAttackModeSelection == ShipAttackSelectionMode.TargetWeapon && !AttackTargetLasers))
+            {
+                ScrollDownInAttackUnitActionsList();
+            }
         }
 
         private void ScrollUpInUnitActionsList()

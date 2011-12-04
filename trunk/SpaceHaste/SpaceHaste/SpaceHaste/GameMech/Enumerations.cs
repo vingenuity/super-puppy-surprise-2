@@ -38,6 +38,7 @@ namespace SpaceHaste.GameMech
         AttackingDisableWeaponAnimation,
         AttackingDisableEngineAnimation,
         CutScene,
+        CutSceneEnd,
         Exiting,
     };
     public class Enumerations

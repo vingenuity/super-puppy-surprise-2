@@ -96,7 +96,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
         private void NextShipTurn()
         {
-            CheckVictory();
+            if (CheckVictory())
+                return;
             SortGameObjectList();
             if (!enabled)
             {
@@ -187,11 +188,11 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             if (ShipModeSelection == ShipSelectionMode.Attack && !AttackEnabled)
                 ScrollDownInUnitActionList();
         }
-
-        void CheckVictory()
+        public static string VictoryDefeatScreenText;
+        bool CheckVictory()
         {
             if (!enabled)
-                return;
+                return false;
             bool PlayerFound = false;
             bool EnemyFound = false;
             foreach(GameObject obj in GameMechanicsManager.GameObjectList)
@@ -202,12 +203,17 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     EnemyFound = true;
             }
             if (PlayerFound && EnemyFound)
-                return;
-            string VictoryDefeatScreenText = "";
+                return false;
+            VictoryDefeatScreenText = "";
             if (!PlayerFound)
                 VictoryDefeatScreenText = "You have been Destroyed";
             else if (!EnemyFound)
                 VictoryDefeatScreenText = "Enemy Destroyed";
+            if (LevelManagers.LevelManager.Instance.cutSceneEnd.currentLine != null)
+            {
+                GameMechanicsManager.gamestate = GameState.CutSceneEnd;
+                return true;
+            }
             if (Game1.USEMENUS)
             {
                 enabled = false;
@@ -215,6 +221,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
             else
                 Game1.game.LoadGameComponents();
+            return true;
         }
         double timer = 0;
         List<Vector3> ListOfMovementSquares = new List<Vector3>();

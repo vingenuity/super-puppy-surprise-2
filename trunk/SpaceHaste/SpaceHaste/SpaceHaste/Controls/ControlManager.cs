@@ -122,10 +122,15 @@ namespace SpaceHaste.Controls
             else
                 PadMap.Add(newButton, action);
         }
-        private void RemapCutScene()
+        private void RemapCutSceneEnd()
         {
-            Remap(Buttons.A, new GameAction(LevelManager.Instance.NextText));
-            Remap(Keys.Enter, new GameAction(LevelManager.Instance.NextText));
+            Remap(Buttons.A, new GameAction(LevelManager.Instance.NextTextEnd));
+            Remap(Keys.Enter, new GameAction(LevelManager.Instance.NextTextEnd));
+        }
+        private void RemapCutSceneStart()
+        {
+            Remap(Buttons.A, new GameAction(LevelManager.Instance.NextTextStart));
+            Remap(Keys.Enter, new GameAction(LevelManager.Instance.NextTextStart));
         }
         //These functions dynamically remap the controls for the game situation.
         private void RemapStandard()
@@ -206,7 +211,9 @@ namespace SpaceHaste.Controls
             if (GameMechanicsManager.gamestate == GameState.SelectShipAction || GameMechanicsManager.gamestate == GameState.SelectShipAttackAction)
                 RemapStandard();
             else if (GameMechanicsManager.gamestate == GameState.CutScene)
-                RemapCutScene();
+                RemapCutSceneStart();
+            else if (GameMechanicsManager.gamestate == GameState.CutSceneEnd)
+                RemapCutSceneEnd();
             else
                 RemapToCameraPersp();
 

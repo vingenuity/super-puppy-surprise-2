@@ -254,7 +254,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             {           
                     if (ListOfMovementSquares.Count > 0)
                     {
+                        Missile.shouldDraw = true;
                         //ShipThrustersParticle.Position = CurrentGameObjectSelected.DrawPosition; 
+                        
+
                         GridCube c = Map.map.GetCubeAt(ListOfMovementSquares[0]);
 
                         Vector3 v = (c.Position - Missile.GridPosition);
@@ -272,13 +275,13 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
                         if (timer < 1)
                         {
-                           // InterpDistance = CurrentGameObjectSelected.GridLocation.Center - c.Center;
-                          //  CurrentGameObjectSelected.DrawPosition = CurrentGameObjectSelected.GridLocation.Center - InterpDistance * (float)(timer / 1.0);
+                             InterpDistance = Map.map.GetCubeAt(Missile.GridPosition).Center - c.Center;
+                             Missile.DrawPosition =  Map.map.GetCubeAt(Missile.GridPosition).Center - InterpDistance * (float)(timer / 1.0);
                         }
                         else
                         {
                             //Map.map.MoveObject(CurrentGameObjectSelected, (int)c.AsVector().X, (int)c.AsVector().Y, (int)c.AsVector().Z);
-
+                            Missile.GridPosition = ListOfMovementSquares[0];
                             //CurrentGameObjectSelected.energy[0] -= CurrentGameObjectSelected.MovementEnergyCost;
 
 
@@ -289,6 +292,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     }
                     if (ListOfMovementSquares.Count == 0)
                     {
+                        Missile.shouldDraw = false;
                         //CurrentGameObjectSelected.AnimationRotation = new Vector3(0, 0, 0);
                         NextShipAction();
                         // ParticleManager.Instance.Remove(ShipThrustersParticle);
@@ -409,6 +413,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 //play missile sound
                 SoundManager.Sounds.PlaySound(SoundEffects.missExpl);
                 target.isHit(offender.dmg[1]);
+                Missile.GridPosition = CurrentGameObjectSelected.GridPosition;
                 offender.MissileCount--;         
                 AttackEnabled = false;
                 NextShipAction();

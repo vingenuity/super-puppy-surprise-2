@@ -1,0 +1,107 @@
+SPACE HASTE ACT 1
+
+Scene 1
+	Captain Ken Ceruleo's Team is on patrol when they make contact with a rebel patrol. Ceruleo is surpirsed to find that the rebels have laser capabilities that can damage his ship. At the end of the battle, he expresses his concerns about the unusual nature of the conflict to his crew and Bbattalion commander, Lieutenant Colonel Albid.\
+	**Map
+	* Long, skinny, no features
+	
+	Intro: Captain Ceruleo of the Federal Army, on patrol in the Zulu Yankee sector...
+	Executive Officer Argent: Sir, we have just received resupply from Apfel.
+	Commander Ceruleo: Thank you, Lieutenant Argent. Please send my regards to Apfel.
+	Argent: Katie Door is on the comm now if you want to say something.
+	Ceruleo: Of course! Katie, thank you for your continued support of our war efforts.
+	Katie: You're very welcome, Ken. I just wish this bloody conflict could end soon.
+	Ceruleo: I'll do what I can, Katie.
+	Katie: You and I still need to discuss my father.
+	Ceruleo: The CEO?
+	Scout Leader 2LT Viridis: Sir, the enemy!
+	Concurrently:
+		Ceruleo: Excuse me Katie, I have matter to attned to.
+		Viridis: I'm hit!
+		Argent: Attack patten 1-Alpha, go!
+	Concurrently:
+		Katie: Good luck, Ken!
+		Argent: Green group, fall back. Viridis, status report. Red group, advance.
+		Rubber: They can fire through our shields!? I'm on my way, Viridis!
+	Ceruleo: It begins. ALL UNITS ADVANCE!
+	
+	**Battle**
+	
+	Ceruleo: ...
+	Argent: Are you okay, sir?
+	Ceruleo: How did the rebels get our shield frequencies? 
+	Ceruleo: Argent, send recue crews. All surviving personel are now prisioners of the Federation.
+	Argent: Incoming transmission, sir.
+	Albid: Baker 16, this is Willy 16.
+	Ceruleo: This is Baker 16.
+	Albid: Ken, is everything alright?
+	Ceruleo: Yes, sir. We made contact with the enemy. They know our shield frequencies.
+	Albid: So they do. Send a sit rep when you can.
+	Ceruleo: Roger, sir.
+	Albid: Kenneth, is there something on your mind.
+	Ceruleo: Yes. I have a bad feeling about this conflict. Every time we come close to finishing the rebels they bounce back like this.
+	Albid: Don't think too much of it. Many wars go like this.
+	Ceruleo: Yes, sir.
+	Albid: Well, good luck. Charlie-Mike. Willy 16-out.
+	Argent: Sir, I have that sit-rep.
+	Ceruleo: Thanks. Charlie-Mike, right?
+	Argent: Yeah, Ken. Continue Mission.
+	
+Scene 2
+	Albid is pleased with Ceruleo's performance and sends him to a vanguard effort to bring the fight to the enemy. Ceruleo fakes a distress call, laying in ambush. He springs the ambush on a rebel ship that responds but the rebels knew of the ambush and counter-ambush Ceruleo.
+	**Map
+	* long, less skinny
+	* all but one ship is hiding in a nebula
+	
+	Viridis: I can't believe we're on the vanguard! This is exciting!
+	Rubber: I can't believe you're still talking.
+	Argent: Sir, they have a point, we did do well.
+	Ceruleo: Something still bothers me.
+	Argent: Colonel Albid was impressed. That's how we got this assignemnt.
+	Viridis: Sir, I see the enemy!
+	**one enemy appears
+	Ceruleo: Show time! All units advance!
+	Rubber: Sir, there's more than one!
+	**remaining enemy appear
+	Ceruleo: How could they have known we were waiting to ambush them?
+	
+	**Battle**
+	
+	Ceruleo: Well done. Argent, launch the recue crews and prepare a sit rep; it's time to go home.
+	
+Scene 3
+	On his way back, Ceruleo makes contact with the enemy, one of whom uses a Apfel Bomb, guided missile. At the end, Ceruleo expresses his concerns with the conflict.
+	**Map
+	* large map
+	* some astroids
+	* at this time, enemy can use missiles
+		
+	**Rebel pilot appears.
+	Rebel pilot: like the only drunk girl at a party, the federation does exactly what we want all the time.
+	Rubber: Who the hell is that?
+	Argent: Who are you? How do you know our comm frequences?
+	Rebel officer: dammit! that channel is only for listening, not communicating! those federal pigs can hear you!
+	Rebel pilot: Hmph. Well, hear this!
+	**rebel pilot fire an Apfel Bomb
+	Concurrenly:
+		Rubber: What the hell was that?
+		Viridis: I'm hit!
+		Ceruleo: An Apfel bomb - but only we have those!
+		Argent: Viridis, status report!
+		**various other "what the shit" statements here
+	Concurrently:
+		Rebel officer: oh, great now we have to finish them off.
+		Ceruleo: All units, advance!
+		
+	**Battle**
+
+	Argent: Sir, what happened here?
+	Ceruleo: This war keeps getting stranger. I'll open a comm to Katie later. She needs to know the rebels have access to their weapons.
+	Argent: Incoming transmission, sir.
+	Albid: Baker 16, this is Willy 16.
+	Ceruleo: This is Baker 16.
+	Albid: Ken, is everything alright?
+	Ceruleo: Sir, they have Apfel equipment.
+	Albid: Dammit, Ceruleo! You have one job: close with and destroy the enemy! Leave everything else to me. Willy-16 out.
+	Ceruleo: Roger.
+	

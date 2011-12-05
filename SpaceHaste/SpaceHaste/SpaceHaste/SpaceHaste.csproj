@@ -198,7 +198,6 @@
     <Compile Include="Maps\Map1.cs" />
     <Compile Include="Maps\Map2.cs" />
     <Compile Include="Maps\MapManager.cs" />
-    <Compile Include="Maps\Map_Level1.cs" />
     <Compile Include="Primitives\Line.cs" />
     <Compile Include="Primitives\LineManager.cs" />
     <Compile Include="Primitives\PrimitiveManager.cs" />

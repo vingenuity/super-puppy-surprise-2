@@ -55,7 +55,7 @@ namespace GameStateManagement
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-            backgroundTexture = content.Load<Texture2D>("Menu/background");
+            backgroundTexture = content.Load<Texture2D>("Menu/budgie - starrystock");
         }
 
 

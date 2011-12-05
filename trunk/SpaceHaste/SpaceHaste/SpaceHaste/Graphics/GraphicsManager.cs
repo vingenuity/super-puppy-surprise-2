@@ -47,6 +47,8 @@ namespace SpaceHaste.Graphics
       //  GraphicsShaders GraphicsShader;
         public static Model TestCube;
 
+        public static Model SkyDome;
+
         public static Model IcePlanet;
         // Change the model to use our custom cartoon shading effect.
         //static Effect cartoonEffect;
@@ -68,6 +70,7 @@ namespace SpaceHaste.Graphics
             TestCube = Content.Load<Model>("Ship");
             IcePlanet = Content.Load<Model>("icePlanet");
             Missile.Model = Content.Load<Model>("Ship");
+            SkyDome = Content.Load<Model>("skydome");
            // GraphicsShaders.ChangeEffectUsedByModel(TestCube, cartoonEffect);
         }
 
@@ -110,6 +113,9 @@ namespace SpaceHaste.Graphics
         }
         void DrawAllModels()
         {
+            DrawModel(GraphicsManager.SkyDome,
+                   Matrix.CreateScale(100f) * Matrix.CreateTranslation(Vector3.Zero),
+                   ControlManager.View, ControlManager.Projection);
             for (int i = 0; i < GraphicsManager.GraphicsGameObjects.Count; i++)
                 DrawModel(GraphicsManager.GraphicsGameObjects[i].Model,
                     GraphicsManager.GraphicsGameObjects[i].World,

@@ -47,7 +47,6 @@ namespace SpaceHaste.Huds
             for (int i = 0; i < strings.Length; i++) 
             {
                 tempPosition.Y = TextPosition.Y + (i * 15);
-                //if (i > 0) tempPosition.X = TextPosition.X + 20;
                 Hud.spriteBatch.DrawString(Hud.spriteFont, strings[i], tempPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
             }
 

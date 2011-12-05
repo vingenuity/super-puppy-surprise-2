@@ -23,48 +23,23 @@ namespace SpaceHaste.GameMech.LevelManagers
         {
             Instance = this;
             int a = LoadSaveManager.LevelNumber;
-            switch (MapManager.currentLevel) 
-            {
-                case 1:
-                    LoadLevel1();
-                    break;
-                default:
-                    LoadLevel1();
-                    break;
-            }
+            LoadLevel();
         }
 
-        //void LoadLevel1()
-        //{
-        //    if (loadCutScene)
-        //    {
-        //        GameMechanicsManager.gamestate = GameState.CutScene;
-        //        cutSceneStart = new CutScene("TestCutScene1");
-        //        cutSceneStart.drawCutscene();
-        //        cutSceneStart.Text.RemoveAt(0);
-        //        try
-        //        {
-        //            cutSceneEnd = new CutScene("TestCutScene1");
-        //            //cutSceneEnd.drawCutscene();
-        //            cutSceneEnd.Text.RemoveAt(0);
-        //        }
-        //        catch { }
-        //    }
-        //    else
-        //        GameMechanicsManager.gamestate = GameState.StartBattle;
-        //}
-
-        void LoadLevel1()
+        void LoadLevel()
         {
             if (loadCutScene)
             {
                 GameMechanicsManager.gamestate = GameState.CutScene;
-                cutSceneStart = new CutScene("act1scene1");
+
+                string cutSceneFile = "act" + MapManager.currentAct + "scene" + MapManager.currentScene;
+                cutSceneStart = new CutScene(cutSceneFile);
                 cutSceneStart.drawCutscene();
                 cutSceneStart.Text.RemoveAt(0);
                 try
                 {
-                    cutSceneEnd = new CutScene("act1scene1");
+                    string cutSceneEndFile = cutSceneFile + "ending";
+                    cutSceneEnd = new CutScene(cutSceneEndFile);
                     //cutSceneEnd.drawCutscene();
                     cutSceneEnd.Text.RemoveAt(0);
                 }
@@ -92,15 +67,11 @@ namespace SpaceHaste.GameMech.LevelManagers
                     cutSceneStart.currentLine = cutSceneStart.Text[0];
                     cutSceneStart.Text.RemoveAt(0);
                     cutSceneStart.drawCutscene();
-
                 }
                 else
                 {
-
-
                     cutSceneStart.currentLine = "";
                     cutSceneStart.destroyBox();
-
                     GameMechanicsManager.gamestate = GameState.StartBattle;
                 }
             }
@@ -114,15 +85,11 @@ namespace SpaceHaste.GameMech.LevelManagers
                     cutSceneEnd.currentLine = cutSceneEnd.Text[0];
                     cutSceneEnd.Text.RemoveAt(0);
                     cutSceneEnd.drawCutscene();
-
                 }
                 else
                 {
-
-
                     cutSceneEnd.currentLine = "";
                     cutSceneEnd.destroyBox();
-
                     Game1.game.ScreenManager.AddScreen(new VictoryDefeatScreen(BattleMechanicsManagers.BattleMechanicsManager.VictoryDefeatScreenText, ""), PlayerIndex.One);
                 }
             }

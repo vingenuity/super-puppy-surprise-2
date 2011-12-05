@@ -106,7 +106,7 @@ namespace SpaceHaste
             Components.Add(ControlManager);
             gameComponents.Add(ControlManager);
 
-            DrawSkyDomeManager SkyDomeManager = new DrawSkyDomeManager(this, graphics)
+            DrawSkyDomeManager SkyDomeManager = new DrawSkyDomeManager(this, graphics);
             Components.Add(SkyDomeManager);
             gameComponents.Add(SkyDomeManager);
         }

@@ -168,7 +168,7 @@ namespace SpaceHaste.Grids
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        public void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
 
             basicEffect.View = ControlManager.View;

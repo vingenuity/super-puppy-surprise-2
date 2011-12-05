@@ -12,7 +12,7 @@ namespace SpaceHaste.ClearScreen
         public ClearScreenManager(Game game, GraphicsDeviceManager graphics)
             : base(game)
         {
-            DrawOrder = -1;
+            DrawOrder = -6;
             this.graphics = graphics;
         }
         public override void Draw(GameTime gameTime)

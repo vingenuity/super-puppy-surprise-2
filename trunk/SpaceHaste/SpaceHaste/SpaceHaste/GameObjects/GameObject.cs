@@ -166,6 +166,11 @@ namespace SpaceHaste.GameObjects
                 hull[0] -= damage;
                 if (hull[0] < 50 && !OnFire)
                 {
+                    if (FireParticle != null)
+                    {
+                        ParticleManager.Instance.Remove(FireParticle);
+                        FireParticle = null;
+                    }
                     FireParticle = FireOnShipsParticle.CreateParticle(DrawPosition+Vector3.UnitY*GridCube.GRIDSQUARELENGTH*1/5, this);
                 }
                 return;

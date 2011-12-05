@@ -227,7 +227,7 @@ namespace SpaceHaste.Graphics
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice device = graphics.GraphicsDevice;
-            Hud.Instance.Draw(gameTime);
+            
           //  device.Clear(Color.Black);
 
             graphics.GraphicsDevice.BlendState = BlendState.Opaque;
@@ -238,7 +238,7 @@ namespace SpaceHaste.Graphics
             //GraphicsShader.Draw(gameTime);
 
             DPSFParticles.ParticleManager.Instance.Draw(gameTime);
-           
+            Hud.Instance.Draw(gameTime);
             //LineManager.Instance.Draw(gameTime);
             //DrawSkyDome();
 

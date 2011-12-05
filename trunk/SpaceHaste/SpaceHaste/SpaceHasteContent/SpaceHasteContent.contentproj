@@ -229,11 +229,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\AnimatedButterfly.png">
-      <Name>AnimatedButterfly</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Textures\Arrow.png">
       <Name>Arrow</Name>
       <Importer>TextureImporter</Importer>

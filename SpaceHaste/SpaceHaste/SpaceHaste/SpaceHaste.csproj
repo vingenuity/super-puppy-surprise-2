@@ -180,6 +180,7 @@
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\StandardShip.cs" />
     <Compile Include="GameObjects\SuperTerrain.cs" />
+    <Compile Include="Graphics\DrawSkyDomeManager.cs" />
     <Compile Include="Graphics\GraphicsManager.cs" />
     <Compile Include="Graphics\Missile.cs" />
     <Compile Include="Graphics\NonPhotoRealisticSettings.cs" />

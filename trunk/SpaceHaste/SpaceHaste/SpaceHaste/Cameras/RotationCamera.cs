@@ -20,7 +20,7 @@ namespace SpaceHaste.Cameras
         public Vector3 FocusedPosition { get; set; }
         float verticalAngle = 1.0f;
         float horizontalAngle = 0;
-        float zoom = 2000;
+        float zoom = 8000;
         float verticalAngleMin = .01f;
         float verticalAngleMax = (float) Math.PI - .01f;
         float zoomMin = 600;
@@ -99,7 +99,7 @@ namespace SpaceHaste.Cameras
             zoom = MathHelper.Clamp(zoom, zoomMin, zoomMax); 
  
             // Start with an initial offset 
-            Vector3 cameraPosition = new Vector3(0.0f, zoom, 0.0f); 
+            Vector3 cameraPosition = new Vector3(5000.0f, zoom, 100.0f); 
  
             // Rotate vertically 
             cameraPosition = Vector3.Transform(cameraPosition, Matrix.CreateRotationX(verticalAngle)); 

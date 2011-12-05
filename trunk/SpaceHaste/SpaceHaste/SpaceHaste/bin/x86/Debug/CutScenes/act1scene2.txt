@@ -1,0 +1,9 @@
+Viridis:|     I can't believe we're on the vanguard!|     This is exciting!
+Rubber:|     I can't believe you're still talking.
+Argent:|     Sir, they have a point, we did do well.
+Ceruleo:|     Something still bothers me.
+Argent:|     Colonel Albid was impressed.|     That's how we got this assignemnt.
+Viridis:|     Sir, I see the enemy!
+Ceruleo:|     Show time! All units advance!
+Rubber:|     Sir, there's more than one!
+Ceruleo:|     How could they have known we were waiting to ambush them?

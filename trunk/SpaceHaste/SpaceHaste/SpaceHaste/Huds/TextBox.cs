@@ -36,6 +36,23 @@ namespace SpaceHaste.Huds
             Hud.spriteBatch.End();
 
         }
+        public void DrawSet(String[] strings)
+        {
+            Vector2 tempPosition = TextPosition;
+
+            Hud.spriteBatch.Begin();
+            
+            Hud.spriteBatch.Draw(texture1, new Rectangle((int)(ScreenWidth / 3), (int)(4 * (ScreenHeight / 5) - ScreenHeight / 20 - 5), (int)(ScreenWidth / 3), (int)(ScreenHeight / 5)), Color.Plum);
+
+            for (int i = 0; i < strings.Length; i++) 
+            {
+                tempPosition.Y = TextPosition.Y + (i * 15);
+                //if (i > 0) tempPosition.X = TextPosition.X + 20;
+                Hud.spriteBatch.DrawString(Hud.spriteFont, strings[i], tempPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
+            }
+
+            Hud.spriteBatch.End();
+        }
 
         public void endBox() {
             ScreenWidth = 0;

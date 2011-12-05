@@ -43,13 +43,14 @@ namespace SpaceHaste.GameMech.CutScenes
             file.Close();
 
         }
-
         public void drawCutscene() {
-            if(currentLine != null)
-                box.Draw(currentLine);
-
             if (currentLine == null)
                 box = null;
+            else 
+            {
+                string[] strings = currentLine.Split('|');
+                box.DrawSet(strings);
+            }
         }
 
         public void destroyBox() {

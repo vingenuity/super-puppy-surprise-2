@@ -18,19 +18,15 @@ namespace SpaceHaste.Maps
         protected Line[,] XZMatrix;
         protected Line[,] YZMatrix;
 
-        //protected Line[,] XY0Matrix;
-        //protected Line[,] XZ0Matrix;
-        //protected Line[,] YZ0Matrix;
-        //protected Line[,] XY1Matrix;
-        //protected Line[,] XZ1Matrix;
-        //protected Line[,] YZ1Matrix;
-
         public List<GridCube> EnvMapObjects;
         public List<GameObject> ShipMapObjects;
         public static List<NebulaParticle> Nebulae;
         public Vector3 Size;
 
         public static Map map;
+
+        public int Act = 1;
+        public int Scene = 1;
 
         public Map(Vector3 Size)
         {
@@ -333,32 +329,6 @@ namespace SpaceHaste.Maps
         {
             AddGridXY0Lines();
             AddGridXY0Orthogonal();
-            //for (int i = 0; i <= Size.X; i++)
-            //{
-            //    float x = ((Size.X / 2) - i) * GridCube.GRIDSQUARELENGTH;
-            //    float y = Size.Y / 2 * GridCube.GRIDSQUARELENGTH;
-            //    float z = -1 * Size.Z / 2 * GridCube.GRIDSQUARELENGTH;
-
-            //    //Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
-            //    //                     new Color((float)((Size.X+Size.Z+Size.Y)/3 - i) * .1f, 0, 0));
-            //    //LineManager.AddLine(line);
-            //    //XYMatrix[0, i] = line;
-
-            //    //Line orthongal = new Line(new Vector3(y, x, z), new Vector3(-y, x, z),
-            //    //                          new Color((float)((Size.X+Size.Z+Size.Y)/3 - i) * .1f, 0, 0));
-            //    //LineManager.AddLine(orthongal);
-            //    //XYMatrix[1, i] = orthongal;
-
-            //    Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
-            //                         new Color(1.0f, 0, 0));
-            //    LineManager.AddLine(line);
-            //    XYMatrix[0, i] = line;
-
-            //    Line orthongal = new Line(new Vector3(y, x, z), new Vector3(-y, x, z),
-            //                              new Color(1.0f, 0, 0));
-            //    LineManager.AddLine(orthongal);
-            //    XYMatrix[1, i] = orthongal;
-            //}
         }
         public void AddGridXY0Lines() 
         {
@@ -394,31 +364,6 @@ namespace SpaceHaste.Maps
         {
             AddGrid0YZLines();
             AddGrid0YZOrthogonal();
-            //for (int i = 0; i <= Size.X; i++)
-            //{
-            //    float x = -1 * Size.X / 2 * GridCube.GRIDSQUARELENGTH;
-            //    float y = Size.Y / 2 * GridCube.GRIDSQUARELENGTH;
-            //    float z = ((Size.Z / 2) - i) * GridCube.GRIDSQUARELENGTH;
-
-            //    //Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
-            //    //                     new Color(0, (float)(Size.X - i) * .1f, 0));
-            //    //LineManager.AddLine(line);
-            //    //YZMatrix[0, i] = line;
-
-            //    //Line orthogonal = new Line(new Vector3(x, z, y), new Vector3(x, z, -y),
-            //    //                           new Color(0, (float)(Size.X - i) * .1f, 0));
-            //    //LineManager.AddLine(orthogonal);
-            //    //YZMatrix[1, i] = orthogonal;
-            //    Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
-            //                         new Color(0, 1.0f, 0));
-            //    LineManager.AddLine(line);
-            //    YZMatrix[0, i] = line;
-
-            //    Line orthogonal = new Line(new Vector3(x, z, y), new Vector3(x, z, -y),
-            //                               new Color(0, 1.0f, 0));
-            //    LineManager.AddLine(orthogonal);
-            //    YZMatrix[1, i] = orthogonal;
-            //}
         }
         public void AddGrid0YZLines()
         {
@@ -454,31 +399,6 @@ namespace SpaceHaste.Maps
         {
             AddGridX0ZLines();
             AddGridX0ZOrthogonal();
-            //for (int i = 0; i <= Size.Y; i++) 
-            //{
-            //    float x = ((Size.X / 2) - i) * GridCube.GRIDSQUARELENGTH;
-            //    float z = Size.Z / 2 * GridCube.GRIDSQUARELENGTH;
-            //    float y = -1 * (Size.Y / 2) * GridCube.GRIDSQUARELENGTH;
-
-            //    //Line line = new Line(new Vector3(x, y, z), new Vector3(x, y, -z), 
-            //    //                    new Color(0, 0, (float) (Size.Y - i) * .1f ));
-            //    //LineManager.AddLine(line);
-            //    //XZMatrix[0, i] = line;
-
-            //    //Line orthogonal = new Line(new Vector3(z, y, x), new Vector3(-z, y, x),
-            //    //                    new Color(0, 0, (float) (Size.Y - i) * .1f));
-            //    //LineManager.AddLine(orthogonal);
-            //    //XZMatrix[1, i] = orthogonal;
-            //    Line line = new Line(new Vector3(x, y, z), new Vector3(x, y, -z),
-            //                        new Color(0, 0, 1.0f));
-            //    LineManager.AddLine(line);
-            //    XZMatrix[0, i] = line;
-
-            //    Line orthogonal = new Line(new Vector3(z, y, x), new Vector3(-z, y, x),
-            //                        new Color(0, 0, 1.0f));
-            //    LineManager.AddLine(orthogonal);
-            //    XZMatrix[1, i] = orthogonal;
-            //}
         }
         public void AddGridX0ZLines()
         {
@@ -526,32 +446,6 @@ namespace SpaceHaste.Maps
         {
             AddGridXY1Lines();
             AddGridXY1Orthogonal();
-            //for (int i = 0; i <= Size.X; i++)
-            //{
-            //    float x = ((Size.X / 2) - i) * GridCube.GRIDSQUARELENGTH;
-            //    float y = Size.Y / 2 * GridCube.GRIDSQUARELENGTH;
-            //    float z = -1 * Size.Z / 2 * GridCube.GRIDSQUARELENGTH;
-
-            //    //Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
-            //    //                     new Color((float)((Size.X+Size.Z+Size.Y)/3 - i) * .1f, 0, 0));
-            //    //LineManager.AddLine(line);
-            //    //XYMatrix[0, i] = line;
-
-            //    //Line orthongal = new Line(new Vector3(y, x, z), new Vector3(-y, x, z),
-            //    //                          new Color((float)((Size.X+Size.Z+Size.Y)/3 - i) * .1f, 0, 0));
-            //    //LineManager.AddLine(orthongal);
-            //    //XYMatrix[1, i] = orthongal;
-
-            //    Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
-            //                         new Color(1.0f, 0, 0));
-            //    LineManager.AddLine(line);
-            //    XYMatrix[0, i] = line;
-
-            //    Line orthongal = new Line(new Vector3(y, x, z), new Vector3(-y, x, z),
-            //                              new Color(1.0f, 0, 0));
-            //    LineManager.AddLine(orthongal);
-            //    XYMatrix[1, i] = orthongal;
-            //}
         }
         public void AddGridXY1Lines()
         {
@@ -586,31 +480,6 @@ namespace SpaceHaste.Maps
         {
             AddGrid1YZLines();
             AddGrid1YZOrthogonal();
-            //for (int i = 0; i <= Size.X; i++)
-            //{
-            //    float x = -1 * Size.X / 2 * GridCube.GRIDSQUARELENGTH;
-            //    float y = Size.Y / 2 * GridCube.GRIDSQUARELENGTH;
-            //    float z = ((Size.Z / 2) - i) * GridCube.GRIDSQUARELENGTH;
-
-            //    //Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
-            //    //                     new Color(0, (float)(Size.X - i) * .1f, 0));
-            //    //LineManager.AddLine(line);
-            //    //YZMatrix[0, i] = line;
-
-            //    //Line orthogonal = new Line(new Vector3(x, z, y), new Vector3(x, z, -y),
-            //    //                           new Color(0, (float)(Size.X - i) * .1f, 0));
-            //    //LineManager.AddLine(orthogonal);
-            //    //YZMatrix[1, i] = orthogonal;
-            //    Line line = new Line(new Vector3(x, y, z), new Vector3(x, -y, z),
-            //                         new Color(0, 1.0f, 0));
-            //    LineManager.AddLine(line);
-            //    YZMatrix[0, i] = line;
-
-            //    Line orthogonal = new Line(new Vector3(x, z, y), new Vector3(x, z, -y),
-            //                               new Color(0, 1.0f, 0));
-            //    LineManager.AddLine(orthogonal);
-            //    YZMatrix[1, i] = orthogonal;
-            //}
         }
         public void AddGrid1YZLines()
         {
@@ -645,31 +514,6 @@ namespace SpaceHaste.Maps
         {
             AddGridX1ZLines();
             AddGridX1ZOrthogonal();
-            //for (int i = 0; i <= Size.Y; i++) 
-            //{
-            //    float x = ((Size.X / 2) - i) * GridCube.GRIDSQUARELENGTH;
-            //    float z = Size.Z / 2 * GridCube.GRIDSQUARELENGTH;
-            //    float y = -1 * (Size.Y / 2) * GridCube.GRIDSQUARELENGTH;
-
-            //    //Line line = new Line(new Vector3(x, y, z), new Vector3(x, y, -z), 
-            //    //                    new Color(0, 0, (float) (Size.Y - i) * .1f ));
-            //    //LineManager.AddLine(line);
-            //    //XZMatrix[0, i] = line;
-
-            //    //Line orthogonal = new Line(new Vector3(z, y, x), new Vector3(-z, y, x),
-            //    //                    new Color(0, 0, (float) (Size.Y - i) * .1f));
-            //    //LineManager.AddLine(orthogonal);
-            //    //XZMatrix[1, i] = orthogonal;
-            //    Line line = new Line(new Vector3(x, y, z), new Vector3(x, y, -z),
-            //                        new Color(0, 0, 1.0f));
-            //    LineManager.AddLine(line);
-            //    XZMatrix[0, i] = line;
-
-            //    Line orthogonal = new Line(new Vector3(z, y, x), new Vector3(-z, y, x),
-            //                        new Color(0, 0, 1.0f));
-            //    LineManager.AddLine(orthogonal);
-            //    XZMatrix[1, i] = orthogonal;
-            //}
         }
         public void AddGridX1ZLines()
         {

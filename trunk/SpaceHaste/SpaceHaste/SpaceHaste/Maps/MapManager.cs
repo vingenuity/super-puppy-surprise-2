@@ -25,7 +25,7 @@ namespace SpaceHaste.Maps
         public static bool isDrawingZGridBottom = false;
         public static int currentLevel;
         public static int currentAct = 1;
-        public static int currentScene = 1;
+        public static int currentScene = 2;
         public MapManager(Game game)
             : base(game)
         {
@@ -41,7 +41,9 @@ namespace SpaceHaste.Maps
             gridX1Zwas = true;
             grid0YZwas = true;
             grid1YZwas = true;
-            Map = new Map_Act1Scene1();
+            Map = new Map_Act1Scene2();
+            currentAct = Map.map.Act;
+            currentScene = Map.map.Scene;
             currentLevel = 1;
             Map.AddGrid1YZ();
             Map.AddGrid0YZ();

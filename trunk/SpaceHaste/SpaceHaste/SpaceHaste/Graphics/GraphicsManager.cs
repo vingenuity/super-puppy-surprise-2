@@ -70,7 +70,7 @@ namespace SpaceHaste.Graphics
             TestCube = Content.Load<Model>("Ship");
             IcePlanet = Content.Load<Model>("icePlanet");
             Missile.Model = Content.Load<Model>("Ship");
-            SkyDome = Content.Load<Model>("skydome");
+            SkyDome = Content.Load<Model>("models/skydome");
            // GraphicsShaders.ChangeEffectUsedByModel(TestCube, cartoonEffect);
         }
 

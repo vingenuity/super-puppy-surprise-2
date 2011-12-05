@@ -751,7 +751,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         internal void Back()
         {
-            if (GameMechanicsManager.gamestate == GameState.EnterShipAction || GameMechanicsManager.gamestate == GameState.SelectShipAttackAction)
+            if (GameMechanicsManager.gamestate == GameState.EnterShipAction || GameMechanicsManager.gamestate == GameState.SelectShipAttackAction || isInsideAnEnterShipAction())
             {
                 GameMechanicsManager.gamestate = GameState.SelectShipAction;
                 ResetActionSelectionMenu();
@@ -811,7 +811,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         {
             if (isInsideAnEnterShipAction())
             {
-                if (CurrentGridCubeSelected.Z < Map.map.Size.X - 1) CurrentGridCubeSelected.Z++;
+                if (CurrentGridCubeSelected.Z < Map.map.Size.Z - 1) CurrentGridCubeSelected.Z++;
                 UpdateSelectionLine();
             }
         }

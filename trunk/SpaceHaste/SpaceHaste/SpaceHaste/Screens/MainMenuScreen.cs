@@ -63,7 +63,7 @@ namespace GameStateManagement
         void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
            // Game1.SoundEngine.TurnSoundOff(ConstantSounds.MenuBackground);
-            LoadSaveManager.Load("Save1");
+            LoadSaveManager.Load("Save2");
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen());
         }

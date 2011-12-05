@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using SpaceHaste.GameMech.CutScenes;
 using GameStateManagement;
+using AvatarElementalBash.SaveLoad;
 
 namespace SpaceHaste.GameMech.LevelManagers
 {
@@ -20,7 +21,11 @@ namespace SpaceHaste.GameMech.LevelManagers
         public LevelManager()
         {
             Instance = this;
-            LoadLevel1();
+            int a = LoadSaveManager.LevelNumber;
+            if(a== 2)
+                LoadLevel1();
+            else
+                LoadLevel1();
         }
         void LoadLevel1()
         {

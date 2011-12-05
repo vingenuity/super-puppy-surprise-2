@@ -18,9 +18,8 @@ namespace SpaceHaste.GameObjects
         public override void Load()
         {
             base.Load();
-            Model = GraphicsManager.Content.Load<Model>("heavy_ship_combined");
 
-            Scale = 2f;
+            Model = GraphicsManager.Content.Load<Model>("model/heavy_ship_blue");
 
         }
     } 

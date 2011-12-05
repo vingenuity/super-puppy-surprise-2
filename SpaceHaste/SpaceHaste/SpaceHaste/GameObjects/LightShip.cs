@@ -14,12 +14,12 @@ namespace SpaceHaste.GameObjects
         public LightShip(String name, Vector3 location, Team side)
             : base(name, location, side, 100, 80, 20, 1, 8, 50, new double[] { .8, 1, 1.66 })
         {
+           
         }
         public override void Load()
         {
             base.Load();
-            Model = GraphicsManager.Content.Load<Model>("light_ship_combined");
-
+            Model = GraphicsManager.Content.Load<Model>("model/light_ship_red");
             Scale = 15f;
 
         }

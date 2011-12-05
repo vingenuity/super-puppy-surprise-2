@@ -18,7 +18,7 @@ namespace SpaceHaste.GameObjects
         public override void Load()
         {
             base.Load();
-            Model = GraphicsManager.Content.Load<Model>("models/gatherer_ship_blue");
+            Model = GraphicsManager.Content.Load<Model>("model/heavy_ship_red");
 
             Scale = 55f;
 

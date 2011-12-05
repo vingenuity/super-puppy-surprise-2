@@ -227,7 +227,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         double timer = 0;
         List<Vector3> ListOfMovementSquares = new List<Vector3>();
         Vector3 InterpDistance;
-
+        GameObject AttackTarget;
+        double AttackDamage;
         public void Update(GameTime gameTime)
         {
             timer += gameTime.ElapsedGameTime.TotalSeconds;
@@ -285,6 +286,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             {
                 if (timer > 1)
                 {
+                    AttackTarget.isHit((int)AttackDamage);
                      NextShipAction();
                      timer = 0;
                 }                
@@ -332,6 +334,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     if (ListOfMovementSquares.Count == 0)
                     {
                         Missile.shouldDraw = false;
+                        SoundManager.Sounds.PlaySound(SoundEffects.missExpl);
+                        AttackTarget.isHit((int)AttackDamage);
                         //CurrentGameObjectSelected.AnimationRotation = new Vector3(0, 0, 0);
                         NextShipAction();
                         // ParticleManager.Instance.Remove(ShipThrustersParticle);
@@ -410,7 +414,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 Line line = new Line(offender.DrawPosition, target.DrawPosition, Color.Aqua);
                 AttackLineList.Add(line);
                 LineManager.AddLine(line);*/
-                target.isHit(offender.GetLaserDamage(target));
+                timer = 0;
+                AttackTarget = target;
+                AttackDamage = offender.GetLaserDamage(target);
+               // target.isHit(offender.GetLaserDamage(target));
                 offender.energy[0] -= offender.AttackEnergyCost;
                 if (offender.energy[0] < 0)
                     offender.energy[0] = 0;
@@ -450,8 +457,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     ListOfMovementSquares.RemoveAt(0);
 
                 //play missile sound
-                SoundManager.Sounds.PlaySound(SoundEffects.missExpl);
-                target.isHit(offender.dmg[1]);
+                AttackTarget = target;
+                AttackDamage = offender.dmg[1];
                 Missile.GridPosition = CurrentGameObjectSelected.GridPosition;
                 offender.MissileCount--;         
                 //AttackEnabled = false;

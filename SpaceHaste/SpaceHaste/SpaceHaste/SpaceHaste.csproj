@@ -200,7 +200,6 @@
     <Compile Include="Maps\MapManager.cs" />
     <Compile Include="Maps\Map_Act1Scene1.cs" />
     <Compile Include="Maps\Map_Act1Scene2.cs" />
-    <Compile Include="Maps\Map_Act2Scene1.cs" />
     <Compile Include="Primitives\Line.cs" />
     <Compile Include="Primitives\LineManager.cs" />
     <Compile Include="Primitives\PrimitiveManager.cs" />
@@ -215,7 +214,6 @@
     </Compile>
     <Compile Include="ScreenManager\ScreenManager.cs" />
     <Compile Include="Screens\BackgroundScreen.cs" />
-    <Compile Include="Screens\CreditsScreen.cs" />
     <Compile Include="Screens\GameplayScreen.cs" />
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />

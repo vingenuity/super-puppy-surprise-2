@@ -20,7 +20,7 @@ namespace SpaceHaste.GameObjects
         {
             base.Load();
             Model = GraphicsManager.Content.Load<Model>("models/light_ship_red");
-            Scale = 15f;
+            Scale = 6f;
 
         }
     }

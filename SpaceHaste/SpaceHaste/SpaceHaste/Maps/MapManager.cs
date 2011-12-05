@@ -41,7 +41,7 @@ namespace SpaceHaste.Maps
             gridX1Zwas = true;
             grid0YZwas = true;
             grid1YZwas = true;
-            Map = new Map_Act1Scene2();
+            Map = new Map_Act1Scene1();
             currentAct = Map.map.Act;
             currentScene = Map.map.Scene;
             currentLevel = 1;

@@ -47,6 +47,14 @@ namespace SpaceHaste.Graphics
         public static ContentManager Content;
 
       //  GraphicsShaders GraphicsShader;
+        public static Random random;
+        public static Model Asteroid1;
+        public static Model Asteroid2;
+        public static Model Asteroid3;
+        public static Model Asteroid4;
+        public static Model Asteroid5;
+        public static Model Asteroid6;
+
         public static Model TestCube;
 
         public static Model SkyDome;
@@ -58,6 +66,8 @@ namespace SpaceHaste.Graphics
         public GraphicsManager(Game game, GraphicsDeviceManager _graphics)
             : base(game)
         {
+            random = new Random();
+            
             Planets = new List<Tuple<Vector3, float>>();
             Nebula = new List<Vector3>();
             graphics = _graphics;
@@ -69,7 +79,7 @@ namespace SpaceHaste.Graphics
         }
         static void InitTestCube()
         {
-            TestCube = Content.Load<Model>("Ship");
+            TestCube = Content.Load<Model>("models/asteroid1");
             IcePlanet = Content.Load<Model>("icePlanet");
             Missile.Model = Content.Load<Model>("models/missile");
             SkyDome = Content.Load<Model>("models/skydome");
@@ -128,10 +138,18 @@ namespace SpaceHaste.Graphics
                     ControlManager.View, ControlManager.Projection);
             for (int i = 0; i < Maps.Map.map.EnvMapObjects.Count; i++)
             {
-                if(Maps.Map.map.EnvMapObjects[i].GetTerrain() == Maps.GridCube.TerrainType.asteroid)
+                if (Maps.Map.map.EnvMapObjects[i].GetTerrain() == Maps.GridCube.TerrainType.asteroid)
+                {
+
+                    
+                    //ADD SWITCH CASES FOR ASTEROIDS
+
+
+
                     DrawModel(GraphicsManager.TestCube,
-                        Matrix.CreateScale(.1f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
+                        Matrix.CreateScale(40f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
                         ControlManager.View, ControlManager.Projection);
+                }
                 if (Maps.Map.map.EnvMapObjects[i].GetTerrain() == Maps.GridCube.TerrainType.wreck)
                     DrawModel(GraphicsManager.TestCube,
                         Matrix.CreateScale(.2f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),

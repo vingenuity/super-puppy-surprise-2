@@ -20,17 +20,28 @@ namespace SpaceHaste.Maps
         {
             this.addGameObject(new AttackShip("Ceruleo", new Vector3(2, 2, 10), GameObject.Team.Player), new Vector3(2, 2, 10));
             this.addGameObject(new HeavyShip("Reubber", new Vector3(4, 2, 10), GameObject.Team.Player), new Vector3(4, 2, 10));
-            this.addGameObject(new LightShip("Viridis", new Vector3(2, 2, 6), GameObject.Team.Player), new Vector3(2, 2, 6));
+            this.addGameObject(new LightShip("Midori", new Vector3(2, 2, 11), GameObject.Team.Player), new Vector3(2, 2, 6));
+            this.addGameObject(new LightShip("Groc", new Vector3(3, 4, 11), GameObject.Team.Player), new Vector3(3, 4, 7));
 
-            this.addGameObject(new LightShip("Rebel Ship 1", new Vector3(2, 2, 3), GameObject.Team.Enemy), new Vector3(2, 2, 3));
-            this.addGameObject(new LightShip("Rebel Ship 2", new Vector3(4, 2, 3), GameObject.Team.Enemy), new Vector3(4, 2, 3));
+            this.addGameObject(new AttackShip("Rebel Boss", new Vector3(6, 2, 3), GameObject.Team.Enemy), new Vector3(2, 2, 3));
+            this.addGameObject(new LightShip("Rebel Joe", new Vector3(4, 2, 3), GameObject.Team.Enemy), new Vector3(4, 2, 3));
+            this.addGameObject(new LightShip("Rebel Howe", new Vector3(5, 2, 2), GameObject.Team.Enemy), new Vector3(5, 2, 2));
+            this.addGameObject(new LightShip("Rebel Rick", new Vector3(7, 3, 3), GameObject.Team.Enemy), new Vector3(7, 3, 3));
 
             int z = 9;
 
-            for (int x = 1; x < 5; x++)
-                for (int y = 1; y < 5; y++)
-            //        for (int z = 8; z < 11; z++)
-                        this.AddEnvObject(GridCube.TerrainType.nebula, x, y, z);
+            for(int i = 0; i <= 1; i++)
+                for(int j = 0; j <=1; i++){
+                    this.AddEnvObject(GridCube.TerrainType.asteroid, i+6, j, 4);
+                    this.AddEnvObject(GridCube.TerrainType.asteroid, 4, j+5, i);
+                    this.AddEnvObject(GridCube.TerrainType.asteroid, i, j+3, 0);
+                    this.AddEnvObject(GridCube.TerrainType.asteroid, 7, j, i); 
+                    this.AddEnvObject(GridCube.TerrainType.asteroid, i+5, j+2, 4);
+                    this.AddEnvObject(GridCube.TerrainType.asteroid, 7, j+4, i+1);
+                    this.AddEnvObject(GridCube.TerrainType.asteroid, i+4, 0, j+2);
+                    this.AddEnvObject(GridCube.TerrainType.asteroid, i + 7, 0, j);
+                    
+                }
         }
     }
 }

@@ -26,7 +26,6 @@ namespace SpaceHaste.Huds
         {
            
             this.graphics = graphics;
-            
             DrawUnitLists = new HUDDrawListOfUnits();
             UnitActions = new UnitDisplayActions();
             AttackUnitActions = new AttackUnitDisplayActions();

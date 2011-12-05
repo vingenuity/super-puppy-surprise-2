@@ -166,13 +166,18 @@ namespace SpaceHaste.GameObjects
                 hull[0] -= damage;
                 if (hull[0] < 50 && !OnFire)
                 {
-                    FireParticle = FireOnShipsParticle.CreateParticle(DrawPosition+Vector3.UnitY*GridCube.GRIDSQUARELENGTH*1/5);
+                    FireParticle = FireOnShipsParticle.CreateParticle(DrawPosition+Vector3.UnitY*GridCube.GRIDSQUARELENGTH*1/5, this);
                 }
                 return;
             }
             //Otherwise, we're dead. Get rid of us.
             else
             {
+                if (FireParticle != null)
+                {
+                    ParticleManager.Instance.Remove(FireParticle);
+                }
+
                 SoundManager.Sounds.PlaySound(SoundEffects.explode);
                 
                 DeathParticle.CreateDeathParticle(DrawPosition);

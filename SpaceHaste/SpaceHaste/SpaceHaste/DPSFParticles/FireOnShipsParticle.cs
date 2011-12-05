@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using DPSF.ParticleSystems;
 using SpaceHaste.Graphics;
 using SpaceHaste.Huds;
+using SpaceHaste.GameObjects;
 
 namespace SpaceHaste.DPSFParticles
 {
@@ -15,16 +16,17 @@ namespace SpaceHaste.DPSFParticles
         public int counter = 0;
         public Vector3 Position;
 
-
-        public static FireOnShipsParticle CreateParticle(Vector3 pos)
+        GameObject gameObject;
+        public static FireOnShipsParticle CreateParticle(Vector3 pos, GameObject gameObject)
         {
-            FireOnShipsParticle p = new FireOnShipsParticle(pos);
+            FireOnShipsParticle p = new FireOnShipsParticle(pos, gameObject);
             ParticleManager.Instance.Add(p);
             return p;
         }
-        public FireOnShipsParticle(Vector3 Position)
+        public FireOnShipsParticle(Vector3 Position, GameObject gameObject)
             : base()
         {
+            this.gameObject = gameObject;
             LaserHitParicleSystem = new FireOnPointParticleSystem(Game1.game);
 
             LaserHitParicleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);
@@ -47,7 +49,8 @@ namespace SpaceHaste.DPSFParticles
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             timercd += gameTime.ElapsedGameTime.TotalSeconds;
-           
+
+            LaserHitParicleSystem.Emitter.PositionData.Position = gameObject.DrawPosition;
 
 
             //mcSphereParticleSystem.Emitter.PositionData.Position = Position;

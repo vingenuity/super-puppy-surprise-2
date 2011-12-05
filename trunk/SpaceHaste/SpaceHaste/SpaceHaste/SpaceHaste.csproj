@@ -191,6 +191,7 @@
     <Compile Include="Huds\StatsBar.cs" />
     <Compile Include="Huds\TextBox.cs" />
     <Compile Include="Huds\UnitDisplayActions.cs" />
+    <Compile Include="LoadSave\LoadSaveManager.cs" />
     <Compile Include="Maps\GridCube.cs" />
     <Compile Include="GameObjects\HeavyShip.cs" />
     <Compile Include="Maps\Map.cs" />
@@ -228,6 +229,10 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EasyStorage\EasyStorage [Windows].csproj">
+      <Project>{A89EB1D5-B286-48EB-A864-315ABCDAA024}</Project>
+      <Name>EasyStorage [Windows]</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SpaceHasteContent\SpaceHasteContent.contentproj">
       <Name>SpaceHasteContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>

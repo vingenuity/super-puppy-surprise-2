@@ -21,6 +21,7 @@ using GameStateManagement;
 using SpaceHaste.GameMech.CutScenes;
 using SpaceHaste.DPSFParticles;
 using SpaceHaste.ClearScreen;
+using AvatarElementalBash.SaveLoad;
 
 namespace SpaceHaste
 {
@@ -50,7 +51,8 @@ namespace SpaceHaste
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             game = this;
-            gameComponents = new List<GameComponent>(); 
+            gameComponents = new List<GameComponent>();
+            LoadSaveManager.Init();
         }
         List<GameComponent> gameComponents;
         public void LoadGameComponents()
@@ -152,6 +154,7 @@ namespace SpaceHaste
                 ScreenManager.AddScreen(new BackgroundScreen(), null);
                 ScreenManager.AddScreen(new MainMenuScreen(), null);
             }
+            
             // TODO: use this.Content to load your game content here
         }
 

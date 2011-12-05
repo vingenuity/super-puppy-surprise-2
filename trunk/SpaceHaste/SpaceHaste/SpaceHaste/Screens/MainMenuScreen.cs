@@ -10,6 +10,7 @@
 #region Using Statements
 using Microsoft.Xna.Framework;
 using SpaceHaste;
+using AvatarElementalBash.SaveLoad;
 
 #endregion
 
@@ -62,6 +63,7 @@ namespace GameStateManagement
         void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
            // Game1.SoundEngine.TurnSoundOff(ConstantSounds.MenuBackground);
+            LoadSaveManager.Load("Save1");
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen());
         }

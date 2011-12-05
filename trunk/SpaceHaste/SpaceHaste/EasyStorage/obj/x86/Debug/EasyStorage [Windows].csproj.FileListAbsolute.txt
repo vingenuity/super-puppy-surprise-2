@@ -1,0 +1,48 @@
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\bin\x86\Debug\EasyStorage.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\bin\x86\Debug\EasyStorage.pdb
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\bin\x86\Debug\de\EasyStorage.resources.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\bin\x86\Debug\es\EasyStorage.resources.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\bin\x86\Debug\fr\EasyStorage.resources.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\bin\x86\Debug\it\EasyStorage.resources.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\bin\x86\Debug\ja\EasyStorage.resources.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\EasyStorage.Strings.resources
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\EasyStorage.Strings.de.resources
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\EasyStorage.Strings.es.resources
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\EasyStorage.Strings.fr.resources
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\EasyStorage.Strings.it.resources
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\EasyStorage.Strings.ja.resources
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\de\EasyStorage.resources.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\es\EasyStorage.resources.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\fr\EasyStorage.resources.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\it\EasyStorage.resources.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\ja\EasyStorage.resources.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\EasyStorage.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\x86\Debug\EasyStorage.pdb
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\bin\x86\Debug\EasyStorage.dll
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\bin\x86\Debug\EasyStorage.pdb
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\bin\x86\Debug\de\EasyStorage.resources.dll
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\bin\x86\Debug\es\EasyStorage.resources.dll
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\bin\x86\Debug\fr\EasyStorage.resources.dll
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\bin\x86\Debug\it\EasyStorage.resources.dll
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\bin\x86\Debug\ja\EasyStorage.resources.dll
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\EasyStorage.Strings.resources
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\EasyStorage.Strings.de.resources
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\EasyStorage.Strings.es.resources
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\EasyStorage.Strings.fr.resources
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\EasyStorage.Strings.it.resources
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\EasyStorage.Strings.ja.resources
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\de\EasyStorage.resources.dll
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\es\EasyStorage.resources.dll
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\fr\EasyStorage.resources.dll
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\it\EasyStorage.resources.dll
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\ja\EasyStorage.resources.dll
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\EasyStorage.dll
+C:\Users\Tom\Desktop\New folder (2)\SpaceHaste\SpaceHaste\EasyStorage\obj\x86\Debug\EasyStorage.pdb

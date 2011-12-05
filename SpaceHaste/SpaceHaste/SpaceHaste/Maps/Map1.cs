@@ -16,7 +16,7 @@ namespace SpaceHaste.Maps
 
         protected override void InitMapGameObjects()
         {
-           this.addGameObject(new HeavyShip("Player Ship 1", new Vector3(1, 4, 7), GameObject.Team.Player), new Vector3(1, 4, 7));
+            this.addGameObject(new HeavyShip("Player Ship 1", new Vector3(1, 4, 7), GameObject.Team.Player), new Vector3(1, 4, 7));
             this.addGameObject(new HeavyShip("Player Ship 2", new Vector3(4, 3, 7), GameObject.Team.Player), new Vector3(4, 3, 7));
             this.addGameObject(new LightShip("Player Ship 3", new Vector3(7, 4, 7), GameObject.Team.Player), new Vector3(7, 4, 7));
             this.AddEnvObject(GridCube.TerrainType.nebula, 2, 2, 2);

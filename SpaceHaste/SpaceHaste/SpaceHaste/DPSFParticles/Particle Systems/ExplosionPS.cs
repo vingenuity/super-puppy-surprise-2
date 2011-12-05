@@ -184,6 +184,8 @@ namespace DPSF.ParticleSystems
             _shockwaveParticleSystem.Emitter.PositionData.Position = this.Emitter.PositionData.Position;
             _smokeTrailsParticleSystem.Emitter.PositionData.Position = this.Emitter.PositionData.Position;
 
+
+
             // Update all of the particle systems
             _particleSystemManager.UpdateAllParticleSystems(fElapsedTimeInSeconds);
         }
@@ -268,7 +270,7 @@ namespace DPSF.ParticleSystems
 
             // Set the default explosion settings
             ExplosionColor = new Color(255, 120, 0);
-            ExplosionParticleSize = 10;
+            ExplosionParticleSize = 100;
             ExplosionIntensity = 20;
         }
 
@@ -314,7 +316,7 @@ namespace DPSF.ParticleSystems
             _flashParticleSystem.Explode();
             _flyingSparksParticleSystem.Explode();
             _roundSparksParticleSystem.Explode();
-           // _shockwaveParticleSystem.Explode();
+            //_shockwaveParticleSystem.Explode();
             _smokeTrailsParticleSystem.Explode();
         }
 

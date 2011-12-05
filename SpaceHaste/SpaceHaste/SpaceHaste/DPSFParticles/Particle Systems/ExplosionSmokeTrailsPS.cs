@@ -85,7 +85,7 @@ namespace DPSF.ParticleSystems
 
 			// Set the default explosion settings
 			ExplosionColor = new Color(250, 190, 90);
-			ExplosionParticleSize = 20;
+			ExplosionParticleSize = 300;
 			ExplosionIntensity = 15;
 		}
 

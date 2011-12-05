@@ -82,7 +82,7 @@ namespace GameStateManagement
         /// </summary>
         void CreditsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-           // ScreenManager.AddScreen(new CreditsScreen(), e.PlayerIndex);
+           ScreenManager.AddScreen(new CreditsScreen(), e.PlayerIndex);
         }
 
         /// <summary>

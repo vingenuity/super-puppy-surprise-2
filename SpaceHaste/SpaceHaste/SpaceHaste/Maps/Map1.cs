@@ -40,7 +40,7 @@ namespace SpaceHaste.Maps
                 }
             }
             //AddGridIsometric();
-            Sounds.SoundManager.Sounds.TurnSoundOn(Sounds.ConstantSounds.FightorFlight);
+            
         }
     }
 }

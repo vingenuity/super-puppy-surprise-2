@@ -13,9 +13,11 @@ namespace SpaceHaste.Huds
     class StatsBar
     {
 
+        //LOADING PROBLEM IN HERE SOMEWHERE
+        System.DateTime a = System.DateTime.Now;
         Texture2D backpaneLeft = Graphics.GraphicsManager.Content.Load<Texture2D>("UI_backPane_blue");
         Texture2D backpaneRight = Graphics.GraphicsManager.Content.Load<Texture2D>("UI_backPane_red");
-
+        System.DateTime b = System.DateTime.Now;
 
         Rectangle left = new Rectangle(0, (Graphics.GraphicsManager.graphics.PreferredBackBufferHeight / 20) * 19, Graphics.GraphicsManager.graphics.PreferredBackBufferWidth / 2, (Graphics.GraphicsManager.graphics.PreferredBackBufferHeight / 20));
         Rectangle right = new Rectangle(Graphics.GraphicsManager.graphics.PreferredBackBufferWidth / 2, (Graphics.GraphicsManager.graphics.PreferredBackBufferHeight / 20) * 19, Graphics.GraphicsManager.graphics.PreferredBackBufferWidth / 2, (Graphics.GraphicsManager.graphics.PreferredBackBufferHeight / 20));

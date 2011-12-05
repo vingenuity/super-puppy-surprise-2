@@ -197,10 +197,10 @@
     <Compile Include="GameObjects\HeavyShip.cs" />
     <Compile Include="Maps\Map.cs" />
     <Compile Include="Maps\Map1.cs" />
-    <Compile Include="Maps\Map2.cs" />
     <Compile Include="Maps\MapManager.cs" />
     <Compile Include="Maps\Map_Act1Scene1.cs" />
     <Compile Include="Maps\Map_Act1Scene2.cs" />
+    <Compile Include="Maps\Map_Act2Scene1.cs" />
     <Compile Include="Primitives\Line.cs" />
     <Compile Include="Primitives\LineManager.cs" />
     <Compile Include="Primitives\PrimitiveManager.cs" />

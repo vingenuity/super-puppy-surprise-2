@@ -6,6 +6,7 @@ using SpaceHaste.GameObjects;
 using SpaceHaste.Primitives;
 using Microsoft.Xna.Framework;
 using SpaceHaste.DPSFParticles;
+using SpaceHaste.Graphics;
 
 namespace SpaceHaste.Maps
 {
@@ -19,6 +20,7 @@ namespace SpaceHaste.Maps
         protected Line[,] YZMatrix;
 
         public List<GridCube> EnvMapObjects;
+        public List<int> EnvMapObjectsRandomNum;
         public List<GameObject> ShipMapObjects;
         public static List<NebulaParticle> Nebulae;
         public Vector3 Size;
@@ -33,6 +35,7 @@ namespace SpaceHaste.Maps
             this.Size = Size;
             ShipMapObjects = new List<GameObject>();
             EnvMapObjects = new List<GridCube>();
+            EnvMapObjectsRandomNum = new List<int>();
             Nebulae = new List<NebulaParticle>();
             XYMatrix = new Line[4, Math.Max((int)Size.X + 1, (int)Size.Y + 1)];
             XZMatrix = new Line[4, Math.Max((int)Size.X + 1, (int)Size.Z + 1)];
@@ -70,14 +73,17 @@ namespace SpaceHaste.Maps
                 case GridCube.TerrainType.asteroid:
                     MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.asteroid);
                     EnvMapObjects.Add(MapGridCubes[x, y, z]);
+                    EnvMapObjectsRandomNum.Add(GraphicsManager.random.Next(6));
                     break;
                 case GridCube.TerrainType.nebula:
                     MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.nebula);
                     Nebulae.Add(NebulaParticle.CreateParticle( MapGridCubes[x, y, z].Center));
+                    EnvMapObjectsRandomNum.Add(GraphicsManager.random.Next(0));
                     break;
                 case GridCube.TerrainType.wreck:
                     EnvMapObjects.Add(MapGridCubes[x, y, z]);
                     MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.wreck);
+                    EnvMapObjectsRandomNum.Add(GraphicsManager.random.Next(0));
                     break;
             };
            
@@ -101,6 +107,7 @@ namespace SpaceHaste.Maps
                         {
                             MapGridCubes[i, j, k].SetTerrain(GridCube.TerrainType.planet);
                             EnvMapObjects.Add(MapGridCubes[i, j, k]);
+                            EnvMapObjectsRandomNum.Add(GraphicsManager.random.Next(0));
                             
                         }
                         catch { }

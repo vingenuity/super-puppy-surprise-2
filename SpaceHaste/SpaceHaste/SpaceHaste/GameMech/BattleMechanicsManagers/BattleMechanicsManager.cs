@@ -211,6 +211,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 VictoryDefeatScreenText = "Enemy Destroyed";
             if (LevelManagers.LevelManager.Instance.cutSceneEnd.currentLine != null)
             {
+                SoundManager.Sounds.TurnSoundOff(ConstantSounds.FightorFlight);
                 GameMechanicsManager.gamestate = GameState.CutSceneEnd;
                 return true;
             }

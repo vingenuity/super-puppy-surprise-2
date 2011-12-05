@@ -46,7 +46,10 @@ namespace SpaceHaste.GameMech.LevelManagers
                 catch { }
             }
             else
+            {
                 GameMechanicsManager.gamestate = GameState.StartBattle;
+                Sounds.SoundManager.Sounds.TurnSoundOn(Sounds.ConstantSounds.FightorFlight);
+            }
         }
 
         public CutScene getScene() {

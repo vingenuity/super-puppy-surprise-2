@@ -43,6 +43,7 @@ namespace SpaceHaste.Sounds
         //SoundEffectInstance menubackground;
         public SoundManager(Game game) : base(game)
         {
+            
             try
             {
 
@@ -51,10 +52,13 @@ namespace SpaceHaste.Sounds
                 soundBank = new SoundBank(engine, "Content/Sound/Sounds.xsb");
                 waveBank = new WaveBank(engine, "Content/Sound/Waves.xwb");
             }
-            catch { }   
+                                
+            catch { }
+                        
                 Sounds = this;
-
+            
             Reset();
+
         }
         void Reset()
         {
@@ -75,7 +79,6 @@ namespace SpaceHaste.Sounds
                 FoF = FightorFlight.CreateInstance();
                 FoF.IsLooped = true;
                 FoF.Volume = 0.1F;
-                
             }
             catch { }
         }
@@ -160,8 +163,10 @@ namespace SpaceHaste.Sounds
                 {
                     
                 case ConstantSounds.FightorFlight:
-                    if (FoF.State.Equals(0))
-                        FoF.Stop();
+                        if (FoF.State.Equals(0))
+                        {
+                            FoF.Stop();
+                        }
                     
                     break;
 
@@ -170,5 +175,6 @@ namespace SpaceHaste.Sounds
             }
             catch { }
         }
+
     }
 }

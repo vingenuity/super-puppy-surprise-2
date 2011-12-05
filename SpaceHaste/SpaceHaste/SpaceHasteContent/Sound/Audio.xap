@@ -16,8 +16,8 @@ Global Settings
     Header File = Audio.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 2318504051;
-    Last Modified High = 30191088;
+    Last Modified Low = 386139870;
+    Last Modified High = 30191490;
 
     Category
     {
@@ -227,10 +227,12 @@ Wave Bank
     Compression Preset Name = <none>;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 2319504151;
-    PC Bank Last Modified High = 30191088;
-    Bank Last Revised Low = 2319484149;
-    Bank Last Revised High = 30191088;
+    PC Bank Last Modified Low = 386719928;
+    PC Bank Last Modified High = 30191490;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 3726111676;
+    Bank Last Revised High = 30191489;
 
     Wave
     {
@@ -275,29 +277,6 @@ Wave Bank
             File Type = 1;
             Last Modified Low = 1358818408;
             Last Modified High = 30187657;
-        }
-    }
-
-    Wave
-    {
-        Name = SpaceHasteFlight(v0.9);
-        File = sounds\SpaceHasteFlight(v0.9).wav;
-        Build Settings Last Modified Low = 768418285;
-        Build Settings Last Modified High = 30191074;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 2;
-            Sampling Rate = 44100;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 5212280;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 2778491648;
-            Last Modified High = 30191062;
         }
     }
 
@@ -378,8 +357,8 @@ Sound Bank
     Windows File = Win\Sounds.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 2338246025;
-    Bank Last Modified High = 30191088;
+    Bank Last Modified Low = 417663022;
+    Bank Last Modified High = 30191490;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -479,53 +458,6 @@ Sound Bank
 
     Sound
     {
-        Name = SpaceHasteFlight(v0.9);
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Default;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Waves;
-                    Bank Index = 0;
-                    Entry Name = SpaceHasteFlight(v0.9);
-                    Entry Index = 2;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
         Name = Engines;
         Volume = -1200;
         Pitch = 0;
@@ -563,7 +495,7 @@ Sound Bank
                     Bank Name = Waves;
                     Bank Index = 0;
                     Entry Name = Engines;
-                    Entry Index = 3;
+                    Entry Index = 2;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -610,7 +542,7 @@ Sound Bank
                     Bank Name = Waves;
                     Bank Index = 0;
                     Entry Name = RocketExpl;
-                    Entry Index = 4;
+                    Entry Index = 3;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -657,7 +589,7 @@ Sound Bank
                     Bank Name = Waves;
                     Bank Index = 0;
                     Entry Name = RocketFire;
-                    Entry Index = 5;
+                    Entry Index = 4;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -707,26 +639,6 @@ Sound Bank
 
     Cue
     {
-        Name = SpaceHasteFlight(v0.9);
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = SpaceHasteFlight(v0.9);
-            Index = 2;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
         Name = Engines;
 
         Variation
@@ -739,7 +651,7 @@ Sound Bank
         Sound Entry
         {
             Name = Engines;
-            Index = 3;
+            Index = 2;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -759,7 +671,7 @@ Sound Bank
         Sound Entry
         {
             Name = RocketExpl;
-            Index = 4;
+            Index = 3;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -779,7 +691,7 @@ Sound Bank
         Sound Entry
         {
             Name = RocketFire;
-            Index = 5;
+            Index = 4;
             Weight Min = 0;
             Weight Max = 255;
         }

@@ -35,7 +35,7 @@ namespace SpaceHaste.Graphics
         public static GraphicsDeviceManager graphics;
 
         public static ContentManager Content;
-
+        public static Model SkyDome;
         public DrawSkyDomeManager(Game game, GraphicsDeviceManager _graphics)
             : base(game)
         {
@@ -43,7 +43,7 @@ namespace SpaceHaste.Graphics
             graphics = _graphics;
             Content = new ContentManager(game.Services);
             Content.RootDirectory = "Content";
-            DrawOrder = 10;
+            DrawOrder = -3;
         }
         static void InitTestCube()
         {
@@ -66,14 +66,7 @@ namespace SpaceHaste.Graphics
 
 
 
-        /// <summary>
-        /// Allows the game to run logic.
-        /// </summary>
-        public override void Update(GameTime gameTime)
-        {
-            //GraphicsShader.Update(gameTime);
-            UpdateWorldMatricies(gameTime);
-        }
+        
         void DrawSkyDome()
         {
             DrawModel(GraphicsManager.SkyDome,

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace SpaceHaste.Huds
 {
-    public class Hud : GameComponent
+    public class Hud : DrawableGameComponent
     {
         public static Hud Instance;
 

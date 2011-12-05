@@ -71,7 +71,7 @@ namespace SpaceHaste.Graphics
         {
             TestCube = Content.Load<Model>("Ship");
             IcePlanet = Content.Load<Model>("icePlanet");
-            Missile.Model = Content.Load<Model>("Ship");
+            Missile.Model = Content.Load<Model>("models/missile");
             SkyDome = Content.Load<Model>("models/skydome");
            // GraphicsShaders.ChangeEffectUsedByModel(TestCube, cartoonEffect);
         }
@@ -147,7 +147,7 @@ namespace SpaceHaste.Graphics
             }
             if (Missile.shouldDraw == true)
             {
-                Matrix world = Matrix.CreateScale(.05f) *
+                Matrix world = Matrix.CreateScale(80,80,20) *
                         Matrix.CreateFromYawPitchRoll(
                         Missile.Direction.X,
                         Missile.Direction.Y,

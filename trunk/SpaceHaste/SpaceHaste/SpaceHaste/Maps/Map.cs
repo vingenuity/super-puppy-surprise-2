@@ -532,13 +532,13 @@ namespace SpaceHaste.Maps
         }
         public void AddGridX1ZOrthogonal()
         {
-            for (int i = 0; i <= Size.X; i++)
+            for (int i = 0; i <= Size.Z; i++)
             {
-                float x = ((Size.Z / 2) - i) * GridCube.GRIDSQUARELENGTH;
-                float z = Size.X / 2 * GridCube.GRIDSQUARELENGTH;
+                float z = ((Size.Z / 2) - i) * GridCube.GRIDSQUARELENGTH;
+                float x = Size.X / 2 * GridCube.GRIDSQUARELENGTH;
                 float y = Size.Y / 2 * GridCube.GRIDSQUARELENGTH;
 
-                Line orthogonal = new Line(new Vector3(z, y, x), new Vector3(-z, y, x),
+                Line orthogonal = new Line(new Vector3(x, y, z), new Vector3(-x, y, z),
                                     new Color(0, 0, 1.0f));
                 LineManager.AddLine(orthogonal);
                 XZMatrix[3, i] = orthogonal;
@@ -624,7 +624,6 @@ namespace SpaceHaste.Maps
                 LineManager.RemoveLine(XZMatrix[3, i]);
             }
         }
-
 
         public GridCube GetCubeAt(Vector3 loc)
         {

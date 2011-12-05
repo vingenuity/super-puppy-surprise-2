@@ -99,7 +99,7 @@ namespace SpaceHaste.Cameras
             zoom = MathHelper.Clamp(zoom, zoomMin, zoomMax); 
  
             // Start with an initial offset 
-            Vector3 cameraPosition = new Vector3(5000.0f, zoom, 100.0f); 
+            Vector3 cameraPosition = new Vector3(0.0f, zoom, 0.0f); 
  
             // Rotate vertically 
             cameraPosition = Vector3.Transform(cameraPosition, Matrix.CreateRotationX(verticalAngle)); 

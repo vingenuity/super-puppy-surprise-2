@@ -27,6 +27,7 @@ namespace SpaceHaste.GameMech.LevelManagers
             else
                 LoadLevel1();
         }
+
         void LoadLevel1()
         {
             if (loadCutScene)
@@ -35,7 +36,8 @@ namespace SpaceHaste.GameMech.LevelManagers
                 cutSceneStart = new CutScene("TestCutScene1");
                 cutSceneStart.drawCutscene();
                 cutSceneStart.Text.RemoveAt(0);
-                try {
+                try
+                {
                     cutSceneEnd = new CutScene("TestCutScene1");
                     //cutSceneEnd.drawCutscene();
                     cutSceneEnd.Text.RemoveAt(0);
@@ -45,6 +47,26 @@ namespace SpaceHaste.GameMech.LevelManagers
             else
                 GameMechanicsManager.gamestate = GameState.StartBattle;
         }
+
+        //void LoadLevel1()
+        //{
+        //    if (loadCutScene)
+        //    {
+        //        GameMechanicsManager.gamestate = GameState.CutScene;
+        //        cutSceneStart = new CutScene("level1");
+        //        cutSceneStart.drawCutscene();
+        //        cutSceneStart.Text.RemoveAt(0);
+        //        try
+        //        {
+        //            cutSceneEnd = new CutScene("level1");
+        //            //cutSceneEnd.drawCutscene();
+        //            cutSceneEnd.Text.RemoveAt(0);
+        //        }
+        //        catch { }
+        //    }
+        //    else
+        //        GameMechanicsManager.gamestate = GameState.StartBattle;
+        //}
 
         public CutScene getScene() {
             if (GameMechanicsManager.gamestate == GameState.CutSceneEnd)

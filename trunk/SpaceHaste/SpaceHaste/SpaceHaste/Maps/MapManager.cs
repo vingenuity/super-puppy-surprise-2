@@ -39,6 +39,7 @@ namespace SpaceHaste.Maps
             grid0YZwas = true;
             grid1YZwas = true;
             Map = new Map1();
+            //Map = new Map_Level1();
             Map.AddGrid1YZ();
             Map.AddGrid0YZ();
             Map.AddGridX0Z();

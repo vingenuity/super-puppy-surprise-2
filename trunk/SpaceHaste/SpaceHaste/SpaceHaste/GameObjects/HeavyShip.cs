@@ -19,7 +19,7 @@ namespace SpaceHaste.GameObjects
         {
             base.Load();
 
-            Model = GraphicsManager.Content.Load<Model>("model/heavy_ship_blue");
+            Model = GraphicsManager.Content.Load<Model>("models/heavy_ship_blue");
 
         }
     } 

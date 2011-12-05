@@ -64,7 +64,7 @@ namespace SpaceHaste
                 else
                     action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
             }
-            //If not, if we can kill the enemy with lasers without a return volley, close in and fire; otherwise take evasive action.
+            //If not, if we can kill the enemy with lasers without a return volley, close in and fire; otherwise take a quick shot and evasive action.
             else
             {
                 if (MaxDamageThisTurn(myShip, enemy) > enemy.hull[0] && Map.map.IsObjectInRange(myShip, enemy))

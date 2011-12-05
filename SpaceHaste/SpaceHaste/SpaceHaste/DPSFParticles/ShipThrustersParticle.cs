@@ -42,13 +42,12 @@ namespace SpaceHaste.DPSFParticles
         {
             paricleSystem.Emitter.Enabled = false;
         }
-        double timercd = 0;
-        bool exploded = false;
+        //double timercd = 0;
+        //bool exploded = false;
         //126... 42....-38
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             paricleSystem.Emitter.PositionData.Position = Position + Offset;
-            
             base.Update(gameTime);
         }
     }

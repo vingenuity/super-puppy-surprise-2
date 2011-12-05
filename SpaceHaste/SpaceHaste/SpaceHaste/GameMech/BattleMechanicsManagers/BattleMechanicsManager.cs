@@ -642,7 +642,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         /// </summary>
         internal void ChangeCameraMode()
         {
-            if (currentCameraMode == CameraMode.OnCenter)
+            if (currentCameraMode == CameraMode.OnCenter && GameMechanicsManager.gamestate != GameState.CutScene)
             {
                 ControlManager.camera.ChangeToFocusedPosition(Map.map.GetCubeAt(CurrentGridCubeSelected).Center);
                 currentCameraMode = CameraMode.OnShip;

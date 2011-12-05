@@ -42,7 +42,7 @@ namespace SpaceHaste.DPSFParticles
             LaserHitParicleSystem.Emitter.Enabled = false;
         }
         double timercd = 0;
-        bool exploded = false;
+        //bool exploded = false;
         //126... 42....-38
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {

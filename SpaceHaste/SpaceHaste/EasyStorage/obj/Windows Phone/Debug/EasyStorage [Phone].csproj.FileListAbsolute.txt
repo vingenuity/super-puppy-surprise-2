@@ -1,0 +1,6 @@
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\bin\Windows Phone\Debug\EasyStorage.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\bin\Windows Phone\Debug\EasyStorage.pdb
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\Windows Phone\Debug\ResolveAssemblyReference.cache
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\Windows Phone\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\Windows Phone\Debug\EasyStorage.dll
+C:\Users\Tom\Downloads\easystorage-57440\GS4\EasyStorage\obj\Windows Phone\Debug\EasyStorage.pdb

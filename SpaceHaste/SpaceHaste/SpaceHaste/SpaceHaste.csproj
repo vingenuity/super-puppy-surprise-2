@@ -126,8 +126,6 @@
     <Compile Include="DPSFParticles\DeathParticle.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DPSFParticles\Particle Systems\AnimatedQuadPS.cs" />
-    <Compile Include="DPSFParticles\Particle Systems\AnimatedSpritePS.cs" />
     <Compile Include="DPSFParticles\Particle Systems\BallPS.cs" />
     <Compile Include="DPSFParticles\Particle Systems\BoxPS.cs" />
     <Compile Include="DPSFParticles\Particle Systems\DotPS.cs" />

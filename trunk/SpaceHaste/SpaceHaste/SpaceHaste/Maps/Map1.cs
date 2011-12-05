@@ -20,7 +20,7 @@ namespace SpaceHaste.Maps
             this.addGameObject(new AttackShip("Player Ship 2", new Vector3(2, 4, 7), GameObject.Team.Player), new Vector3(2, 4, 7));
             this.addGameObject(new LightShip("Player Ship 3", new Vector3(3, 4, 7), GameObject.Team.Player), new Vector3(3, 4, 7));
             this.addGameObject(new MissileShip("Player Ship 4", new Vector3(4, 4, 7), GameObject.Team.Player), new Vector3(4, 4, 7));
-            this.addGameObject(new StandardShip("Player Ship 5", new Vector3(5, 4, 7), GameObject.Team.Player), new Vector3(5, 4, 7));
+         //   this.addGameObject(new StandardShip("Player Ship 5", new Vector3(5, 4, 7), GameObject.Team.Player), new Vector3(5, 4, 7));
           
             this.AddEnvObject(GridCube.TerrainType.nebula, 2, 2, 2);
             this.AddPlanet(6, 6, 6, 2);

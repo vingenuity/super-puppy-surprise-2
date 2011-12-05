@@ -220,8 +220,8 @@ namespace SpaceHaste.Graphics
             //GraphicsShader.Draw(gameTime);
 
             DPSFParticles.ParticleManager.Instance.Draw(gameTime);
-
-            LineManager.Instance.Draw(gameTime);
+           
+            //LineManager.Instance.Draw(gameTime);
             DrawSkyDome();
 
             base.Draw(gameTime);

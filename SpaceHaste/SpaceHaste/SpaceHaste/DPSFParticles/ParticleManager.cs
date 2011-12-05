@@ -67,7 +67,7 @@ namespace SpaceHaste.DPSFParticles
 
             particleSystemManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
         }
-        public override void  Draw(GameTime gameTime)
+        public void  Draw(GameTime gameTime)
         {
             particleSystemManager.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, ControlManager.View, ControlManager.Projection);
 

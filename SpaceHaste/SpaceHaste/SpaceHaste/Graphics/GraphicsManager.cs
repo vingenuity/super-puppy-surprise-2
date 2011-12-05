@@ -19,6 +19,8 @@ using SpaceHaste.Grids;
 using SpaceHaste.GameObjects;
 using SpaceHaste.Controls;
 using SpaceHaste.Maps;
+using SpaceHaste.Huds;
+using SpaceHaste.Primitives;
 #endregion
 
 namespace SpaceHaste.Graphics
@@ -111,11 +113,15 @@ namespace SpaceHaste.Graphics
             //GraphicsShader.Update(gameTime);
             UpdateWorldMatricies(gameTime);
         }
-        void DrawAllModels()
+        void DrawSkyDome()
         {
             DrawModel(GraphicsManager.SkyDome,
-                   Matrix.CreateScale(100f) * Matrix.CreateTranslation(Vector3.Zero),
-                   ControlManager.View, ControlManager.Projection);
+                  Matrix.CreateScale(100f) * Matrix.CreateTranslation(Vector3.Zero),
+                  ControlManager.View, ControlManager.Projection);
+        }
+        void DrawAllModels()
+        {
+           
             for (int i = 0; i < GraphicsManager.GraphicsGameObjects.Count; i++)
                 DrawModel(GraphicsManager.GraphicsGameObjects[i].Model,
                     GraphicsManager.GraphicsGameObjects[i].World,
@@ -203,7 +209,7 @@ namespace SpaceHaste.Graphics
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice device = graphics.GraphicsDevice;
-
+            Hud.Instance.Draw(gameTime);
           //  device.Clear(Color.Black);
 
             graphics.GraphicsDevice.BlendState = BlendState.Opaque;
@@ -212,6 +218,11 @@ namespace SpaceHaste.Graphics
 
             DrawAllModels();
             //GraphicsShader.Draw(gameTime);
+
+            DPSFParticles.ParticleManager.Instance.Draw(gameTime);
+
+            LineManager.Instance.Draw(gameTime);
+            DrawSkyDome();
 
             base.Draw(gameTime);
         }

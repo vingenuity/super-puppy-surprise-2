@@ -8,8 +8,10 @@ using Microsoft.Xna.Framework.Content;
 
 namespace SpaceHaste.Huds
 {
-    public class Hud : DrawableGameComponent
+    public class Hud : GameComponent
     {
+        public static Hud Instance;
+
         public static SpriteBatch spriteBatch;
         public static SpriteFont spriteFont;
         HUDDrawListOfUnits DrawUnitLists;
@@ -22,6 +24,7 @@ namespace SpaceHaste.Huds
 
         public Hud(Game game, GraphicsDeviceManager graphics) : base (game)
         {
+           
             this.graphics = graphics;
             
             DrawUnitLists = new HUDDrawListOfUnits();
@@ -32,7 +35,7 @@ namespace SpaceHaste.Huds
             Content.RootDirectory = "Content";
 
             scene = new DisplayCutScenes();
-            DrawOrder = 12;
+            Instance = this;
         }
         protected override void LoadContent()
         {
@@ -55,7 +58,7 @@ namespace SpaceHaste.Huds
                 
         }
 
-        public override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
 

@@ -6,11 +6,11 @@ Argent:|     Incoming transmission, sir.
 Albid:|     Baker 16, this is Willy 16.
 Ceruleo:|     This is Baker 16.
 Albid:|     Ken, is everything alright?
-Ceruleo:|     Yes, sir. We made contact with the enemy.|     They know our shield frequencies.
+Ceruleo:|     Yes, sir. We made contact with the enemy.|     They knew our shield frequencies.
 Albid:|     So they do. Send a sit rep when you can.
 Ceruleo:|     Roger, sir.
-Albid:|     Kenneth, is there something on your mind.
-Ceruleo:|     Yes. I have a bad feeling about this conflict.|     Every time we come close to finishing the rebels they bounce back like this.
+Albid:|     Kenneth, is there something on your mind?
+Ceruleo:|     Yes. I have a bad feeling about this conflict.|     Every time we come close to finishing the|     rebels they bounce back like this.
 Albid:|     Don't think too much of it.|     Many wars go like this.
 Ceruleo:|     Yes, sir.
 Albid:|     Well, good luck. Charlie-Mike.|     Willy 16-out.

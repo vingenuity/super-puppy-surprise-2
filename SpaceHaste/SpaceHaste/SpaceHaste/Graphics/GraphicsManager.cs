@@ -222,7 +222,7 @@ namespace SpaceHaste.Graphics
             DPSFParticles.ParticleManager.Instance.Draw(gameTime);
            
             //LineManager.Instance.Draw(gameTime);
-            DrawSkyDome();
+            //DrawSkyDome();
 
             base.Draw(gameTime);
         }

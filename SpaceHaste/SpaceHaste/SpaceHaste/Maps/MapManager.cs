@@ -24,6 +24,8 @@ namespace SpaceHaste.Maps
         public static bool isDrawingXGridBottom = false;
         public static bool isDrawingZGridBottom = false;
         public static int currentLevel;
+        public static int currentAct = 1;
+        public static int currentScene = 1;
         public MapManager(Game game)
             : base(game)
         {

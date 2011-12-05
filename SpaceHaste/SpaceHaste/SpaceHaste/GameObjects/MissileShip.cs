@@ -19,11 +19,11 @@ namespace SpaceHaste.GameObjects
         {
             base.Load();
             if (team == Team.Player)
-                Model = GraphicsManager.Content.Load<Model>("gatherer/light_ship_red");
+                Model = GraphicsManager.Content.Load<Model>("models/gatherer_ship_red");
             else if (team == Team.Enemy)
-                Model = GraphicsManager.Content.Load<Model>("gatherer/light_ship_blue");
+                Model = GraphicsManager.Content.Load<Model>("models/gatherer_ship_blue");
 
-            Scale = 2f;
+            Scale = 75f;
 
         }
     }

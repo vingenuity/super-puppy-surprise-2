@@ -18,7 +18,11 @@ namespace SpaceHaste.GameObjects
         public override void Load()
         {
             base.Load();
-            Model = GraphicsManager.Content.Load<Model>("models/heavy_ship_blue");
+
+            if (team == Team.Player)
+                Model = GraphicsManager.Content.Load<Model>("models/heavy_ship_blue");
+            else if (team == Team.Enemy)
+                Model = GraphicsManager.Content.Load<Model>("models/heavy_ship_red");
 
             Scale = 25f;
 

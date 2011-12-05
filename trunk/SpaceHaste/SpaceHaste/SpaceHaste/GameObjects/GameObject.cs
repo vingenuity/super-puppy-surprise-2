@@ -63,9 +63,9 @@ namespace SpaceHaste.GameObjects
         {
             Name = name;
             energy[0] = 100;
+            team = side;
             Load();
             GridPosition = location;
-            team = side;
 
             boundingSphere = new BoundingSphere(GridPosition, 0.5f);
 

@@ -12,7 +12,7 @@ namespace SpaceHaste.DPSFParticles
     {
         ParticleSystemManager particleSystemManager;
         public List<Particle> ParticleList;
-        IDPSFParticleSystem mcCurrentParticleSystem;
+        //IDPSFParticleSystem mcCurrentParticleSystem;
         public static ParticleManager Instance;
         public ParticleManager(Game game): base(game)
         {

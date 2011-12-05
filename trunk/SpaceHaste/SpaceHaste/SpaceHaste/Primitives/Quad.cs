@@ -114,7 +114,7 @@ namespace SpaceHaste.Primitives
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void DrawQuad()
-        {
+        {/*
             foreach (EffectPass pass in quadEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
@@ -124,7 +124,7 @@ namespace SpaceHaste.Primitives
                     PrimitiveType.TriangleList,
                     Vertices, 0, 4,
                     Indexes, 0, 2);
-            }
+            }*/
         }
     }
 }

@@ -167,8 +167,8 @@ namespace SpaceHaste.Graphics
             {
                 Matrix world = Matrix.CreateScale(80,80,20) *
                         Matrix.CreateFromYawPitchRoll(
-                        Missile.Direction.X,
                         Missile.Direction.Y,
+                        Missile.Direction.X,
                         Missile.Direction.Z)
                         * Matrix.CreateTranslation(Missile.DrawPosition);
                 DrawModel(Missile.Model, world, ControlManager.View, ControlManager.Projection);

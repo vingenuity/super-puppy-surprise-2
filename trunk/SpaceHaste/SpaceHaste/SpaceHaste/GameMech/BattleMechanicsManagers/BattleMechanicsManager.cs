@@ -229,6 +229,14 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         public void UpdateShipParticles()
         {
+            if (ShipThrustersParticle1 != null)
+                ParticleManager.Instance.Remove(ShipThrustersParticle1);
+            if (ShipThrustersParticle2 != null)
+                ParticleManager.Instance.Remove(ShipThrustersParticle2);
+            if (ShipThrustersParticle3 != null)
+                ParticleManager.Instance.Remove(ShipThrustersParticle3);
+            if (ShipThrustersParticle4 != null)
+                ParticleManager.Instance.Remove(ShipThrustersParticle4);
             if (CurrentGameObjectSelected.ModelType == 1)
             {
                 Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(ListOfMovementSquares[0]).Center;
@@ -534,20 +542,32 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                         Map.map.MoveObject(CurrentGameObjectSelected, (int)c.AsVector().X, (int)c.AsVector().Y, (int)c.AsVector().Z);
 
                         CurrentGameObjectSelected.energy[0] -= CurrentGameObjectSelected.MovementEnergyCost;
-                        
                         ListOfMovementSquares.RemoveAt(0);
+                        Vector3 a,b;
+                        b = Vector3.One;
+                        if(ListOfMovementSquares.Count> 0)
+                        {
+                            a = Map.map.GetCubeAt(ListOfMovementSquares[0]).Center;
+
+                            b = a - CurrentGameObjectSelected.GridLocation.Center;
+                            b.Normalize();
+                            b *= -1;
+                        }
+
                         timer = 0;
-                        if (ShipThrustersParticle1 != null)
-                            ParticleManager.Instance.Remove(ShipThrustersParticle1);
-                        if (ShipThrustersParticle2 != null)
-                            ParticleManager.Instance.Remove(ShipThrustersParticle2);
-                        if (ShipThrustersParticle3 != null)
-                            ParticleManager.Instance.Remove(ShipThrustersParticle3);
-                        if (ShipThrustersParticle4 != null)
-                            ParticleManager.Instance.Remove(ShipThrustersParticle4);
+
+                        Vector3 DirectionPrevious = InterpDistance;
+                        DirectionPrevious.Normalize();
+
                         if (ListOfMovementSquares.Count > 0)
                         {
-                            UpdateShipParticles();
+                            if (DirectionPrevious != b)
+                            {
+                                if (ListOfMovementSquares.Count > 0)
+                                {
+                                    UpdateShipParticles();
+                                }
+                            }
                         }
                     }
                 }

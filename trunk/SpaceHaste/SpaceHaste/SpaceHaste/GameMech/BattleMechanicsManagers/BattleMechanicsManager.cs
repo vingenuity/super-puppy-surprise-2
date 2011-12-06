@@ -559,7 +559,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
                     Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(CurrentGridCubeSelected).Center;
                     offset.Normalize();
-                    offset *= GridCube.GRIDSQUARELENGTH * 4 / 5;
+                    offset *= GridCube.GRIDSQUARELENGTH * 1 / 5;
                     ShipThrustersParticle = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
                 }
             }

@@ -56,7 +56,12 @@ namespace SpaceHaste.Maps
         public void RemoveObject(GameObject obj) { ContainedObject = null; }
 
         //Terrain Functions
-        public int GetMoveCost() { return (int)Terrain; }
+        public int GetMoveCost() 
+        {
+            if (Terrain == TerrainType.nearplanet)
+                return 1;
+            else return (int)Terrain;
+        }
         public TerrainType GetTerrain() { return Terrain; }
         public void SetTerrain(TerrainType t) { 
             Terrain = t;

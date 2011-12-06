@@ -46,7 +46,7 @@ namespace SpaceHaste.GameMech.CutScenes
         public void drawCutscene() {
             if (currentLine == null)
                 box = null;
-            else 
+            else
             {
                 string[] strings = currentLine.Split('|');
                 box.DrawSet(strings);

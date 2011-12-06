@@ -15,12 +15,12 @@ namespace DPSF.ParticleSystems
 #if (WINDOWS)
     [Serializable]
 #endif
-    class NebulaeParticleSystem : DefaultSprite3DBillboardParticleSystem
+    class ParticleSystem : DefaultSprite3DBillboardParticleSystem
     {
         /// <summary>
         /// Constructor
         /// </summary>
-        public NebulaeParticleSystem(Game cGame) : base(cGame) { }
+        public ParticleSystem(Game cGame) : base(cGame) { }
 
         //===========================================================
         // Structures and Variables

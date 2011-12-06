@@ -25,7 +25,7 @@ namespace SpaceHaste.GameMech
 
         //For controls, we need a singleton
         public static GameMechanicsManager MechMan;
-        LevelManager LevelManager;
+        public static LevelManager LevelManager;
 
         public GameMechanicsManager(Game g)
             : base(g)
@@ -39,7 +39,6 @@ namespace SpaceHaste.GameMech
 
         public override void Initialize()
         {
-
             base.Initialize();
         }
         public override void Update(GameTime gameTime)
@@ -47,7 +46,5 @@ namespace SpaceHaste.GameMech
             BattleManager.Update(gameTime);
             base.Update(gameTime);
         }
-
-
     }
 }

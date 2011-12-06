@@ -19,14 +19,17 @@ namespace SpaceHaste.GameMech.LevelManagers
 
         public static LevelManager Instance;
 
+        public bool loaded;
+
         public LevelManager()
         {
             Instance = this;
             int a = LoadSaveManager.LevelNumber;
-            LoadLevel();
+            loaded = false;
+            //LoadLevel();
         }
 
-        void LoadLevel()
+        public void LoadLevel()
         {
             if (loadCutScene)
             {

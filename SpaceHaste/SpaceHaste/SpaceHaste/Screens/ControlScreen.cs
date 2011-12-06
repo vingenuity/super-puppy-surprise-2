@@ -28,6 +28,7 @@ namespace GameStateManagement
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
             keyPic = content.Load<Texture2D>("keyMaps");
+            GPPic = content.Load<Texture2D>("PadMapComp");
         }
 
         void keyboardSelected(object sender, PlayerIndexEventArgs e)
@@ -64,9 +65,15 @@ namespace GameStateManagement
 
             if (keyboardOn)
             {
-                size = new Rectangle((viewport.Width / 2) - (keyPic.Width / 2), (viewport.Height / 2) - (keyPic.Height / 2), 
+                size = new Rectangle((viewport.Width / 2) - (keyPic.Width / 2), (viewport.Height / 2) - (keyPic.Height / 2),
                                         keyPic.Width, keyPic.Height);
                 spriteBatch.Draw(keyPic, size, new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
+            }
+            else
+            {
+                size = new Rectangle((viewport.Width / 2) - (GPPic.Width / 2), (viewport.Height / 2) - 200,
+                                        GPPic.Width, GPPic.Height);
+                spriteBatch.Draw(GPPic, size, new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
             }
 
             spriteBatch.End();

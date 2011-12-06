@@ -23,7 +23,7 @@ namespace SpaceHaste.GameObjects
                 Model = GraphicsManager.Content.Load<Model>("models/light_ship_blue_swap");
             else if (team == Team.Enemy)
                 Model = GraphicsManager.Content.Load<Model>("models/light_ship_red_swap");
-
+            ModelType = 1;
             Scale = 6f;
 
         }

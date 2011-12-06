@@ -58,6 +58,7 @@ namespace SpaceHaste.GameObjects
         public Vector3 IdleAngle;
         public Vector3 AnimationRotation;
         public Vector3 DefaultRotation;
+        public int ModelType;
         //Constructor
         public GameObject(String name, Vector3 location, Team side, int maxHull, int maxShield, double regeneration, int numMissiles, int lsrDmg, int missDmg, double[] eff)
         {

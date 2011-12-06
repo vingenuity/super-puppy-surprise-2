@@ -52,7 +52,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         public bool AttackTargetLasers;
 
         //Particles
-        ThrustersParticle ShipThrustersParticle;
+        ThrustersParticle ShipThrustersParticle1;
+        ThrustersParticle ShipThrustersParticle2;
+        ThrustersParticle ShipThrustersParticle3;
+        ThrustersParticle ShipThrustersParticle4;
 
         public BattleMechanicsManager()
         {
@@ -224,6 +227,160 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 Game1.game.LoadGameComponents();
             return true;
         }
+        public void UpdateShipParticles()
+        {
+            if (CurrentGameObjectSelected.ModelType == 1)
+            {
+                Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(ListOfMovementSquares[0]).Center;
+                offset.Normalize();
+                offset *= GridCube.GRIDSQUARELENGTH * .5f / 5;
+                ShipThrustersParticle1 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+            }
+            else if (CurrentGameObjectSelected.ModelType == 2)
+            {
+                Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(ListOfMovementSquares[0]).Center;
+                offset.Normalize();
+                if (offset == new Vector3(1, 0, 0))
+                {
+                    offset = new Vector3(.9f, -.15f, 1) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle1 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(.9f, -.15f, -1) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle2 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                }
+                if (offset == new Vector3(-1, 0, 0))
+                {
+                    offset = new Vector3(-.15f, -.9f, 1) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle1 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-.15f, -.9f, -1) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle2 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                }
+                if (offset == new Vector3(0, 1, 0))
+                {
+                    offset = new Vector3(1, .9f, -.15f) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle1 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-1, .9f, -.15f) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle2 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                }
+                if (offset == new Vector3(0, -1, 0))
+                {
+                    offset = new Vector3(1, -.9f, .15f) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle1 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-1, -.9f, .15f) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle2 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                }
+                if (offset == new Vector3(0, 0, 1))
+                {
+                    offset = new Vector3(1, -.15f, .9f) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle1 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-1, -.15f, .9f) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle2 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                }
+                if (offset == new Vector3(0, 0, -1))
+                {
+                    offset = new Vector3(-1, -.15f, -.9f) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle1 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(1, -.15f, -.9f) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle2 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                }
+            }
+            else if (CurrentGameObjectSelected.ModelType == 3)
+            {
+                Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(ListOfMovementSquares[0]).Center;
+                offset.Normalize();
+                float a = -.48f;
+                float b = .3f;
+                if (offset == new Vector3(1, 0, 0))
+                {
+                    offset = new Vector3(-a, -b, -b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle1 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-a, b, b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle2 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-a, b, b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle3 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-a, -b, b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle4 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                }
+                if (offset == new Vector3(-1, 0, 0))
+                {
+                    offset = new Vector3(a, -b, -b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle1 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(a, b, b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle2 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(a, b, b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle3 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(a, -b, b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle4 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                }
+                if (offset == new Vector3(0, 1, 0))
+                {
+                    offset = new Vector3(b, -a, -b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle1 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(b, -a, b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle2 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-b,- a, b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle3 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-b, -a, -b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle4 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                }
+                if (offset == new Vector3(0, -1, 0))
+                {
+                    offset = new Vector3(b, a, -b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle1 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(b, a, b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle2 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-b, a, b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle3 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-b, a, -b) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle4 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                }
+                if (offset == new Vector3(0, 0, 1))
+                {
+                    offset = new Vector3(b, -b, -a) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle1 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(b, b, -a) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle2 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-b, -b, -a) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle3 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-b, b, -a) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle4 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                }
+                if (offset == new Vector3(0, 0, -1))
+                {
+                    offset = new Vector3(b, -b, a) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle1 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(b, b, a) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle2 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-b, -b, a) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle3 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+
+                    offset = new Vector3(-b, b, a) * GridCube.GRIDSQUARELENGTH * model2offset / 5;
+                    ShipThrustersParticle4 = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                }
+            }
+        }
         double timer = 0;
         List<Vector3> ListOfMovementSquares = new List<Vector3>();
         Vector3 InterpDistance;
@@ -345,7 +502,15 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                {
                 if (ListOfMovementSquares.Count > 0)
                 {
-                    ShipThrustersParticle.Position = CurrentGameObjectSelected.DrawPosition; 
+                    if (ShipThrustersParticle1 != null)
+                        ShipThrustersParticle1.Position = CurrentGameObjectSelected.DrawPosition + ShipThrustersParticle1.Offset;
+                    if (ShipThrustersParticle2 != null)
+                        ShipThrustersParticle2.Position = CurrentGameObjectSelected.DrawPosition + ShipThrustersParticle2.Offset;
+                    if (ShipThrustersParticle3 != null)
+                        ShipThrustersParticle3.Position = CurrentGameObjectSelected.DrawPosition + ShipThrustersParticle3.Offset;
+                    if (ShipThrustersParticle4 != null)
+                        ShipThrustersParticle4.Position = CurrentGameObjectSelected.DrawPosition + ShipThrustersParticle4.Offset; 
+
                     GridCube c =  Map.map.GetCubeAt(ListOfMovementSquares[0]);
 
                     Vector3 v = (c.Position - CurrentGameObjectSelected.GridPosition);
@@ -372,14 +537,17 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                         
                         ListOfMovementSquares.RemoveAt(0);
                         timer = 0;
-                        if (ShipThrustersParticle != null)
-                            ParticleManager.Instance.Remove(ShipThrustersParticle);
+                        if (ShipThrustersParticle1 != null)
+                            ParticleManager.Instance.Remove(ShipThrustersParticle1);
+                        if (ShipThrustersParticle2 != null)
+                            ParticleManager.Instance.Remove(ShipThrustersParticle2);
+                        if (ShipThrustersParticle3 != null)
+                            ParticleManager.Instance.Remove(ShipThrustersParticle3);
+                        if (ShipThrustersParticle4 != null)
+                            ParticleManager.Instance.Remove(ShipThrustersParticle4);
                         if (ListOfMovementSquares.Count > 0)
                         {
-                            Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(ListOfMovementSquares[0]).Center;
-                            offset.Normalize();
-                            offset *= GridCube.GRIDSQUARELENGTH * 1 / 5;
-                            ShipThrustersParticle = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                            UpdateShipParticles();
                         }
                     }
                 }
@@ -389,12 +557,19 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     if (CurrentGameObjectSelected.energy[0] - CurrentGameObjectSelected.MovementEnergyCost < 0)
                         MoveEnabled = false;
                     NextShipAction();
-                    if(ShipThrustersParticle != null)
-                        ParticleManager.Instance.Remove(ShipThrustersParticle);
+                    if (ShipThrustersParticle1 != null)
+                        ParticleManager.Instance.Remove(ShipThrustersParticle1);
+                    if (ShipThrustersParticle2 != null)
+                        ParticleManager.Instance.Remove(ShipThrustersParticle2);
+                    if (ShipThrustersParticle3 != null)
+                        ParticleManager.Instance.Remove(ShipThrustersParticle3);
+                    if (ShipThrustersParticle4 != null)
+                        ParticleManager.Instance.Remove(ShipThrustersParticle4);
                 }
             }
             
         }
+        float model2offset = .7f;
         #region Selection Functions
         void SelectionAttack()
         {
@@ -566,15 +741,13 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                         ListOfMovementSquares.RemoveAt(0);
                     if (ListOfMovementSquares.Count > 0)
                     {
-                        Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(ListOfMovementSquares[0]).Center;
-                        offset.Normalize();
-                        offset *= GridCube.GRIDSQUARELENGTH * 1 / 5;
-                        ShipThrustersParticle = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                        UpdateShipParticles();
                     }
                 }
             }
             CurrentGameObjectSelected.updateBoundingSphere();
         }
+       
         void SelectionWait()
         {
             ClearLineList();

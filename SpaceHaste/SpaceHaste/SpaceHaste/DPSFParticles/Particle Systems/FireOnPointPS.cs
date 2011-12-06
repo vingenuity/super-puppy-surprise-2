@@ -9,13 +9,12 @@ using Microsoft.Xna.Framework.Content;
 namespace DPSF.ParticleSystems
 {
     /// <summary>
-    /// Create a new Particle System class that inherits from a
-    /// Default DPSF Particle System
+    /// Create a new Particle System class that inherits from a Default DPSF Particle System.
     /// </summary>
 #if (WINDOWS)
     [Serializable]
 #endif
-    class FireOnPointParticleSystem : DefaultTexturedQuadParticleSystem
+    class FireOnPointParticleSystem : DefaultSprite3DBillboardParticleSystem
     {
         /// <summary>
         /// Constructor
@@ -36,29 +35,21 @@ namespace DPSF.ParticleSystems
         //===========================================================
         // Overridden Particle System Functions
         //===========================================================
-        protected override void SetEffectParameters()
-        {
-            base.SetEffectParameters();
-
-            // Specify to not use the Color component when drawing (Texture color is not tinted)
-            Effect.Parameters["xColorBlendAmount"].SetValue(mfColorBlendAmount);
-        }
 
         //===========================================================
         // Initialization Functions
         //===========================================================
         public override void AutoInitialize(GraphicsDevice cGraphicsDevice, ContentManager cContentManager, SpriteBatch cSpriteBatch)
         {
-            InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 1000, 50000,
-                                                    UpdateVertexProperties, "Textures/Fire");
+            InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, 1000, 50000, "Textures/Fire");
             LoadSmokeEvents();
-            Emitter.ParticlesPerSecond = 100;
+            Emitter.ParticlesPerSecond = 10;
             Name = "Smoke";
         }
 
         public void LoadSmokeEvents()
         {
-            ParticleInitializationFunction = InitializeParticleRisingSmoke;
+            ParticleInitializationFunction = InitializeParticleFoggySmoke;
 
             ParticleEvents.RemoveAllEvents();
             ParticleEvents.AddEveryTimeEvent(UpdateParticlePositionAndVelocityUsingAcceleration, 500);
@@ -66,65 +57,62 @@ namespace DPSF.ParticleSystems
             ParticleEvents.AddEveryTimeEvent(UpdateColor);
             ParticleEvents.AddEveryTimeEvent(UpdateParticleTransparencyWithQuickFadeInAndSlowFadeOut, 100);
             ParticleEvents.AddEveryTimeEvent(IncreaseSizeBasedOnLifetime);
-            ParticleEvents.AddEveryTimeEvent(UpdateParticleToFaceTheCamera, 200);
         }
 
         // Used to generate a single smoke plume
-        public void InitializeParticleRisingSmoke(DefaultTexturedQuadParticle cParticle)
+        public void InitializeParticleRisingSmoke(DefaultSprite3DBillboardParticle cParticle)
         {
             cParticle.Lifetime = RandomNumber.Between(1.0f, 7.0f);
 
             cParticle.Position = Emitter.PositionData.Position;
-            // cParticle.Position += new Vector3(0, 10, 0);
-            cParticle.Size = RandomNumber.Next(10, 15);
+            cParticle.Position += new Vector3(0, 10, 0);
+            cParticle.Size = RandomNumber.Next(10, 25);
             cParticle.Color = msaColors[miCurrentColor];
-            cParticle.Color = msaColors[6];
+            cParticle.Rotation = RandomNumber.Between(0, MathHelper.TwoPi);
 
-            cParticle.Orientation = DPSF.Orientation3D.Rotate(Matrix.CreateRotationZ(RandomNumber.Between(0, MathHelper.TwoPi)), cParticle.Orientation);
-
-            cParticle.Velocity = new Vector3(RandomNumber.Next(-15, 15), RandomNumber.Next(-15, 15), RandomNumber.Next(-15, 15));
+            cParticle.Velocity = new Vector3(RandomNumber.Next(-15, 15), RandomNumber.Next(10, 30), RandomNumber.Next(-15, 15));
             cParticle.Acceleration = Vector3.Zero;
-            cParticle.RotationalVelocity.Z = RandomNumber.Between(-MathHelper.Pi, MathHelper.Pi);
-            cParticle.Color = Color.Purple;
+            cParticle.RotationalVelocity = RandomNumber.Between(-MathHelper.Pi, MathHelper.Pi);
+
             cParticle.StartSize = cParticle.Size;
 
             mfColorBlendAmount = 0.5f;
         }
-
         // Used to generate random smoke particles around the floor
-        public void InitializeParticleFoggySmoke(DefaultTexturedQuadParticle cParticle)
+        public void InitializeParticleFoggySmoke(DefaultSprite3DBillboardParticle cParticle)
         {
             cParticle.Lifetime = RandomNumber.Between(1.0f, 3.0f);
 
             cParticle.Position = Emitter.PositionData.Position;
-            cParticle.Position += new Vector3(RandomNumber.Next(-5000, 5000), 0, RandomNumber.Next(-5000, 5000));
+            cParticle.Position += new Vector3(RandomNumber.Next(-30, 30), RandomNumber.Next(-30, 30), RandomNumber.Next(-30, 30));
             cParticle.Size = RandomNumber.Next(50, 75);
             cParticle.Color = msaColors[miCurrentColor];
-            cParticle.Orientation = DPSF.Orientation3D.Rotate(Matrix.CreateRotationZ(RandomNumber.Between(0, MathHelper.TwoPi)), cParticle.Orientation);
+           // cParticle.Orientation = DPSF.Orientation3D.Rotate(Matrix.CreateRotationZ(RandomNumber.Between(0, MathHelper.TwoPi)), cParticle.Orientation);
 
-            cParticle.Velocity = new Vector3(RandomNumber.Next(-90, 90), RandomNumber.Next(-90, 90), RandomNumber.Next(-90, 90));
+            cParticle.Velocity = new Vector3(RandomNumber.Next(-10, 10), RandomNumber.Next(-10, 10), RandomNumber.Next(-10, 10));
             cParticle.Acceleration = Vector3.Zero;
-            cParticle.RotationalVelocity.Z = RandomNumber.Between(-MathHelper.Pi, MathHelper.Pi);
+            cParticle.RotationalVelocity = RandomNumber.Between(-MathHelper.Pi, MathHelper.Pi);
 
             cParticle.StartSize = cParticle.Size;
 
             mfColorBlendAmount = 0.5f;
         }
+        
 
         //===========================================================
         // Particle Update Functions
         //===========================================================
-        protected void IncreaseSizeBasedOnLifetime(DefaultTexturedQuadParticle cParticle, float fElapsedTimeInSeconds)
+        protected void IncreaseSizeBasedOnLifetime(DefaultSprite3DBillboardParticle cParticle, float fElapsedTimeInSeconds)
         {
-            cParticle.Size = ((1.0f + cParticle.NormalizedElapsedTime) / 1.0f) * cParticle.StartSize * 2;
+            cParticle.Size = ((1.0f + cParticle.NormalizedElapsedTime) / 1.0f) * cParticle.StartSize;
         }
 
-        protected void UpdateColor(DefaultTexturedQuadParticle cParticle, float fElapsedTimeInSeconds)
+        protected void UpdateColor(DefaultSprite3DBillboardParticle cParticle, float fElapsedTimeInSeconds)
         {
             cParticle.Color = msaColors[miCurrentColor];
         }
 
-        protected void RepelParticleFromExternalObject(DefaultTexturedQuadParticle cParticle, float fElapsedTimeInSeconds)
+        protected void RepelParticleFromExternalObject(DefaultSprite3DBillboardParticle cParticle, float fElapsedTimeInSeconds)
         {
             // Calculate Direction away from the Object and how far the Particle is from the Object
             Vector3 sDirectionAwayFromObject = cParticle.Position - mcExternalObjectPosition;
@@ -136,11 +124,11 @@ namespace DPSF.ParticleSystems
                 // Repel the Particle from the Object
                 sDirectionAwayFromObject.Normalize();
                 cParticle.Velocity += sDirectionAwayFromObject * (mfAttractRepelRange - fDistance) * mfAttractRepelForce;
-                cParticle.RotationalVelocity.Z += 0.005f;
+                cParticle.RotationalVelocity += 0.005f;
             }
         }
 
-        protected void AttractParticleToExternalObject(DefaultTexturedQuadParticle cParticle, float fElapsedTimeInSeconds)
+        protected void AttractParticleToExternalObject(DefaultSprite3DBillboardParticle cParticle, float fElapsedTimeInSeconds)
         {
             // Calculate Direction towards the Object and how far the Particle is from the Object
             Vector3 sDirectionTowardsObject = mcExternalObjectPosition - cParticle.Position;
@@ -172,7 +160,7 @@ namespace DPSF.ParticleSystems
 
         public void MakeParticlesAttractToExternalObject()
         {
-            //Make sure we only apply the Attract function once by first removing the function if it already exists
+            // Make sure we only apply the Attract function once by first removing the function if it already exists
             this.ParticleEvents.RemoveEveryTimeEvents(AttractParticleToExternalObject);
             this.ParticleEvents.AddEveryTimeEvent(AttractParticleToExternalObject);
         }

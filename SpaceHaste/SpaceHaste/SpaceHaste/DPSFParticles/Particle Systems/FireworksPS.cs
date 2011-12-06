@@ -160,10 +160,10 @@ namespace DPSF.ParticleSystems
 		protected void CreateExplosionParticles(DefaultTexturedQuadParticle cParticle, float fElapsedTimeInSeconds)
 		{
 			// If the Fireworks Explosion Particle Systems are Initialized
-			if (mcFireworksExplosionParticleSystem1.IsInitialized() &&
-				mcFireworksExplosionParticleSystem2.IsInitialized() &&
-				mcFireworksExplosionParticleSystem3.IsInitialized() &&
-				mcFireworksExplosionParticleSystem4.IsInitialized())
+			if (mcFireworksExplosionParticleSystem1.IsInitialized &&
+				mcFireworksExplosionParticleSystem2.IsInitialized &&
+				mcFireworksExplosionParticleSystem3.IsInitialized &&
+				mcFireworksExplosionParticleSystem4.IsInitialized)
 			{
 				// Randomly choose which Particle System to use for the Explosion
 				int iPSToUse = RandomNumber.Next(1, 5);
@@ -232,7 +232,7 @@ namespace DPSF.ParticleSystems
 				}
 
 				// If the Explosion Smoke Particle System is initialized
-				if (mcFireworksExplosionSmokeParticleSystem.IsInitialized())
+				if (mcFireworksExplosionSmokeParticleSystem.IsInitialized)
 				{
 					// Create some Smoke at the position where the Particle died
 					mcFireworksExplosionSmokeParticleSystem.Emitter.PositionData.Position = cParticle.Position;

@@ -1,3 +1,5 @@
+
+
 #region Using Statements
 using System;
 using System.Collections.Generic;
@@ -69,7 +71,7 @@ namespace DPSF.ParticleSystems
 		protected override void AfterUpdate(float fElapsedTimeInSeconds)
 		{
 			// If the Smoke Particle System is Initialized
-			if (mcSmokeParticleSystem.IsInitialized())
+			if (mcSmokeParticleSystem.IsInitialized)
 			{
 				// Update the Smoke Particle System manually
 				mcSmokeParticleSystem.CameraPosition = this.CameraPosition;
@@ -83,7 +85,7 @@ namespace DPSF.ParticleSystems
 			mcSmokeParticleSystem.SetWorldViewProjectionMatrices(World, View, Projection);
 
 			// If the Smoke Particle System is Initialized
-			if (mcSmokeParticleSystem.IsInitialized())
+			if (mcSmokeParticleSystem.IsInitialized)
 			{
 				// Draw the Smoke Particles manually
 				mcSmokeParticleSystem.Draw();
@@ -206,7 +208,7 @@ namespace DPSF.ParticleSystems
 		protected void GenerateSmokeParticle(DefaultTexturedQuadParticle cParticle, float fElapsedTimeInSeconds)
 		{
 			// If the Smoke Particle System is initialized
-			if (mcSmokeParticleSystem != null && mcSmokeParticleSystem.IsInitialized())
+			if (mcSmokeParticleSystem != null && mcSmokeParticleSystem.IsInitialized)
 			{
 				// Only create a Smoke Particles some of the time
 				if (RandomNumber.NextFloat() < mfAmountOfSmokeToRelease)

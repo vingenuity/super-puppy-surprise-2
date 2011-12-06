@@ -1,4 +1,7 @@
-﻿using System;
+﻿
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +23,12 @@ namespace SpaceHaste.DPSFParticles
         public static FireOnShipsParticle CreateParticle(Vector3 pos, GameObject gameObject)
         {
             FireOnShipsParticle p = new FireOnShipsParticle(pos, gameObject);
+           ParticleManager.Instance.Add(p);
+            return p;
+        }
+        public static FireOnShipsParticle CreateParticle(Vector3 pos)
+        {
+            FireOnShipsParticle p = new FireOnShipsParticle(pos, null);
             ParticleManager.Instance.Add(p);
             return p;
         }

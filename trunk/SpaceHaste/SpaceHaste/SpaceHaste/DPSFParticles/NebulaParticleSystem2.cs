@@ -9,23 +9,23 @@ using SpaceHaste.Huds;
 
 namespace SpaceHaste.DPSFParticles
 {
-    public class NebulaParticle : Particle
+    public class NebulaParticle2 : Particle
     {
-        ParticleSystem paricleSystem;
+        ParticleSystem2 paricleSystem;
         public int counter = 0;
         public Vector3 Position;
 
 
-        public static NebulaParticle CreateParticle(Vector3 pos)
+        public static NebulaParticle2 CreateParticle(Vector3 pos)
         {
-            NebulaParticle p = new NebulaParticle(pos);
+            NebulaParticle2 p = new NebulaParticle2(pos);
             ParticleManager.Instance.Add(p);
             return p;
         }
-        public NebulaParticle(Vector3 Position)
+        public NebulaParticle2(Vector3 Position)
             : base()
         {
-            paricleSystem = new ParticleSystem(Game1.game);
+            paricleSystem = new ParticleSystem2(Game1.game);
 
             paricleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);
             paricleSystem.Emitter.PositionData.Position = Position;

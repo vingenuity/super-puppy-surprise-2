@@ -22,7 +22,7 @@ namespace SpaceHaste.Maps
         public List<GridCube> EnvMapObjects;
         public List<int> EnvMapObjectsRandomNum;
         public List<GameObject> ShipMapObjects;
-        public static List<NebulaParticle> Nebulae;
+        public static List<NebulaParticle2> Nebulae;
         public Vector3 Size;
 
         public static Map map;
@@ -36,7 +36,7 @@ namespace SpaceHaste.Maps
             ShipMapObjects = new List<GameObject>();
             EnvMapObjects = new List<GridCube>();
             EnvMapObjectsRandomNum = new List<int>();
-            Nebulae = new List<NebulaParticle>();
+            Nebulae = new List<NebulaParticle2>();
             XYMatrix = new Line[4, Math.Max((int)Size.X + 1, (int)Size.Y + 1)];
             XZMatrix = new Line[4, Math.Max((int)Size.X + 1, (int)Size.Z + 1)];
             YZMatrix = new Line[4, Math.Max((int)Size.Y + 1, (int)Size.Z + 1)];
@@ -77,7 +77,7 @@ namespace SpaceHaste.Maps
                     break;
                 case GridCube.TerrainType.nebula:
                     MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.nebula);
-                    Nebulae.Add(NebulaParticle.CreateParticle( MapGridCubes[x, y, z].Center));
+                    Nebulae.Add(NebulaParticle2.CreateParticle( MapGridCubes[x, y, z].Center));
                     EnvMapObjectsRandomNum.Add(GraphicsManager.random.Next(0));
                     break;
                 case GridCube.TerrainType.wreck:

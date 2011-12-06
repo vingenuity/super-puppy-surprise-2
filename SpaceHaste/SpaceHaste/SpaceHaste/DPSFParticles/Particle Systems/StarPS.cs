@@ -19,7 +19,7 @@ namespace DPSF.ParticleSystems
         /// <summary>
         /// Constructor
         /// </summary>
-        public StarParticleSystem(Game cGame) : base(cGame) { }
+        public StarParticleSystem(Game cGame, Vector3 v) : base(cGame) { this.v = v; }
 
         //===========================================================
         // Structures and Variables
@@ -36,7 +36,7 @@ namespace DPSF.ParticleSystems
             base.InitializeRenderProperties();
             //RenderProperties.DepthStencilState = DepthStencilState.Default;
         }
-
+        public Vector3 v;
         //===========================================================
         // Initialization Functions
         //===========================================================
@@ -167,7 +167,7 @@ namespace DPSF.ParticleSystems
 
             ParticleSystemEvents.LifetimeData.EndOfLifeOption = CParticleSystemEvents.EParticleSystemEndOfLifeOptions.Repeat;
 
-            Emitter.PositionData.Position = new Vector3(0, 50, 0);
+            Emitter.PositionData.Position = v;
             Emitter.ParticlesPerSecond = 60;
 
             InitialProperties.LifetimeMin = 1.0f;

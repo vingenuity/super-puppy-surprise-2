@@ -150,10 +150,10 @@ namespace SpaceHaste.Graphics
                         Matrix.CreateScale(40f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
                         ControlManager.View, ControlManager.Projection);
                 }
-                if (Maps.Map.map.EnvMapObjects[i].GetTerrain() == Maps.GridCube.TerrainType.wreck)
-                    DrawModel(GraphicsManager.TestCube,
-                        Matrix.CreateScale(.2f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
-                        ControlManager.View, ControlManager.Projection);
+               // if (Maps.Map.map.EnvMapObjects[i].GetTerrain() == Maps.GridCube.TerrainType.wreck)
+                //    DrawModel(GraphicsManager.TestCube,
+                  //      Matrix.CreateScale(.2f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
+                  //      ControlManager.View, ControlManager.Projection);
             }
             for (int i = 0; i < Planets.Count; i++)
             {

@@ -9,23 +9,23 @@ using SpaceHaste.Huds;
 
 namespace SpaceHaste.DPSFParticles
 {
-    public class NebulaParticle : Particle
+    public class ShipWreckageParticle : Particle
     {
-        ParticleSystem paricleSystem;
+        ShipWreckageParticleSystem paricleSystem;
         public int counter = 0;
         public Vector3 Position;
 
 
-        public static NebulaParticle CreateParticle(Vector3 pos)
+        public static ShipWreckageParticle CreateParticle(Vector3 pos)
         {
-            NebulaParticle p = new NebulaParticle(pos);
+            ShipWreckageParticle p = new ShipWreckageParticle(pos);
             ParticleManager.Instance.Add(p);
             return p;
         }
-        public NebulaParticle(Vector3 Position)
+        public ShipWreckageParticle(Vector3 Position)
             : base()
         {
-            paricleSystem = new ParticleSystem(Game1.game);
+            paricleSystem = new ShipWreckageParticleSystem(Game1.game);
 
             paricleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);
             paricleSystem.Emitter.PositionData.Position = Position;
@@ -36,10 +36,6 @@ namespace SpaceHaste.DPSFParticles
 
             //deathParicleSystem.Emitter.BurstComplete += BurstFinished;
             ParticleSystem = paricleSystem;
-        }
-        void BurstFinished(object sender, EventArgs e)
-        {
-            paricleSystem.Emitter.Enabled = false;
         }
         //double timercd = 0;
         //bool exploded = false;

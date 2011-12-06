@@ -121,6 +121,7 @@
     <Compile Include="DPSFParticles\NebulaParticleSystem.cs" />
     <Compile Include="DPSFParticles\Particle Systems\FireOnPointPS.cs" />
     <Compile Include="DPSFParticles\Particle Systems\NebulaePS.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\ShipWreckageParticleSystem.cs" />
     <Compile Include="DPSFParticles\ShipThrustersParticle.cs" />
     <Compile Include="DPSFParticles\LaserParticle.cs" />
     <Compile Include="DPSFParticles\DeathParticle.cs">
@@ -160,6 +161,7 @@
     <Compile Include="DPSFParticles\Particle Systems\TrailPS.cs" />
     <Compile Include="DPSFParticles\Particle.cs" />
     <Compile Include="DPSFParticles\ParticleManager.cs" />
+    <Compile Include="DPSFParticles\ShipWreckageParticle.cs" />
     <Compile Include="DPSFParticles\Templates\DefaultQuadParticleSystem.cs" />
     <Compile Include="DPSFParticles\Templates\DefaultSpriteParticleSystemTemplate.cs" />
     <Compile Include="DPSFParticles\Templates\DefaultTexturedQuadParticleSystemTemplate.cs" />

@@ -87,7 +87,7 @@ namespace DPSF.ParticleSystems
             // If the axis should be distinguishable
             if (mbHighlightAxis)
             {
-                cParticle.Color = new Color(0,0,255);
+                cParticle.Color = new Color(0,255,255);
                 cParticle3.Color = Color.Red;
             }
 

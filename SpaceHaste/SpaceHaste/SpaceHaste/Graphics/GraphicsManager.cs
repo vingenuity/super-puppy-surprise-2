@@ -48,6 +48,8 @@ namespace SpaceHaste.Graphics
 
       //  GraphicsShaders GraphicsShader;
         public static Random random;
+        public static int rand;
+
         public static Model Asteroid1;
         public static Model Asteroid2;
         public static Model Asteroid3;
@@ -67,7 +69,7 @@ namespace SpaceHaste.Graphics
             : base(game)
         {
             random = new Random();
-            
+            rand = random.Next(5);
             Planets = new List<Tuple<Vector3, float>>();
             Nebula = new List<Vector3>();
             graphics = _graphics;
@@ -79,6 +81,12 @@ namespace SpaceHaste.Graphics
         }
         static void InitTestCube()
         {
+            Asteroid1 = Content.Load<Model>("models/asteroid1");
+            Asteroid2 = Content.Load<Model>("models/asteroid2");
+            Asteroid3 = Content.Load<Model>("models/asteroid3");
+            Asteroid4 = Content.Load<Model>("models/asteroid4");
+            Asteroid5 = Content.Load<Model>("models/asteroid5");
+            Asteroid6 = Content.Load<Model>("models/asteroid6");
             TestCube = Content.Load<Model>("models/asteroid1");
             IcePlanet = Content.Load<Model>("icePlanet");
             Missile.Model = Content.Load<Model>("models/missile");
@@ -141,7 +149,40 @@ namespace SpaceHaste.Graphics
                 if (Maps.Map.map.EnvMapObjects[i].GetTerrain() == Maps.GridCube.TerrainType.asteroid)
                 {
 
-                    
+                    switch (rand)
+                    {
+                        case 0:
+                            DrawModel(GraphicsManager.Asteroid1,
+                        Matrix.CreateScale(40f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
+                        ControlManager.View, ControlManager.Projection);
+                            break;
+                        case 1:
+                            DrawModel(GraphicsManager.Asteroid2,
+                        Matrix.CreateScale(40f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
+                        ControlManager.View, ControlManager.Projection);
+                            break;
+                        case 2:
+                            DrawModel(GraphicsManager.Asteroid3,
+                        Matrix.CreateScale(40f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
+                        ControlManager.View, ControlManager.Projection);
+                            break;
+                        case 3:
+                            DrawModel(GraphicsManager.Asteroid4,
+                        Matrix.CreateScale(40f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
+                        ControlManager.View, ControlManager.Projection);
+                            break;
+                        case 4:
+                            DrawModel(GraphicsManager.Asteroid5,
+                        Matrix.CreateScale(40f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
+                        ControlManager.View, ControlManager.Projection);
+                            break;
+                        case 5:
+                            DrawModel(GraphicsManager.Asteroid6,
+                        Matrix.CreateScale(40f) * Matrix.CreateTranslation(Maps.Map.map.EnvMapObjects[i].Center),
+                        ControlManager.View, ControlManager.Projection);
+                            break;
+                    }
+
                     //ADD SWITCH CASES FOR ASTEROIDS
 
 

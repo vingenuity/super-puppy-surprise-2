@@ -34,9 +34,15 @@ namespace SpaceHaste.Huds
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont spriteFont)
         {
          //   DrawGridInformation(GameMechanicsManager., spriteBatch, spriteFont, i, GraphicsManager.graphics.PreferredBackBufferWidth, GraphicsManager.graphics.PreferredBackBufferHeight);
-            for (int i = 0; i < GameMechanicsManager.GameObjectList.Count; i++)
-                DrawUnitInformation(GameMechanicsManager.GameObjectList[i], spriteBatch, spriteFont, i, GraphicsManager.graphics.PreferredBackBufferWidth, GraphicsManager.graphics.PreferredBackBufferHeight);
-
+            if (GameMechanicsManager.GameObjectList.Count <= 9)
+            {
+                for (int i = 0; i < GameMechanicsManager.GameObjectList.Count; i++)
+                    DrawUnitInformation(GameMechanicsManager.GameObjectList[i], spriteBatch, spriteFont, i, GraphicsManager.graphics.PreferredBackBufferWidth, GraphicsManager.graphics.PreferredBackBufferHeight);
+            }
+            else {
+                for (int i = 0; i < 9; i++)
+                    DrawUnitInformation(GameMechanicsManager.GameObjectList[i], spriteBatch, spriteFont, i, GraphicsManager.graphics.PreferredBackBufferWidth, GraphicsManager.graphics.PreferredBackBufferHeight);
+            }
         }
 
         private void DrawGridInformation(GameObject unit, GameObject selected, SpriteBatch spriteBatch, SpriteFont spriteFont, float ScreenWidth, float ScreenHeight){

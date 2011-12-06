@@ -11,7 +11,7 @@ namespace SpaceHaste.DPSFParticles
 {
     public class ShipWreckageParticle : Particle
     {
-        ShipWreckageParticleSystem paricleSystem;
+        //ShipWreckageParticleSystem paricleSystem;
         public int counter = 0;
         public Vector3 Position;
 
@@ -25,17 +25,17 @@ namespace SpaceHaste.DPSFParticles
         public ShipWreckageParticle(Vector3 Position)
             : base()
         {
-            paricleSystem = new ShipWreckageParticleSystem(Game1.game);
+           // paricleSystem = new ShipWreckageParticleSystem(Game1.game);
 
-            paricleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);
-            paricleSystem.Emitter.PositionData.Position = Position;
+          //  paricleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);
+           // paricleSystem.Emitter.PositionData.Position = Position;
 
             //deathParicleSystem.Emitter.BurstParticles = (10);
 
             //  deathParicleSystem.Emitter.Enabled = true;
 
             //deathParicleSystem.Emitter.BurstComplete += BurstFinished;
-            ParticleSystem = paricleSystem;
+           // ParticleSystem = paricleSystem;
         }
         //double timercd = 0;
         //bool exploded = false;

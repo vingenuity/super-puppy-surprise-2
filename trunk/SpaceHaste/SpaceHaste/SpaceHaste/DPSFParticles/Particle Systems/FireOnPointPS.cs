@@ -84,8 +84,8 @@ namespace DPSF.ParticleSystems
             cParticle.Lifetime = RandomNumber.Between(1.0f, 3.0f);
 
             cParticle.Position = Emitter.PositionData.Position;
-            cParticle.Position += new Vector3(RandomNumber.Next(-30, 30), RandomNumber.Next(-30, 30), RandomNumber.Next(-30, 30));
-            cParticle.Size = RandomNumber.Next(50, 75);
+            cParticle.Position += new Vector3(RandomNumber.Next(0, 50), RandomNumber.Next(0, 50), RandomNumber.Next(0, 50));
+            cParticle.Size = RandomNumber.Next(70, 95);
             cParticle.Color = msaColors[miCurrentColor];
            // cParticle.Orientation = DPSF.Orientation3D.Rotate(Matrix.CreateRotationZ(RandomNumber.Between(0, MathHelper.TwoPi)), cParticle.Orientation);
 

@@ -103,8 +103,8 @@ namespace DPSF.ParticleSystems
 
             TrailStartColor = Color.Red;
             TrailEndColor = Color.Yellow;
-            TrailStartSize = 5;
-            TrailEndSize = 40;
+            TrailStartSize = 60;
+            TrailEndSize = 60;
             SetTexture("Textures/Particle");
 
             NumberOfParticlesToEmitScale = 0.05f;

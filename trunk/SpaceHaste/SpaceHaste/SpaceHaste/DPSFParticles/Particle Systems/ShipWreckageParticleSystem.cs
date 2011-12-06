@@ -15,7 +15,7 @@ namespace DPSF.ParticleSystems
 #if (WINDOWS)
     [Serializable]
 #endif
-    class ShipWreckageParticleSystem : DefaultSprite3DBillboardParticleSystem
+    class ShipWreckageParticleSystem : DefaultTexturedQuadTextureCoordinatesParticleSystem
     {
         /// <summary>
         /// Constructor
@@ -33,6 +33,17 @@ namespace DPSF.ParticleSystems
         public float mfAttractRepelForce = 3.0f;
         public float mfAttractRepelRange = 50.0f;
 
+
+        Rectangle _debris1TextureCoordinates = new Rectangle(256, 256, 39, 44);
+        Rectangle _debris2TextureCoordinates = new Rectangle(300, 261, 35, 33);
+        Rectangle _debris3TextureCoordinates = new Rectangle(344, 263, 38, 30);
+        Rectangle _debris4TextureCoordinates = new Rectangle(259, 302, 37, 35);
+        Rectangle _debris5TextureCoordinates = new Rectangle(298, 299, 42, 41);
+        Rectangle _debris6TextureCoordinates = new Rectangle(342, 306, 40, 32);
+        Rectangle _debris7TextureCoordinates = new Rectangle(257, 345, 39, 36);
+        Rectangle _debris8TextureCoordinates = new Rectangle(299, 349, 41, 25);
+        Rectangle _debris9TextureCoordinates = new Rectangle(343, 342, 36, 40);
+
         //===========================================================
         // Overridden Particle System Functions
         //===========================================================
@@ -42,9 +53,11 @@ namespace DPSF.ParticleSystems
         //===========================================================
         public override void AutoInitialize(GraphicsDevice cGraphicsDevice, ContentManager cContentManager, SpriteBatch cSpriteBatch)
         {
-            InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, 20, 20, "Textures/Particle");
+            InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 50,50,
+                                                UpdateVertexProperties, "Textures/ExplosionParticles");
+           // InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, 20, 20, "Textures/Particle");
             LoadSmokeEvents();
-            Emitter.ParticlesPerSecond = 50;
+            Emitter.ParticlesPerSecond = 400;
             Name = "Smoke";
         }
 
@@ -55,30 +68,50 @@ namespace DPSF.ParticleSystems
             ParticleEvents.RemoveAllEvents();
             //ParticleEvents.AddEveryTimeEvent(UpdateParticlePositionAndVelocityUsingAcceleration, 500);
            // ParticleEvents.AddEveryTimeEvent(UpdateParticleRotationUsingRotationalVelocity);
-            ParticleEvents.AddEveryTimeEvent(UpdateColor);
+          //  ParticleEvents.AddEveryTimeEvent(UpdateColor);
           //  ParticleEvents.AddEveryTimeEvent(UpdateParticleTransparencyWithQuickFadeInAndSlowFadeOut, 100);
            // ParticleEvents.AddEveryTimeEvent(IncreaseSizeBasedOnLifetime);
         }
         // Used to generate a single smoke plume
-        public void InitializeParticleRisingSmoke(DefaultSprite3DBillboardParticle cParticle)
+        public void InitializeParticleRisingSmoke(DefaultTextureQuadTextureCoordinatesParticle cParticle)
         {
             //cParticle.Lifetime = RandomNumber.Between(1.0f, 7.0f);
             int a = 80;
             cParticle.Position = Emitter.PositionData.Position + new Vector3(RandomNumber.Next(-a, a), RandomNumber.Next(-a, a), RandomNumber.Next(-a, a)); ;
             // cParticle.Position += new Vector3(0, 10, 0);
-            cParticle.Size = RandomNumber.Next(110, 140);
+            cParticle.Size = RandomNumber.Next(10, 40);
             cParticle.Color = msaColors[miCurrentColor];
             cParticle.Color = msaColors[6];
 
-            //  cParticle.Orientation = DPSF.Orientation3D.Rotate(Matrix.CreateRotationZ(RandomNumber.Between(0, MathHelper.TwoPi)), cParticle.Orientation);
-
+         //   cParticle.Orientation = DPSF.Orientation3D.Rotate(Matrix.CreateRotationZ(RandomNumber.Between(0, MathHelper.TwoPi)), cParticle.Orientation);
+            cParticle.Orientation = DPSF.Orientation3D.Rotate(Matrix.CreateRotationY(RandomNumber.Between(-(MathHelper.TwoPi), MathHelper.TwoPi))*
+                Matrix.CreateRotationX(RandomNumber.Between(-(MathHelper.TwoPi), MathHelper.TwoPi))*
+                Matrix.CreateRotationZ(RandomNumber.Between(-(MathHelper.TwoPi), MathHelper.TwoPi)), cParticle.Orientation);
             cParticle.Velocity = new Vector3(RandomNumber.Next(-45, 45), RandomNumber.Next(-45, 45), RandomNumber.Next(-45, 45));
             cParticle.Acceleration = Vector3.Zero;
-            cParticle.RotationalVelocity = RandomNumber.Between(-MathHelper.Pi, MathHelper.Pi);
-            cParticle.Color = Color.Purple;
+          //  cParticle.Orientation 
+           // cParticle.RotationalVelocity = RandomNumber.Between(-MathHelper.Pi, MathHelper.Pi);
+            //cParticle.Color = Color.Purple;
             cParticle.StartSize = cParticle.Size;
 
             mfColorBlendAmount = 0.5f;
+
+            Rectangle textureCoordinates;
+            switch (RandomNumber.Next(0, 9))
+            {
+                default:
+                case 0: textureCoordinates = _debris1TextureCoordinates; break;
+                case 1: textureCoordinates = _debris2TextureCoordinates; break;
+                case 2: textureCoordinates = _debris3TextureCoordinates; break;
+                case 3: textureCoordinates = _debris4TextureCoordinates; break;
+                case 4: textureCoordinates = _debris5TextureCoordinates; break;
+                case 5: textureCoordinates = _debris6TextureCoordinates; break;
+                case 6: textureCoordinates = _debris7TextureCoordinates; break;
+                case 7: textureCoordinates = _debris8TextureCoordinates; break;
+                case 8: textureCoordinates = _debris9TextureCoordinates; break;
+            }
+
+            cParticle.SetTextureCoordinates(textureCoordinates, Texture.Width, Texture.Height);
         }
 
         // Used to generate random smoke particles around the floor
@@ -88,7 +121,7 @@ namespace DPSF.ParticleSystems
 
             cParticle.Position = Emitter.PositionData.Position;
             cParticle.Position += new Vector3(RandomNumber.Next(-5000, 5000), 0, RandomNumber.Next(-5000, 5000));
-            cParticle.Size = RandomNumber.Next(100, 175);
+            cParticle.Size = RandomNumber.Next(1, 2);
             cParticle.Color = msaColors[miCurrentColor];
             // cParticle.Orientation = DPSF.Orientation3D.Rotate(Matrix.CreateRotationZ(RandomNumber.Between(0, MathHelper.TwoPi)), cParticle.Orientation);
 
@@ -159,24 +192,6 @@ namespace DPSF.ParticleSystems
             }
         }
 
-        public void MakeParticlesAttractToExternalObject()
-        {
-            // Make sure we only apply the Attract function once by first removing the function if it already exists
-            this.ParticleEvents.RemoveEveryTimeEvents(AttractParticleToExternalObject);
-            this.ParticleEvents.AddEveryTimeEvent(AttractParticleToExternalObject);
-        }
-
-        public void MakeParticlesRepelFromExternalObject()
-        {
-            // Make sure we only apply the Repel function once by first removing the function if it already exists
-            this.ParticleEvents.RemoveEveryTimeEvents(RepelParticleFromExternalObject);
-            this.ParticleEvents.AddEveryTimeEvent(RepelParticleFromExternalObject);
-        }
-
-        public void StopParticleAttractionAndRepulsionToExternalObject()
-        {
-            this.ParticleEvents.RemoveEveryTimeEvents(RepelParticleFromExternalObject);
-            this.ParticleEvents.RemoveEveryTimeEvents(AttractParticleToExternalObject);
-        }
+      
     }
 }

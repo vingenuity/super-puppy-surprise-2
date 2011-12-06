@@ -362,7 +362,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     if (timer < 1)
                     {
                           InterpDistance = CurrentGameObjectSelected.GridLocation.Center - c.Center;
-                          CurrentGameObjectSelected.DrawPosition = CurrentGameObjectSelected.GridLocation.Center - InterpDistance * (float)(timer / 1.0);
+                          CurrentGameObjectSelected.DrawPosition = CurrentGameObjectSelected.GridLocation.Center - InterpDistance * (float)(timer / 1.0);                        
                     }
                     else
                     {
@@ -370,10 +370,17 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
                         CurrentGameObjectSelected.energy[0] -= CurrentGameObjectSelected.MovementEnergyCost;
                         
-                        
                         ListOfMovementSquares.RemoveAt(0);
                         timer = 0;
-                        //ParticleManager.Instance.Remove(ShipThrustersParticle);
+                        if (ShipThrustersParticle != null)
+                            ParticleManager.Instance.Remove(ShipThrustersParticle);
+                        if (ListOfMovementSquares.Count > 0)
+                        {
+                            Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(ListOfMovementSquares[0]).Center;
+                            offset.Normalize();
+                            offset *= GridCube.GRIDSQUARELENGTH * 1 / 5;
+                            ShipThrustersParticle = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                        }
                     }
                 }
                 if (ListOfMovementSquares.Count == 0)
@@ -382,7 +389,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     if (CurrentGameObjectSelected.energy[0] - CurrentGameObjectSelected.MovementEnergyCost < 0)
                         MoveEnabled = false;
                     NextShipAction();
-                    ParticleManager.Instance.Remove(ShipThrustersParticle);
+                    if(ShipThrustersParticle != null)
+                        ParticleManager.Instance.Remove(ShipThrustersParticle);
                 }
             }
             
@@ -556,11 +564,13 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     SoundManager.Sounds.PlaySound(SoundEffects.engines);
                     if (ListOfMovementSquares.Count > 0)
                         ListOfMovementSquares.RemoveAt(0);
-
-                    Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(CurrentGridCubeSelected).Center;
-                    offset.Normalize();
-                    offset *= GridCube.GRIDSQUARELENGTH * 1 / 5;
-                    ShipThrustersParticle = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                    if (ListOfMovementSquares.Count > 0)
+                    {
+                        Vector3 offset = CurrentGameObjectSelected.DrawPosition - Map.map.GetCubeAt(ListOfMovementSquares[0]).Center;
+                        offset.Normalize();
+                        offset *= GridCube.GRIDSQUARELENGTH * 1 / 5;
+                        ShipThrustersParticle = ThrustersParticle.CreateParticle(CurrentGameObjectSelected.DrawPosition, offset);
+                    }
                 }
             }
             CurrentGameObjectSelected.updateBoundingSphere();

@@ -50,7 +50,7 @@ namespace DPSF.ParticleSystems
         public override void AutoInitialize(GraphicsDevice cGraphicsDevice, ContentManager cContentManager, SpriteBatch cSpriteBatch)
         {
             InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 100, 500,
-                                                    UpdateVertexProperties, "Textures/Smoke");
+                                                    UpdateVertexProperties, "Textures/TestImage");
             LoadSmokeEvents();
             Emitter.ParticlesPerSecond = 10;
             Name = "Smoke";
@@ -73,16 +73,16 @@ namespace DPSF.ParticleSystems
         public void InitializeParticleRisingSmoke(DefaultTexturedQuadParticle cParticle)
         {
             cParticle.Lifetime = RandomNumber.Between(1.0f, 7.0f);
-            int a = 150;
+            int a = 250;
             cParticle.Position = Emitter.PositionData.Position + new Vector3(RandomNumber.Next(-a, a), RandomNumber.Next(-a, a), RandomNumber.Next(-a, a)); ;
            // cParticle.Position += new Vector3(0, 10, 0);
-            cParticle.Size = RandomNumber.Next(150, 175);
+            cParticle.Size = RandomNumber.Next(110, 140);
             cParticle.Color = msaColors[miCurrentColor];
             cParticle.Color = msaColors[6];
 
             cParticle.Orientation = DPSF.Orientation3D.Rotate(Matrix.CreateRotationZ(RandomNumber.Between(0, MathHelper.TwoPi)), cParticle.Orientation);
 
-            cParticle.Velocity = new Vector3(RandomNumber.Next(-155, 155), RandomNumber.Next(-155, 155), RandomNumber.Next(-155, 155));
+            cParticle.Velocity = new Vector3(RandomNumber.Next(-45, 45), RandomNumber.Next(-45, 45), RandomNumber.Next(-45, 45));
             cParticle.Acceleration = Vector3.Zero;
             cParticle.RotationalVelocity.Z = RandomNumber.Between(-MathHelper.Pi, MathHelper.Pi);
             cParticle.Color = Color.Purple;

@@ -160,6 +160,7 @@ namespace SpaceHaste
         private GridCube ClosestCubeAtDistanceFrom(GameObject self, GameObject target, int distance)
         {
             Vector3 center = target.GridPosition;
+            Vector3 cube;
             List<Vector3> possibles = new List<Vector3>();
             for (int i = 0; i <= distance; i++)
             {
@@ -171,7 +172,24 @@ namespace SpaceHaste
                     {
                         int sum = i + j + k;
                         if (sum == distance)
-                            possibles.Add(new Vector3(center.X + i, center.Y + j, center.Z + k));
+                        {
+                            cube = new Vector3(center.X + i, center.Y + j, center.Z + k);
+                            if (CubeInMap(cube)) possibles.Add(cube);
+                            cube = new Vector3(center.X - i, center.Y + j, center.Z + k);
+                            if (CubeInMap(cube)) possibles.Add(cube);
+                            cube = new Vector3(center.X + i, center.Y - j, center.Z + k);
+                            if (CubeInMap(cube)) possibles.Add(cube);
+                            cube = new Vector3(center.X + i, center.Y + j, center.Z - k);
+                            if (CubeInMap(cube)) possibles.Add(cube);
+                            cube = new Vector3(center.X - i, center.Y - j, center.Z + k);
+                            if (CubeInMap(cube)) possibles.Add(cube);
+                            cube = new Vector3(center.X + i, center.Y - j, center.Z - k);
+                            if (CubeInMap(cube)) possibles.Add(cube);
+                            cube = new Vector3(center.X - i, center.Y + j, center.Z - k);
+                            if (CubeInMap(cube)) possibles.Add(cube);
+                            cube = new Vector3(center.X - i, center.Y - j, center.Z - k);
+                            if (CubeInMap(cube)) possibles.Add(cube);
+                        }
                         else if (sum > distance)
                             continue;
                     }
@@ -319,10 +337,19 @@ namespace SpaceHaste
             if (awayVector.X < 0) awayVector.X = 0;
             if (awayVector.Y < 0) awayVector.Y = 0;
             if (awayVector.Z < 0) awayVector.Z = 0;
-            if (awayVector.X > Map.map.Size.X) awayVector.X = Map.map.Size.X;
-            if (awayVector.Y > Map.map.Size.Y) awayVector.Y = Map.map.Size.Y;
-            if (awayVector.Z > Map.map.Size.Z) awayVector.Z = Map.map.Size.Z;
+            if (awayVector.X >= Map.map.Size.X) awayVector.X = Map.map.Size.X;
+            if (awayVector.Y >= Map.map.Size.Y) awayVector.Y = Map.map.Size.Y;
+            if (awayVector.Z >= Map.map.Size.Z) awayVector.Z = Map.map.Size.Z;
             return GetMovePath(self.GridLocation, Map.map.GetCubeAt(awayVector));
+        }
+
+        bool CubeInMap(Vector3 cube)
+        {
+            if (cube.X < 0 || cube.X >= Map.map.Size.X ||
+                cube.Y < 0 || cube.Y >= Map.map.Size.Y ||
+                cube.Z < 0 || cube.Z >= Map.map.Size.Z)
+                return false;
+            return true;
         }
         #endregion
     }

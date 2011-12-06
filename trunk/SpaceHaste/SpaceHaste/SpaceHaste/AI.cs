@@ -64,10 +64,10 @@ namespace SpaceHaste
                 else
                     action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
             }
-            //If not, if we can kill the enemy with lasers without a return volley, close in and fire; otherwise take a quick shot and evasive action.
+            //If not, if we can heavily damage the enemy with lasers, close in and fire; otherwise take a quick shot and evasive action.
             else
             {
-                if (MaxDamageThisTurn(myShip, enemy) > enemy.hull[0] && Map.map.IsObjectInRange(myShip, enemy))
+                if (MaxDamageThisTurn(myShip, enemy) > 0.8 * enemy.hull[0] && Map.map.IsObjectInRange(myShip, enemy))
                     action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser);
                 else
                 {
@@ -77,7 +77,7 @@ namespace SpaceHaste
                         action = Tuple.Create(bestFiringLocation, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
                     else
                     {
-                        if(lastAction != Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser))
+                        if(lastAction != Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser) && Map.map.IsObjectInRange(myShip, enemy))
                             action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser);
                         int enemyHighDamageRadius = (int)Math.Floor(100 / enemy.MovementEnergyCost);
                         if (DistanceBetween(myShip, enemy) <= enemyHighDamageRadius)
@@ -307,7 +307,7 @@ namespace SpaceHaste
             {
                 ship.GridPosition = path[i].Position;
                 ship.energy[0] = originalEnergy - i * ship.MovementEnergyCost;
-                if (!path[i].BlocksMovement() && MaxDamageThisTurn(ship, target) > target.hull[0])
+                if (!path[i].BlocksMovement() && MaxDamageThisTurn(ship, target) >  0.8 * target.hull[0])
                 {
                     selection = path[i];
                     break;

@@ -11,7 +11,7 @@ namespace SpaceHaste.DPSFParticles
 {
     public class ThrustersParticle : Particle
     {
-        TrailParticleSystem paricleSystem;
+        StarParticleSystem paricleSystem;
         public int counter = 0;
         public Vector3 Position;
         public Vector3 Offset;
@@ -26,7 +26,7 @@ namespace SpaceHaste.DPSFParticles
             : base()
         {
             Offset = offset;
-            paricleSystem = new TrailParticleSystem(Game1.game);
+            paricleSystem = new StarParticleSystem(Game1.game);
 
             paricleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);
             paricleSystem.Emitter.PositionData.Position = Position;

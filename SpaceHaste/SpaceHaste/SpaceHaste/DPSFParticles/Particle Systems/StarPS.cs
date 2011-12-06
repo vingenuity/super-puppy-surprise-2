@@ -87,7 +87,7 @@ namespace DPSF.ParticleSystems
             // If the axis should be distinguishable
             if (mbHighlightAxis)
             {
-                cParticle.Color = Color.Blue;
+                cParticle.Color = new Color(0,0,255);
                 cParticle3.Color = Color.Red;
             }
 
@@ -174,8 +174,8 @@ namespace DPSF.ParticleSystems
             InitialProperties.LifetimeMax = 1.0f;
             InitialProperties.PositionMin = new Vector3(0, 0, 0);
             InitialProperties.PositionMax = new Vector3(0, 0, 0);
-            InitialProperties.StartSizeMin = 10.0f;
-            InitialProperties.StartSizeMax = 10.0f;
+            InitialProperties.StartSizeMin = 60.0f;
+            InitialProperties.StartSizeMax = 80.0f;
             InitialProperties.EndSizeMin = 10.0f;
             InitialProperties.EndSizeMax = 10.0f;
             InitialProperties.StartColorMin = Color.White;

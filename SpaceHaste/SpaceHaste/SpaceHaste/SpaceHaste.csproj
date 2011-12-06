@@ -161,7 +161,6 @@
     <Compile Include="DPSFParticles\Particle.cs" />
     <Compile Include="DPSFParticles\ParticleManager.cs" />
     <Compile Include="DPSFParticles\Templates\DefaultQuadParticleSystem.cs" />
-    <Compile Include="DPSFParticles\Templates\DefaultSprite3DBillboardParticleSystemTemplate.cs" />
     <Compile Include="DPSFParticles\Templates\DefaultSpriteParticleSystemTemplate.cs" />
     <Compile Include="DPSFParticles\Templates\DefaultTexturedQuadParticleSystemTemplate.cs" />
     <Compile Include="DPSFParticles\Templates\QuadParticleSystemTemplate.cs" />

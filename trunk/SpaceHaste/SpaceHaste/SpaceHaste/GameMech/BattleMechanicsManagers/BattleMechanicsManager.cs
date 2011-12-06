@@ -373,7 +373,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                         
                         ListOfMovementSquares.RemoveAt(0);
                         timer = 0;
-                        ParticleManager.Instance.Remove(ShipThrustersParticle);
+                        //ParticleManager.Instance.Remove(ShipThrustersParticle);
                     }
                 }
                 if (ListOfMovementSquares.Count == 0)

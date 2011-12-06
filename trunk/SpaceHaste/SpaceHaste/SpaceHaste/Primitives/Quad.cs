@@ -90,7 +90,7 @@ namespace SpaceHaste.Primitives
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsManager.graphics.GraphicsDevice);
-            texture = GraphicsManager.Content.Load<Texture2D>("Textures/AnimatedButterfly");
+           // texture = GraphicsManager.Content.Load<Texture2D>("Textures/AnimatedButterfly");
             quadEffect = new BasicEffect(GraphicsManager.graphics.GraphicsDevice);
             quadEffect.EnableDefaultLighting();
 

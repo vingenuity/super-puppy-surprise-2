@@ -188,7 +188,7 @@ namespace SpaceHaste.GameObjects
                 
                 DeathParticle.CreateDeathParticle(DrawPosition);
                 Unload();
-                GridLocation.SetTerrain(GridCube.TerrainType.wreck);
+               // GridLocation.SetTerrain(GridCube.TerrainType.wreck);
             }
         }
 

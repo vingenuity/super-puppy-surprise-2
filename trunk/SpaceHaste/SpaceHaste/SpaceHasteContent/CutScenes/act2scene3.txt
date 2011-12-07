@@ -1,2 +1,2 @@
-Ceruleo:|     Captain Blau must have landed|     on the planet. Alright, destory|     all of his escourts.
-Argent:|     Beware of the planet.|     An Apfel Bomb can use it's|     gravity to travel further.|     It's not safe.
+Ceruleo:|     Captain Blau must have landed|     on the planet. Alright, destroy|     all of his escorts.
+Argent:|     Beware of the planet.|     An Apfel Bomb can use the planet's|     gravity to travel further.|     Hiding in the planet's gravity won't help.

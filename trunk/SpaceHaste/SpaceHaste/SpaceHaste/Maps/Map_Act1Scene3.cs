@@ -19,8 +19,8 @@ namespace SpaceHaste.Maps
         protected override void InitMapGameObjects()
         {
             this.addGameObject(new LightShip("Ceruleo", new Vector3(2, 2, 9), GameObject.Team.Player), new Vector3(2, 2, 9));
-            this.addGameObject(new MissileShip ("Reubber", new Vector3(3, 2, 9), GameObject.Team.Player), new Vector3(3, 2, 9));
-            this.addGameObject(new AttackShip  ("Viridis", new Vector3(3, 2, 8), GameObject.Team.Player), new Vector3(3, 2, 8));
+            this.addGameObject(new HeavyShip ("Reubber", new Vector3(3, 2, 9), GameObject.Team.Player), new Vector3(3, 2, 9));
+            this.addGameObject(new LightShip  ("Viridis", new Vector3(3, 2, 8), GameObject.Team.Player), new Vector3(3, 2, 8));
             this.addGameObject(new StandardShip("RED ONE", new Vector3(2, 2, 8), GameObject.Team.Player), new Vector3(2, 2, 8));
 
             HeavyShip Rebel1 = new HeavyShip("Rebel Pilot", new Vector3(2, 2, 3), GameObject.Team.Enemy);

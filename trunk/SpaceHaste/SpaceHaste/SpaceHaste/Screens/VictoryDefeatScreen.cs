@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework;
 using SpaceHaste;
 using AvatarElementalBash.SaveLoad;
 using SpaceHaste.GameMech.LevelManagers;
+using SpaceHaste.Sounds;
 
 #endregion
 
@@ -105,6 +106,7 @@ namespace GameStateManagement
         //    Game1.game.ExitGameComponents();
             LoadSaveManager.Load("Save2");
             LevelManager.skipFirstLine = true;
+            SoundManager.Sounds.TurnSoundOff(ConstantSounds.FightorFlight);
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen());
            

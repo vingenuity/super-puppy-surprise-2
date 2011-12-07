@@ -280,6 +280,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 VictoryDefeatScreenText = "Enemy Destroyed";
                 Win = true;
             }
+
             if (LevelManagers.LevelManager.Instance.cutSceneEnd.currentLine != null)
             {
                 

@@ -26,7 +26,7 @@ namespace SpaceHaste.Maps
             this.addGameObject(new MissileShip("Rebel Lt. Gruen", new Vector3(6, 2, 3), GameObject.Team.Enemy), new Vector3(2, 2, 3));
             this.addGameObject(new LightShip("Rebel Joe", new Vector3(4, 2, 3), GameObject.Team.Enemy), new Vector3(4, 2, 3));
             this.addGameObject(new LightShip("Rebel Howe", new Vector3(5, 2, 2), GameObject.Team.Enemy), new Vector3(5, 2, 2));
-            this.addGameObject(new AttackShip("Rebel John", new Vector3(4, 4, 4), GameObject.Team.Enemy), new Vector3(4, 4, 4));
+            this.addGameObject(new AttackShip("Rebel John", new Vector3(4, 4, 3), GameObject.Team.Enemy), new Vector3(4, 4, 3));
 
 
             for (int i = 0; i <= 1; i++)

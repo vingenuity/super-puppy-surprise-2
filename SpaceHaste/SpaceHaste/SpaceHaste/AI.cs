@@ -57,64 +57,36 @@ namespace SpaceHaste
             if (myShip.MissileCount > 0)
             {
                 if (myShip.MissileCount * myShip.dmg[1] > enemy.hull[0] && DistanceBetween(myShip, enemy) <= myShip.MissileRange)
-                {
-                    if (!myShip.LasersDisabled)
-                        action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
-                    else
-                        action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Missile);
-                }
+                    action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
                 else if (DistanceBetween(myShip, enemy) != myShip.MissileRange)
                 {
                     bestFiringLocation = ClosestCubeAtDistanceFrom(myShip, enemy, myShip.MissileRange);
                     path = GetMovePath(myShip.GridLocation, bestFiringLocation);
                     GridCube selection = MoveMaxAlongPath(myShip, path);
                     if (selection != null)
-                    {
-                        if (!myShip.EnginesDisabled)
-                            action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Missile);
-                        else
-                            action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Missile);
-                    }
+                        action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Missile);
                     else
                         action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Missile);
                 }
                 else
-                    if(!myShip.LasersDisabled)
-                        action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
-                     else
-                            action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Missile);
+                    action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Missile);
             }
             //If not, if we can heavily damage the enemy with lasers, close in and fire; otherwise take a quick shot and evasive action.
             else
             {
                 if (MaxDamageThisTurn(myShip, enemy) > 0.8 * enemy.hull[0] && Map.map.IsObjectInRange(myShip, enemy))
-                {
-                    if(!myShip.LasersDisabled)
-                        action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser);
-                    else
-                        action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Missile);
-                }
+                    action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser);
                 else
                 {
                     path = GetMovePath(myShip.GridLocation, enemy.GridLocation);
                     bestFiringLocation = FindKillCube(myShip, path);
                     if (bestFiringLocation != null)
-                    {
-                        if(!myShip.EnginesDisabled)
-                            action = Tuple.Create(bestFiringLocation, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
-                        else
-                            action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Missile);
-                    }
+                        action = Tuple.Create(bestFiringLocation, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
                     else
                     {
-                        if (lastAction != Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser)
+                        if(lastAction != Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser) 
                             && Map.map.IsObjectInRange(myShip, enemy))
-                        {
-                            if(!myShip.LasersDisabled)
-                                action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser);
-                            else
-                                action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Missile);
-                        }
+                            action = Tuple.Create(enemy.GridLocation, ShipSelectionMode.Attack, ShipAttackSelectionMode.Laser);
                         int enemyHighDamageRadius = (int)Math.Floor(100 / enemy.MovementEnergyCost);
                         if (DistanceBetween(myShip, enemy) <= enemyHighDamageRadius)
                         {
@@ -123,13 +95,7 @@ namespace SpaceHaste
                             {
                                 GridCube selection = MoveMaxAlongPath(myShip, path);
                                 if (selection != null)
-                                {
-                                    if(!myShip.EnginesDisabled)
-                                        action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
-                                    else
-                                        action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Missile);
-                                }
-
+                                    action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
                             }
                             else
                                 action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
@@ -142,18 +108,10 @@ namespace SpaceHaste
                             {
                                 GridCube selection = MoveMaxAlongPath(myShip, path);
                                 if (selection != null)
-                                {
-                                    if (!myShip.EnginesDisabled)
-                                        action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
-                                    else
-                                        action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Missile);
-                                }
+                                    action = Tuple.Create(selection, ShipSelectionMode.Movement, ShipAttackSelectionMode.Laser);
                             }
                             else
-                            {
-                                
                                 action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
-                            }
                         }
                     }
                 }

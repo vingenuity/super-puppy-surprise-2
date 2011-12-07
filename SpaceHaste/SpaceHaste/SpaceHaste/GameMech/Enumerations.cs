@@ -17,7 +17,6 @@ namespace SpaceHaste.GameMech
     {
         Laser,
         Missile,
-        TargetWeapon,
         TargetEngine,
     };
     public enum GameState
@@ -35,7 +34,6 @@ namespace SpaceHaste.GameMech
         MovingShipAnimation,
         AttackingLaserAnimation,
         AttackingMissileAnimation,
-        AttackingDisableWeaponAnimation,
         AttackingDisableEngineAnimation,
         CutScene,
         CutSceneEnd,

@@ -15,17 +15,17 @@ namespace DPSF.ParticleSystems
 #if (WINDOWS)
     [Serializable]
 #endif
-    class TrailParticleSystem2 : DefaultTexturedQuadParticleSystem
+    class TrailParticleSystem : DefaultTexturedQuadParticleSystem
     {
         /// <summary>
         /// Constructor
         /// </summary>
-        public TrailParticleSystem2(Game cGame) : base(cGame) { }
+        public TrailParticleSystem(Game cGame) : base(cGame) { }
 
         //===========================================================
         // Structures and Variables
         //===========================================================
-        public Color TrailStartColor = Color.Blue;
+        public Color TrailStartColor = Color.Red;
         public Color TrailEndColor = Color.Yellow;
 
         public int TrailStartSize = 5;
@@ -101,7 +101,7 @@ namespace DPSF.ParticleSystems
             Emitter.OrientationData.RotationalVelocity = new Vector3(0, 0, (float)Math.PI);
             Emitter.ParticlesPerSecond = 100;
 
-            TrailStartColor = Color.Blue;
+            TrailStartColor = Color.Red;
             TrailEndColor = Color.Yellow;
             TrailStartSize = 60;
             TrailEndSize = 60;
@@ -127,7 +127,7 @@ namespace DPSF.ParticleSystems
             Emitter.OrientationData.RotationalVelocity = new Vector3(0, 0, (float)Math.PI);
             Emitter.ParticlesPerSecond = 100;
 
-            TrailStartColor = Color.Blue;
+            TrailStartColor = Color.Red;
             TrailEndColor = Color.Yellow;
             TrailStartSize = 30;
             TrailEndSize = 5;

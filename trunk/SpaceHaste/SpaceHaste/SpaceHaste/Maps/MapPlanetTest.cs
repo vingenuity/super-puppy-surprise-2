@@ -19,12 +19,12 @@ namespace SpaceHaste.Maps
         protected override void InitMapGameObjects()
         {
             GameObject Ceruleo = new StandardShip("Ceruleo", new Vector3(2, 2, 8), GameObject.Team.Player);
-            Ceruleo.energy[0] = 800;
+            //Ceruleo.energy[0] = 800;
             this.addGameObject(Ceruleo, Ceruleo.GridPosition);
 
             GameObject Enemy = new StandardShip("test", new Vector3(2, 2, 2), GameObject.Team.Enemy);
             Enemy.MissileCount = 0;
-            Enemy.EnginesDisabled = true;
+            //Enemy.EnginesDisabled = true;
             this.addGameObject(Enemy, Enemy.GridPosition);
 
             this.AddPlanet(4, 4, 4, 6);

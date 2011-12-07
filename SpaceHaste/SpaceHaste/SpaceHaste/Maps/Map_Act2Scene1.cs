@@ -18,16 +18,14 @@ namespace SpaceHaste.Maps
 
         protected override void InitMapGameObjects()
         {
-            this.addGameObject(new AttackShip("Ceruleo", new Vector3(6, 2, 19), GameObject.Team.Player), new Vector3(6, 2, 19));
-            this.addGameObject(new HeavyShip("Reubber", new Vector3(6, 2, 21), GameObject.Team.Player), new Vector3(6, 2, 21));
-            this.addGameObject(new LightShip("Midori", new Vector3(7, 2, 20), GameObject.Team.Player), new Vector3(7, 2, 20));
-            this.addGameObject(new LightShip("Groc", new Vector3(5, 2, 20), GameObject.Team.Player), new Vector3(5, 2, 20));
+            this.addGameObject(new MissileShip("Ceruleo", new Vector3(6, 2, 19), GameObject.Team.Player), new Vector3(6, 2, 19));
+            this.addGameObject(new HeavyShip("Reubber ", new Vector3(6, 2, 21), GameObject.Team.Player), new Vector3(6, 2, 21));
+            this.addGameObject(new AttackShip("RED TWO", new Vector3(7, 2, 20), GameObject.Team.Player), new Vector3(7, 2, 20));
+            this.addGameObject(new LightShip("RED THREE", new Vector3(5, 2, 20), GameObject.Team.Player), new Vector3(5, 2, 20));
 
-            this.addGameObject(new AttackShip("Rebel Boss", new Vector3(6, 2, 3), GameObject.Team.Enemy), new Vector3(2, 2, 3));
+            this.addGameObject(new MissileShip("Rebel Lt. Gruen", new Vector3(6, 2, 3), GameObject.Team.Enemy), new Vector3(2, 2, 3));
             this.addGameObject(new LightShip("Rebel Joe", new Vector3(4, 2, 3), GameObject.Team.Enemy), new Vector3(4, 2, 3));
             this.addGameObject(new LightShip("Rebel Howe", new Vector3(5, 2, 2), GameObject.Team.Enemy), new Vector3(5, 2, 2));
-            this.addGameObject(new LightShip("Rebel Rick", new Vector3(7, 3, 3), GameObject.Team.Enemy), new Vector3(7, 3, 3));
-            this.addGameObject(new AttackShip("Rebel Bernard", new Vector3(2, 5, 3), GameObject.Team.Enemy), new Vector3(2, 5, 3));
             this.addGameObject(new AttackShip("Rebel John", new Vector3(4, 4, 4), GameObject.Team.Enemy), new Vector3(4, 4, 4));
 
 

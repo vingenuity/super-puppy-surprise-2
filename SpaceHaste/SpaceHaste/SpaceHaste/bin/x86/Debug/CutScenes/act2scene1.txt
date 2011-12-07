@@ -1,15 +1,15 @@
 LTC Albid was pleased with Captain Ceruleo's|     performance and sent him on a |     special mission to destroy Captain Blau,|     a dangerous renegade rebel. But|     Ceruleo has another idea...
-Argent:|     Filthy rebels. Tell us, where is Captain Blau?|     Surrender and we may be leanient.
+Argent:|     Filthy rebels. Tell us, where is Captain Blau?|     Surrender and we may be lenient.
 Second Lieutenant Gruen:|     I will never betray my commander!
-Argent:|     Red group, Green group, fill into|     attack formation.
-Ceruleo:|     Belay that order.
+Argent:|     Red group, Green group, fall into|     attack formation.
+Ceruleo:|     Delay that order.
 Argent:|     Sir?
 Ceruleo:|     I have a different idea. I need not|     kill Blau if we can speak with him.
-Argent:|     You meant to capture the rogue? Ken,|     that takes a field grade officer.
+Argent:|     You mean to capture the rogue? Ken,|     that takes a field grade officer.
 Ceruleo:|     I know.
 Argent:|     Okay. I trust you, sir.
-Major Ceruleo:|     So, this is the famed Lieutenant Gruen?|     I am acting Major Kenneth Ceruleuo.
-Gruen:|     I won't have words with you,|     fed'ralist scum!
+Major Ceruleo:|     So, this is the famed Lieutenant Gruen?|     I am acting Major Kenneth Ceruleo.
+Gruen:|     I won't have words with you|     fed'ralist scum!
 Ceruleo:|     I only want to talk with Captain Blau.|     Perhaps we can bring some understanding|     to this conflict.
 Gruen:|     I understand you mean to kill him!
-Ceruleo:|     If peace is no priority of yours, then|     your life is no priority of mine.|	All units engage!
+Ceruleo:|     If peace is no priority of yours, then|     your life is no priority of mine. All|     units engage!

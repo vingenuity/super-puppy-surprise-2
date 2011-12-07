@@ -20,14 +20,14 @@ namespace SpaceHaste.Maps
         {
             this.addGameObject(new AttackShip("Ceruleo", new Vector3(12, 13, 19), GameObject.Team.Player), new Vector3(9, 9, 12));
             this.addGameObject(new HeavyShip("Reubber", new Vector3(13, 14, 20), GameObject.Team.Player), new Vector3(8, 9, 11));
-            this.addGameObject(new LightShip("Midori", new Vector3(13, 14, 19), GameObject.Team.Player), new Vector3(9, 8, 10));
-            this.addGameObject(new LightShip("Groc", new Vector3(12, 13, 20), GameObject.Team.Player), new Vector3(8, 8, 11));
+            this.addGameObject(new LightShip("RED TWO", new Vector3(13, 14, 19), GameObject.Team.Player), new Vector3(9, 8, 10));
+            this.addGameObject(new LightShip("RED THREE", new Vector3(12, 13, 20), GameObject.Team.Player), new Vector3(8, 8, 11));
 
-            this.addGameObject(new HeavyShip("Rebel Budge", new Vector3(2, 2, 3), GameObject.Team.Enemy), new Vector3(2, 2, 3));
+            this.addGameObject(new HeavyShip("Rebel Lt. Roht", new Vector3(2, 2, 3), GameObject.Team.Enemy), new Vector3(2, 2, 3));
             this.addGameObject(new LightShip("Rebel Hulk", new Vector3(4, 2, 3), GameObject.Team.Enemy), new Vector3(4, 2, 3));
             this.addGameObject(new LightShip("Rebel Payne", new Vector3(5, 2, 2), GameObject.Team.Enemy), new Vector3(5, 2, 2));
            
-            this.addGameObject(new HeavyShip("Rebel Tim", new Vector3(2, 5, 3), GameObject.Team.Enemy), new Vector3(2, 5, 3));
+            this.addGameObject(new MissileShip("Rebel Tim", new Vector3(2, 5, 3), GameObject.Team.Enemy), new Vector3(2, 5, 3));
 
 
             this.AddEnvObject(GridCube.TerrainType.nebula, 5, 3, 9);

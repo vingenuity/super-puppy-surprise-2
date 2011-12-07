@@ -12,7 +12,7 @@ namespace SpaceHaste.GameObjects
     class MissileShip : GameObject
     {
         public MissileShip(String name, Vector3 location, Team side)
-            : base(name, location, side, 100, 100, 8, 8, 6, 75, new double[] { 1.44, 1.44, 1.44 })
+            : base(name, location, side, 100, 100, 8, 5, 8, 65, new double[] { 1.44, 1.44, 1.44 })
         {
         }
         public override void Load()

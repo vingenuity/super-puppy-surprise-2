@@ -32,19 +32,22 @@ namespace GameStateManagement
         {
             // Create our menu entries.
             //Game1.SoundEngine.TurnSoundOn(ConstantSounds.MenuBackground);
-            MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
+            MenuEntry newGameMenuEntry = new MenuEntry("New Game");
+            MenuEntry continueGameMenuEntry = new MenuEntry("Continue Game");
             MenuEntry creditsMenuEntry = new MenuEntry("Credits");
             MenuEntry controlsMenuEntry = new MenuEntry("Controls");
             MenuEntry exitMenuEntry = new MenuEntry("Exit");
 
             // Hook up menu event handlers.
-            playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
+            newGameMenuEntry.Selected += NewGameMenuEntrySelected;
+            continueGameMenuEntry.Selected += ContinueGameMenuEntrySelected;
             controlsMenuEntry.Selected += ControlsMenuEntrySelected;
             creditsMenuEntry.Selected += CreditsMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
-            MenuEntries.Add(playGameMenuEntry);
+            MenuEntries.Add(newGameMenuEntry);
+            MenuEntries.Add(continueGameMenuEntry);
             MenuEntries.Add(controlsMenuEntry);
             MenuEntries.Add(creditsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
@@ -58,16 +61,25 @@ namespace GameStateManagement
 
 
         /// <summary>
-        /// Event handler for when the Play Game menu entry is selected.
+        /// Event handler for when the New Game menu entry is selected.
         /// </summary>
-        void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void NewGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
            // Game1.SoundEngine.TurnSoundOff(ConstantSounds.MenuBackground);
-            LoadSaveManager.Load("Save2");
+            LoadSaveManager.Save("Save2");
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen());
         }
 
+        /// <summary>
+        /// Event handler for when the Continue Game menu entry is selected.
+        /// </summary>
+        void ContinueGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            LoadSaveManager.Load("Save2");
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+                               new GameplayScreen());
+        }
 
         /// <summary>
         /// Event handler for when the Options menu entry is selected.
@@ -82,7 +94,7 @@ namespace GameStateManagement
         /// </summary>
         void CreditsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-           //ScreenManager.AddScreen(new CreditsScreen(), e.PlayerIndex);
+           ScreenManager.AddScreen(new CreditsScreen(), e.PlayerIndex);
         }
 
         /// <summary>

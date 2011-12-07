@@ -26,10 +26,10 @@ namespace SpaceHaste.Maps
             this.addGameObject(new AttackShip("Rebel Boss", new Vector3(6, 2, 3), GameObject.Team.Enemy), new Vector3(2, 2, 3));
             this.addGameObject(new LightShip("Rebel Joe", new Vector3(4, 2, 3), GameObject.Team.Enemy), new Vector3(4, 2, 3));
             this.addGameObject(new LightShip("Rebel Howe", new Vector3(5, 2, 2), GameObject.Team.Enemy), new Vector3(5, 2, 2));
-            this.addGameObject(new LightShip("Rebel Rick", new Vector3(7, 3, 3), GameObject.Team.Enemy), new Vector3(7, 3, 3));
+            this.addGameObject(new LightShip("Rebel Rick", new Vector3(5, 3, 3), GameObject.Team.Enemy), new Vector3(5, 3, 3));
 
             int z = 9;
-
+            /*
             for (int i = 0; i <= 1; i++)
                 for (int j = 0; j <= 1; i++)
                 {
@@ -42,7 +42,7 @@ namespace SpaceHaste.Maps
                     this.AddEnvObject(GridCube.TerrainType.asteroid, i + 4, 0, j + 2);
                     this.AddEnvObject(GridCube.TerrainType.asteroid, i + 7, 0, j);
 
-                }
+                }*/
         }
     }
 }

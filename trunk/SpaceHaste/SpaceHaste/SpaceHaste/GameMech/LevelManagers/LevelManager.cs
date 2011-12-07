@@ -26,7 +26,7 @@ namespace SpaceHaste.GameMech.LevelManagers
             Instance = this;
             int a = LoadSaveManager.LevelNumber;
             loaded = false;
-            //LoadLevel();
+            LoadLevel();
         }
 
         public void LoadLevel()

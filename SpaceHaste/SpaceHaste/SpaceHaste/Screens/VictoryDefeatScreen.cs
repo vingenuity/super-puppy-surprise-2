@@ -93,7 +93,7 @@ namespace GameStateManagement
                 ScreenManager.RemoveScreen(screen);
             ScreenManager.AddScreen(new BackgroundScreen(), null);
             ScreenManager.AddScreen(new MainMenuScreen(), null);
-            Game1.game.LoadGameComponents();
+            Game1.game.ExitGameComponents();
            
         }
 

@@ -13,6 +13,7 @@ using GameStateManagement;
 using SpaceHaste.Controls;
 using SpaceHaste.DPSFParticles;
 using SpaceHaste.Graphics;
+using AvatarElementalBash.SaveLoad;
 
 namespace SpaceHaste.GameMech.BattleMechanicsManagers
 {    
@@ -126,7 +127,15 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         }
         private void NextShipAction()
         {
-
+            if (CurrentGameObjectSelected.EnginesDisabled)
+                MoveEnabled = false;
+            if (CurrentGameObjectSelected.LasersDisabled)
+            {
+                AttackMissiles = false;
+                AttackLasers = false;
+                AttackTargetEngines = false;
+                AttackTargetLasers = false;
+            }
             if (CurrentGameObjectSelected.MissileCount > 0)
                 AttackMissiles = true;
             else
@@ -237,6 +246,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 ScrollDownInUnitActionList();
         }
         public static string VictoryDefeatScreenText;
+        public static bool Win;
         bool CheckVictory()
         {
             if (!enabled)
@@ -254,14 +264,29 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 return false;
             VictoryDefeatScreenText = "";
             if (!PlayerFound)
+            {
                 VictoryDefeatScreenText = "You have been Destroyed";
+                Win = false;
+            }
             else if (!EnemyFound)
+            {
                 VictoryDefeatScreenText = "Enemy Destroyed";
+                Win = true;
+            }
             if (LevelManagers.LevelManager.Instance.cutSceneEnd.currentLine != null)
             {
+                
                 SoundManager.Sounds.TurnSoundOff(ConstantSounds.FightorFlight);
-                GameMechanicsManager.gamestate = GameState.CutSceneEnd;
-                return true;
+                if (Win)
+                {
+                    GameMechanicsManager.gamestate = GameState.CutSceneEnd;
+                    LoadSaveManager.LevelNumber++;
+                    LoadSaveManager.Save("Save2");
+                    return true;
+                }
+                else
+                    Game1.game.ScreenManager.AddScreen(new VictoryDefeatScreen(VictoryDefeatScreenText, ""), PlayerIndex.One);
+                    
             }
             if (Game1.USEMENUS)
             {
@@ -441,6 +466,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         double AttackDamage;
         public void Update(GameTime gameTime)
         {
+            if (GameMechanicsManager.gamestate == GameState.CutSceneEnd || Win || GameMechanicsManager.gamestate == GameState.CutScene)
+                return;
             timer += gameTime.ElapsedGameTime.TotalSeconds;
             if (GameMechanicsManager.GameObjectList[0].team == GameObject.Team.Enemy && GameMechanicsManager.gamestate == GameState.SelectShipAction)
             {
@@ -750,7 +777,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             int percent = random.Next(0, 100);
             if (percent > offender.accuracy) return;
 
-            ParticleManager.Instance.Add(new DeathParticle(CurrentGameObjectSelected.DrawPosition));
+            ParticleManager.Instance.Add(new DeathParticle(tempTarget.DrawPosition));
 
             if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
                 return;
@@ -789,7 +816,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             int percent = random.Next(0, 100);
             if (percent > offender.accuracy) return;
 
-            ParticleManager.Instance.Add(new DeathParticle(CurrentGameObjectSelected.DrawPosition));
+            ParticleManager.Instance.Add(new DeathParticle(tempTarget.DrawPosition));
 
             if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
                 return;
@@ -850,6 +877,9 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
        
         void SelectionWait()
         {
+            CurrentGameObjectSelected.LasersDisabled = false;
+            CurrentGameObjectSelected.EnginesDisabled = false;
+
             ClearLineList();
             if (CurrentGameObjectSelected.energy[0] == 100)
                 CurrentGameObjectSelected.energy[0] -= 5;

@@ -25,6 +25,10 @@ namespace SpaceHaste.GameMech.LevelManagers
         {
             Instance = this;
             int a = LoadSaveManager.LevelNumber;
+            MapManager.currentAct = (int)((a-1) / 3) +1;
+            MapManager.currentScene = a % 3;
+            if (MapManager.currentScene == 0)
+                MapManager.currentScene = 3;
             loaded = false;
             LoadLevel();
         }
@@ -57,7 +61,9 @@ namespace SpaceHaste.GameMech.LevelManagers
 
         public CutScene getScene() {
             if (GameMechanicsManager.gamestate == GameState.CutSceneEnd)
+            {
                 return cutSceneEnd;
+            }
             return cutSceneStart;
         }
 

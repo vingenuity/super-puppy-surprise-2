@@ -64,7 +64,25 @@ namespace AvatarElementalBash.SaveLoad
                 Load(SaveName);
             }
         }
-  
+        public static void NewSave(String SaveName)
+        {
+            // make sure the device is ready
+            if (saveDevice.IsReady)
+            {
+                // save a file asynchronously. this will trigger IsBusy to return true
+                // for the duration of the save process.
+                saveDevice.SaveAsync(
+                    "TestContainer",
+                    SaveName + ".txt",
+                    stream =>
+                    {
+
+                        using (StreamWriter writer = new StreamWriter(stream))
+                            writer.WriteLine("" + 1);
+
+                    });
+            }
+        }
         public static void Save(String SaveName)
         {
             // make sure the device is ready
@@ -79,7 +97,7 @@ namespace AvatarElementalBash.SaveLoad
                     {
 
                         using (StreamWriter writer = new StreamWriter(stream))
-                            writer.WriteLine(""+2);
+                            writer.WriteLine("" + LevelNumber);
 
                     });
             }

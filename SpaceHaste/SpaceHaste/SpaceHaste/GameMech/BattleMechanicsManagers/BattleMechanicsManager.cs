@@ -130,7 +130,20 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             if (CurrentGameObjectSelected.MissileCount > 0)
                 AttackMissiles = true;
             else
+            {
                 AttackMissiles = false;
+                if (ShipAttackModeSelection == ShipAttackSelectionMode.Missile)
+                {
+                    ResetActionSelectionMenu();
+                    if (AttackTargetEngines == true ||
+                        AttackTargetLasers == true)
+                        ScrollDownInAttackUnitActionsList();
+                    else if (AttackTargetLasers == true)
+                        ScrollUpInAttackUnitActionsList();
+                    else
+                        ScrollDownInUnitActionList();
+                }
+            }
 
             if (CurrentGameObjectSelected.energy[0] > CurrentGameObjectSelected.AttackEnergyCost)
             {
@@ -143,10 +156,42 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 AttackTargetEngines = false;
                 AttackTargetLasers = false;
                 AttackLasers = false;
+                if (ShipAttackModeSelection == ShipAttackSelectionMode.Laser)
+                {
+                    ResetActionSelectionMenu();
+                   if (AttackTargetEngines == true ||
+                        AttackTargetLasers == true ||
+                       AttackMissiles == true)
+                       ScrollDownInAttackUnitActionsList();
+                   else
+                       ScrollDownInUnitActionList();
+                }
+                if (ShipAttackModeSelection == ShipAttackSelectionMode.TargetWeapon)
+                {
+                    ResetActionSelectionMenu();
+                    if (AttackTargetEngines == true)
+                        ScrollDownInAttackUnitActionsList();
+                    else if (AttackTargetLasers == true ||
+                        AttackMissiles == true)
+                        ScrollUpInAttackUnitActionsList();
+                    else
+                        ScrollDownInUnitActionList();
+                }
+                if (ShipAttackModeSelection == ShipAttackSelectionMode.TargetEngine)
+                {
+                    ResetActionSelectionMenu();
+                    if (AttackTargetEngines == true ||
+                        AttackTargetLasers == true ||
+                        AttackMissiles == true)
+                        ScrollUpInAttackUnitActionsList();
+                    else
+                        ScrollDownInUnitActionList();
+                }
             }
             if (AttackMissiles || AttackTargetEngines || AttackTargetLasers || AttackLasers)
                 AttackEnabled = true;
-
+            else
+                AttackEnabled = false;
             GameMechanicsManager.gamestate = GameState.SelectShipAction;
             ScrollDownInUnitListIfActionIsDisabled();
             GameObject nextShipToMove = GameMechanicsManager.GameObjectList[0];

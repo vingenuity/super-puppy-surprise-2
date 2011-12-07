@@ -200,6 +200,7 @@
     <Compile Include="Maps\Map.cs" />
     <Compile Include="Maps\Map1.cs" />
     <Compile Include="Maps\MapManager.cs" />
+    <Compile Include="Maps\MapPlanetTest.cs" />
     <Compile Include="Maps\Map_Act1Scene1.cs" />
     <Compile Include="Maps\Map_Act1Scene2.cs" />
     <Compile Include="Maps\Map_Act2Scene1.cs" />

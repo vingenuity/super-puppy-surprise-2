@@ -11,7 +11,7 @@ namespace SpaceHaste.Maps
             : base(new Vector3(6, 6, 18))
         {
             Act = 3;
-            Scene = 1S;
+            Scene = 1;
         }
 
 

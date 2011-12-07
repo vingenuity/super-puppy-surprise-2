@@ -225,11 +225,12 @@ namespace SpaceHaste.Maps
                 return true;
             else return false;
         }
-        public Boolean IsTargetCubeInRange(GridCube loc, GridCube target)
+        public Boolean 
+            IsTargetCubeInRange(GridCube loc, GridCube target, int range)
         {
-            int range = (int)Math.Abs(loc.X - target.X) +
-                        (int)Math.Abs(loc.Y - target.Y) +
-                        (int)Math.Abs(loc.Z - target.Z);
+           // int range = (int)Math.Abs(loc.X - target.X) +
+             //           (int)Math.Abs(loc.Y - target.Y) +
+            //            (int)Math.Abs(loc.Z - target.Z);
             //Create queues and initialize
             RefreshGridSearch();
             List<GridCube> inRange = new List<GridCube>();
@@ -244,7 +245,7 @@ namespace SpaceHaste.Maps
                 if (gc.distance >= range) continue;
                 foreach (GridCube neighbor in gc.ConnectedGridSquares)
                 {
-                    if (neighbor.GetTerrain() != GridCube.TerrainType.none)
+                    if (neighbor.GetTerrain() != GridCube.TerrainType.none && neighbor.GetTerrain() != GridCube.TerrainType.nearplanet)
                         continue;
                     if (gc.distance + neighbor.GetMoveCost() < neighbor.distance)
                     {

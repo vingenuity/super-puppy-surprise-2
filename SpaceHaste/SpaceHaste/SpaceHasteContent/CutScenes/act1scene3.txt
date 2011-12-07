@@ -1,9 +1,9 @@
 Rebel Pilot:|     Like the only drunk girl at a party,|     the Federation does exactly what we want.
-Rubber:|     Who the hell is that?
+Reuber:|     Who the hell is that?
 Argent:|     Who are you?|     How do you know our comm frequences?
 Rebel Officer:|     Dammit! That channel is only for listening,|     not communication! Those federal pigs|     can hear you!
 Rebel Pilot:|     Hmph. Well, hear this!
-Rubber:|     What the hell was that?
+Reuber:|     What the hell was that?
 Viridis:|     I'm hit!
 Ceruleo:|     An Apfel bomb - but that's our new | top-of-the-line technology!
 Argent:|     Viridis, status report!

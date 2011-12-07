@@ -20,7 +20,7 @@ namespace SpaceHaste.GameMech.LevelManagers
         public static LevelManager Instance;
 
         public bool loaded;
-
+        public static bool skipFirstLine;
         public LevelManager()
         {
             Instance = this;
@@ -31,6 +31,7 @@ namespace SpaceHaste.GameMech.LevelManagers
                 MapManager.currentScene = 3;
             loaded = false;
             LoadLevel();
+           // timeInLevel = 0;
         }
 
         public void LoadLevel()
@@ -72,21 +73,26 @@ namespace SpaceHaste.GameMech.LevelManagers
         }
         internal void NextTextStart()
         {
-            if (GameMechanicsManager.gamestate == GameState.CutScene)
+            
+            if(!skipFirstLine)
             {
-                if (cutSceneStart.Text.Count > 0)
+                if (GameMechanicsManager.gamestate == GameState.CutScene)
                 {
-                    cutSceneStart.currentLine = cutSceneStart.Text[0];
-                    cutSceneStart.Text.RemoveAt(0);
-                    cutSceneStart.drawCutscene();
-                }
-                else
-                {
-                    cutSceneStart.currentLine = "";
-                    cutSceneStart.destroyBox();
-                    GameMechanicsManager.gamestate = GameState.StartBattle;
+                    if (cutSceneStart.Text.Count > 0)
+                    {
+                        cutSceneStart.currentLine = cutSceneStart.Text[0];
+                        cutSceneStart.Text.RemoveAt(0);
+                        cutSceneStart.drawCutscene();
+                    }
+                    else
+                    {
+                        cutSceneStart.currentLine = "";
+                        cutSceneStart.destroyBox();
+                        GameMechanicsManager.gamestate = GameState.StartBattle;
+                    }
                 }
             }
+            skipFirstLine = false;
         }
         internal void NextTextEnd()
         {

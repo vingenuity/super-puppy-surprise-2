@@ -11,6 +11,7 @@
 using Microsoft.Xna.Framework;
 using SpaceHaste;
 using AvatarElementalBash.SaveLoad;
+using SpaceHaste.GameMech.LevelManagers;
 
 #endregion
 
@@ -103,6 +104,7 @@ namespace GameStateManagement
             ScreenManager.AddScreen(new MainMenuScreen(), null);
         //    Game1.game.ExitGameComponents();
             LoadSaveManager.Load("Save2");
+            LevelManager.skipFirstLine = true;
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen());
            

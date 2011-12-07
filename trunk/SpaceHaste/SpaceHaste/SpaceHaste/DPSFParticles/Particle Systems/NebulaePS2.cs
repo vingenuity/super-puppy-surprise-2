@@ -42,9 +42,9 @@ namespace DPSF.ParticleSystems
         //===========================================================
         public override void AutoInitialize(GraphicsDevice cGraphicsDevice, ContentManager cContentManager, SpriteBatch cSpriteBatch)
         {
-            InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, 1000, 50000, "Textures/Smoke");
+            InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, 50000, 50000, "Textures/Smoke");
             LoadSmokeEvents();
-            Emitter.ParticlesPerSecond = 100;
+            Emitter.ParticlesPerSecond = 10;
             Name = "Smoke";
         }
 

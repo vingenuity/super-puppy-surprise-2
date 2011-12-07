@@ -79,7 +79,7 @@ namespace SpaceHaste.Maps
                 case GridCube.TerrainType.asteroid:
                     MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.asteroid);
                     EnvMapObjects.Add(MapGridCubes[x, y, z]);
-                    EnvMapObjectsRandomNum.Add(GraphicsManager.random.Next(6));
+                    EnvMapObjectsRandomNum.Add(GraphicsManager.random.Next(6));  
                     break;
                 case GridCube.TerrainType.nebula:
                     MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.nebula);
@@ -285,7 +285,7 @@ namespace SpaceHaste.Maps
                 if (gc.distance >= range) continue;
                 foreach (GridCube neighbor in gc.ConnectedGridSquares)
                 {
-                    if (neighbor.HasObject() || neighbor.GetTerrain() != GridCube.TerrainType.none)
+                    if (neighbor.HasObject() || (neighbor.GetTerrain() != GridCube.TerrainType.none && neighbor.GetTerrain() != GridCube.TerrainType.nebula))
                         continue;
                     if (gc.distance + neighbor.GetMoveCost() < neighbor.distance)
                     {

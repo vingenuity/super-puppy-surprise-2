@@ -496,10 +496,28 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             {
                 if (timer > 1)
                 {
-                    AttackTarget.isHit((int)AttackDamage);
+                     AttackTarget.isHit((int)AttackDamage);
                      NextShipAction();
                      timer = 0;
                 }                
+            }
+            if (GameMechanicsManager.gamestate == GameState.AttackingDisableEngineAnimation)
+            {
+                if (timer > 1)
+                {
+                    //AttackTarget.isHit((int)AttackDamage);
+                    NextShipAction();
+                    timer = 0;
+                }
+            }
+            if (GameMechanicsManager.gamestate == GameState.AttackingDisableWeaponAnimation)
+            {
+                if (timer > 1)
+                {
+                   // AttackTarget.isHit((int)AttackDamage);
+                    NextShipAction();
+                    timer = 0;
+                }
             }
             if (GameMechanicsManager.gamestate == GameState.AttackingMissileAnimation)
             {           
@@ -671,7 +689,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     offender.energy[0] = 0;
                 if (offender.energy[0] < offender.AttackEnergyCost)
                     AttackEnabled = false;
-                NextShipAction();
+              //  NextShipAction();
 
                 GameMechanicsManager.gamestate = GameState.AttackingLaserAnimation;
             }
@@ -720,8 +738,14 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             GameObject offender = CurrentGameObjectSelected;
             GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
 
+            offender.energy[0] -= offender.AttackEnergyCost;
+            if (offender.energy[0] < 0)
+                offender.energy[0] = 0;
+
             int percent = random.Next(0, 100);
             if (percent > offender.accuracy) return;
+
+            ParticleManager.Instance.Add(new DeathParticle(CurrentGameObjectSelected.DrawPosition));
 
             if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
                 return;
@@ -735,7 +759,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
             if (Map.map.IsObjectInRange(offender, target))
             {
-                GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
+               // GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
 
                 SoundManager.Sounds.PlaySound(SoundEffects.laser);
                 //make a new color
@@ -743,7 +767,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
                 target.LasersDisabled = true;
 
-                NextShipAction();
+               // NextShipAction();
                 GameMechanicsManager.gamestate = GameState.AttackingDisableEngineAnimation;
             }
             else return;
@@ -753,8 +777,14 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             GameObject offender = CurrentGameObjectSelected;
             GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
 
+            offender.energy[0] -= offender.AttackEnergyCost;
+            if (offender.energy[0] < 0)
+                offender.energy[0] = 0;
+
             int percent = random.Next(0, 100);
             if (percent > offender.accuracy) return;
+
+            ParticleManager.Instance.Add(new DeathParticle(CurrentGameObjectSelected.DrawPosition));
 
             if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
                 return;
@@ -776,7 +806,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
                 target.EnginesDisabled = true;
 
-                NextShipAction();
+             //   NextShipAction();
                 GameMechanicsManager.gamestate = GameState.AttackingDisableEngineAnimation;
             }
             else return;
@@ -985,7 +1015,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
             if (GameMechanicsManager.gamestate == GameState.EnterShipActionAttackLasers)
             {
-                SelectionAttack();
+                SelectionAttack(); 
                 return;
             }
             if (GameMechanicsManager.gamestate == GameState.EnterShipActionAttackMissiles)

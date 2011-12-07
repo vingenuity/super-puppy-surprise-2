@@ -10,7 +10,7 @@ namespace SpaceHaste.Maps
 {
     public class GridCube
     {
-        public int distance;
+        public double distance;
         public static float GRIDSQUARELENGTH = 500;
         public int X, Y, Z;
         public Vector3 Position;
@@ -56,11 +56,11 @@ namespace SpaceHaste.Maps
         public void RemoveObject(GameObject obj) { ContainedObject = null; }
 
         //Terrain Functions
-        public int GetMoveCost() 
+        public double GetMoveCost() 
         {
             if (Terrain == TerrainType.nearplanet)
-                return 1;
-            else return (int)Terrain;
+                return .333;
+            else return 1;
         }
         public TerrainType GetTerrain() { return Terrain; }
         public void SetTerrain(TerrainType t) { 

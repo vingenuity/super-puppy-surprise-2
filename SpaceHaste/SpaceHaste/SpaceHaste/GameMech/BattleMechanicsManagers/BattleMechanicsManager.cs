@@ -752,7 +752,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 NextShipAction();
             }
 
-            if (Map.map.IsTargetCubeInRange(offender.GridLocation, tempTarget.GridLocation))
+            if (Map.map.IsTargetCubeInRange(offender.GridLocation, tempTarget.GridLocation,offender.MissileRange))
             {
                 FiredAMissile = true;
                 ListOfMovementSquares = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath();
@@ -1199,10 +1199,11 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             if (i < 0)
                 i += 3;
             i = i % 3;
-            if (i == 0 && MoveEnabled == false)
-                i++;
             if (i == 1 && AttackEnabled == false)
-                i++;
+                i--;
+            if (i == 0 && MoveEnabled == false)
+                i--;
+            
 
             ShipModeSelection = (ShipSelectionMode)(i % 3);
 
@@ -1211,10 +1212,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         {
             int i = (int)ShipModeSelection + 1;
             i = i % 3;
-            if (i == 1 && AttackEnabled == false)
-                i--;
             if (i == 0 && MoveEnabled == false)
-                i--;
+                i++;
+            if (i == 1 && AttackEnabled == false)
+                i++;
             if (i < 0)
                 i += 3;
             i = i % 3;

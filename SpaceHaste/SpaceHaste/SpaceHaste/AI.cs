@@ -121,7 +121,7 @@ namespace SpaceHaste
                 lastAction = action;
                 frustration = 0;
             }
-            else if (frustration < 5) frustration++;
+            else if (frustration < 2) frustration++;
             else action = Tuple.Create(myShip.GridLocation, ShipSelectionMode.Wait, ShipAttackSelectionMode.Laser);
             return action;
         }

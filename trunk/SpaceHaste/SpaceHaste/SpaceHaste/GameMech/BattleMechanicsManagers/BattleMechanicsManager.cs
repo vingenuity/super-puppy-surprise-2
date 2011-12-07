@@ -447,7 +447,9 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 CheckVictory();
                 action = Enemy.TakeTurn(GameMechanicsManager.GameObjectList);
                 if (action.Item2 == ShipSelectionMode.Wait)
+                {
                     SelectionWait();
+                }
                 else
                 {
                     timer = 0;
@@ -490,6 +492,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     else
                         GameMechanicsManager.gamestate = GameState.EnterShipAction;
                     Selection();
+                    if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
+                        GameMechanicsManager.gamestate = GameState.SelectShipAction;
                 }
             }
             if (GameMechanicsManager.gamestate == GameState.AttackingLaserAnimation)
@@ -569,8 +573,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                         // ParticleManager.Instance.Remove(ShipThrustersParticle);
                     }
                 }
-                if (GameMechanicsManager.gamestate == GameState.MovingShipAnimation)
-               {
+            if (GameMechanicsManager.gamestate == GameState.MovingShipAnimation)
+            {
                 if (ListOfMovementSquares.Count > 0)
                 {
                     if (ShipThrustersParticle1 != null)
@@ -580,25 +584,27 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     if (ShipThrustersParticle3 != null)
                         ShipThrustersParticle3.Position = CurrentGameObjectSelected.DrawPosition + ShipThrustersParticle3.Offset;
                     if (ShipThrustersParticle4 != null)
-                        ShipThrustersParticle4.Position = CurrentGameObjectSelected.DrawPosition + ShipThrustersParticle4.Offset; 
+                        ShipThrustersParticle4.Position = CurrentGameObjectSelected.DrawPosition + ShipThrustersParticle4.Offset;
 
-                    GridCube c =  Map.map.GetCubeAt(ListOfMovementSquares[0]);
+                    GridCube c = Map.map.GetCubeAt(ListOfMovementSquares[0]);
 
                     Vector3 v = (c.Position - CurrentGameObjectSelected.GridPosition);
 
-                    if(v.X == 1 && v.Y == 0 && v.Z == 0) { CurrentGameObjectSelected.AnimationRotation = new Vector3(0, (float)(Math.PI / 2), 0); }
+                    if (v.X == 1 && v.Y == 0 && v.Z == 0) { CurrentGameObjectSelected.AnimationRotation = new Vector3(0, (float)(Math.PI / 2), 0); }
                     if (v.X == -1 && v.Y == 0 && v.Z == 0) { CurrentGameObjectSelected.AnimationRotation = new Vector3(0, -(float)(Math.PI / 2), 0); }
-                    if (v.X == 0 && v.Y == 0 && v.Z == 1) { 
-                        CurrentGameObjectSelected.AnimationRotation = new Vector3(0, 2*(float)(Math.PI), 0); }
+                    if (v.X == 0 && v.Y == 0 && v.Z == 1)
+                    {
+                        CurrentGameObjectSelected.AnimationRotation = new Vector3(0, 2 * (float)(Math.PI), 0);
+                    }
                     if (v.X == 0 && v.Y == 0 && v.Z == -1) { CurrentGameObjectSelected.AnimationRotation = new Vector3(0, (float)(Math.PI), 0); }
 
-                    if (v.X == 0 && v.Y == 1 && v.Z == 0) { CurrentGameObjectSelected.AnimationRotation = new Vector3(-(float)(Math.PI)/2, 0, 0); }
+                    if (v.X == 0 && v.Y == 1 && v.Z == 0) { CurrentGameObjectSelected.AnimationRotation = new Vector3(-(float)(Math.PI) / 2, 0, 0); }
                     if (v.X == 0 && v.Y == -1 && v.Z == 0) { CurrentGameObjectSelected.AnimationRotation = new Vector3((float)(Math.PI) / 2, 0, 0); }
 
                     if (timer < 1)
                     {
-                          InterpDistance = CurrentGameObjectSelected.GridLocation.Center - c.Center;
-                          CurrentGameObjectSelected.DrawPosition = CurrentGameObjectSelected.GridLocation.Center - InterpDistance * (float)(timer / 1.0);                        
+                        InterpDistance = CurrentGameObjectSelected.GridLocation.Center - c.Center;
+                        CurrentGameObjectSelected.DrawPosition = CurrentGameObjectSelected.GridLocation.Center - InterpDistance * (float)(timer / 1.0);
                     }
                     else
                     {
@@ -606,9 +612,9 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
                         CurrentGameObjectSelected.energy[0] -= CurrentGameObjectSelected.MovementEnergyCost;
                         ListOfMovementSquares.RemoveAt(0);
-                        Vector3 a,b;
+                        Vector3 a, b;
                         b = Vector3.One;
-                        if(ListOfMovementSquares.Count> 0)
+                        if (ListOfMovementSquares.Count > 0)
                         {
                             a = Map.map.GetCubeAt(ListOfMovementSquares[0]).Center;
 
@@ -650,7 +656,6 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                         ParticleManager.Instance.Remove(ShipThrustersParticle4);
                 }
             }
-            
         }
         float model2offset = .7f;
         #region Selection Functions

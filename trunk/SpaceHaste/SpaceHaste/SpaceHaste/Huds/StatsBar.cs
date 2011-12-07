@@ -48,9 +48,15 @@ namespace SpaceHaste.Huds
             spriteBatch.DrawString(spriteFont, "E. Regen:", new Vector2(4*widthL / 6 - 10, (height / 20) * 19 + 5), Color.White);
             spriteBatch.DrawString(spriteFont, "" + GameMechanicsManager.GameObjectList[0].regen, new Vector2(4*widthL / 6 - 10, (height / 20) * 19 + 25), Color.White);
 
-            spriteBatch.DrawString(spriteFont, "Dmg Out:", new Vector2(5*widthL / 6, (height / 20) * 19 + 5), Color.White); 
-            spriteBatch.DrawString(spriteFont, "" /*+  Damage Output */, new Vector2(5*widthL / 6, (height / 20) * 19 + 25), Color.White);
+            if (BattleMechanicsManager.CurrentGameObjectSelected != null)
+            {
+                Vector3 Distance = BattleMechanicsManager.CurrentGameObjectSelected.GridPosition - BattleMechanicsManager.CurrentGridCubeSelected;
+                int dist = (int)(Math.Abs(Distance.X) + Math.Abs(Distance.Y) + Math.Abs(Distance.Z));
+            
 
+                spriteBatch.DrawString(spriteFont, "Distance:", new Vector2(5*widthL / 6, (height / 20) * 19 + 5), Color.White); 
+                spriteBatch.DrawString(spriteFont, "" + dist, new Vector2(5*widthL / 6, (height / 20) * 19 + 25), Color.White);
+            }
 
 
             spriteBatch.Draw(backpaneRight, right, Color.White);
@@ -72,8 +78,7 @@ namespace SpaceHaste.Huds
                 spriteBatch.DrawString(spriteFont, "E. Regen:", new Vector2(4 * widthL / 6 + widthL - 10, (height / 20) * 19 + 5), Color.White);
                 spriteBatch.DrawString(spriteFont, "" + Map.map.GetCubeAt(GameMechanicsManager.MechMan.BattleManager.getSelectedCube()).GetObject().regen, new Vector2(4 * widthL / 6 + widthL - 10, (height / 20) * 19 + 25), Color.White);
 
-                spriteBatch.DrawString(spriteFont, "Dmg Out:", new Vector2(5 * widthL / 6 + widthL, (height / 20) * 19 + 5), Color.White);
-                spriteBatch.DrawString(spriteFont, "" /*+  Damage Output */, new Vector2(5 * widthL / 6 + widthL, (height / 20) * 19 + 25), Color.White);
+
             }
 
 

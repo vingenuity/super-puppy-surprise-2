@@ -27,7 +27,7 @@ namespace SpaceHaste.Maps
             //Enemy.EnginesDisabled = true;
             this.addGameObject(Enemy, Enemy.GridPosition);
 
-            this.AddPlanet(4, 4, 4, 6);
+            this.AddPlanet(4, 4, 4, 6,1);
         }
     }
 }

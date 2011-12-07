@@ -36,7 +36,7 @@ namespace SpaceHaste.Graphics
         /// <summary>
         /// Position of planet and scale (Draw Coords, Draw Scale) 
         /// </summary>
-        public static List<Tuple<Vector3,float>> Planets;
+        public static List<Tuple<Vector3,float,int>> Planets;
         /// <summary>
         /// Position of Nebula (Draw Coords) 
         /// </summary>
@@ -62,6 +62,8 @@ namespace SpaceHaste.Graphics
         public static Model SkyDome;
 
         public static Model IcePlanet;
+
+        public static Model RedIcePlanet;
         // Change the model to use our custom cartoon shading effect.
         //static Effect cartoonEffect;
 
@@ -70,7 +72,7 @@ namespace SpaceHaste.Graphics
         {
             random = new Random();
             rand = random.Next(5);
-            Planets = new List<Tuple<Vector3, float>>();
+            Planets = new List<Tuple<Vector3, float,int>>();
             Nebula = new List<Vector3>();
             graphics = _graphics;
             Content = new ContentManager(game.Services);
@@ -89,6 +91,7 @@ namespace SpaceHaste.Graphics
             Asteroid6 = Content.Load<Model>("models/asteroid6");
             TestCube = Content.Load<Model>("models/asteroid1");
             IcePlanet = Content.Load<Model>("icePlanet");
+            RedIcePlanet = Content.Load<Model>("redIcePlanet");
             Missile.Model = Content.Load<Model>("models/missile");
             SkyDome = Content.Load<Model>("models/skydome");
            // GraphicsShaders.ChangeEffectUsedByModel(TestCube, cartoonEffect);
@@ -198,10 +201,20 @@ namespace SpaceHaste.Graphics
             }
             for (int i = 0; i < Planets.Count; i++)
             {
-                DrawModel(GraphicsManager.IcePlanet,
-                   Matrix.CreateScale(15f * Planets[i].Item2)
-                   * Matrix.CreateTranslation(Maps.Map.map.GetCubeAt(Planets[i].Item1).Center),
-                   ControlManager.View, ControlManager.Projection);
+                if (Planets[i].Item3 == 0)
+                {
+                    DrawModel(GraphicsManager.IcePlanet,
+                       Matrix.CreateScale(15f * Planets[i].Item2)
+                       * Matrix.CreateTranslation(Maps.Map.map.GetCubeAt(Planets[i].Item1).Center),
+                       ControlManager.View, ControlManager.Projection);
+                }
+                else
+                {
+                    DrawModel(GraphicsManager.RedIcePlanet,
+                       Matrix.CreateScale(15f * Planets[i].Item2)
+                       * Matrix.CreateTranslation(Maps.Map.map.GetCubeAt(Planets[i].Item1).Center),
+                       ControlManager.View, ControlManager.Projection);
+                }
                 /*
                 DrawModel(GraphicsManager.IcePlanet,
                     Matrix.CreateScale(15f * Planets[i].Item2) 

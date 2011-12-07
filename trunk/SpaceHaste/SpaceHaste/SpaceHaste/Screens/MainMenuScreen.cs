@@ -67,6 +67,7 @@ namespace GameStateManagement
         {
            // Game1.SoundEngine.TurnSoundOff(ConstantSounds.MenuBackground);
             LoadSaveManager.Save("Save2");
+            LoadSaveManager.Load("Save2");
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen());
         }

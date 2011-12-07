@@ -18,12 +18,12 @@ namespace SpaceHaste.Maps
         protected override void InitMapGameObjects()
         {
             GameObject Ceruleo = new StandardShip("Ceruleo", new Vector3(2, 4, 15), GameObject.Team.Player);
-            GameObject Grau = new AttackShip("Grau", new Vector3(2, 5, 13), GameObject.Team.Player);
+            GameObject Blau = new AttackShip("Blau", new Vector3(2, 5, 13), GameObject.Team.Player);
             GameObject Reubber = new HeavyShip("Reubber", new Vector3(3, 4, 16), GameObject.Team.Player);
             GameObject Viridis = new LightShip("Viridis", new Vector3(3, 3, 15), GameObject.Team.Player);
             GameObject Katie = new MissileShip("Katie", new Vector3(4, 2, 14), GameObject.Team.Player);
             this.addGameObject(Ceruleo, Ceruleo.GridPosition);
-            this.addGameObject(Grau, Grau.GridPosition);
+            this.addGameObject(Blau, Blau.GridPosition);
             this.addGameObject(Reubber, Reubber.GridPosition);
             this.addGameObject(Viridis, Viridis.GridPosition);
             this.addGameObject(Katie, Katie.GridPosition);

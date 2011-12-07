@@ -989,7 +989,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     GameMechanicsManager.gamestate = GameState.SelectShipAttackAction;
                 return;
             }
-            if (GameMechanicsManager.gamestate == GameState.EnterShipAction)
+            if (GameMechanicsManager.gamestate == GameState.EnterShipAction
+                || (GameMechanicsManager.gamestate == GameState.SelectShipAttackAction && ShipModeSelection != ShipSelectionMode.Attack))
                 switch (ShipModeSelection)
                 {
                     case (ShipSelectionMode.Attack):

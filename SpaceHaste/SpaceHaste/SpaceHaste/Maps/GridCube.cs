@@ -90,7 +90,7 @@ namespace SpaceHaste.Maps
 
         public bool BlocksMovement()
         {
-            if (this.Terrain == TerrainType.wreck || this.Terrain == TerrainType.planet || this.Terrain == TerrainType.asteroid || this.HasObject())
+            if (this.Terrain == TerrainType.wreck || this.Terrain == TerrainType.nearplanet  || this.Terrain == TerrainType.planet || this.Terrain == TerrainType.asteroid || this.HasObject())
                 return true;
             return false;
         }

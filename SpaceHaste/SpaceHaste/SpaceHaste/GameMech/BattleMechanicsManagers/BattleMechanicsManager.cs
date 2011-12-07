@@ -22,7 +22,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         public static BattleMechanicsManager Instance;
         public KeyboardState kState;
         public Random random;
-
+        bool FiredAMissile = false;
         //AI
         private AI Enemy;
         Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action;
@@ -116,6 +116,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             CurrentGameObjectSelected = nextShipToMove;
             CurrentGridCubeSelected = nextShipToMove.GridPosition;
 
+            FiredAMissile = false;
+
             MoveEnabled = true;
             WaitEnabled = true;
             AttackEnabled = true;
@@ -139,7 +141,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 AttackTargetEngines = false;
                 AttackTargetLasers = false;
             }
-            if (CurrentGameObjectSelected.MissileCount > 0)
+            if (CurrentGameObjectSelected.MissileCount > 0 && !FiredAMissile)
                 AttackMissiles = true;
             else
             {
@@ -749,7 +751,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
             if (Map.map.IsTargetCubeInRange(offender.GridLocation, tempTarget.GridLocation))
             {
-
+                FiredAMissile = true;
                 ListOfMovementSquares = Map.map.GetCubeAt(CurrentGridCubeSelected).GetPath();
 
                 ListOfMovementSquares.Add(CurrentGridCubeSelected);

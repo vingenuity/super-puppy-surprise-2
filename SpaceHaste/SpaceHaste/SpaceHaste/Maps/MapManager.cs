@@ -41,16 +41,15 @@ namespace SpaceHaste.Maps
             gridX1Zwas = true;
             grid0YZwas = true;
             grid1YZwas = true;
-         //   if (currentAct == 1 && currentScene == 1) { Map = new Map_Act3Scene3(); }
-         //   if (currentAct == 1 && currentScene == 2) { Map = new Map_Act1Scene2(); }
-         //   if (currentAct == 1 && currentScene == 3) { Map = new Map_Act1Scene1(); }
-         //   if (currentAct == 2 && currentScene == 1) { Map = new Map_Act2Scene1(); }
-         //   if (currentAct == 2 && currentScene == 1) { Map = new Map_Act2Scene2(); }
-         //   if (currentAct == 3 && currentScene == 1) { Map = new Map_Act3Scene2(); }
-         //   if (currentAct == 3 && currentScene == 2) { Map = new Map_Act3Scene2(); }
-         //   if (currentAct == 3 && currentScene == 3) { Map = new Map_Act3Scene2(); }
+            if (currentAct == 1 && currentScene == 1) { Map = new Map_Act1Scene3(); }
+            if (currentAct == 1 && currentScene == 2) { Map = new Map_Act1Scene2(); }
+            if (currentAct == 1 && currentScene == 3) { Map = new Map_Act1Scene1(); }
+            if (currentAct == 2 && currentScene == 1) { Map = new Map_Act2Scene1(); }
+            if (currentAct == 2 && currentScene == 1) { Map = new Map_Act2Scene2(); }
+            if (currentAct == 3 && currentScene == 1) { Map = new Map_Act3Scene2(); }
+            if (currentAct == 3 && currentScene == 2) { Map = new Map_Act3Scene2(); }
+            if (currentAct == 3 && currentScene == 3) { Map = new Map_Act3Scene2(); }
             // if (currentAct == 4 && currentScene == 1) { Map = new Map_Act3Scene2(); }
-            Map = new Map_Act2Scene3();
 
             currentAct = Map.map.Act;
             currentScene = Map.map.Scene;

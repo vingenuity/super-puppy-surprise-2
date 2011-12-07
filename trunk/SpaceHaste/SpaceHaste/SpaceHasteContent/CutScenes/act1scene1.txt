@@ -1,8 +1,10 @@
-Captain Ceruleo of the Federal Army,|on patrol in the Zulu Yankee sector...
-Executive Officer Argent:|     Sir, we have just received |     resupply from Apfel.
+In the not too distant future,|civil war is pleaguing a peaceful people
+Rebel ambush squads have disturbed|the life they once enjoyed|and the only hope to restore|peace and order lay in the arms|of heroes like:
+Captain Ceruleo of the Federal Army,|who we meet now on patrol in the Zulu|Yankee sector of the Kepler 22 System.
+Executive Officer Argent:|     Sir, we have just received a|     resupply from Apfel.
 Commander Ceruleo:|     Thank you, Lieutenant Argent.|     Please send my regards to Apfel.
 Argent:|     Katie Door is on the comm now.|     Would you like to say something?
-Ceruleo:|     Of course! Katie, thank you for your|     continued support of the war effort.
+Ceruleo:|     Of course! Katie, thank you for|     your continued support of|     the war effort.
 Katie:|     You're very welcome, Ken.|     I just wish that this bloody |     conflict would end soon.
 Ceruleo:|     I'll do what I can, Katie.
 Katie:|     You and I still need to |     discuss my father.
@@ -10,8 +12,9 @@ Ceruleo:|     The CEO?
 Scout Leader 2LT Viridis:|     Sir, the enemy!
 Ceruleo:|     Excuse me Katie, I have matters |     to attend to.
 Viridis:|     I'm hit!
+Reuber:|     Don't worry Viridis, I'll|     protect you!
 Argent:|     Attack pattern 1-Alpha, go!
 Katie:|     Good luck, Ken!
 Argent:|     Green group, fall back.|     Viridis, status report.|     Red group, advance.
-Reuber:|     They can fire through our shields!?|     I'm on my way, Viridis!
+Reuber:|     They can fire through our|     shields!? I'm on my way, Viridis!
 Ceruleo:|     It begins. ALL UNITS ADVANCE!

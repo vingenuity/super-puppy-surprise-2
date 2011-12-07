@@ -10,6 +10,7 @@
 #region Using Statements
 using Microsoft.Xna.Framework;
 using SpaceHaste;
+using SpaceHaste.Sounds;
 
 #endregion
 
@@ -75,6 +76,7 @@ namespace GameStateManagement
                 ScreenManager.RemoveScreen(screen);
             ScreenManager.AddScreen(new BackgroundScreen(), null);
             ScreenManager.AddScreen(new MainMenuScreen(), null);
+            SoundManager.Sounds.TurnSoundOff(ConstantSounds.FightorFlight);
             Game1.game.ExitGameComponents();
         }
 

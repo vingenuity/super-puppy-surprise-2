@@ -20,7 +20,7 @@ namespace SpaceHaste.Maps
         {
             this.addGameObject(new StandardShip("Ceruleo", new Vector3(2, 2, 10), GameObject.Team.Player), new Vector3(2, 2, 10));
             this.addGameObject(new HeavyShip ("Reubber", new Vector3(4, 2, 10), GameObject.Team.Player), new Vector3(4, 2, 10));
-            this.addGameObject(new AttackShip  ("Viridis", new Vector3(3, 2, 8), GameObject.Team.Player), new Vector3(3, 2, 8));
+            this.addGameObject(new LightShip  ("Viridis", new Vector3(3, 2, 8), GameObject.Team.Player), new Vector3(3, 2, 8));
 
             LightShip Rebel1 = new LightShip   ("Grau Rebel", new Vector3(2, 2, 3), GameObject.Team.Enemy);
             Rebel1.MissileCount = 0;

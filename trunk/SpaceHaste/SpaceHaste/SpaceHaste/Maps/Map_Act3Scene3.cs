@@ -38,8 +38,7 @@ namespace SpaceHaste.Maps
             this.addGameObject(Green1, Green1.GridPosition);
             this.addGameObject(Green2, Green2.GridPosition);
             
-
-            GameObject Albid = new MissileShip ("Traitor Albid", new Vector3(2, 2, 2), GameObject.Team.Enemy);
+            GameObject Albid = new MissileShip ("Traitor Albid", new Vector3(2, 2, 1), GameObject.Team.Enemy);
             GameObject Thug1 = new StandardShip("Albid Thug", new Vector3(1, 3, 1), GameObject.Team.Enemy);
             GameObject Thug2 = new StandardShip("Albid Thug", new Vector3(3, 1, 1), GameObject.Team.Enemy);
             GameObject Thug3 = new StandardShip("Albid Thug", new Vector3(1, 1, 1), GameObject.Team.Enemy);
@@ -61,8 +60,6 @@ namespace SpaceHaste.Maps
             this.addGameObject(Apfel2, Apfel2.GridPosition);
             this.addGameObject(Apfel3, Apfel3.GridPosition);
             this.addGameObject(Apfel4, Apfel4.GridPosition);
-
-
 
             this.AddPlanet(3, 3, 5, 6, 1);
             this.AddPlanet(11, 11, 11, 8, 0);

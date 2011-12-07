@@ -115,7 +115,7 @@ namespace SpaceHaste
                         }
                     }
                 }
-            }
+            } 
 
             //If we perform the same action 5 times in a row, we must be performing an illegal action and the game is stopping us, so wait instead.
             if (lastEnergy != myShip.energy[0])
@@ -351,9 +351,9 @@ namespace SpaceHaste
             if (awayVector.X < 0) awayVector.X = 0;
             if (awayVector.Y < 0) awayVector.Y = 0;
             if (awayVector.Z < 0) awayVector.Z = 0;
-            if (awayVector.X >= Map.map.Size.X) awayVector.X = Map.map.Size.X;
-            if (awayVector.Y >= Map.map.Size.Y) awayVector.Y = Map.map.Size.Y;
-            if (awayVector.Z >= Map.map.Size.Z) awayVector.Z = Map.map.Size.Z;
+            if (awayVector.X >= Map.map.Size.X) awayVector.X = Map.map.Size.X - 1;
+            if (awayVector.Y >= Map.map.Size.Y) awayVector.Y = Map.map.Size.Y - 1;
+            if (awayVector.Z >= Map.map.Size.Z) awayVector.Z = Map.map.Size.Z - 1;
             return GetMovePath(self.GridLocation, Map.map.GetCubeAt(awayVector));
         }
 

@@ -270,11 +270,13 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             VictoryDefeatScreenText = "";
             if (!PlayerFound)
             {
+                SoundManager.Sounds.TurnSoundOff(ConstantSounds.FightorFlight);
                 VictoryDefeatScreenText = "You have been Destroyed";
                 Win = false;
             }
             else if (!EnemyFound)
             {
+                SoundManager.Sounds.TurnSoundOff(ConstantSounds.FightorFlight);
                 VictoryDefeatScreenText = "Enemy Destroyed";
                 Win = true;
             }
@@ -492,6 +494,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
             if (GameMechanicsManager.gamestate == GameState.StartBattle)
             {
+                Sounds.SoundManager.Sounds.TurnSoundOn(Sounds.ConstantSounds.FightorFlight);
                 QuadManager.AddQuad(new Quad(Vector3.Zero, Vector3.Left, Vector3.Up, 400, 400));
                 GameMechanicsManager.gamestate = GameState.EnterShipAction;
                //USE THIS LINE TO TEST PARTICLES DeathParticle.CreateDeathParticle(Vector3.Zero);
@@ -870,7 +873,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     ListOfMovementSquares.Add(CurrentGridCubeSelected);
                     timer = 0;
                     GameMechanicsManager.gamestate = GameState.MovingShipAnimation;
-                    SoundManager.Sounds.PlaySound(SoundEffects.engines);
+                    if(DistanceMoved > 0)
+                        SoundManager.Sounds.PlaySound(SoundEffects.engines);
                     if (ListOfMovementSquares.Count > 0)
                         ListOfMovementSquares.RemoveAt(0);
                     if (ListOfMovementSquares.Count > 0)

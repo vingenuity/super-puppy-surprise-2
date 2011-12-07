@@ -90,7 +90,7 @@ namespace SpaceHaste.Maps
                     EnvMapObjects.Add(MapGridCubes[x, y, z]);
                     MapGridCubes[x, y, z].SetTerrain(GridCube.TerrainType.wreck);
                     ParticleManager.Instance.Add(new ShipWreckageParticle(MapGridCubes[x, y, z].Center));
-                    //EnvMapObjectsRandomNum.Add(GraphicsManager.random.Next(0));
+                    EnvMapObjectsRandomNum.Add(GraphicsManager.random.Next(0));
                     break;
             };
            

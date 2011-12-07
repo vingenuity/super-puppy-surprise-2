@@ -752,6 +752,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             if (Map.map.IsObjectInRange(offender, tempTarget))
             {
                 offender.energy[0] -= offender.AttackEnergyCost;
+
                 if (offender.energy[0] < 0)
                     offender.energy[0] = 0;
 
@@ -759,7 +760,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 if (percent > offender.accuracy) return;
 
                 tempTarget.energy[0] = 0;
-
+                tempTarget.waitTime = 100;
                 ParticleManager.Instance.Add(new DeathParticle(tempTarget.DrawPosition));
 
                 

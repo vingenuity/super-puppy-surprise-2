@@ -310,6 +310,7 @@ namespace SpaceHaste
             double originalEnergy = ship.energy[0];
             Vector3 originalPosition = ship.GridPosition;
             GridCube selection = null;
+            if (path.Count == 0) return null;
             GridCube targetCube = path.Last();
             GameObject target;
             if (targetCube.GetObject() != null)
@@ -365,13 +366,5 @@ namespace SpaceHaste
             return true;
         }
         #endregion
-
-        bool IsSameAction(Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action1, 
-                        Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action2)
-        {
-            if (action1.Item1 == action2.Item1 && action1.Item2 == action2.Item2 && action1.Item3 == action2.Item3)
-                return true;
-            return false;
-        }
     }
 }

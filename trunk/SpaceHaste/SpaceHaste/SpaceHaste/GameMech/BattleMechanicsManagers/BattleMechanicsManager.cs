@@ -64,6 +64,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             Instance = this;
             AttackLineList = new List<Line>();
             Enemy = new AI(Map.map);
+            Win = false;
         }
 
         public Vector3 getSelectedCube() { return CurrentGridCubeSelected; }

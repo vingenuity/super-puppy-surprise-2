@@ -44,7 +44,7 @@ namespace DPSF.ParticleSystems
         {
             InitializeSpriteParticleSystem(cGraphicsDevice, cContentManager, 50000, 50000, "Textures/Smoke");
             LoadSmokeEvents();
-            Emitter.ParticlesPerSecond = 10;
+            Emitter.ParticlesPerSecond = 50;
             Name = "Smoke";
         }
 
@@ -75,6 +75,7 @@ namespace DPSF.ParticleSystems
             cParticle.Velocity = new Vector3(RandomNumber.Next(-45, 45), RandomNumber.Next(-45, 45), RandomNumber.Next(-45, 45));
             cParticle.Acceleration = Vector3.Zero;
             cParticle.RotationalVelocity = RandomNumber.Between(-MathHelper.Pi, MathHelper.Pi);
+
             cParticle.Color = new Color(238, 130, 238);
             cParticle.StartSize = cParticle.Size;
 

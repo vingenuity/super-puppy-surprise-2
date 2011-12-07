@@ -884,13 +884,14 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         {
             CurrentGameObjectSelected.LasersDisabled = false;
             CurrentGameObjectSelected.EnginesDisabled = false;
-
+            
             ClearLineList();
             if (CurrentGameObjectSelected.energy[0] == 100)
                 CurrentGameObjectSelected.energy[0] -= 5;
             CurrentGameObjectSelected.waitTime += 40;
             if (CurrentGameObjectSelected.energy[0] < 0)
                 CurrentGameObjectSelected.energy[0] = 0;
+            ShipModeSelection = ShipSelectionMode.Movement;
             NextShipTurn();
         }
         #endregion

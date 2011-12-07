@@ -149,7 +149,7 @@ namespace SpaceHaste.Graphics
                 if (Maps.Map.map.EnvMapObjects[i].GetTerrain() == Maps.GridCube.TerrainType.asteroid)
                 {
 
-                    switch (rand)
+                    switch (Maps.Map.map.EnvMapObjectsRandomNum[i])
                     {
                         case 0:
                             DrawModel(GraphicsManager.Asteroid1,

@@ -19,7 +19,8 @@ namespace SpaceHaste.Maps
 
         protected override void InitMapGameObjects()
         {
-            GameObject Ceruleo = new StandardShip("Ceruleo", new Vector3(2, 2, 9), GameObject.Team.Player);
+          //  GameObject Ceruleo = new StandardShip("Ceruleo", new Vector3(2, 2, 9), GameObject.Team.Player);
+            GameObject Ceruleo = new StandardShip("Ceruleo", new Vector3(2, 2, 5), GameObject.Team.Player);
             GameObject Reubber = new HeavyShip   ("Reubber", new Vector3(4, 2, 9), GameObject.Team.Player);
             GameObject Viridis = new LightShip   ("Viridis", new Vector3(3, 2, 8), GameObject.Team.Player);
             this.addGameObject(Ceruleo, Ceruleo.GridPosition);

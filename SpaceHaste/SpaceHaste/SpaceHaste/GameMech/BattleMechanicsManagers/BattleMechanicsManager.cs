@@ -900,6 +900,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                 CurrentGameObjectSelected.energy[0] = 0;
             ShipModeSelection = ShipSelectionMode.Movement;
             NextShipTurn();
+            ResetActionSelectionMenu();
         }
         #endregion
 

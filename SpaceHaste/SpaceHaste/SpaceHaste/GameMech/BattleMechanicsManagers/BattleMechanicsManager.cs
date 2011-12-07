@@ -744,6 +744,10 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             GameObject offender = CurrentGameObjectSelected;
             GameObject tempTarget = Map.map.GetCubeAt(CurrentGridCubeSelected).GetObject();
 
+            if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
+                return;
+            GameObject target = tempTarget as GameObject;
+
             if (Map.map.IsObjectInRange(offender, tempTarget))
             {
                 offender.energy[0] -= offender.AttackEnergyCost;
@@ -757,9 +761,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
 
                 ParticleManager.Instance.Add(new DeathParticle(tempTarget.DrawPosition));
 
-                if (tempTarget == null || !(tempTarget is GameObject) || tempTarget.getTeam() == offender.getTeam())
-                    return;
-                GameObject target = tempTarget as GameObject;
+                
 
                 if (offender.energy[0] < offender.AttackEnergyCost)
                 {

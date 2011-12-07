@@ -13,5 +13,5 @@ Viridis:|     I'm hit!
 Argent:|     Attack patten 1-Alpha, go!
 Katie:|     Good luck, Ken!
 Argent:|     Green group, fall back.|     Viridis, status report.|     Red group, advance.
-Rubber:|     They can fire through our shields!?|     I'm on my way, Viridis!
+Reuber:|     They can fire through our shields!?|     I'm on my way, Viridis!
 Ceruleo:|     It begins. ALL UNITS ADVANCE!

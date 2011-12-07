@@ -31,25 +31,25 @@ namespace SpaceHaste.Maps
             this.addGameObject(Red4, Red4.GridPosition);
 
             GameObject Escourt1 = new LightShip("ESCOURT", new Vector3(10, 10, 2), GameObject.Team.Enemy);
-            //GameObject Escourt2 = new LightShip("ESCOURT", new Vector3(9,  10, 4), GameObject.Team.Enemy);
-            //GameObject Escourt3 = new LightShip("ESCOURT", new Vector3(10, 9,  4), GameObject.Team.Enemy);
+            GameObject Escourt2 = new LightShip("ESCOURT", new Vector3(9,  10, 4), GameObject.Team.Enemy);
+            GameObject Escourt3 = new LightShip("ESCOURT", new Vector3(10, 9,  4), GameObject.Team.Enemy);
             this.addGameObject(Escourt1, Escourt1.GridPosition);
-            //this.addGameObject(Escourt2, Escourt2.GridPosition);
-            //this.addGameObject(Escourt3, Escourt3.GridPosition);
+            this.addGameObject(Escourt2, Escourt2.GridPosition);
+            this.addGameObject(Escourt3, Escourt3.GridPosition);
 
-            //GameObject Security1 = new LightShip("SECURITY DETAIL", new Vector3(2, 10, 2), GameObject.Team.Enemy);
-            //GameObject Security2 = new LightShip("SECURITY DETAIL", new Vector3(4, 10, 2), GameObject.Team.Enemy);
-            //GameObject Security3 = new LightShip("SECURITY DETAIL", new Vector3(2, 8, 2), GameObject.Team.Enemy);
-            //this.addGameObject(Security1, Security1.GridPosition);
-            //this.addGameObject(Security2, Security2.GridPosition);
-            //this.addGameObject(Security3, Security3.GridPosition);
+            GameObject Security1 = new LightShip("SECURITY DETAIL", new Vector3(2, 10, 2), GameObject.Team.Enemy);
+            GameObject Security2 = new LightShip("SECURITY DETAIL", new Vector3(4, 10, 2), GameObject.Team.Enemy);
+            GameObject Security3 = new LightShip("SECURITY DETAIL", new Vector3(2, 8, 2), GameObject.Team.Enemy);
+            this.addGameObject(Security1, Security1.GridPosition);
+            this.addGameObject(Security2, Security2.GridPosition);
+            this.addGameObject(Security3, Security3.GridPosition);
 
-            //GameObject rebel1 = new HeavyShip("REBEL SCUM", new Vector3(10, 2, 10), GameObject.Team.Enemy);
-            //GameObject rebel2 = new HeavyShip("REBEL SCUM", new Vector3(10, 4, 10), GameObject.Team.Enemy);
-            //GameObject rebel3 = new HeavyShip("REBEL SCUM", new Vector3(08, 2, 10), GameObject.Team.Enemy);
-            //this.addGameObject(rebel1, rebel1.GridPosition);
-            //this.addGameObject(rebel2, rebel2.GridPosition);
-            //this.addGameObject(rebel3, rebel3.GridPosition);
+            GameObject rebel1 = new HeavyShip("REBEL SCUM", new Vector3(10, 2, 10), GameObject.Team.Enemy);
+            GameObject rebel2 = new HeavyShip("REBEL SCUM", new Vector3(10, 4, 10), GameObject.Team.Enemy);
+            GameObject rebel3 = new HeavyShip("REBEL SCUM", new Vector3(08, 2, 10), GameObject.Team.Enemy);
+            this.addGameObject(rebel1, rebel1.GridPosition);
+            this.addGameObject(rebel2, rebel2.GridPosition);
+            this.addGameObject(rebel3, rebel3.GridPosition);
 
             this.AddPlanet(2, 2, 2, 8);
         }

@@ -468,6 +468,7 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
             }
             if (GameMechanicsManager.gamestate == GameState.StartBattle)
             {
+                Sounds.SoundManager.Sounds.TurnSoundOff(Sounds.ConstantSounds.FightorFlight);
                 Sounds.SoundManager.Sounds.TurnSoundOn(Sounds.ConstantSounds.FightorFlight);
                 QuadManager.AddQuad(new Quad(Vector3.Zero, Vector3.Left, Vector3.Up, 400, 400));
                 GameMechanicsManager.gamestate = GameState.EnterShipAction;

@@ -1,11 +1,11 @@
-Albid:|     Have we been defeated? I don't believe it!
+Albid:|     Have we been defeated? I don't|     believe it!
 George Door:|     Curse you, Blau!
 George Door:|     Curse you, Katie, you traitor! 
 George Door:|     Curse you, Ceruleo!
 Ceruleo:|     Finally, we can have peace...
-After George Door the traitor was captured,
- Ceruleo went back to his post,|     where he continued his self-promotion. 
-Katie restored Apfel to honesty|     and brought an end to the conflict. 
-Blau went to become a politician|     and good friend to Kenneth Ceruleo.|     He always wanted a greater punishment for|     George Door, but Ceruleo demanded he only|     be imprisoned for life. 
-He knew George's rotten heart|     was a far worse punishment than anything the |     Federation could give. 
-Under the leadership of Katie, Blau and Ceruleo,|     the Federation and rebels came to establish a|     long lasting peace.
+After George Door the traitor|     was captured,
+ Ceruleo went back to his post,|     where he continued his|     self-promotion. 
+Katie restored Apfel to honesty|     and brought an end to the|     conflict. 
+Blau went to become a politician|     and good friend to Kenneth|     Ceruleo. He always wanted a|     greater punishment for George |    Door, but Ceruleo demanded he only|     be imprisoned for life. 
+He knew George's rotten heart|     was a far worse punishment than|     anything the Federation could|     give. 
+Under the leadership of Katie,|     Blau, and Ceruleo, the Federation|     and rebels came to establish a|     long lasting peace.

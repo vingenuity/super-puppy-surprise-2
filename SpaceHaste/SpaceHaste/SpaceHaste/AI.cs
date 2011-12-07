@@ -146,7 +146,9 @@ namespace SpaceHaste
 
         private float DistanceBetween(GameObject obj1, GameObject obj2)
         {
-            return Vector3.Distance(obj1.GridPosition, obj2.GridPosition);
+            
+            float dist = Math.Abs(obj1.GridPosition.X - obj2.GridPosition.X) + Math.Abs(obj1.GridPosition.Y+obj2.GridPosition.Y) + Math.Abs(obj1.GridPosition.Z+obj2.GridPosition.Z);
+            return dist;
         }
 
         private int EnemiesLeft(List<GameObject> ships)

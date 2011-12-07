@@ -32,13 +32,10 @@ namespace SpaceHaste.Maps
 
             this.AddEnvObject(GridCube.TerrainType.nebula, 5, 3, 9);
             this.AddEnvObject(GridCube.TerrainType.nebula, 4, 6, 8);
-            this.AddEnvObject(GridCube.TerrainType.nebula, 8, 5, 3);
             this.AddEnvObject(GridCube.TerrainType.nebula, 6, 2, 5);
             this.AddEnvObject(GridCube.TerrainType.nebula, 3, 5, 5);
-            this.AddEnvObject(GridCube.TerrainType.nebula, 5, 2, 5);
             this.AddEnvObject(GridCube.TerrainType.nebula, 5, 6, 3);
             this.AddEnvObject(GridCube.TerrainType.nebula, 3, 4, 3);
-            this.AddEnvObject(GridCube.TerrainType.nebula, 1, 2, 2);
             this.AddEnvObject(GridCube.TerrainType.nebula, 4, 2, 3);
             this.AddEnvObject(GridCube.TerrainType.nebula, 4, 9, 5);
             this.AddEnvObject(GridCube.TerrainType.nebula, 6, 8, 6);

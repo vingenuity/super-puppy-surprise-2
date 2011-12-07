@@ -10,6 +10,7 @@
 #region Using Statements
 using Microsoft.Xna.Framework;
 using SpaceHaste;
+using AvatarElementalBash.SaveLoad;
 
 #endregion
 
@@ -80,6 +81,13 @@ namespace GameStateManagement
                                                            new MainMenuScreen());
         }
 
+        void ContinueToNextLevelSelected(object sender, PlayerIndexEventArgs e)
+        {
+            //LoadSaveManager.Load("Save2");
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+                               new GameplayScreen());
+        }
+
         /// <summary>
         /// Event handler for when the user selects ok on the "are you sure
         /// you want to quit" message box. This uses the loading screen to
@@ -87,13 +95,17 @@ namespace GameStateManagement
         /// </summary>
         void RestartEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-          //  LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
-           //                                                new MainMenuScreen());
+            // LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
+            //                                                new MainMenuScreen());
             foreach (GameScreen screen in ScreenManager.GetScreens())
                 ScreenManager.RemoveScreen(screen);
             ScreenManager.AddScreen(new BackgroundScreen(), null);
             ScreenManager.AddScreen(new MainMenuScreen(), null);
-            Game1.game.ExitGameComponents();
+        //    Game1.game.ExitGameComponents();
+            LoadSaveManager.Load("Save2");
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+                               new GameplayScreen());
+           
            
         }
 

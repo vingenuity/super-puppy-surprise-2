@@ -1,5 +1,5 @@
 Argent:|     He got away.
-Ceruleo:|     But we're faster. Viridis, move your team|     to the Sirius System.
+Ceruleo:|     But we're faster. Viridis, move|     your team to the Sirius System.
 Viridis:|     Sir?
-Argent:|     I see. If they see a presence in Sirius,|     Blau will move elsewhere. Perhaps to the -
-Ceruleo:|     To the Misar system.|     We will show them that, as they say, |Reuberwisdom is always an overmatch for strength.
+Argent:|     I see. If they see a presence in|     Sirius, Blau will move|     elsewhere. Perhaps to the -
+Ceruleo:|     To the Misar system.|     We will show them that, as they|     say, Reuber, wisdom is always an|     overmatch for strength.

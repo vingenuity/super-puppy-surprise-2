@@ -1,4 +1,4 @@
-Blau:|     We're too late.|     Albid must have sent someone here.
+Blau:|     We're too late.|     Albid must have sent someone|     here.
 Katie:|     Help!!
 Ceruleo:|     Katie!
 Katie:|     Kenneth! My father has betrayed|     the federation and now me too!

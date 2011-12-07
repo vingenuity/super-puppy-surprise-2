@@ -1,16 +1,16 @@
-Ceruleo:|     Captain Blau, this is Major Ceruleo.
-Blau:|     Major, this is Captain Blau. You've got me.
+Ceruleo:|     Captain Blau, this is Major|     Ceruleo.
+Blau:|     Major, this is Captain Blau.|     You've got me.
 Ceruleo:|     We have things to discuss.
 Blau:|     I understand.
-Ceruleo:|     How did you obtain Apfel equipment?
-Blau:|     What do you mean? They sell it to us.
-Ceruleo:|     What? How could they? They're only supposed to sell to us.
-Blau:|     What!? But they've been give us intelligence on your activities.|     Like what your attacks on the Beta Centauri system.
-Ceruleo: |     What? They gave us proof that|     you were the ones who attacked that system.
+Ceruleo:|     How did you obtain Apfel|     equipment?
+Blau:|     What do you mean? They sell it|     to us.
+Ceruleo:|     What? How could they?|     They're only supposed to sell|     to us.
+Blau:|     What!? But they've been give us|     intelligence on your activities.|     Like what your attacks on|     the Beta Centauri system.
+Ceruleo: |     What? They gave us proof that|     you were the ones who attacked|     that system.
 Blau:|     Oh, no...
-Ceruleo:|     Did they sell you our shield frequency?
-Blau:|     Yes. They always give us intellegence.|     It's saved our soldiers many times now.
+Ceruleo:|     Did they sell you our shield|    frequency?
+Blau:|     Yes. They always give us|     intellegence. It's saved our soldiers|     many times now.
 Argent:|     Sir, does this mean -
-Ceruleo:|     Yes, the Apfel Corporation has been|     orchestrating this war. Forgive me, Captain Blau.|     You are not my enemy.
+Ceruleo:|     Yes, the Apfel Corporation has|     been orchestrating this war.|     Forgive me, Captain Blau. You|     are not my enemy.
 Blau:|     Then nor are you mine.
 Ceruleo:|     Captain Blau, join me.|     We can end this conflict.

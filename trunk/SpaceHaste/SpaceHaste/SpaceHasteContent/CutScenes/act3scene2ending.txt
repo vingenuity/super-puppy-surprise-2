@@ -1,5 +1,5 @@
 Ceruleo:|     Katie, are you hurt?
 Katie:|     No. Apfel Corp must be stopped!
-Ceruleo:|     Come with us, Katie. We want you to lead|     Apfel Corp. after we stop your father.
+Ceruleo:|     Come with us, Katie. We want|     you to lead Apfel Corp after|     we stop your father.
 Katie:|     He is no father of mine!|     We must stop him!
-Blau:|     And so the end to our story begins.
+Blau:|     And so the end to our story|     begins.

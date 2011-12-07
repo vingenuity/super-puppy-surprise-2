@@ -206,7 +206,9 @@
     <Compile Include="Maps\Map_Act2Scene1.cs" />
     <Compile Include="Maps\Map_Act2Scene2.cs" />
     <Compile Include="Maps\Map_Act2Scene3.cs" />
+    <Compile Include="Maps\Map_Act3Scene1.cs" />
     <Compile Include="Maps\Map_Act3Scene2.cs" />
+    <Compile Include="Maps\Map_Act3Scene3.cs" />
     <Compile Include="Primitives\Line.cs" />
     <Compile Include="Primitives\LineManager.cs" />
     <Compile Include="Primitives\PrimitiveManager.cs" />

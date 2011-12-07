@@ -24,7 +24,6 @@ namespace SpaceHaste.GameObjects
                 Model = GraphicsManager.Content.Load<Model>("models/gatherer_ship_red");
             ModelType = 2;
             Scale = 65f;
-
         }
     }
 }

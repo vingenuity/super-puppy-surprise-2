@@ -9,6 +9,7 @@
 
 #region Using Statements
 using Microsoft.Xna.Framework;
+using SpaceHaste;
 
 #endregion
 
@@ -70,10 +71,11 @@ namespace GameStateManagement
         /// </summary>
         void ConfirmQuitMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
         {
-          //  Game1.SoundEngine.StopHover();
-           // Game1.SoundEngine.TurnSoundOn(ConstantSounds.MenuBackground);
-            LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
-                                                           new MainMenuScreen());
+            foreach (GameScreen screen in ScreenManager.GetScreens())
+                ScreenManager.RemoveScreen(screen);
+            ScreenManager.AddScreen(new BackgroundScreen(), null);
+            ScreenManager.AddScreen(new MainMenuScreen(), null);
+            Game1.game.ExitGameComponents();
         }
 
 

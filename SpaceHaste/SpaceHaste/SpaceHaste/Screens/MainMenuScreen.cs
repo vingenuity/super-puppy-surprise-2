@@ -46,8 +46,8 @@ namespace GameStateManagement
             exitMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
-            MenuEntries.Add(newGameMenuEntry);
             MenuEntries.Add(continueGameMenuEntry);
+            MenuEntries.Add(newGameMenuEntry);
             MenuEntries.Add(controlsMenuEntry);
             MenuEntries.Add(creditsMenuEntry);
             MenuEntries.Add(exitMenuEntry);

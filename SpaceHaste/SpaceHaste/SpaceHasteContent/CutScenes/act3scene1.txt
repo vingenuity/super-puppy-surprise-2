@@ -1,7 +1,7 @@
-Ceruleo and Blau have discovered that|     the Apfel Corp has orcestrated and|     prolonged the civil war. Together, they|     now turn their weapons on Apfel...
+Ceruleo and Blau have discovered that|     Apfel Corp. has both orchestrated and|     prolonged the civil war. Together, they|     now turn their weapons on Apfel...
 Blau:|     Are you sure about this?
 Ceruleo:|     Absolutely, Colonel Albid will help us.
-Albid:|     Captain Blau! You Rogue!|     Release Ceruleo, or we will fire!
+Albid:|     Captain Blau! You rogue!|     Release Ceruleo, or we will fire!
 Ceruleo:|     Sir, no. I brought him here.
 Albid:|     You captured him? Well done!
 Ceruleo:|     Not quite, sir. We need to discuss Apfel Corp.
@@ -9,7 +9,7 @@ Albid:|     ...
 Ceruleo:|     Sir?
 Albid:|     So you know?
 Ceruleo:|     Know what?
-Albid:|     Attention all units! Captain Ceruleo has|     betrayed the Federation and joined forces|     with Captain Blau.| |     Captain Ceruleo is now kill on sight!
+Albid:|     Attention all units! Captain Ceruleo has|     betrayed the Federation and joined forces|     with Captain Blau. |     Captain Ceruleo must be killed on sight!
 Ceruleo:|     Dammit!
 Blau:|     Some plan this was...
 Ceruleo:|     Forgive me, friends. All units, engage!

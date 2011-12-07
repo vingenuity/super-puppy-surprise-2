@@ -1,11 +1,11 @@
-Rebel pilot:|     like the only drunk girl at a party,|     the federation does exactly what we want.
+Rebel Pilot:|     Like the only drunk girl at a party,|     the Federation does exactly what we want.
 Rubber:|     Who the hell is that?
 Argent:|     Who are you?|     How do you know our comm frequences?
-Rebel officer:|     dammit! that channel is only for listening,|     not communicating! those federal pigs|     can hear you!
-Rebel pilot:|     Hmph. Well, hear this!
+Rebel Officer:|     Dammit! That channel is only for listening,|     not communication! Those federal pigs|     can hear you!
+Rebel Pilot:|     Hmph. Well, hear this!
 Rubber:|     What the hell was that?
 Viridis:|     I'm hit!
-Ceruleo:|     An Apfel bomb - but only we have those!
+Ceruleo:|     An Apfel bomb - but that's our new | top-of-the-line technology!
 Argent:|     Viridis, status report!
-Rebel officer:|     oh, great now we have to finish them off.
+Rebel Officer:|     Oh great, now we have to finish them off.
 Ceruleo:|     All units, advance!

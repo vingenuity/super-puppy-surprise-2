@@ -77,7 +77,7 @@ namespace SpaceHaste.GameObjects
 
             MovementRange = (int) (energy[0] / MovementEnergyCost);
 	        LaserRange = 6;
-            MissileRange = 4;
+            MissileRange = 6;
 
             //Fill hull and shields to max.
             hull[0] = hull[1] = maxHull;

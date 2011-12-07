@@ -26,6 +26,8 @@ namespace SpaceHaste.GameMech.LevelManagers
             Instance = this;
             int a = LoadSaveManager.LevelNumber;
             MapManager.currentAct = (int)((a-1) / 3) +1;
+            if (MapManager.currentAct > 3)
+                MapManager.currentAct = 1;
             MapManager.currentScene = a % 3;
             if (MapManager.currentScene == 0)
                 MapManager.currentScene = 3;

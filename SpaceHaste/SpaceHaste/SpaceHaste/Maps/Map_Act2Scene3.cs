@@ -51,7 +51,7 @@ namespace SpaceHaste.Maps
             this.addGameObject(rebel2, rebel2.GridPosition);
             this.addGameObject(rebel3, rebel3.GridPosition);
 
-            this.AddPlanet(2, 2, 2, 8);
+            this.AddPlanet(2, 2, 2, 8,0);
         }
     }
 }

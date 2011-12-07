@@ -104,7 +104,7 @@ namespace SpaceHaste.Maps
         /// <param name="y"></param>
         /// <param name="z"></param>
         /// <param name="scale"></param>
-        public void AddPlanet(int x, int y, int z, float length)
+        public void AddPlanet(int x, int y, int z, float length,int planetType)
         {
 
             float radius = (length) / 2;
@@ -130,11 +130,11 @@ namespace SpaceHaste.Maps
                                 EnvMapObjects.Add(MapGridCubes[i, j, k]);
                                 nearaplanet.Add(new Vector3(i, j, k));
                             }
-                            EnvMapObjectsRandomNum.Add(GraphicsManager.random.Next(0));
+                            EnvMapObjectsRandomNum.Add(planetType);
                         }
                         catch { }
                     }
-            Graphics.GraphicsManager.Planets.Add(new Tuple<Vector3, float>(new Vector3((float)x, (float)y, (float)z), length));
+            Graphics.GraphicsManager.Planets.Add(new Tuple<Vector3, float,int>(new Vector3((float)x, (float)y, (float)z), length,planetType));
         }
 
         public void AddGameObjectToGridSquare(GameObject gameObject, int x, int y, int z)

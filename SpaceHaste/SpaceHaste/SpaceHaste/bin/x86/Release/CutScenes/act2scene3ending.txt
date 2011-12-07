@@ -1,0 +1,16 @@
+Ceruleo:|     Captain Blau, this is Major Ceruleo.
+Blau:|     Major, this is Captain Blau. You got me.
+Ceruleo:|     We have things to discuss.
+Blau:|     I understand.
+Ceruleo:|     How did you obtain Apfel equipment?
+Blau:|     What do you mean? They sell it to us.
+Ceruleo:|     What? How could they? They only sell to us.
+Blau:|     What!? But they give us intellegence.|     Like what you did to the Beta Centauri System.
+Ceruleo: |     What? They gave us proof that|     you attacked that system.
+Blau:|     Oh, no...
+Ceruleo:|     Did they sell you our shield frequency?
+Blau:|     Yes. They always give us intellegence.|     It's saved our fight a few times now.
+Argent:|     Sir, does this mean -
+Ceruleo:|     Yes, the Apfel Corporation has been|     orcestrating this war. Forgive me, Captain Blau.|     You are not my enemy.
+Blau:|     Then nor are you mine.
+Ceruleo:|     Captain Blau, join me.|     We can end this conflict.

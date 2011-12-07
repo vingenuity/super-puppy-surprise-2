@@ -24,7 +24,6 @@ namespace SpaceHaste.Huds
 
         public Hud(Game game, GraphicsDeviceManager graphics) : base (game)
         {
-           
             this.graphics = graphics;
             DrawUnitLists = new HUDDrawListOfUnits();
             UnitActions = new UnitDisplayActions();

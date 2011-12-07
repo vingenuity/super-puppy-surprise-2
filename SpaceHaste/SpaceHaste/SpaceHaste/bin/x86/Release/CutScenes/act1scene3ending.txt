@@ -1,0 +1,9 @@
+Argent:|     Sir, what happened here?
+Ceruleo:|     This war keeps getting stranger.|     I'll open a comm to Katie later.|     She needs to know the rebels have|     access to their weapons.
+Argent:|     Incoming transmission, sir.
+Albid:|     Baker 16, this is Willy 16.
+Ceruleo:|     This is Baker 16.
+Albid:|     Ken, is everything alright?
+Ceruleo:|     Sir, they have Apfel equipment.
+Albid:|     Dammit, Ceruleo! You have one job:|     close with and destroy the enemy!|     Leave everything else to me.| |     Willy-16 out.
+Ceruleo:|     Roger.

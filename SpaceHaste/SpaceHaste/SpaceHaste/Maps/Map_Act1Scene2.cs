@@ -28,6 +28,13 @@ namespace SpaceHaste.Maps
             LightShip Rebel2 = new LightShip   ("Grau Rebel", new Vector3(4, 2, 3), GameObject.Team.Enemy);
             Rebel2.MissileCount = 0;
             this.addGameObject(Rebel2, new Vector3(4, 2, 3));
+
+            this.AddEnvObject(GridCube.TerrainType.nebula, 2, 2, 10);
+            this.AddEnvObject(GridCube.TerrainType.nebula, 3, 2, 10);
+            this.AddEnvObject(GridCube.TerrainType.nebula, 4, 2, 10);
+            this.AddEnvObject(GridCube.TerrainType.nebula, 2, 2, 9);
+            this.AddEnvObject(GridCube.TerrainType.nebula, 2, 5, 10);
+            this.AddEnvObject(GridCube.TerrainType.nebula, 3, 3, 5);
         }
     }
 }

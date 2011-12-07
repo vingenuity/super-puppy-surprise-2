@@ -26,7 +26,7 @@ namespace SpaceHaste.Maps
         public Vector3 Size;
 
         public static Map map;
-
+        
         public int Act = 1;
         public int Scene = 1;
 
@@ -106,18 +106,16 @@ namespace SpaceHaste.Maps
         /// <param name="scale"></param>
         public void AddPlanet(int x, int y, int z, float length)
         {
-            
-            float radius = length / 2;
-            Vector3 Center = new Vector3(x + radius, y + radius, z + radius);
-            for(int i = x; i < x+length; i++)
-                for(int j = y; j < y+length; j++)
-                    for (int k = z; k < z+ length; k++)
+
+            float radius = (length) / 2;
+            Vector3 Center = new Vector3(x, y, z);
+            //Vector3 Center = new Vector3(x + radius, y + radius, z + radius);
+            for(int i = x - (int)radius; i < x + (int)radius; i++)
+                for (int j = y - (int)radius; j < y + (int)radius; j++)
+                    for (int k = z - (int)radius; k < z + (int)radius; k++)
                     {
-                        int a;
-                        if(i == 2 && j == 2 && k == 7)
-                            a = 0;
-                        //try
-                        //{
+                        try
+                        {
                             Vector3 toCenter = new Vector3(Math.Abs(i - Center.X), Math.Abs(j - Center.Y), Math.Abs(k - Center.Z));
                             float temp = toCenter.Length();
                             if (toCenter.Length() <= radius)
@@ -129,13 +127,12 @@ namespace SpaceHaste.Maps
                             else if (toCenter.Length() <= radius + 2)
                             {
                                 MapGridCubes[i, j, k].SetTerrain(GridCube.TerrainType.nearplanet);
-                                
                                 EnvMapObjects.Add(MapGridCubes[i, j, k]);
                                 nearaplanet.Add(new Vector3(i, j, k));
                             }
                             EnvMapObjectsRandomNum.Add(GraphicsManager.random.Next(0));
-                        //}
-                        //catch { }
+                        }
+                        catch { }
                     }
             Graphics.GraphicsManager.Planets.Add(new Tuple<Vector3, float>(new Vector3((float)x, (float)y, (float)z), length));
         }
@@ -294,7 +291,7 @@ namespace SpaceHaste.Maps
                     {
                         int a;
                         neighbor.distance = gc.distance + neighbor.GetMoveCost();
-                        if (gc.GetTerrain() == GridCube.TerrainType.nearplanet || gc.GetTerrain() == GridCube.TerrainType.planet)
+                        if (gc.GetTerrain() == GridCube.TerrainType.nearplanet)// || gc.GetTerrain() == GridCube.TerrainType.planet)
                             a = 1;
                         neighbor.SetPath(gc);
                         GridQueue.Enqueue(neighbor);

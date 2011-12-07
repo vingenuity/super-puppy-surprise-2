@@ -1,0 +1,80 @@
+SPACE HASTE ACT 1
+
+Scene 1 -
+	Ceruleo is given the task to destroy a particular rebel named Blau but decides it's more pertenent to interrogate the enemy. Ignoring orders, Ceruleo opens a comm to the enemy, who refuses to reveal the location of Captain Blau. Ceruleo destroys them in anger.
+	**map
+	*long, open map
+	
+	Intro: LTC Albid was pleased with Captain Ceruleo's performance and sent him on a special mission to destroy Captain Blau, a dangerous renegade rebel. But Ceruleo has another idea...
+	Argent: Filthy rebels. Tell us, where is Captain Blau? Surrender and we may be leanient.
+	Second Lieutenant Gruen: I will never betray my commander!
+	Argent: Red group, Green group, fill into attack formation.
+	Ceruleo: Belay that order.
+	Argent: Sir?
+	Ceruleo: I have a different idea. I need not kill Blau if we can speak with him.
+	Argent: You meant to capture the rogue? Ken, that takes a field grade officer.
+	Ceruleo: I know.
+	Argent: Okay. I trust you, sir.
+	Major Ceruleo: So, this is the famed Lieutenant Gruen? I am acting Major Kenneth Ceruleuo.
+	Gruen: I won't have words with you fed'ralist scum!
+	Ceruleo: I only want to talk with Captain Blau. Perhaps we can bring some understanding to this conflict.
+	Gruen: I understand you mean to kill him!
+	Ceruleo: If peace is no priority of yours, then your life no priority of mine. All units engage!
+	
+	**Battle**
+	
+	Rubber: Sir, I thought Blau was going to be here.
+	Argent: He makes a good point. Sir, there haven't been any transmissions logged but they knew we would be here.
+	Rubber: A traitor?
+	Argent: Only Captain, no, Major Ceruleo and I have access to alter those files.
+	Ceruleo: And if you were going to betray me, I'd be dead already. No, there is no traitor.
+	Argent: Sir, we're intercepted a transmission. Someone is talking to Captain Blau.
+	Ceruleo: Well done! All units, move out.
+	
+Scene 2 -
+	Ceruleo traces a transmission and finds Blau's location. Ceruleo attempts to talk with Blau but Blau runs and leaves a secrurity element to fight Ceruleo.
+	**map
+	*anything, really
+	
+	Ceruleo: Captain Blau, this is Major Ceruleo.
+	Captain Blau: Damn. Lieutenant Rot, take care of this for me.
+	**Blau leaves
+	Second Lieutenant Rot: You're mine now.
+	Ceruleo: We'll take care of these guys first.
+	
+	**Battle**
+	
+	Argent: He got away.
+	Ceruleo: But we're faster. Viridis, more your team to the Sirius System.
+	Viridis: Sir?
+	Argent: I see. If they see a presence in Sirius, Blau will move else where. Perhaps to the -
+	Ceruleo: Yes, to the Misar system. The pin is mighter than the sword and now we can force their next move.
+	
+Scene 3 -
+	Ceruleo runs down Blau and destroys his escourts. Upon interrogation, Blau reveals that the rebels are supplied by Apfel Corps, just as the federal army is. Ceruleo and Blau compare intellegence and learn that Apfel has spurred the conflict from both sides.
+	**map
+	*large, near a planet
+	*no fast ships
+	
+	Ceruleo: Captain Blau must have landed on the planet. Alright, destory all of his escourts.
+	Argent: Beware of the planet. An Apfel Bomb can use it's gravity to travel further. It's not safe.
+	
+	**battle**
+	
+	Ceruleo: Captain Blau, this is Major Ceruleo.
+	Blau: Major, this is Captain Blau. You got me.
+	Ceruleo: We have things to discuss.
+	Blau: I understand.
+	Ceruleo: How did you obtain Apfel equipment?
+	Blau: What do you mean? The sell it to us.
+	Ceruleo: What? How could they? They sell to us?
+	Blau: What!? But they give us intellegence. Like what you did to the Beta Centauri System.
+	Ceruleo: What? They gave us proof that you attacked that system.
+	Blau: Oh, no...
+	Ceruleo: Did they sell you our shield frequency?
+	Blau: Yes. They always give us intellegence. It's saved our fight a few times now.
+	Argent: Sir, does this mean -
+	Ceruleo: Yes, the Apfel Corporation has been orcestrating this war. Forgive me, Captain Blau. You are not my enemy.
+	Blau: Then nor are you mine.
+	Ceruleo: Captain Blau, join me. We can end this conflict.
+	

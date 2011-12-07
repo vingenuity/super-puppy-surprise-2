@@ -13,21 +13,21 @@ namespace SpaceHaste.Maps
         public MapPlanetTest()
             : base(new Vector3(12, 12, 12))
         {
-            Act = 3;
+            Act = 1;
             Scene = 2;
         }
         protected override void InitMapGameObjects()
         {
-            GameObject Ceruleo = new StandardShip("Ceruleo", new Vector3(2, 2, 08), GameObject.Team.Player);
-            //Ceruleo.energy[0] = 100000;
-            //
-            Ceruleo.MovementRange = 80000;
+            GameObject Ceruleo = new StandardShip("Ceruleo", new Vector3(2, 2, 8), GameObject.Team.Player);
+            Ceruleo.energy[0] = 800;
             this.addGameObject(Ceruleo, Ceruleo.GridPosition);
 
             GameObject Enemy = new StandardShip("test", new Vector3(2, 2, 2), GameObject.Team.Enemy);
+            Enemy.MissileCount = 0;
+            Enemy.EnginesDisabled = true;
             this.addGameObject(Enemy, Enemy.GridPosition);
 
-            this.AddPlanet(2, 2, 2, 6);
+            this.AddPlanet(4, 4, 4, 6);
         }
     }
 }

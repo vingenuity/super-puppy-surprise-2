@@ -16,7 +16,7 @@ namespace SpaceHaste.Huds
         public bool CanMissiles;
         public bool CanLasers;
         public bool CanTargetLasers;
-        public bool CanTargetEngines;
+        public bool CanDrainEnergy;
         int Selected = 0;
         Vector2 MenuAttackStringPosition;
         Vector2 MenuMoveStringPosition;
@@ -61,17 +61,11 @@ namespace SpaceHaste.Huds
             else
                 spriteBatch.DrawString(spriteFont, "Missile", MenuAttackStringPosition, Color.White);
             if (Selected == 2)
-                spriteBatch.DrawString(spriteFont, "Target Weapons", MenuWaitStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
-            else if (!CanTargetLasers)
-                spriteBatch.DrawString(spriteFont, "Target Weapons", MenuWaitStringPosition, Color.Gray);
+                spriteBatch.DrawString(spriteFont, "Drain Energy", MenuWaitStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
+            else if (!CanDrainEnergy)
+                spriteBatch.DrawString(spriteFont, "Drain Energy", MenuWaitStringPosition, Color.Gray);
             else
-                spriteBatch.DrawString(spriteFont, "Target Weapons", MenuWaitStringPosition, Color.White);
-            if (Selected == 3)
-                spriteBatch.DrawString(spriteFont, "Target Engines", MenutargetWeaponStringPosition, Color.Yellow, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
-            else if (!CanTargetEngines)
-                spriteBatch.DrawString(spriteFont, "Target Engines", MenutargetWeaponStringPosition, Color.Gray);
-            else
-                spriteBatch.DrawString(spriteFont, "Target Engines", MenutargetWeaponStringPosition, Color.White);
+                spriteBatch.DrawString(spriteFont, "Drain Energy", MenuWaitStringPosition, Color.White);
           //  else
           //      spriteBatch.DrawString(spriteFont, "Missile", MenuAttackStringPosition, Color.Gray);
         }
@@ -85,8 +79,7 @@ namespace SpaceHaste.Huds
                 ShowShipAttackActions = false;
             CanLasers = BattleMechanicsManager.Instance.AttackLasers;
             CanMissiles = BattleMechanicsManager.Instance.AttackMissiles;
-            CanTargetEngines = BattleMechanicsManager.Instance.AttackTargetEngines;
-            CanTargetLasers = BattleMechanicsManager.Instance.AttackTargetLasers;
+            CanDrainEnergy = BattleMechanicsManager.Instance.AttackDrainEnergy;
         }
         public void Attack()
         {

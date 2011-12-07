@@ -10,33 +10,31 @@ using SpaceHaste.Huds;
 
 namespace SpaceHaste.DPSFParticles
 {
-    public class LaserParticle : Particle
+    public class LaserParticle2 : Particle
     {
-        TrailParticleSystem laserParicleSystem;
+        TrailParticleSystem2 laserParicleSystem;
         public int counter = 0;
         public Vector3 Position;
 
         public static void CreateLaserParticle(Vector3 pos1, Vector3 pos2)
         {
-            ParticleManager.Instance.Add(new LaserParticle(pos1, pos2));
+            ParticleManager.Instance.Add(new LaserParticle2(pos1, pos2));
         }
-    
-        static Color color;
         Vector3 Start;
         Vector3 End;
         Vector3 Length;
         double timeToEnd = .6;
-        public LaserParticle(Vector3 Start, Vector3 End)
+        public LaserParticle2(Vector3 Start, Vector3 End)
             : base()
         {
             this.Start = Start;
             this.End = End;
             Length = End - Start;
-            laserParicleSystem = new TrailParticleSystem(Game1.game);
+            laserParicleSystem = new TrailParticleSystem2(Game1.game);
 
             laserParicleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);
             laserParicleSystem.Emitter.PositionData.Position = Position;
-            
+
             //deathParicleSystem.Emitter.BurstParticles = (10);
 
             //  deathParicleSystem.Emitter.Enabled = true;

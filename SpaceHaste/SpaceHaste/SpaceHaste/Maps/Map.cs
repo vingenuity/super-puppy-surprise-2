@@ -289,10 +289,7 @@ namespace SpaceHaste.Maps
                         continue;
                     if (gc.distance + neighbor.GetMoveCost() < neighbor.distance)
                     {
-                        int a;
                         neighbor.distance = gc.distance + neighbor.GetMoveCost();
-                        if (gc.GetTerrain() == GridCube.TerrainType.nearplanet)// || gc.GetTerrain() == GridCube.TerrainType.planet)
-                            a = 1;
                         neighbor.SetPath(gc);
                         GridQueue.Enqueue(neighbor);
                         inRange.Add(neighbor);

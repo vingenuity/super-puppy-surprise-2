@@ -12,7 +12,7 @@ namespace SpaceHaste.GameObjects
     class StandardShip : GameObject
     {
         public StandardShip(String name, Vector3 location, Team side)
-            : base(name, location, side, 100, 100, 13, 1, 10, 50, new double[] { 1, 1, 1 })
+            : base(name, location, side, 100, 100, 13, 2, 10, 50, new double[] { 1, 1, 1 })
         {
         }
         public override void Load()
@@ -25,7 +25,6 @@ namespace SpaceHaste.GameObjects
                 Model = GraphicsManager.Content.Load<Model>("models/light_ship_red_swap");
             ModelType = 1;
             Scale = 6f;
-
         }
     }
 }

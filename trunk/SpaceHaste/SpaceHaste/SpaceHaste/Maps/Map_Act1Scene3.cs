@@ -14,7 +14,7 @@ namespace SpaceHaste.Maps
             : base(new Vector3(5, 5, 11))
         {
             Act = 1;
-            Scene = 2;
+            Scene = 3;
         }
         protected override void InitMapGameObjects()
         {

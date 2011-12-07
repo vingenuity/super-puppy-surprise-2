@@ -26,6 +26,7 @@ namespace SpaceHaste.DPSFParticles
             : base()
         {
             Offset = offset;
+            this.Position = Position;
             paricleSystem = new StarParticleSystem(Game1.game, Position + Offset);
 
             paricleSystem.AutoInitialize(Game1.game.GraphicsDevice, Game1.game.Content, Hud.spriteBatch);

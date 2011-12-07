@@ -102,7 +102,9 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
         private void NextShipTurn()
         {
             if (CheckVictory())
+            {
                 return;
+            }
             SortGameObjectList();
             if (!enabled)
             {
@@ -283,6 +285,8 @@ namespace SpaceHaste.GameMech.BattleMechanicsManagers
                     GameMechanicsManager.gamestate = GameState.CutSceneEnd;
                     LoadSaveManager.LevelNumber++;
                     LoadSaveManager.Save("Save2");
+                    //LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+                    //           new GameplayScreen());
                     return true;
                 }
                 else

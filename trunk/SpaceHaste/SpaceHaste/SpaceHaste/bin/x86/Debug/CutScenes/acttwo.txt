@@ -9,7 +9,7 @@ Scene 1 -
 	Argent: Filthy rebels. Tell us, where is Captain Blau? Surrender and we may be leanient.
 	Second Lieutenant Gruen: I will never betray my commander!
 	Argent: Red group, Green group, fill into attack formation.
-	Ceruleo: Belay that order.
+	Ceruleo: Delay that order.
 	Argent: Sir?
 	Ceruleo: I have a different idea. I need not kill Blau if we can speak with him.
 	Argent: You meant to capture the rogue? Ken, that takes a field grade officer.
@@ -23,11 +23,11 @@ Scene 1 -
 	
 	**Battle**
 	
-	Rubber: Sir, I thought Blau was going to be here.
+	Reuber: Sir, I thought Blau was going to be here.
 	Argent: He makes a good point. Sir, there haven't been any transmissions logged but they knew we would be here.
-	Rubber: A traitor?
+	Reuber: A trator?
 	Argent: Only Captain, no, Major Ceruleo and I have access to alter those files.
-	Ceruleo: And if you were going to betray me, I'd be dead already. No, there is no traitor.
+	Ceruleo: And if you were going to betray me, I'd be dead already. No, there is no trator.
 	Argent: Sir, we're intercepted a transmission. Someone is talking to Captain Blau.
 	Ceruleo: Well done! All units, move out.
 	

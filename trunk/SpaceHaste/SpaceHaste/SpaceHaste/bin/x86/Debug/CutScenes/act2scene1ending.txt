@@ -1,7 +1,7 @@
-Rubber:|     Sir, I thought Blau was|     going to be here.
+Reuber:|     Sir, I thought Blau was|     going to be here.
 Argent:|     He makes a good point.|     Sir, there haven't been any transmissions|     logged but they knew we would be here.
-Rubber:|     A trator?
-Argent:|     Only Captain- excuse me, Major Ceruleo and I|     have access to alter those files.
-Ceruleo:|     And if you were going to betray me,|     I'd be dead already.| |     No, there's no trator.
+Reuber:|     A traitor?
+Argent:|     Only Captain- excuse me, Major Ceruleo and I|     have access to those files.
+Ceruleo:|     And if you were going to betray me,|     I'd be dead already.| |     No, there's no traitor.
 Argent:|     Sir, we're intercepted a transmission.|     Someone is talking to Captain Blau.
 Ceruleo:|     Well done! All units, move out.

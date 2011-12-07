@@ -22,7 +22,7 @@ Scene 1
 	Concurrently:
 		Katie: Good luck, Ken!
 		Argent: Green group, fall back. Viridis, status report. Red group, advance.
-		Rubber: They can fire through our shields!? I'm on my way, Viridis!
+		Reuber: They can fire through our shields!? I'm on my way, Viridis!
 	Ceruleo: It begins. ALL UNITS ADVANCE!
 	
 	**Battle**
@@ -54,14 +54,14 @@ Scene 2
 	* all but one ship is hiding in a nebula
 	
 	Viridis: I can't believe we're on the vanguard! This is exciting!
-	Rubber: I can't believe you're still talking.
+	Reuber: I can't believe you're still talking.
 	Argent: Sir, they have a point, we did do well.
 	Ceruleo: Something still bothers me.
 	Argent: Colonel Albid was impressed. That's how we got this assignemnt.
 	Viridis: Sir, I see the enemy!
 	**one enemy appears
 	Ceruleo: Show time! All units advance!
-	Rubber: Sir, there's more than one!
+	Reuber: Sir, there's more than one!
 	**remaining enemy appear
 	Ceruleo: How could they have known we were waiting to ambush them?
 	
@@ -78,13 +78,13 @@ Scene 3
 		
 	**Rebel pilot appears.
 	Rebel pilot: like the only drunk girl at a party, the federation does exactly what we want all the time.
-	Rubber: Who the hell is that?
+	Reuber: Who the hell is that?
 	Argent: Who are you? How do you know our comm frequences?
 	Rebel officer: dammit! that channel is only for listening, not communicating! those federal pigs can hear you!
 	Rebel pilot: Hmph. Well, hear this!
 	**rebel pilot fire an Apfel Bomb
 	Concurrenly:
-		Rubber: What the hell was that?
+		Reuber: What the hell was that?
 		Viridis: I'm hit!
 		Ceruleo: An Apfel bomb - but only we have those!
 		Argent: Viridis, status report!

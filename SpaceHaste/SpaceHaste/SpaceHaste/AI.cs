@@ -308,7 +308,12 @@ namespace SpaceHaste
             double originalEnergy = ship.energy[0];
             Vector3 originalPosition = ship.GridPosition;
             GridCube selection = null;
-            GameObject target = path[path.Count - 1].GetObject();
+            GridCube targetCube = path.Last();
+            GameObject target;
+            if (targetCube.GetObject() != null)
+                target = path.Last().GetObject();
+            else
+                return null;
             for (int i = path.Count() - 1; i > 0; i--)
             {
                 ship.GridPosition = path[i].Position;

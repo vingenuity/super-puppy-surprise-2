@@ -118,7 +118,7 @@ namespace SpaceHaste
             }
 
             //If we perform the same action 5 times in a row, we must be performing an illegal action and the game is stopping us, so wait instead.
-            if (lastEnergy == myShip.energy[0])
+            if (lastEnergy != myShip.energy[0])
             {
                 lastEnergy = myShip.energy[0];
                 frustration = 0;

@@ -25,7 +25,12 @@ namespace SpaceHaste
         Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> lastAction;
         int frustration;
 
-        public AI(Map battlefield) { map = battlefield; frustration = 0; }
+        public AI(Map battlefield) 
+        { 
+            map = battlefield; 
+            frustration = 0;
+            lastAction = Tuple.Create(new GridCube(0, 0, 0), ShipSelectionMode.Wait, ShipAttackSelectionMode.TargetEngine);
+        }
 
         /// <summary>
         /// This is the function that does all of the work for the AI. 
@@ -111,7 +116,7 @@ namespace SpaceHaste
             }
 
             //If we perform the same action 5 times in a row, we must be performing an illegal action and the game is stopping us, so wait instead.
-            if (lastAction != action)
+            if (!IsSameAction(lastAction, action))
             {
                 lastAction = action;
                 frustration = 0;
@@ -353,5 +358,13 @@ namespace SpaceHaste
             return true;
         }
         #endregion
+
+        bool IsSameAction(Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action1, 
+                        Tuple<GridCube, ShipSelectionMode, ShipAttackSelectionMode> action2)
+        {
+            if (action1.Item1 == action2.Item1 && action1.Item2 == action2.Item2 && action1.Item3 == action2.Item3)
+                return true;
+            return false;
+        }
     }
 }

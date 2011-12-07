@@ -199,10 +199,15 @@ namespace SpaceHaste.Graphics
             for (int i = 0; i < Planets.Count; i++)
             {
                 DrawModel(GraphicsManager.IcePlanet,
+                   Matrix.CreateScale(15f * Planets[i].Item2)
+                   * Matrix.CreateTranslation(Maps.Map.map.GetCubeAt(Planets[i].Item1).Center),
+                   ControlManager.View, ControlManager.Projection);
+                /*
+                DrawModel(GraphicsManager.IcePlanet,
                     Matrix.CreateScale(15f * Planets[i].Item2) 
                     * Matrix.CreateTranslation(Maps.Map.map.GetCubeAt(Planets[i].Item1).Center-new Vector3(GridCube.GRIDSQUARELENGTH/2, GridCube.GRIDSQUARELENGTH/2, GridCube.GRIDSQUARELENGTH/2)
                         + new Vector3(GridCube.GRIDSQUARELENGTH, GridCube.GRIDSQUARELENGTH, GridCube.GRIDSQUARELENGTH) * (Planets[i].Item2)/2),
-                    ControlManager.View, ControlManager.Projection);
+                    ControlManager.View, ControlManager.Projection);*/
             }
             if (Missile.shouldDraw == true)
             {

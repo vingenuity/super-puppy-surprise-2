@@ -123,6 +123,7 @@
     <Compile Include="DPSFParticles\Particle Systems\FireOnPointPS.cs" />
     <Compile Include="DPSFParticles\Particle Systems\NebulaePS.cs" />
     <Compile Include="DPSFParticles\Particle Systems\NebulaePS2.cs" />
+    <Compile Include="DPSFParticles\Particle Systems\ShipWreckageParticleSystem.cs" />
     <Compile Include="DPSFParticles\ShipThrustersParticle.cs" />
     <Compile Include="DPSFParticles\LaserParticle.cs" />
     <Compile Include="DPSFParticles\DeathParticle.cs">
